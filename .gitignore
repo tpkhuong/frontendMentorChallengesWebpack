@@ -1,1 +1,5 @@
 /intermediate/todoAppChallenge/node_modules/
+/intermediate/roomHomepage/node_modules/
+/intermediate/interactiveComments/node_modules/
+/intermediate/ipAddressTracker/node_modules/
+.env
