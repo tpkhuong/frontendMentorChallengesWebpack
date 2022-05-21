@@ -34,17 +34,24 @@
       type="image/x-icon"
     />
     <!-- <link rel="stylesheet" href="" /> -->
-    <title>Ip Address Tracker</title>
+    <title>IP Address Tracker</title>
   </head>
   <body>
     <section aria-labelledby="section-title" class="app-wrapper">
       <div class="top-half">
+        <!-- max-width here -->
         <div class="title-input-style-wrapper">
-          <h1 aria-hidden="true" id="section-title">Ip Address Tracker</h1>
+          <h1 aria-hidden="true" id="section-title">IP Address Tracker</h1>
           <div class="input-button-wrapper">
-            <label for="user-up"></label>
-            <input id="user-ip" type="text" />
-            <button aria-label="search">
+            <label for="user-up" class="visually-hidden"
+              >Seach for any IP address or domain</label
+            >
+            <input
+              id="user-ip"
+              type="text"
+              placeholder="Seach for any IP address or domain"
+            />
+            <button class="search-btn" aria-label="search">
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14">
                 <path
                   fill="none"
@@ -57,22 +64,23 @@
           </div>
         </div>
       </div>
+      <!-- max-width here -->
       <div class="address-information">
         <div class="ip-address">
-          <span>IP ADDRESS</span>
-          <span></span>
+          <span class="static-info">IP ADDRESS</span>
+          <span class="dynamic-info">192.212.174.101</span>
         </div>
         <div class="location">
-          <span>LOCATION</span>
-          <span></span>
+          <span class="static-info">LOCATION</span>
+          <span class="dynamic-info">Brooklyn, NY 10001</span>
         </div>
         <div class="timezone">
-          <span>TIMEZONE</span>
-          <span></span>
+          <span class="static-info">TIMEZONE</span>
+          <span class="dynamic-info">UTC -05:00</span>
         </div>
         <div class="service-provider">
-          <span>ISP</span>
-          <span></span>
+          <span class="static-info">ISP</span>
+          <span class="dynamic-info">SpaceX Starlink</span>
         </div>
       </div>
       <div class="bottom-half">

@@ -1,15 +1,25 @@
 import "../public/styles.css";
 import getData from "./fetchApi";
-import locationArrow from "../images/icon-location.svg";
+// import locationArrow from "../images/icon-location.svg";
+import {
+  getInputEnterKey,
+  showMapImage,
+  updateAddressInformationValues,
+} from "./helpFunc";
+import { userInput, searchBtn } from "./selectors";
+
+// console.log(userInput, searchBtn);
 /**
  * process.env to use Dotenv
  * **/
 
-getData().then(function workWithData(response) {
-  console.log(response);
-  const { data } = response;
-  console.log(data);
-});
+userInput.addEventListener("keydown", getInputEnterKey);
+
+// searchBtn.addEventListener();
+
+const cachedData = JSON.parse(localStorage.getItem("testing"));
+
+console.log(cachedData);
 
 console.log(process.env.GEOLOCATION_API);
 
@@ -34,26 +44,35 @@ console.log(process.env.GEOLOCATION_API);
  * setView
  * take latLng ([latitude,longitude], altitude)
  * **/
-var map = L.map("map").setView([51.505, -0.09], 13);
 
-L.tileLayer(
-  `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${process.env.MAPBOX_TOKEN}`,
-  {
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: "mapbox/streets-v11",
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: process.env.MAPBOX_TOKEN,
-  }
-).addTo(map);
+// const ipLocation = cachedData.ip;
 
-const ourIcon = L.icon({
-  iconUrl: locationArrow,
-});
+updateAddressInformationValues(cachedData.infoData);
 
-L.marker([51.505, -0.09], { icon: ourIcon }).addTo(map);
+// use cachedData.location.lat and cachedData.location.log, put values in an array
+
+showMapImage();
+
+// var map = L.map("map").setView([51.505, -0.09], 13);
+
+// L.tileLayer(
+//   `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${process.env.MAPBOX_TOKEN}`,
+//   {
+//     attribution:
+//       'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//     maxZoom: 18,
+//     id: "mapbox/streets-v11",
+//     tileSize: 512,
+//     zoomOffset: -1,
+//     accessToken: process.env.MAPBOX_TOKEN,
+//   }
+// ).addTo(map);
+
+// const ourIcon = L.icon({
+//   iconUrl: locationArrow,
+// });
+
+// L.marker([51.505, -0.09], { icon: ourIcon }).addTo(map);
 
 // $(function () {
 //   $.ajax({
