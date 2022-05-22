@@ -1,12 +1,24 @@
 import "../public/styles.css";
-import getData from "./fetchApi";
+// import getData from "./fetchApi";
 // import locationArrow from "../images/icon-location.svg";
 import {
   getInputEnterKey,
   showMapImage,
   updateAddressInformationValues,
+  clickSearchGetData,
 } from "./helpFunc";
 import { userInput, searchBtn } from "./selectors";
+
+const initialStartData = {
+  ipValue: "192.212.174.101",
+  locationValue: {
+    city: "Brooklyn",
+    state: "NY",
+    zipcode: "10001",
+  },
+  timezoneValue: "-05:00",
+  serviceProvider: "SpaceX Starlink",
+};
 
 // console.log(userInput, searchBtn);
 /**
@@ -14,10 +26,14 @@ import { userInput, searchBtn } from "./selectors";
  * **/
 
 userInput.addEventListener("keydown", getInputEnterKey);
-
+searchBtn.addEventListener("click", clickSearchGetData);
+// searchBtn.addEventListener("mouseup", getInputEnterKey);
 // searchBtn.addEventListener();
 
-const cachedData = JSON.parse(localStorage.getItem("testing"));
+const cachedData = JSON.parse(localStorage.getItem("savedData"));
+
+// reset user input
+userInput.value = "";
 
 console.log(cachedData);
 
@@ -45,13 +61,20 @@ console.log(process.env.GEOLOCATION_API);
  * take latLng ([latitude,longitude], altitude)
  * **/
 
-// const ipLocation = cachedData.ip;
-
-updateAddressInformationValues(cachedData.infoData);
+const ipLocation = cachedData
+  ? [cachedData.fetchedData.location.lat, cachedData.fetchedData.location.lng]
+  : null;
 
 // use cachedData.location.lat and cachedData.location.log, put values in an array
 
-showMapImage();
+cachedData
+  ? (showMapImage(ipLocation),
+    updateAddressInformationValues(cachedData.infoData))
+  : (showMapImage(), updateAddressInformationValues(initialStartData));
+
+// showMapImage();
+
+// updateAddressInformationValues(cachedData.infoData);
 
 // var map = L.map("map").setView([51.505, -0.09], 13);
 

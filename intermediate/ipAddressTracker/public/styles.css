@@ -181,6 +181,10 @@ body {
   background-color: var(--color-neutral-white);
 }
 
+button {
+  cursor: pointer;
+}
+
 #map {
   height: 100%;
   z-index: -1;
@@ -304,6 +308,12 @@ span[class$="-info"] {
 @media screen and (min-width: 62.5rem) {
   [id="section-title"] {
     font-size: 2.1rem;
+  }
+  .input-button-wrapper {
+    margin-block-start: 52px;
+  }
+  .address-information {
+    top: 27%;
   }
   .address-information > * + * {
     padding-inline-start: 32px;
