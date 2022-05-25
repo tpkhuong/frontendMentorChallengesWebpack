@@ -7,3 +7,10 @@
 
 /* light shadow */
 /* 223,22,77 */
+body {
+  /* background-color: yellow; */
+}
+
+.img {
+  background-image: url("../../images/favicon-32x32.png");
+}
