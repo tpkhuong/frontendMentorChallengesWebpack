@@ -52,6 +52,10 @@ server.use(staticMiddleware);
 console.log(process.env.PORT);
 // export default server;
 
+server.get("/api", function anotherRoute(req, res) {
+  res.status(200).json({ message: "Get goals" });
+});
+
 server.get("/", function initialPage(req, res) {
   res.status(200).sendFile(path.resolve(__dirname, "dist/index.html"));
 });

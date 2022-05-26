@@ -3,7 +3,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./Components/App.js";
-import "webpack-hot-middleware/client?reload=true";
+// import "webpack-hot-middleware/client?reload=true";
 // react 17
 // ReactDOM.render(<App />, document.getElementById("app"));
 

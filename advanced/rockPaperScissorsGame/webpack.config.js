@@ -9,9 +9,21 @@ const dotenv = require("dotenv");
 // const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  entry: "./frontend/src/index.js",
+  entry: [
+    "webpack-hot-middleware/client?reload=true",
+    "./frontend/src/main.js",
+  ],
   module: {
     rules: [
+      // without html-loader our img tag will not load img from src
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
       {
         test: /\.(js|jsx)$/,
         use: [{ loader: "babel-loader" }],
