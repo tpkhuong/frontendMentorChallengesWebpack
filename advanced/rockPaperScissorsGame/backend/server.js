@@ -2,6 +2,10 @@
 const express = require("express");
 const path = require("path");
 const webpack = require("webpack");
+const connectDB = require("./config/database");
+// without declare dotenv in server our NODE_ENV and MONGO_URI returned undefined
+const dotenv = require("dotenv").config();
+
 /**
  * using import in express giving errors
  * **/
@@ -13,6 +17,11 @@ const webpack = require("webpack");
 // we want to serve the html that webpack will bundle for us.
 // use cors npm package if we plan to make ajax calls to access resouces from remote hosts.
 // cors allow us to make the correct connections in our express server
+
+// connect to db
+console.log(process.env.NODE_ENV);
+
+connectDB();
 
 const config = require("../webpack.config.js");
 const complier = webpack(config);
@@ -31,6 +40,11 @@ const webpackHotMiddleware = require("webpack-hot-middleware")(complier);
 const staticMiddleware = express.static("../dist");
 
 const server = express();
+
+// add middleware express.json() to parse the body of the POST request
+
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
 
 // tell express to use our middlewares
 
@@ -52,9 +66,17 @@ server.use(staticMiddleware);
 console.log(process.env.PORT);
 // export default server;
 
-server.get("/api", function anotherRoute(req, res) {
-  res.status(200).json({ message: "Get goals" });
-});
+/**
+ * moved route below to appRoutes.js in route folder
+ * **/
+
+// run server.use("/route", file we want to use. require("file path"))
+
+server.use("/api/users", require("./routes/appRoutes"));
+
+// server.get("/api", function anotherRoute(req, res) {
+//   res.status(200).json({ message: "Get goal" });
+// });
 
 server.get("/", function initialPage(req, res) {
   res.status(200).sendFile(path.resolve(__dirname, "dist/index.html"));

@@ -15,7 +15,7 @@ module.exports = {
   ],
   module: {
     rules: [
-      // without html-loader our img tag will not load img from src
+      // without html-loader our img tag will not load img from url in src attr
       {
         test: /\.html$/,
         use: [
@@ -58,4 +58,9 @@ module.exports = {
     // new Dotenv(),
   ],
   mode: "development",
+  // devServer: {
+  //   static: ["./dist"],
+  //   hot: true,
+  //   liveReload: true,
+  // },
 };
