@@ -1,0 +1,17 @@
+/* inner */
+/* 226,33,24 */
+/* middle */
+/* 226,37,21 */
+/* outer */
+/* 227,41,20 */
+
+/* light shadow */
+/* 223,22,77 */
+body {
+  /* background-color: yellow; */
+  color: red;
+}
+
+.img {
+  background-image: url("../../images/favicon-32x32.png");
+}
