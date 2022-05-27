@@ -1,0 +1,5 @@
+{
+  "verbose": false,
+  "watch": ["./backend/server/server.js"],
+  "exec": "webpack --mode=development --config webpack.config.server.js && node dist/server-bundle.js"
+}

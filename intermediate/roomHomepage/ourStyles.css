@@ -1,0 +1,471 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&display=swap");
+
+:root {
+  /* primary */
+  --color-primary-dark-gray: hsl(0, 0%, 63%);
+  --color-primary-vary-dark-gray: hsl(0, 0%, 27%);
+  --color-primary-black: hsl(0, 0%, 0%);
+  --color-primary-white: hsl(0, 0%, 100%);
+  --height-img-container: 360px;
+  --width-first-img-middle-text: 955px;
+  --width-arrow-button: 115px;
+  --height-arrow-button: 56px;
+  --size-app-wrapper: 1375px;
+  --size-hero-img: 840px;
+  --color-hsl-black: 0, 0%, 0%;
+
+  --box-shadow: 0px 0.3px 0.7px rgba(0, 0, 0, 0.02),
+    0px 0.7px 1.7px rgba(0, 0, 0, 0.028), 0px 1.4px 3.3px rgba(0, 0, 0, 0.035),
+    0px 2.5px 5.8px rgba(0, 0, 0, 0.042), 0px 4.6px 10.9px rgba(0, 0, 0, 0.05),
+    0px 11px 26px rgba(0, 0, 0, 0.07);
+
+  /***** background *****/
+  /* bg-img top and bg-color-bottom */
+  /* todo input,todo listitem,items left/complete, views btns(mobile) */
+  /***** foreground *****/
+  /***** example for foreground: *****/
+  /* --todo-input-foreground: var(--color-lighttheme-todo-listitem, var(--color-darktheme-todo-text-typing-btn-hover) */
+  /* input placeholder, input typing, todo list text, items left, views btns(mobile)  
+  todo list crossed-out, todo list hover, views btns and clear btn hover, text below todo list
+  */
+
+  /* headings */
+  /* --font-family-poppins: "Poppins", sans-serif; */
+  /* body, call-to-actions */
+  --font-family-josefin: "League Spartan", sans-serif;
+}
+
+/* reset */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+button {
+  border: none;
+}
+
+ul[role],
+li[role] {
+  list-style: none;
+  padding: 0;
+}
+
+/* utilities */
+
+.max-width {
+  /* or the width we want our container/parent element to be */
+  max-width: 1375px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  /* padding-inline-start: 16px;
+  padding-inline-end: 16px; */
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+[href="#main-content"] {
+  position: absolute;
+  top: 0;
+  left: 100%; /* move of the screen */
+}
+
+[href="#main-content"]:focus {
+  left: 62px;
+}
+
+.skip-link {
+  display: none;
+  border: 1px solid red;
+  padding-block: 16px;
+  padding-inline: 32px;
+  z-index: 3;
+}
+
+@media screen and (min-width: 70rem) {
+  .skip-link {
+    display: inline-block;
+  }
+}
+/* general style */
+
+body {
+  font-family: var(--font-family-josefin);
+}
+
+p {
+  color: var(--color-primary-dark-gray);
+  line-height: 1;
+}
+
+button {
+  background-color: transparent;
+}
+
+/* individual sections */
+
+header {
+  position: relative;
+}
+
+/* logo nav */
+
+.logo-nav-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 24px;
+  padding-block-start: 48px;
+  z-index: 1;
+}
+
+.logo-nav-container nav {
+  display: none;
+}
+
+.site-logo {
+  margin-inline: auto;
+}
+
+/* modal */
+
+.mobile-nav-menu {
+  position: fixed;
+  inset: 0;
+  background-color: hsla(var(--color-hsl-black), 0.7);
+  z-index: 2;
+}
+
+[data-status="false"] {
+  display: none;
+}
+
+[data-status="true"] {
+  display: revert;
+}
+
+.mobile-menu-style-wrapper {
+  background-color: var(--color-primary-white);
+  display: flex;
+  align-items: center;
+  padding: 36px;
+  padding-inline: 24px;
+}
+
+.mobile-menu-style-wrapper nav {
+  margin-inline-start: auto;
+}
+
+.mobile-menu-style-wrapper ul {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* .mobile-menu-style-wrapper ul > * + * {
+  margin-inline-start: 24px;
+} */
+
+.mobile-menu-style-wrapper a {
+  color: var(--color-primary-black);
+  text-decoration: none;
+}
+
+@media screen and (min-width: 46.875rem) {
+  .logo-nav-container {
+    padding-block-start: 56px;
+    padding-block-end: 0;
+    padding-inline-start: 60px;
+  }
+  .logo-nav-container nav {
+    display: revert;
+    margin-inline-start: 68px;
+  }
+
+  nav[aria-label="desktop"] ul {
+    display: flex;
+    gap: 32px;
+  }
+  nav[aria-label="desktop"] a {
+    color: var(--color-primary-white);
+    text-decoration: none;
+    position: relative;
+  }
+
+  nav[aria-label="desktop"] a:hover::after,
+  nav[aria-label="desktop"] a:focus::after {
+    opacity: 1;
+  }
+
+  nav[aria-label="desktop"] a::after {
+    content: "";
+    display: block;
+    opacity: 0;
+    background-color: currentColor;
+    height: 2px;
+    width: 50%;
+    margin-inline: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -45%;
+  }
+  .open-modal {
+    display: none;
+  }
+
+  .site-logo {
+    margin-inline: revert;
+  }
+}
+
+/***** carousel  *****/
+
+[aria-roledescription="carousel"] {
+  position: relative;
+}
+
+/* carousel controller */
+
+.btn-controller-container {
+  position: absolute;
+  display: flex;
+  right: 0;
+  top: calc(var(--height-img-container) - var(--height-arrow-button));
+}
+
+.btn-controller-container button:hover {
+  cursor: pointer;
+}
+
+.btn-controller-container button {
+  padding: 0;
+  background-color: var(--color-primary-black);
+  padding: 16px;
+  padding-inline: 18px;
+}
+
+.btn-controller-container button svg {
+  transform: scale(0.7);
+}
+
+/* carousel items,item and image */
+
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.description-content-container {
+  padding: 70px;
+  padding-inline: 24px;
+}
+
+.description-title {
+  line-height: 0.9;
+  font-weight: 600;
+  font-size: 2.2rem;
+}
+
+.shop-arrow-container {
+  display: flex;
+  align-items: center;
+}
+
+.shop-arrow-container a {
+  color: var(--color-primary-black);
+  letter-spacing: 8px;
+  text-decoration: none;
+  position: relative;
+}
+
+.shop-arrow-container svg {
+  margin-inline-start: 34px;
+}
+
+/* .description-content-container a::after {
+  content: url("./images/icon-arrow.svg");
+  display: inline-block;
+  position: absolute;
+  right: -65%;
+  bottom: -35%;
+} */
+
+.description-text {
+  margin-block-start: 18px;
+  margin-block-end: 48px;
+}
+
+@media screen and (min-width: 46.875rem) {
+  .btn-controller-container {
+    right: revert;
+    bottom: 0;
+    top: revert;
+    left: calc(var(--width-first-img-middle-text) - var(--width-arrow-button));
+  }
+
+  .btn-controller-container button {
+    padding: 24px;
+    padding-inline: 21.9px;
+  }
+
+  .btn-controller-container button:hover,
+  .btn-controller-container button:focus {
+    background-color: var(--color-primary-vary-dark-gray);
+  }
+
+  .carousel-item {
+    flex-direction: row;
+  }
+
+  .description-content-container {
+    padding: 0;
+    padding-inline: 86px;
+    flex: 1 1 calc(var(--size-app-wrapper) - var(--size-hero-img));
+    margin-block: auto;
+  }
+
+  .shop-arrow-container {
+    cursor: pointer;
+  }
+
+  .shop-arrow-container:hover a {
+    color: var(--color-primary-dark-gray);
+  }
+
+  .shop-arrow-container:hover a + svg path {
+    fill: var(--color-primary-dark-gray);
+  }
+  .shop-arrow-container a:focus {
+    color: var(--color-primary-dark-gray);
+  }
+
+  .shop-arrow-container a:focus + svg path {
+    fill: var(--color-primary-dark-gray);
+  }
+
+  .description-title {
+    font-size: 2.7rem;
+  }
+
+  .description-text {
+    margin-block: 32px;
+    line-height: 1.2;
+  }
+}
+
+/* main content */
+
+.first-img,
+.second-img {
+  display: flex;
+}
+
+.middle-text {
+  padding: 48px;
+  padding-inline: 24px;
+}
+
+.middle-text h2 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.middle-text p {
+  line-height: 1.1;
+  font-size: 0.9rem;
+  margin-block-start: 8px;
+}
+
+@media screen and (min-width: 46.875rem) {
+  .three-column {
+    display: grid;
+    grid-template-columns: 420px 1fr 420px;
+  }
+
+  .middle-text {
+    padding: 72px;
+    padding-inline: 46px;
+  }
+
+  .middle-text p {
+    line-height: 1.3;
+  }
+}
