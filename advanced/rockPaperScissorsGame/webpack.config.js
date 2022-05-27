@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 // const Dotenv = require("dotenv-webpack");
-
+console.log("hello");
 module.exports = {
   entry: [
     "webpack-hot-middleware/client?reload=true",
