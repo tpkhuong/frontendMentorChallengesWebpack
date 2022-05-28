@@ -58,9 +58,10 @@ module.exports = {
     // new Dotenv(),
   ],
   mode: "development",
-  // devServer: {
-  //   static: ["./dist"],
-  //   hot: true,
-  //   liveReload: true,
-  // },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "./frontend/src"),
+      watch: true,
+    },
+  },
 };
