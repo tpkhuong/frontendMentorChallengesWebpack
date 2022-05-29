@@ -1,0 +1,7 @@
+body {
+  background-color: burlywood;
+}
+
+.max-width-wrapper {
+  width: min-content;
+}
