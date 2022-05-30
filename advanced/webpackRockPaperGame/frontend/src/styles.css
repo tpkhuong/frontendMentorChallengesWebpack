@@ -1,0 +1,346 @@
+:root {
+  /* primary */
+  --color-primary-dark-gray: hsl(0, 0%, 59%);
+  --color-primary-very-dark-gray: hsl(0, 0%, 17%); /* delete btn bg */
+  --color-primary-light-grayish-blue: hsl(239, 57%, 85%);
+  --color-primary-pale-red: hsl(357, 100%, 86%);
+
+  --color-neutral-dark-blue: hsl(212, 24%, 26%);
+  --color-neutral-grayish-blue: hsl(211, 10%, 45%); /* cancel btn*/
+  --color-neutral-light-gray: hsl(223, 19%, 93%);
+  --color-neutral-very-light-gray: hsl(228, 33%, 97%); /* app background */
+  --color-neutral-black: hsl(0, 0%, 0%);
+  --color-neutral-white: hsl(0, 0%, 100%);
+
+  /* rock */
+
+  --color-top-rock: hsl(349, 71%, 52%);
+  --color-bottom-rock: hsl(347, 75%, 35%);
+
+  /* paper */
+  --color-top-paper: hsl(229, 89%, 62%);
+  --color-bottom-paper: hsl(229, 65%, 46%);
+
+  /* scisssor */
+  --color-top-scissors: hsl(39, 84%, 51%);
+  --color-bottom-scissors: hsl(29, 75%, 44%);
+
+  --color-bg-first-half: hsl(214, 47%, 23%);
+  --color-bg-second-half: hsl(237, 49%, 15%);
+
+  /* top-half */
+
+  --color-light-shadow: hsl(223, 22%, 77%);
+
+  /* inner */
+  /* 226,33,24 */
+  /* middle */
+  /* 226,37,21 */
+  /* outer */
+  /* 227,41,20 */
+
+  /* light shadow */
+  /* 223,22,77 */
+
+  /* desktop */
+
+  --selections-wrapper-padding: 60px;
+  --picked-wrapper-padding: 100px;
+
+  --selections-img-width: 80px;
+  --picked-img-width: 115px;
+
+  --selections-brdr-width: 24px;
+  --picked-brdr-width: 36px;
+
+  --selections-slide-up: -9px;
+  --picked-slide-up: -12px;
+
+  /* mobile */
+  /* selections and picked same size */
+
+  --mobile-circle-padding: 42px;
+  --mobile-circle-img: 42px;
+  --mobile-circle-brdr-width: 15px;
+
+  --matching-gap-padding: 16px;
+  --brdr-radius: 16px;
+  /* padding */
+  --padding-small: 8px;
+  --padding-medium: 16px;
+  --padding-large: 24px;
+  /* margin */
+  --margin-small: 8px;
+  --margin-medium: 16px;
+  --margin-large: 24px;
+
+  --color-hsl-black: 0, 0%, 0%;
+
+  --box-shadow: 0px 0.3px 0.7px rgba(0, 0, 0, 0.02),
+    0px 0.7px 1.7px rgba(0, 0, 0, 0.028), 0px 1.4px 3.3px rgba(0, 0, 0, 0.035),
+    0px 2.5px 5.8px rgba(0, 0, 0, 0.042), 0px 4.6px 10.9px rgba(0, 0, 0, 0.05),
+    0px 11px 26px rgba(0, 0, 0, 0.07);
+
+  /***** background *****/
+  /* bg-img top and bg-color-bottom */
+  /* todo input,todo listitem,items left/complete, views btns(mobile) */
+  /***** foreground *****/
+  /***** example for foreground: *****/
+  /* --todo-input-foreground: var(--color-lighttheme-todo-listitem, var(--color-darktheme-todo-text-typing-btn-hover) */
+  /* input placeholder, input typing, todo list text, items left, views btns(mobile)  
+  todo list crossed-out, todo list hover, views btns and clear btn hover, text below todo list
+  */
+
+  /* headings */
+  /* --font-family-poppins: "Poppins", sans-serif; */
+  /* body, call-to-actions */
+  --font-family-barlow: "Barlow Semi Condensed", sans-serif;
+}
+
+/* reset */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+button {
+  border: none;
+}
+
+ul[role],
+li[role] {
+  list-style: none;
+  padding: 0;
+}
+
+/* utilities */
+
+.max-width {
+  /* or the width we want our container/parent element to be */
+  max-width: 1375px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  /* padding-inline-start: 16px;
+  padding-inline-end: 16px; */
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+[href="#main-content"] {
+  position: absolute;
+  top: 0;
+  left: 100%; /* move of the screen */
+}
+
+[href="#main-content"]:focus {
+  left: 62px;
+}
+
+.skip-link {
+  display: none;
+  border: 1px solid red;
+  padding-block: 16px;
+  padding-inline: 32px;
+  z-index: 3;
+}
+
+@media screen and (min-width: 70rem) {
+  .skip-link {
+    display: inline-block;
+  }
+}
+
+/* general styles */
+
+[id="app-wrapper"] {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-barlow);
+  background-color: var(--color-neutral-white);
+}
+
+button {
+  cursor: pointer;
+}
+
+.bg-img {
+  min-height: 100%;
+  background-image: radial-gradient(
+    var(--color-bg-first-half),
+    var(--color-bg-second-half)
+  );
+}
+
+.paper,
+.rock,
+.scissor {
+  position: relative;
+  width: max-content;
+}
+
+.bottom {
+  /* want to use max-content with images */
+  width: max-content;
+  background-color: white;
+  padding: var(--img-wrapper, var(--mobile-circle-padding));
+  border-radius: 50%;
+}
+
+.bottom img {
+  width: var(--img-width, var(--mobile-circle-img));
+}
+
+.circle {
+  position: absolute;
+  inset: 0;
+  border: var(--brdr-width, var(--mobile-circle-brdr-width)) solid
+    var(--brdr-color, black);
+  border-radius: 50%;
+
+  /* border-color: var(--brdr-color, white); */
+}
+
+/* selections or picked */
+
+@media screen and (min-width: 68.75rem) {
+  .selections {
+    --img-wrapper: var(--selections-wrapper-padding);
+    --img-width: var(--selections-img-width);
+    --brdr-width: var(--selections-brdr-width);
+    --attr-translate: var(--selections-slide-up);
+  }
+
+  .picked {
+    --img-wrapper: var(--picked-wrapper-padding);
+    --img-width: var(--picked-img-width);
+    --brdr-width: var(--picked-brdr-width);
+    --attr-translate: var(--picked-slide-up);
+  }
+}
+
+/* rock, paper, scissors */
+
+.paper .circle.bottom-half {
+  --brdr-color: var(--color-bottom-paper);
+}
+
+.paper .circle.top {
+  --brdr-color: var(--color-top-paper);
+}
+
+.rock .circle.bottom-half {
+  --brdr-color: var(--color-bottom-rock);
+}
+
+.rock .circle.top {
+  --brdr-color: var(--color-top-rock);
+}
+
+.scissor .circle.bottom-half {
+  --brdr-color: var(--color-bottom-scissors);
+}
+
+.scissor .circle.top {
+  --brdr-color: var(--color-top-scissors);
+}
+
+/* bottom-half and top will have different  */
+
+.bottom-half {
+  /* border: 7px solid; */
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+}
+
+.top-half {
+  /* border: 7px solid; */
+  border-color: var(--color-light-shadow);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);
+}
+
+.top {
+  /* border: 9px solid; */
+  /* selections -9px */
+  /* picked -12px */
+  /* mobile -5px */
+  transform: translateY(var(--attr-translate, -5px));
+}
+
+/* selections(smaller than picked) and picked(larger than selections) */
