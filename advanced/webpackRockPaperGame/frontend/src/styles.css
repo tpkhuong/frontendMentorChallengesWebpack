@@ -12,6 +12,10 @@
   --color-neutral-black: hsl(0, 0%, 0%);
   --color-neutral-white: hsl(0, 0%, 100%);
 
+  --color-neutral-score: hsl(229, 64%, 46%);
+  --color-neutral-score-text: hsl(229, 25%, 31%);
+  --color-neutral-logo-border: hsl(217, 16%, 45%);
+
   /* rock */
 
   --color-top-rock: hsl(349, 71%, 52%);
@@ -56,11 +60,14 @@
   --selections-slide-up: -9px;
   --picked-slide-up: -12px;
 
+  /* --selections-img-height:;
+  --picked-img-height:; */
+
   /* mobile */
   /* selections and picked same size */
 
   --mobile-circle-padding: 42px;
-  --mobile-circle-img: 42px;
+  --mobile-circle-img: 35px;
   --mobile-circle-brdr-width: 15px;
 
   --matching-gap-padding: 16px;
@@ -121,6 +128,7 @@ html,
 body {
   height: 100%;
 }
+
 /*
   Typographic tweaks!
   4. Add accessible line-height
@@ -241,12 +249,63 @@ button {
   cursor: pointer;
 }
 
+/* individual sections */
+
+/* logo and score */
+
+.logo-score-wrapper {
+  border: 2px solid var(--color-neutral-logo-border);
+  display: flex;
+  align-items: center;
+  margin-block-end: 16px;
+  padding: var(--logo-padding, 12px);
+  justify-content: space-between;
+  border-radius: 6px;
+  max-width: 850px;
+}
+
+.logo {
+  width: 90px;
+}
+
+.score-container {
+  background-color: var(--color-neutral-white);
+  display: flex;
+  width: max-content;
+  padding: var(--score-main-space, 24px);
+  flex-direction: column;
+  align-items: center;
+  padding-block: 8px;
+  border-radius: inherit;
+}
+
+.score-text {
+  color: var(--color-neutral-score);
+  margin-block-end: -12px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.score-digit {
+  color: var(--color-neutral-score-text);
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-block-end: -8px;
+}
+
+/* signs component */
+
 .bg-img {
+  padding: var(--main-padding, 20px);
   min-height: 100%;
   background-image: radial-gradient(
     var(--color-bg-first-half),
     var(--color-bg-second-half)
   );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-block-end: 38px;
 }
 
 .paper,
@@ -254,6 +313,16 @@ button {
 .scissor {
   position: relative;
   width: max-content;
+  border-radius: 50%;
+}
+
+.paper:focus,
+.rock:focus,
+.scissor:focus,
+.paper:hover,
+.rock:hover,
+.scissor:hover {
+  outline: 8px solid blanchedalmond;
 }
 
 .bottom {
@@ -266,6 +335,7 @@ button {
 
 .bottom img {
   width: var(--img-width, var(--mobile-circle-img));
+  height: var(--signs-img-height, 38px);
 }
 
 .circle {
@@ -274,13 +344,59 @@ button {
   border: var(--brdr-width, var(--mobile-circle-brdr-width)) solid
     var(--brdr-color, black);
   border-radius: 50%;
-
   /* border-color: var(--brdr-color, white); */
 }
 
+/* testing out algorithm */
+
+/* .circle::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: red;
+  border-radius: 50%;
+} */
+
 /* selections or picked */
 
+.testing {
+  width: 312px;
+  margin-inline: auto;
+  background-image: url("./images/bg-triangle.svg");
+  background-repeat: no-repeat;
+  background-size: 82%;
+  background-position: center 39px;
+}
+
+.selections-top-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selections-bottom-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 24px;
+}
+
+/* rules btn */
+
+.rules-btn {
+  background-color: transparent;
+  color: var(--color-neutral-white);
+  border: 1px solid currentColor;
+  padding: 38px;
+  padding-block: 10px;
+  border-radius: 7px;
+  display: block;
+  margin-inline: auto;
+}
+
 @media screen and (min-width: 68.75rem) {
+  .bg-img {
+    --main-padding: 32px;
+  }
   .selections {
     --img-wrapper: var(--selections-wrapper-padding);
     --img-width: var(--selections-img-width);
