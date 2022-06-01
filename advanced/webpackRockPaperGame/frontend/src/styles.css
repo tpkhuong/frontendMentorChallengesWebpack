@@ -13,7 +13,7 @@
   --color-neutral-white: hsl(0, 0%, 100%);
 
   --color-neutral-score: hsl(229, 64%, 46%);
-  --color-neutral-score-text: hsl(229, 25%, 31%);
+  --color-neutral-score-digit: hsl(229, 25%, 31%);
   --color-neutral-logo-border: hsl(217, 16%, 45%);
 
   /* rock */
@@ -35,6 +35,8 @@
   /* top-half */
 
   --color-light-shadow: hsl(223, 22%, 77%);
+
+  --color-dark-circle: hsl(223, 46%, 17%);
 
   /* inner */
   /* 226,33,24 */
@@ -69,6 +71,10 @@
   --mobile-circle-padding: 42px;
   --mobile-circle-img: 35px;
   --mobile-circle-brdr-width: 15px;
+
+  /* dark circle size */
+
+  --dark-inset-size: 20px;
 
   --matching-gap-padding: 16px;
   --brdr-radius: 16px;
@@ -287,7 +293,7 @@ button {
 }
 
 .score-digit {
-  color: var(--color-neutral-score-text);
+  color: var(--color-neutral-score-digit);
   font-size: 2.7rem;
   font-weight: 700;
   margin-block-end: -8px;
@@ -360,7 +366,11 @@ button {
 
 /* selections or picked */
 
-.testing {
+[data-hide="true"] {
+  display: none;
+}
+
+.selections-wrapper {
   width: 312px;
   margin-inline: auto;
   background-image: url("./images/bg-triangle.svg");
@@ -378,6 +388,95 @@ button {
   display: flex;
   justify-content: center;
   margin-block-start: 24px;
+}
+
+/* Battle */
+
+[data-start-battle="false"] {
+  display: none;
+}
+[data-start-battle="true"] {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.battle-wrapper {
+  /* display: flex; */
+}
+
+[class$="-picked"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+[class$="-picked"] span {
+  color: var(--color-neutral-white);
+  letter-spacing: 2px;
+}
+
+.player-picked {
+  width: min-content;
+  grid-area: player;
+}
+
+.house-picked {
+  width: max-content;
+  grid-area: house;
+}
+
+/* show box-shadow for either player or house picked element */
+
+[data-result="player"] .player-picked {
+}
+
+[data-result="house"] .house-picked {
+}
+
+.picked-wrapper {
+  position: relative;
+  order: -1;
+  margin-block-end: 20px;
+}
+
+.dark-circle {
+  background-color: var(--color-dark-circle);
+  position: absolute;
+  inset: var(--circle-shadow-size, 12px);
+  border-radius: 50%;
+}
+
+[data-fade="false"] button.picked {
+  opacity: 0;
+}
+
+/* results */
+
+[data-battle-results="false"] {
+  opacity: 0;
+}
+
+.results-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  margin-block-start: 92px;
+}
+
+.result-text {
+  color: var(--color-neutral-white);
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.reset-game {
+  font-size: 1rem;
+  color: var(--color-neutral-score-digit);
+  width: 100%;
+  padding-block: 14px;
+  border-radius: 8px;
 }
 
 /* rules btn */

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../styles.css";
 import { cachedData } from "../../api/dataStorage";
 // import rockImg from "../../images/icon-rock.svg";
@@ -21,17 +21,16 @@ function App(props) {
         {/* we can wrap PlayerSelections and Battle component inside of another component 
         that way both can share state with the wrapper component
         */}
-        <SelectBattleWrapper></SelectBattleWrapper>
         {/* <PlayerSelections>
           <div className="selections-top-wrapper">
             <Signs stepAttr="selections" picSrc="paper" />
             <Signs stepAttr="selections" picSrc="scissor" />
-          </div>
-          <div className="selections-bottom-wrapper">
+            </div>
+            <div className="selections-bottom-wrapper">
             <Signs stepAttr="selections" picSrc="rock" />
-          </div>
-        </PlayerSelections> */}
-        <div className="battle-testing"></div>
+            </div>
+          </PlayerSelections> */}
+        <SelectBattleWrapper></SelectBattleWrapper>
         {/* <Battle>
           <Signs stepAttr="selections" picSrc="scissor" />
           <Signs stepAttr="selections" picSrc="scissor" />

@@ -7,8 +7,12 @@ import Signs from "../main/SignChoices";
  * **/
 
 function PlayerSelections(props) {
-  const { dataObj, children } = props;
-  return <div className="testing">{children}</div>;
+  const { hideProp, children } = props;
+  return (
+    <div data-hide={hideProp} className="selections-wrapper">
+      {children}
+    </div>
+  );
 }
 
 export default PlayerSelections;

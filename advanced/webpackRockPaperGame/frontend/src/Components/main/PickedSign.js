@@ -3,22 +3,24 @@ import "../../styles.css";
 import Signs from "../main/SignChoices";
 
 function PickedSign(props) {
-  const { signSelector, passedSrc } = props;
+  const { signSelector, passedSrc, fadeBoolead } = props;
   const textContent =
     signSelector == "player" ? "YOU PICKED" : "THE HOUSE PICKED";
   return (
-    <div className={`${signSelector}-picked`}>
+    //   div below will have its width based on min-content
+    <div data-fade={fadeBoolead} className={`${signSelector}-picked`}>
       <span>{textContent}</span>
       {/*  */}
       <div className="picked-wrapper">
         {signSelector == "player" ? (
-          <div>player div</div>
+          <Signs stepAttr="picked" picSrc={passedSrc} />
         ) : (
-          <div>house div</div>
+          <React.Fragment>
+            <div className="dark-circle"></div>
+            <Signs stepAttr="picked" picSrc={passedSrc} />
+          </React.Fragment>
         )}
         {/* pass in SignChoice button as children */}
-        <Signs stepAttr="picked" picSrc={passedSrc} />
-        {}
       </div>
     </div>
   );
