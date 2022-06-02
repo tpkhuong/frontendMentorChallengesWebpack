@@ -7,9 +7,10 @@ import Signs from "../main/SignChoices";
  * **/
 
 function PlayerSelections(props) {
-  const { hideProp, children } = props;
+  const { hideProp, funcBind, children } = props;
+  // funcBind is a func we declared in SelectBattleWrapper Component
   return (
-    <div data-hide={hideProp} className="selections-wrapper">
+    <div onClick={funcBind} data-hide="false" className="selections-wrapper">
       {children}
     </div>
   );

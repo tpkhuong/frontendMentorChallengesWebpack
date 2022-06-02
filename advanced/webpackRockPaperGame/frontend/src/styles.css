@@ -54,7 +54,7 @@
   --picked-wrapper-padding: 100px;
 
   --selections-img-width: 80px;
-  --picked-img-width: 115px;
+  --picked-img-width: 100px;
 
   --selections-brdr-width: 24px;
   --picked-brdr-width: 36px;
@@ -62,8 +62,8 @@
   --selections-slide-up: -9px;
   --picked-slide-up: -12px;
 
-  /* --selections-img-height:;
-  --picked-img-height:; */
+  --selections-img-height: 86px;
+  --picked-img-height: 105px;
 
   /* mobile */
   /* selections and picked same size */
@@ -447,7 +447,7 @@ button {
   border-radius: 50%;
 }
 
-[data-fade="false"] button.picked {
+[data-fade="false"].house-picked button {
   opacity: 0;
 }
 
@@ -463,9 +463,10 @@ button {
   align-items: center;
   margin-inline: auto;
   margin-block-start: 92px;
+  grid-area: result;
 }
 
-.result-text {
+.result-dynamic-text {
   color: var(--color-neutral-white);
   font-size: 4rem;
   font-weight: 700;
@@ -490,17 +491,97 @@ button {
   border-radius: 7px;
   display: block;
   margin-inline: auto;
+  letter-spacing: 4px;
 }
 
 @media screen and (min-width: 68.75rem) {
   .bg-img {
     --main-padding: 32px;
   }
+
+  /* logo wrapper */
+
+  .logo-score-wrapper {
+    min-width: 850px;
+    align-self: center;
+    --logo-padding: 20px;
+    padding-inline: 30px;
+    border-radius: 16px;
+  }
+
+  .logo {
+    width: 170px;
+  }
+
+  .score-container {
+    --score-main-space: 46px;
+    padding-block: 14px;
+    border-radius: 8px;
+  }
+
+  .score-text {
+    font-size: 1.2rem;
+  }
+
+  .score-digit {
+    font-size: 3.8rem;
+  }
+
+  /* selections */
+
+  .selections-wrapper {
+    width: 525px;
+    background-size: 65%;
+    background-position: center 84px;
+  }
+
+  .selections-bottom-wrapper {
+    margin-block-start: 48px;
+  }
+
+  [data-start-battle="true"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "player result house";
+  }
+
+  .battle-wrapper {
+    min-width: 1080px;
+    align-self: center;
+  }
+
+  [class$="-picked"] span {
+    font-size: 1.6rem;
+  }
+
+  .picked-wrapper {
+    order: revert;
+    margin-block-end: revert;
+    margin-block-start: 55px;
+  }
+
+  .house-picked {
+    justify-self: end;
+  }
+
+  .results-wrapper {
+    align-self: center;
+  }
+
+  .result-dynamic-text {
+    font-size: 3.6rem;
+  }
+
+  .reset-game {
+    font-size: 1.2rem;
+  }
+
   .selections {
     --img-wrapper: var(--selections-wrapper-padding);
     --img-width: var(--selections-img-width);
     --brdr-width: var(--selections-brdr-width);
     --attr-translate: var(--selections-slide-up);
+    --signs-img-height: var(--selections-img-height);
   }
 
   .picked {
@@ -508,6 +589,12 @@ button {
     --img-width: var(--picked-img-width);
     --brdr-width: var(--picked-brdr-width);
     --attr-translate: var(--picked-slide-up);
+    --signs-img-height: var(--picked-img-height);
+  }
+  /* rules btn */
+  .rules-btn {
+    margin-inline: revert;
+    margin-inline-start: auto;
   }
 }
 

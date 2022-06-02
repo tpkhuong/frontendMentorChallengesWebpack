@@ -12,7 +12,15 @@ import Battle from "../main/Battle";
 import RulesButton from "../main/RulesButton";
 import PickedSign from "../main/PickedSign";
 
+useLocalStorage();
+
 function App(props) {
+  useEffect(() => {
+    document.querySelector(".score-digit").innerText = JSON.parse(
+      localStorage.getItem("scoreObj")
+    ).score;
+  });
+
   return (
     <React.Fragment>
       <section className="bg-img">
@@ -42,6 +50,12 @@ function App(props) {
       </section>
     </React.Fragment>
   );
+}
+
+function useLocalStorage() {
+  if (!localStorage.getItem("scoreObj")) {
+    localStorage.setItem("scoreObj", JSON.stringify({ score: 0 }));
+  }
 }
 
 export default App;
