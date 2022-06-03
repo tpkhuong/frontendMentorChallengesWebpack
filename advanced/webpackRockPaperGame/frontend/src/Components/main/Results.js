@@ -41,12 +41,27 @@ function setValuesToInitial() {
   const housePickedSign = document.querySelector(".house-picked");
   const battleWrapper = document.querySelector(".battle-wrapper");
   const dynamicTextElement = document.querySelector(".result-dynamic-text");
+  const winningPickedElement = document.querySelector("[data-winner='true']");
+  const assistiveTextElement = document.querySelector(".assistive-text");
+  const paperSelectorBtn = document.querySelector("[data-selector='paper']");
+  const instructionsElement = document.querySelector(".keyboard-instructions");
   // assign values
   resultWrapperElement.setAttribute("data-battle-results", "false");
   selectionsContainer.setAttribute("data-hide", "false");
   housePickedSign.setAttribute("data-fade", "false");
   battleWrapper.setAttribute("data-start-battle", "false");
+  instructionsElement.setAttribute("data-hide-instructions", "false");
   dynamicTextElement.innerText = "PLEHDR";
+  assistiveTextElement.innerText = "";
+  // want to remove attr data-winner or else when user click on play again
+  // data-winner applied to either player or house picked will not be remove
+  // which will cause our algorithm to apply box-shadow to both player and house picked button
+  // if winningPickedElement is truthy remove data-winner attr
+  winningPickedElement
+    ? winningPickedElement.removeAttribute("data-winner")
+    : null;
+  // focus paper button when user click play again
+  paperSelectorBtn.focus();
 }
 
 export default Results;

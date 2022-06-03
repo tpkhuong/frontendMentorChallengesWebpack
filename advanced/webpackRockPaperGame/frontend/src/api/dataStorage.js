@@ -1,7 +1,7 @@
 export const cachedData = {
   playerPicked: null,
   arrayOfRandomSigns: [],
-  todoObj: {
+  battleSelectorObj: {
     paper: {
       rock: "player",
       scissor: "house",

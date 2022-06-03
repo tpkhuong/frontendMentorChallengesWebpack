@@ -32,12 +32,6 @@
   --color-bg-first-half: hsl(214, 47%, 23%);
   --color-bg-second-half: hsl(237, 49%, 15%);
 
-  /* top-half */
-
-  --color-light-shadow: hsl(223, 22%, 77%);
-
-  --color-dark-circle: hsl(223, 46%, 17%);
-
   /* inner */
   /* 226,33,24 */
   /* middle */
@@ -47,6 +41,18 @@
 
   /* light shadow */
   /* 223,22,77 */
+
+  /* top-half */
+
+  --color-light-shadow: hsl(223, 22%, 77%);
+
+  --color-dark-circle: hsl(223, 46%, 17%);
+
+  /* button circle shadows */
+
+  --inner-shadow: hsl(220, 33%, 27%);
+  --middle-shadow: hsl(218, 41%, 26%);
+  --outer-shadow: hsl(221, 38%, 25%);
 
   /* desktop */
 
@@ -76,7 +82,18 @@
 
   --dark-inset-size: 20px;
 
+  /* shadow for picked button */
+
+  --mobile-first-shadow: 20px;
+  --mobile-second-shadow: 45px;
+  --mobile-third-shadow: 75px;
+
   --matching-gap-padding: 16px;
+
+  /* focus/hover outline */
+
+  --mobile-focus: 8px;
+
   --brdr-radius: 16px;
   /* padding */
   --padding-small: 8px;
@@ -314,6 +331,10 @@ button {
   padding-block-end: 38px;
 }
 
+.keyboard-instructions {
+  display: none;
+}
+
 .paper,
 .rock,
 .scissor {
@@ -328,7 +349,7 @@ button {
 .paper:hover,
 .rock:hover,
 .scissor:hover {
-  outline: 8px solid blanchedalmond;
+  outline: var(--focus-hover, var(--mobile-focus)) solid blanchedalmond;
 }
 
 .bottom {
@@ -411,7 +432,7 @@ button {
   align-items: center;
 }
 
-[class$="-picked"] span {
+.picked-text {
   color: var(--color-neutral-white);
   letter-spacing: 2px;
 }
@@ -428,10 +449,22 @@ button {
 
 /* show box-shadow for either player or house picked element */
 
-[data-result="player"] .player-picked {
+/* [data-result="player"] .player-picked {
 }
 
 [data-result="house"] .house-picked {
+} */
+
+/* declare box-shadow for winner with selector data-winner="true" */
+
+[data-winner="true"] .picked {
+  /* mobile: first shadow = 20px, second shadow = 45px, third shadow = 75px */
+  box-shadow: 0px 0px 0px var(--first-shadow, var(--mobile-first-shadow))
+      var(--inner-shadow),
+    0px 0px 0px var(--second-shadow, var(--mobile-second-shadow))
+      var(--middle-shadow),
+    0px 0px 0px var(--third-shadow, var(--mobile-third-shadow))
+      var(--outer-shadow);
 }
 
 .picked-wrapper {
@@ -482,6 +515,17 @@ button {
 
 /* rules btn */
 
+.rules-btn:focus,
+.close-modal-btn:focus,
+.rules-modal:focus,
+.reset-game:focus,
+.keyboard-instructions:focus,
+.rules-btn:hover,
+.close-modal-btn:hover,
+.reset-game:hover {
+  outline: 5px solid blue;
+}
+
 .rules-btn {
   background-color: transparent;
   color: var(--color-neutral-white);
@@ -494,9 +538,68 @@ button {
   letter-spacing: 4px;
 }
 
+/* target modal wrapper */
+
+[data-launch-modal="false"] + .modal-wrapper {
+  display: none;
+}
+
+/* rules modal */
+
+.rules-modal {
+  color: var(--color-neutral-score-digit);
+  background-color: var(--color-neutral-white);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  max-width: 405px;
+}
+
+.rules-modal h2 {
+  font-size: 2rem;
+}
+
+.close-modal-btn {
+  background-color: transparent;
+  padding: 0;
+}
+
 @media screen and (min-width: 68.75rem) {
   .bg-img {
     --main-padding: 32px;
+    position: relative;
+  }
+
+  [data-hide-instructions="true"] {
+    display: none;
+  }
+
+  .keyboard-instructions {
+    display: revert;
+    position: absolute;
+    background-color: var(--color-neutral-white);
+    color: var(--color-neutral-score-digit);
+    inset: 0;
+    width: max-content;
+    height: min-content;
+    margin-block: auto;
+    left: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .next-text-instructions {
+    margin-block-start: 24px;
+  }
+
+  .arrow-keys-text {
+    font-weight: 700;
+  }
+
+  .arrow-keys-instructions {
+    font-weight: normal;
   }
 
   /* logo wrapper */
@@ -550,8 +653,13 @@ button {
     align-self: center;
   }
 
-  [class$="-picked"] span {
+  /* [class$="-picked"] span {
     font-size: 1.6rem;
+  } */
+
+  [data-selector]:focus,
+  [data-selector]:hover {
+    --focus-hover: 28px;
   }
 
   .picked-wrapper {
@@ -564,8 +672,22 @@ button {
     justify-self: end;
   }
 
+  /* declaring z-index 1 to span with text you picked or house picked to have it stack on top of sign button box-shadow */
+
+  .picked-text {
+    z-index: 1;
+    font-size: 1.6rem;
+  }
+
+  [data-winner="true"] .picked {
+    --first-shadow: 65px;
+    --second-shadow: 135px;
+    --third-shadow: 205px;
+  }
+
   .results-wrapper {
     align-self: center;
+    z-index: 1;
   }
 
   .result-dynamic-text {
@@ -596,6 +718,40 @@ button {
     margin-inline: revert;
     margin-inline-start: auto;
   }
+  /* rules modal */
+
+  .modal-wrapper {
+    position: fixed;
+    inset: 0;
+    background-color: hsla(0, 0%, 0%, 0.5);
+  }
+
+  .rules-modal {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "modal-title modal-btn"
+      "modal-img modal-img";
+    height: min-content;
+    margin: auto;
+    gap: 48px 0px;
+    padding: 20px;
+    padding-inline: 34px;
+    border-radius: 8px;
+  }
+
+  .rules-modal h2 {
+    grid-area: modal-title;
+    justify-self: start;
+  }
+
+  .rules-img-wrapper {
+    grid-area: modal-img;
+  }
+
+  .close-modal-btn {
+    grid-area: modal-btn;
+    justify-self: end;
+  }
 }
 
 /* rock, paper, scissors */
@@ -624,7 +780,7 @@ button {
   --brdr-color: var(--color-top-scissors);
 }
 
-/* bottom-half and top will have different  */
+/* bottom-half and top will have different color */
 
 .bottom-half {
   /* border: 7px solid; */

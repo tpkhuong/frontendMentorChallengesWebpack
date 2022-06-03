@@ -9,7 +9,7 @@ function PickedSign(props) {
   return (
     //   div below will have its width based on min-content
     <div data-fade={fadeBoolead} className={`${signSelector}-picked`}>
-      <span>{textContent}</span>
+      <span className="picked-text">{textContent}</span>
       {/*  */}
       <div className="picked-wrapper">
         {signSelector == "player" ? (

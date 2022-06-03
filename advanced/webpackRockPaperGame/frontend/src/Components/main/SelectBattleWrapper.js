@@ -15,14 +15,25 @@ function SelectBattleWrapper(props) {
   //   const [showHide, showHideState] = useState("false");
   //   const [fadeValue, fadeState] = useState("false");
   // const [resultWinner, resultState] = useState();
+  //   const [playerPick, playerPickState] = useState();
+  //   const [housePick, housePickState] = useState();
+  // const renderPlayerPicked = playerPickedBind.bind({
+  //   playerPickState,
+  //   housePickState,
+  // });
   /**
    * make useState work with muliple values
+   * pass in obj as initial value to useState
    * **/
-  const [playerPick, playerPickState] = useState();
-  const [housePick, housePickState] = useState();
+
+  const [stateObj, playerHousePickState] = useState({
+    playerPick: "",
+    housePick: "",
+  });
+
   const renderPlayerPicked = playerPickedBind.bind({
-    playerPickState,
-    housePickState,
+    stateObj,
+    playerHousePickState,
   });
 
   //   const stateObj = { showHideState, playerPickState, fadeState, resultState };
@@ -43,12 +54,19 @@ function SelectBattleWrapper(props) {
           <Signs stepAttr="selections" picSrc="rock" />
         </div>
       </PlayerSelections>
+      {/* Battle component is a div with class .battle-wrapper we declared display: grid whic creates its own stacking context */}
+      {/* which means it children will stack based on html structure order or we can explicitly declare stacking order using z-index. */}
       <Battle>
-        <PickedSign signSelector="player" passedSrc={playerPick}></PickedSign>
+        {/* PickedSign component is a div with either class .player-picked or .house-picked we declared display: flex */}
+        {/* which means it children will stack based on html structure order or we can explicitly declare stacking order using z-index. */}
+        <PickedSign
+          signSelector="player"
+          passedSrc={stateObj.playerPick}
+        ></PickedSign>
         <PickedSign
           fadeBoolead="false"
           signSelector="house"
-          passedSrc={housePick}
+          passedSrc={stateObj.housePick}
         ></PickedSign>
         {/* stateObj has func that will update state */}
         {/* <Results passState={stateObj}></Results> */}
@@ -74,6 +92,10 @@ function playerPickedBind(event) {
   const battleWrapper = document.querySelector(".battle-wrapper");
   const dynamicTextElement = document.querySelector(".result-dynamic-text");
   const scoreDigitElement = document.querySelector(".score-digit");
+  const assistiveTextContainer = document.querySelector(".assistive-text");
+  const playAgainBtn = document.querySelector(".reset-game");
+  const instructionsElement = document.querySelector(".keyboard-instructions");
+  instructionsElement.setAttribute("data-hide-instructions", "true");
   //   console.log(resultWrapperElement);
   selectionsContainer.setAttribute("data-hide", "true");
   //   resultWrapperElement.setAttribute("data-battle-results", "true");
@@ -83,13 +105,26 @@ function playerPickedBind(event) {
     ? event.target.closest("BUTTON").getAttribute("data-selector")
     : "paper";
   //   console.log(signProp);
-  this.playerPickState(signProp);
+  //   this.playerPickState(signProp);
 
   //   this.showHideState("true");
   // have to use arrow function to use "this" of playerPickedBind
-  const houseSelection = housePickedSignHelper(cachedData);
+  //   const houseSelection = housePickedSignHelper(cachedData);
   // call useState to show house selection in browser
-  this.housePickState(houseSelection);
+  //   this.housePickState(houseSelection);
+  /**
+   * since we call playerPickState and housePickState here we can call a func
+   * that will update both values at once.
+   * we will pass in an obj as the initial value to useState
+   * **/
+  const houseSelection = housePickedSignHelper(cachedData);
+  this.playerHousePickState({
+    ...this.stateObj,
+    playerPick: signProp,
+    housePick: houseSelection,
+  });
+
+  assistiveTextContainer.innerText = `Player selected ${signProp}. House selected ${houseSelection}`;
   setTimeout(() => {
     // this.fadeState("true");
     // resultsAlgorithm(
@@ -123,7 +158,8 @@ function playerPickedBind(event) {
       dynamicTextElement,
       signProp,
       houseSelection,
-      scoreDigitElement
+      scoreDigitElement,
+      { assistiveTextContainer, signProp, houseSelection, playAgainBtn }
     );
   }, 3000);
 }
@@ -133,7 +169,8 @@ function resultsAlgorithm(
   textContentElement,
   playerSelection,
   houseSelection,
-  scoreElement
+  scoreElement,
+  assistiveInfoObj
 ) {
   /** 
  * showHideState,
@@ -141,7 +178,7 @@ function resultsAlgorithm(
     fadeState,
     resultState,
  * **/
-
+  const scoreStorage = JSON.parse(localStorage.getItem("scoreObj"));
   //   dataObj.stateFunc.resultState("player");
   // show result;
   //   dataObj.resultWrapperElement.getAttribute("data-battle-results") == "false"
@@ -166,7 +203,34 @@ function resultsAlgorithm(
         .querySelector(`.${winner}-picked`)
         .setAttribute("data-winner", "true")
     : null;
-  // update score and value in localStorage
+
+  // scoreStorage.score is type number
+  // if tie leave score alone,
+  // winner == "player" add one
+  // winner == "house" subtract one
+  winner == "player"
+    ? (scoreStorage.score += 1)
+    : winner == "house" && scoreStorage.score > 0
+    ? (scoreStorage.score -= 1)
+    : null;
+  // update score value in localStorage
+  localStorage.setItem("scoreObj", JSON.stringify(scoreStorage));
+  // update UI scoreElement
+  scoreElement.innerText = String(scoreStorage.score);
+  /**
+   * assistive text for screen readers
+   * **/
+
+  // winner == "player" => signProp beats houseSelect, YOU WON
+  // winner == "house" => houseSelect beats signProp, YOU LOSE
+  // winner == "tie" => Both players picked same sign, TIE GAME
+
+  assistiveInfoObj.assistiveTextContainer.innerText =
+    winner == "player"
+      ? `${assistiveInfoObj.signProp} beats ${assistiveInfoObj.houseSelection}, YOU WON. Score ${scoreStorage.score}`
+      : winner == "house"
+      ? `${assistiveInfoObj.houseSelection} beats ${assistiveInfoObj.signProp}, YOU LOSE. Score ${scoreStorage.score}`
+      : `Both players picked same sign, TIE GAME`;
   // play again text of lose, won or tie
   textContentElement.innerText =
     winner == "player"
@@ -178,6 +242,8 @@ function resultsAlgorithm(
   resultWrapper.getAttribute("data-battle-results") == "false"
     ? resultWrapper.setAttribute("data-battle-results", "true")
     : null;
+  // focus play again btn
+  assistiveInfoObj.playAgainBtn.focus();
   //   setTimeout(() => {
   //     resultWrapper.getAttribute("data-battle-results") == "false"
   //       ? resultWrapper.setAttribute("data-battle-results", "true")
@@ -205,7 +271,7 @@ function battleAlgorithm(player, house, dataObj) {
   // which will return "player" or "house" as winner
   // ex: dataObj["paper"]["rock"] will return "player"
   // ex: dataObj["paper"]["scissor"] will return "house"
-  return dataObj.todoObj[player][house];
+  return dataObj.battleSelectorObj[player][house];
 }
 
 export default SelectBattleWrapper;
