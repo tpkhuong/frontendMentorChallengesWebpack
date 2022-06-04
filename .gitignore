@@ -4,4 +4,7 @@
 /intermediate/ipAddressTracker/node_modules/
 /advanced/multiPageSetup/node_modules/
 /advanced/rockPaperScissorsGame/node_modules/
+/advanced/webpackRockPaperGame/node_modules/
+/advanced/nextJsProjects/example-app/webpackRockPaperGame/node_modules/
+/advanced/nextJsProjects/spaceTourismMultiPageWebsite/node_modules/
 .env

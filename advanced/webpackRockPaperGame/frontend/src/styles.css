@@ -124,7 +124,8 @@
   /* headings */
   /* --font-family-poppins: "Poppins", sans-serif; */
   /* body, call-to-actions */
-  --font-family-barlow: "Barlow Semi Condensed", sans-serif;
+  --font-family-barlow: "Barlow Semi", sans-serif;
+  --font-family-bellefair: "Bellefair", serif;
 }
 
 /* reset */
