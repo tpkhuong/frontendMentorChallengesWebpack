@@ -137,7 +137,8 @@
   /* headings */
   /* --font-family-poppins: "Poppins", sans-serif; */
   /* body, call-to-actions */
-  --font-family-barlow: "Barlow Semi", sans-serif;
+  --font-family-barlow: "Barlow", sans-serif;
+  --font-family-barlow-condensed: "Barlow Condensed", sans-serif;
   --font-family-bellefair: "Bellefair", serif;
 }
 
@@ -223,7 +224,11 @@ button {
 ul[role],
 li[role] {
   list-style: none;
-  /* padding: 0; */
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* utilities */
@@ -266,6 +271,10 @@ li[role] {
   z-index: 3;
 }
 
+#__next {
+  height: 100%;
+}
+
 @media screen and (min-width: 70rem) {
   .skip-link {
     display: inline-block;
@@ -273,6 +282,17 @@ li[role] {
 }
 
 /* general styles */
+
+/* bg img */
+
+[id="home"],
+[id="destination"] {
+  background-image: var(--page-bg-img);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  padding: var(--padding-large);
+}
 
 .heading1,
 .heading2,
@@ -293,7 +313,7 @@ li[role] {
 
 body {
   /* body text is barlow */
-  font-family: var(--font-family-barlow);
+  font-family: var(--font-family-barlow-condensed);
   background-color: var(--color-neutral-white);
 }
 
@@ -313,23 +333,12 @@ button {
   color: red;
 } */
 
-.navlist {
-  display: flex;
-  gap: 16px;
-  border: 2px solid red;
-}
+/* individual sections */
 
-.navitem {
-  padding-block: 20px;
-  position: relative;
-}
+/* header */
 
-[data-current="true"].navlink::after {
-  content: "";
-  background-color: blueviolet;
-  height: 2px;
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-}
+/* mobile nav */
+
+/* desktop nav */
+
+/* general nav */

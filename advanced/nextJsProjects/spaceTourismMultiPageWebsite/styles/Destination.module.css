@@ -1,0 +1,22 @@
+/* title: barlow condensed*/
+/* tab button: barlow condensed */
+/* tabpanel title: bellefair*/
+/* tabpanel text: barlow*/
+/* avg text: barlow condensed*/
+/* number: bellefair*/
+
+[id="destination"].app {
+  --page-bg-img: url("../starter-code/assets/destination/background-destination-mobile.jpg");
+}
+
+@media screen and (min-width: 768px) {
+  [id="destination"].app {
+    --page-bg-img: url("../starter-code/assets/destination/background-destination-tablet.jpg");
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  [id="destination"].app {
+    --page-bg-img: url("../starter-code/assets/destination/background-destination-desktop.jpg");
+  }
+}

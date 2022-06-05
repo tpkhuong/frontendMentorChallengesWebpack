@@ -1,9 +1,38 @@
 /* tablet: 768px */
 /* desktop: 1440px */
 
-.bg-img {
-  color: blue;
-  background-image: url("../starter-code/assets/technology/background-technology-mobile.jpg");
+/* rules/declarations declared here will be used like this className={styles.bgImg} or use styles["bg-img"] */
+
+/* span: barlow condensed*/
+/* h1: bellefair*/
+/* p: barlow*/
+/* button: bellefair*/
+
+/* mobile */
+
+[id="home"].app {
+  background-image: url("../starter-code//assets/home/background-home-mobile.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  padding: var(--padding-large);
 }
 
-/* rules/declarations declared here will be used like this className={styles.bgImg} or use styles["bg-img"] */
+.title-content-img-wrapper {
+  color: red;
+}
+
+/* tablet */
+
+@media screen and (min-width: 768px) {
+  [id="home"].app {
+    background-image: url("../starter-code//assets/home/background-home-tablet.jpg");
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 1440px) {
+  [id="home"].app {
+    background-image: url("../starter-code//assets/home/background-home-desktop.jpg");
+  }
+}
