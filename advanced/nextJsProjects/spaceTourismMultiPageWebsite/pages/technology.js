@@ -5,6 +5,7 @@ import favicon from "../public/favicon-32x32.png";
 import Link from "next/link";
 import data from "./api/data.json";
 import Header from "../Components/Header";
+import SectionWrapper from "../Components/SectionWrapper";
 // import Navbar from "../Components/Navbar";
 
 function TechPage(props) {
@@ -15,12 +16,9 @@ function TechPage(props) {
         <title>Technology</title>
         <link rel="shortcut icon" href={favicon} type="image/x-icon" />;
       </Head>
-      <h1>Technology Page</h1>
-      <Link href="/">Go Back</Link>
-      <div>Navbar</div>
-      <Header activeEffect="TECHNOLOGY"></Header>
-      {/* <Navbar currentPage="TECHNOLOGY"></Navbar> */}
-      <h2 className={TechStyles[`title-content-img-wrapper`]}>Tech</h2>
+      <SectionWrapper idAttr="technology">
+        <Header activeEffect="TECHNOLOGY"></Header>
+      </SectionWrapper>
     </React.Fragment>
   );
 }

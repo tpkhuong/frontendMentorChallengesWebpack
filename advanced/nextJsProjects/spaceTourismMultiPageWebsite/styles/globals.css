@@ -4,6 +4,8 @@
   /* primary */
   --color-primary: hsl(230, 35%, 7%);
   --color-secondary: hsl(231, 77%, 90%);
+  --color-misc: hsl(0, 0%, 59%);
+  --color-page-digit: hsl(231, 15%, 26%);
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
@@ -103,6 +105,10 @@
   --subheading1: 1.75rem;
   --subheading2: 0.875rem;
 
+  --small-text-space: 2.35px;
+  --medium-text-space: 2.7px;
+  --large-text-space: 4.75px;
+
   /* focus/hover outline */
 
   --mobile-focus: 8px;
@@ -133,6 +139,9 @@
   /* input placeholder, input typing, todo list text, items left, views btns(mobile)  
   todo list crossed-out, todo list hover, views btns and clear btn hover, text below todo list
   */
+
+  --secondary-font: var(--font-family-bellefair);
+  --description-font: var(--font-family-barlow);
 
   /* headings */
   /* --font-family-poppins: "Poppins", sans-serif; */
@@ -165,7 +174,7 @@
 html,
 body {
   height: 100%;
-  color: var(--color-primary);
+  /* color: var(--color-primary); */
 }
 
 /*
@@ -283,16 +292,13 @@ a {
 
 /* general styles */
 
-/* bg img */
-
-[id="home"],
-[id="destination"] {
-  background-image: var(--page-bg-img);
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100%;
-  padding: var(--padding-large);
+/* .primary {
+  color: var(--color-primary);
 }
+
+.secondary {
+  color: var(--color-secondary);
+} */
 
 .heading1,
 .heading2,
@@ -314,6 +320,7 @@ a {
 body {
   /* body text is barlow */
   font-family: var(--font-family-barlow-condensed);
+  color: var(--color-neutral-white);
   background-color: var(--color-neutral-white);
 }
 

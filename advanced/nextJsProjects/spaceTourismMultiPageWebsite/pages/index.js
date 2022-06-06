@@ -5,8 +5,8 @@ import data from "./api/data.json";
 import Link from "next/link";
 import Image from "next/image";
 // import sample from "../starter-code/assets/crew/image-douglas-hurley.png";
-import sample from "../public/crew/image-douglas-hurley.png";
 import Header from "../Components/Header";
+import SectionWrapper from "../Components/SectionWrapper";
 // import Navbar from "../Components/Navbar";
 // components
 // import Navbar from "../Components/Navbar";
@@ -24,19 +24,27 @@ function Home(props) {
         />
         ;
       </Head>
-      <div className={HomeStyles[`app`]} id="home">
+      {/* <div className={HomeStyles[`app`]} id="home"></div> */}
+      <SectionWrapper idAttr="home">
         <Header activeEffect="HOME" />
-        <section className={HomeStyles[`title-content-img-wrapper`]}>
-          <div className={HomeStyles[`title-wrapper`]}>
-            <span></span>
-            <h1></h1>
+        <section className={HomeStyles[`content-btn-wrapper`]}>
+          <div className={HomeStyles[`content-wrapper`]}>
+            <span className={HomeStyles[`sub-heading`]}>
+              SO, YOU WANT TO TRAVEL TO{" "}
+            </span>
+            <h1 className={HomeStyles.title}>SPACE</h1>
+            <p className={HomeStyles.description}>
+              Let’s face it. If you want to go to space, you might as well
+              genuinely go to outer space and not hover kind of on the edge of
+              it. Well sit back, and relax because we’ll give you a truly out of
+              this world experience!
+            </p>
           </div>
-          <div className={HomeStyles[`content-img-wrapper`]}>
-            <div></div>
-            <div></div>
-          </div>
+          <button className={HomeStyles[`homebtn`]}>EXPLORE</button>
+          {/* <div className={HomeStyles[`btn-wrapper`]}>
+          </div> */}
         </section>
-      </div>
+      </SectionWrapper>
       {/* <Navbar currentPage="HOME" /> */}
     </React.Fragment>
   );

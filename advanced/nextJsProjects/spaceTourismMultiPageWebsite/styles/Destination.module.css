@@ -5,18 +5,114 @@
 /* avg text: barlow condensed*/
 /* number: bellefair*/
 
-[id="destination"].app {
-  --page-bg-img: url("../starter-code/assets/destination/background-destination-mobile.jpg");
+/* color and font family */
+
+.tab-wrapper [role="tab"],
+.description,
+.text {
+  color: var(--color-secondary);
+}
+
+.tabpanel .title,
+.digit {
+  font-family: var(--secondary-font);
+}
+
+.title-content-img-wrapper {
+  text-align: center;
+}
+
+/* page title */
+
+.page-title {
+  font-size: 1.3rem;
+}
+
+.page-title-digit {
+  color: var(--color-page-digit);
+}
+
+/* img */
+
+.img-wrapper {
+  width: 170px;
+  height: 170px;
+}
+
+/* tablist/tabs/buttons */
+
+.tab-wrapper [role="tab"] {
+  background-color: transparent;
+  font-size: 1.1rem;
+}
+
+/* tabpanel */
+
+/* panel title */
+
+.title {
+  font-size: var(--heading3);
+  text-transform: uppercase;
+}
+
+/* panel description */
+
+.description {
+  font-family: var(--description-font);
+  font-size: 1rem;
+}
+
+/* panel distance and travel */
+
+/* text */
+
+.text {
+  font-size: 0.9rem;
+}
+
+/* digit */
+
+.digit {
+  font-size: calc(var(--heading5));
+  text-transform: uppercase;
 }
 
 @media screen and (min-width: 768px) {
-  [id="destination"].app {
-    --page-bg-img: url("../starter-code/assets/destination/background-destination-tablet.jpg");
-  }
+  /* page title */
+
+  /* img */
+
+  /* tablist/tabs/buttons */
+
+  /* tabpanel */
+
+  /* panel title */
+
+  /* panel description */
+
+  /* panel distance and travel */
+
+  /* text */
+
+  /* digit */
 }
 
 @media screen and (min-width: 1440px) {
-  [id="destination"].app {
-    --page-bg-img: url("../starter-code/assets/destination/background-destination-desktop.jpg");
-  }
+  /* page title */
+
+  /* img */
+
+  /* tablist/tabs/buttons */
+
+  /* tabpanel */
+
+  /* panel title */
+
+  /* panel description */
+
+  /* panel distance and travel */
+
+  /* text */
+
+  /* digit */
 }

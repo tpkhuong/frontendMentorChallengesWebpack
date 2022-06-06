@@ -62,3 +62,21 @@
     display: none;
   }
 }
+
+@media screen and (min-width: 1440px) {
+  .top-parent {
+    position: relative;
+  }
+  .top-parent::after {
+    content: "";
+    height: 1px;
+    position: absolute;
+    display: block;
+    width: 473px;
+    left: 150px;
+    top: 0;
+    bottom: 0;
+    margin-block: auto;
+    background-color: var(--color-misc);
+  }
+}

@@ -17,7 +17,7 @@
 }
 
 .navlist > * + * {
-  margin-block-start: 32px;
+  margin: 32px 0 0 0;
 }
 
 li.navitem {
@@ -34,7 +34,7 @@ li.navitem {
 [data-current="true"].navlink::after {
   content: "";
   background-color: currentColor;
-  height: 2px;
+  height: 3px;
   position: absolute;
   width: 100%;
   left: 0;
@@ -50,6 +50,8 @@ li.navitem {
 
 [aria-label="primary"].navbar {
   display: none;
+  max-width: 830px;
+  min-width: 450px;
 }
 
 /* link digit only show for mobile and desktop */
@@ -64,19 +66,52 @@ li.navitem {
 
 @media screen and (min-width: 768px) {
   [aria-label="primary"].navbar {
-    display: revert;
+    display: flex;
+    justify-content: center;
+    background-color: hsl(0, 100%, 100%, 0.05);
+    backdrop-filter: blur(1.5rem);
+    flex-basis: var(--flex-size, 450px);
   }
 
   li.navitem {
-    padding-block: 20px;
+    padding-block: 39px;
   }
 
   .navlist {
     flex-direction: row;
+  }
+
+  .navlist > * + * {
+    margin: 0 0 0 37px;
+  }
+  .navlink {
+    font-size: 1rem;
   }
 }
 
 /* desktop */
 
 @media screen and (min-width: 1440px) {
+  [aria-label="primary"].navbar {
+    --flex-size: 830px;
+  }
+  .navlist > * + * {
+    margin: 0 0 0 48px;
+  }
+
+  .navlink:focus {
+    outline: 5px solid blue;
+    border-radius: 3px;
+  }
+
+  .navlink:hover.navlink::after,
+  .navlink:focus.navlink::after {
+    content: "";
+    background-color: var(--color-misc);
+    height: 3px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+  }
 }
