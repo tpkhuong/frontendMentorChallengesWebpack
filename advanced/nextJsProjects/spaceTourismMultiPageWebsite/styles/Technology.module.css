@@ -3,3 +3,60 @@
 /* tabpanel title: bellefair*/
 /* tab button: bellefair*/
 /* text: barlow*/
+
+/* color and font family */
+
+/* title-content-img-wrapper */
+
+/* page title */
+
+/* content-img wrapper */
+
+/* img wrapper */
+
+.img-wrapper {
+  width: 250px;
+  height: 250px;
+}
+
+/* launch vehicle */
+
+[id="vehicle"].img-wrapper {
+  background-image: url("../starter-code/assets/technology/image-launch-vehicle-landscape.jpg");
+}
+
+/* spaceport */
+
+/* space capsule */
+
+/* content/tablist/tab/tabpanel */
+
+/* tablist */
+
+/* tab/button */
+
+/* tabpanel */
+
+/* tabliet */
+
+@media screen and (min-width: 48rem) {
+  /* img wrapper */
+
+  /* launch vehicle */
+
+  /* spaceport */
+
+  /* space capsule */
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  /* img wrapper */
+
+  /* launch vehicle */
+
+  /* spaceport */
+
+  /* space capsule */
+}

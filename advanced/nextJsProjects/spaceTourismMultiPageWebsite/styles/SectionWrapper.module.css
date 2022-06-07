@@ -45,6 +45,7 @@
   /* crew */
   [id="crew"].app {
     --page-bg-img: url("../starter-code/assets/crew/background-crew-tablet.jpg");
+    height: 100%;
   }
   /* technology */
   [id="technology"].app {

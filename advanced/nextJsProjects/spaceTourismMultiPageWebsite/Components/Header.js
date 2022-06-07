@@ -57,6 +57,8 @@ function Header(props) {
               </g>
             </svg>
           </button>
+          {/* better to build navbar inside our header instead of using component */}
+          {/* because every time our page renders it will run Navbar component twice */}
           <Navbar layout="secondary" currentPage={`${activeEffect}`} />
         </div>
       </div>

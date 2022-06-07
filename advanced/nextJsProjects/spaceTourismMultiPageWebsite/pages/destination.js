@@ -59,7 +59,7 @@ function Destinations(props) {
             <div className={DestStyles[`content-wrapper`]}>
               {/* tablist */}
               <div
-                onClick={testing.bind({
+                onClick={changeTabpanelContent.bind({
                   appData: props.destinations,
                   arrOfImgComp: arratOfImgComponents,
                   ourState: {
@@ -69,6 +69,7 @@ function Destinations(props) {
                 })}
                 role="tablist"
                 aria-labelledby="tablist-1"
+                className={DestStyles[`tablist-wrapper`]}
               >
                 {/* moon */}
                 {/* button aria-controls will match the value of the tabpanel id */}
@@ -80,7 +81,7 @@ function Destinations(props) {
                     aria-controls="tabpanel-0"
                     id="tab-0"
                   >
-                    <span>MOON</span>
+                    <span className={DestStyles[`bottom-line`]}>MOON</span>
                   </button>
                 </div>
                 {/* mars */}
@@ -92,7 +93,7 @@ function Destinations(props) {
                     aria-controls="tabpanel-1"
                     id="tab-1"
                   >
-                    <span>MARS</span>
+                    <span className={DestStyles[`bottom-line`]}>MARS</span>
                   </button>
                 </div>
                 {/* europa */}
@@ -104,7 +105,7 @@ function Destinations(props) {
                     aria-controls="tabpanel-2"
                     id="tab-2"
                   >
-                    <span>EUROPA</span>
+                    <span className={DestStyles[`bottom-line`]}>EUROPA</span>
                   </button>
                 </div>
                 {/* titan */}
@@ -116,7 +117,7 @@ function Destinations(props) {
                     aria-controls="tabpanel-4"
                     id="tab-3"
                   >
-                    <span>TITAN</span>
+                    <span className={DestStyles[`bottom-line`]}>TITAN</span>
                   </button>
                 </div>
               </div>
@@ -172,18 +173,33 @@ export async function getStaticProps(context) {
   };
 }
 
-function testing(event) {
+function changeTabpanelContent(event) {
   // add to div with role tablist
-  // onClick={testing.bind(props.destinations)}
+  // onClick={changeTabpanelContent.bind(props.destinations)}
   // <button id="0">moon</button>
   //         <button id="1">mars</button>
   //         <button id="2">euroa</button>
   //         <button id="3">titan</button>
-  {
-    /* <h2>{`${props.destinations[0].name}`}</h2> */
-  }
+  /* <h2>{`${props.destinations[0].name}`}</h2> */
 
-  if (event.target.closest("BUTTON")) {
+  // if user click on current selected button do nothing
+  if (
+    event.target.closest("BUTTON") &&
+    event.target.closest("BUTTON").getAttribute("aria-selected") == "false"
+  ) {
+    // find button with aria-selected true
+    const currentSelectedPanel = document.querySelector(
+      "[aria-selected='true']"
+    );
+    // change value of aria-selected to false for currentSelectedPanel
+    currentSelectedPanel.getAttribute("aria-selected") == "true"
+      ? currentSelectedPanel.setAttribute("aria-selected", "false")
+      : null;
+    // change value of aria-selected of clicked button to true
+    event.target.closest("BUTTON").getAttribute("aria-selected") == "false"
+      ? event.target.closest("BUTTON").setAttribute("aria-selected", "true")
+      : null;
+
     const index = Number(
       event.target.closest("BUTTON").getAttribute("data-index")
     );
