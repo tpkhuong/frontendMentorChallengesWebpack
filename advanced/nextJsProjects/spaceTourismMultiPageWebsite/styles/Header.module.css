@@ -25,6 +25,7 @@
   padding: 32px;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 }
 
 .close-menu-btn {
@@ -60,6 +61,7 @@
   }
   .moda-wrapper {
     display: none;
+    z-index: revert;
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { storageObj } from "./api/storage";
 import CrewStyles from "../styles/Crew.module.css";
 import Head from "next/head";
 import Hurley from "../starter-code/assets/crew/image-douglas-hurley.png";
@@ -14,6 +15,11 @@ import SectionWrapper from "../Components/SectionWrapper";
 // import Navbar from "../Components/Navbar";
 
 function Crew(props) {
+  /**
+   * reset storage.count to 0 when user click to home, destinations, or crew page
+   * **/
+  storageObj.count = storageObj.count > 0 ? 0 : storageObj.count;
+
   const arrOfCrewImg = [Hurley, Shuttleworth, Glover, Ansari];
   const crewInitialData = props.dataCrew[0];
   const crewData = {
@@ -24,7 +30,7 @@ function Crew(props) {
     crewDescription: crewInitialData.bio,
   };
   const [crewStateData, useCrewState] = useState(crewData);
-  // console.log(props.dataCrew);
+  console.log(crewStateData.crewImg);
   return (
     <React.Fragment>
       <Head>
@@ -160,7 +166,9 @@ function crewDataPanelChnage(event) {
       ? event.target.closest("BUTTON").setAttribute("aria-selected", "true")
       : null;
     // get data index
-    const index = event.target.closest("BUTTON").getAttribute("data-index");
+    const index = Number(
+      event.target.closest("BUTTON").getAttribute("data-index")
+    );
     // get img src
     const imgComponent = this.arrOfImgSrc[index];
     // data from json file

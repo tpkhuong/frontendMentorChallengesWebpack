@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home.module.css";
+import { storageObj } from "./api/storage";
 import data from "./api/data.json";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,7 +13,11 @@ import SectionWrapper from "../Components/SectionWrapper";
 // import Navbar from "../Components/Navbar";
 
 function Home(props) {
-  console.log(props.data);
+  /**
+   * reset storage.count to 0 when user click to home, destinations, or crew page
+   * **/
+  storageObj.count = storageObj.count > 0 ? 0 : storageObj.count;
+
   return (
     <React.Fragment>
       <Head>

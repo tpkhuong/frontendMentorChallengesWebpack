@@ -2,5 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/crew": "pages/crew.js"
+  "/technology": "pages/technology.js",
+  "/": "pages/index.js",
+  "/crew": "pages/crew.js",
+  "/destination": "pages/destination.js"
 }

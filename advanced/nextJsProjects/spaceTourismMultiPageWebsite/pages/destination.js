@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { storageObj } from "./api/storage";
 import Head from "next/head";
 import Image from "next/image";
 import Moon from "../starter-code/assets/destination/image-moon.png";
@@ -16,6 +17,11 @@ import SectionWrapper from "../Components/SectionWrapper";
 function Destinations(props) {
   // console.log(props.destinations);
   // console.log(props.stuff);
+  /**
+   * reset storage.count to 0 when user click to home, destinations, or crew page
+   * **/
+
+  storageObj.count = storageObj.count > 0 ? 0 : storageObj.count;
 
   const arratOfImgComponents = [Moon, Mars, Europa, Titan];
   const initialData = props.destinations[0];
