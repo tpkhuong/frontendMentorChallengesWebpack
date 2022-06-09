@@ -134,7 +134,7 @@ function TechPage(props) {
         })}
       ></div> */}
       <Head>
-        <title>Technology</title>
+        <title>Space Launch</title>
         <link rel="shortcut icon" href={favicon} type="image/x-icon" />;
       </Head>
       <SectionWrapper idAttr="technology">

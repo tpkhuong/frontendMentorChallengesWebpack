@@ -26,6 +26,7 @@
 .title {
   font-size: 6rem;
   font-family: var(--secondary-font);
+  font-weight: normal;
 }
 
 .description {

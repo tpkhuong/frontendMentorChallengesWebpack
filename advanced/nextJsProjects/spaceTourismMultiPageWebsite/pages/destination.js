@@ -39,7 +39,7 @@ function Destinations(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>Destination</title>
+        <title>Pick Your Destination</title>
         <link rel="shortcut icon" href={favicon} type="image/x-icon" />;
       </Head>
       {/* <div className="app" id="destination">

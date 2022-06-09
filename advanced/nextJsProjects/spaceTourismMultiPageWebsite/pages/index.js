@@ -35,7 +35,7 @@ function Home(props) {
         <section className={HomeStyles[`content-btn-wrapper`]}>
           <div className={HomeStyles[`content-wrapper`]}>
             <span className={HomeStyles[`sub-heading`]}>
-              SO, YOU WANT TO TRAVEL TO{" "}
+              SO, YOU WANT TO TRAVEL TO
             </span>
             <h1 className={HomeStyles.title}>SPACE</h1>
             <p className={HomeStyles.description}>

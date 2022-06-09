@@ -11,3 +11,23 @@ import App from "./Components/App.js";
 const rootElement = ReactDOM.createRoot(document.getElementById("app"));
 
 rootElement.render(<App />);
+
+function note() {
+  /**
+   * worked
+   * **/
+  // function MakeCall(props) {
+  //   console.log(props);
+  //   return <div>Hello world!!!</div>;
+  // }
+  // export async function getStaticProps() {
+  //   const response = await fetch(
+  //     "http://worldtimeapi.org/api/timezone/America/New_York"
+  //   );
+  //   const data = await response.json();
+  //   return {
+  //     props: data,
+  //   };
+  // }
+  // export default MakeCall;
+}

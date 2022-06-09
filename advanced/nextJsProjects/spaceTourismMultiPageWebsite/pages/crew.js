@@ -34,7 +34,7 @@ function Crew(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>Crew</title>
+        <title>Meet Your Crew</title>
         <link rel="shortcut icon" href={favicon} type="image/x-icon" />;
       </Head>
       <SectionWrapper idAttr="crew">
