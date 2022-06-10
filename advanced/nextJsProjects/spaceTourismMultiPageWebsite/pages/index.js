@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home.module.css";
 import { storageObj } from "./api/storage";
@@ -17,7 +17,6 @@ function Home(props) {
    * reset storage.count to 0 when user click to home, destinations, or crew page
    * **/
   storageObj.count = storageObj.count > 0 ? 0 : storageObj.count;
-
   return (
     <React.Fragment>
       <Head>

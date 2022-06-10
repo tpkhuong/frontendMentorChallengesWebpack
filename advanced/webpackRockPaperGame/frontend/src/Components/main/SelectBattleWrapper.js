@@ -145,6 +145,11 @@ function playerPickedBind(event) {
    * longer than 3000
    * **/
   /**
+   * remove event listener
+   * **/
+
+  selectionsContainer.removeEventListener("keyup", cachedData.removeEvent);
+  /**
      * passing state to another func
      const data = {
        stateFunc: this,

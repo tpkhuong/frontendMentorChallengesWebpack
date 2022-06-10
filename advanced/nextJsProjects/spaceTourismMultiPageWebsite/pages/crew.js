@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { storageObj } from "./api/storage";
 import CrewStyles from "../styles/Crew.module.css";
@@ -12,6 +12,7 @@ import data from "./api/data.json";
 import Link from "next/link";
 import Header from "../Components/Header";
 import SectionWrapper from "../Components/SectionWrapper";
+import { horizontalVerticalTabpanel } from "../src/helperFunc";
 // import Navbar from "../Components/Navbar";
 
 function Crew(props) {
@@ -30,7 +31,22 @@ function Crew(props) {
     crewDescription: crewInitialData.bio,
   };
   const [crewStateData, useCrewState] = useState(crewData);
-  console.log(crewStateData.crewImg);
+  /**
+   * keyboard functionality
+   * **/
+  // useEffect(() => {
+  //   const arrFirstBtnAndLastBtn = getTabButtons(
+  //     Array.from(document.querySelectorAll("[data-index]"))
+  //   );
+  //   const keyboardMovementForTabpanel = horizontalVerticalTabpanel.bind(
+  //     arrFirstBtnAndLastBtn
+  //   );
+  //   // save reference to event listener
+  //   storageObj.removeCallback = keyboardMovementForTabpanel;
+  //   document
+  //     .querySelector("[role='tablist']")
+  //     .addEventListener("keydown", keyboardMovementForTabpanel);
+  // });
   return (
     <React.Fragment>
       <Head>
@@ -61,6 +77,7 @@ function Crew(props) {
               })}
               role="tablist"
               aria-labelledby="tablist-2"
+              onKeyDown={horizontalVerticalTabpanel}
               className={CrewStyles[`tablist`]}
             >
               {/* Hurley */}
@@ -118,7 +135,9 @@ function Crew(props) {
                 {crewStateData.crewPosition}
               </span>
               {/* crewname */}
-              <h2 className={CrewStyles[`title`]}>{crewStateData.crewName}</h2>
+              <h2 tabIndex="-1" className={CrewStyles[`title`]}>
+                {crewStateData.crewName}
+              </h2>
               {/* crew description */}
               <p className={CrewStyles[`description`]}>
                 {crewStateData.crewDescription}
@@ -153,6 +172,12 @@ function crewDataPanelChnage(event) {
     event.target.closest("BUTTON") &&
     event.target.closest("BUTTON").getAttribute("aria-selected") == "false"
   ) {
+    /**
+     * remove event listener
+     * **/
+    // document
+    //   .querySelector("[role='tablist']")
+    //   .removeEventListener("keyup", storageObj.removeCallback);
     // find button with aria-selected true
     const currentSelectedCrewMember = document.querySelector(
       "[aria-selected='true']"

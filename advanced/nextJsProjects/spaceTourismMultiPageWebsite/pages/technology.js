@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import TechStyles from "../styles/Technology.module.css";
 import { storageObj } from "./api/storage";
+import { horizontalVerticalTabpanel } from "../src/helperFunc";
 import Image from "next/image";
 /**
  * landscape
@@ -113,6 +114,20 @@ function TechPage(props) {
       storageObj.count++;
     }
     console.log(storageObj.count);
+    /**
+     * keyboard functionality
+     * **/
+    // const arrFirstBtnAndLastBtn = getTabButtons(
+    //   Array.from(document.querySelectorAll("[data-index]"))
+    // );
+    // const keyboardMovementForTabpanel = horizontalVerticalTabpanel.bind(
+    //   arrFirstBtnAndLastBtn
+    // );
+    // // save reference to event listener
+    // storageObj.removeCallback = keyboardMovementForTabpanel;
+    // document
+    //   .querySelector("[role='tablist']")
+    //   .addEventListener("keydown", keyboardMovementForTabpanel);
   });
   // not using array of img component because we will use background image in css instead
   const techInitialData = props.techData[0];
@@ -174,6 +189,7 @@ function TechPage(props) {
                 })}
                 aria-labelledby="tablist-3"
                 role="tablist"
+                onKeyDown={horizontalVerticalTabpanel}
                 className={TechStyles[`tablist`]}
               >
                 {/* tabs */}
@@ -226,7 +242,7 @@ function TechPage(props) {
                   THE TERMINOLOGY ...
                 </span>
                 {/* title */}
-                <h2 className={TechStyles[`title`]}>
+                <h2 tabIndex="-1" className={TechStyles[`title`]}>
                   {techStateData.techName}
                 </h2>
                 {/* description */}
@@ -255,6 +271,12 @@ function techDataChange(event) {
     event.target.closest("BUTTON") &&
     event.target.closest("BUTTON").getAttribute("aria-selected") == "false"
   ) {
+    /**
+     * remove event listener
+     * **/
+    // document
+    //   .querySelector("[role='tablist']")
+    //   .removeEventListener("keyup", storageObj.removeCallback);
     const windowScreenSize = window.screen.width;
     // find button with aria-selected true
     const currentSelectTechPanel = document.querySelector(

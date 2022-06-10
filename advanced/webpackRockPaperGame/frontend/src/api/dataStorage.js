@@ -1,5 +1,6 @@
 export const cachedData = {
   playerPicked: null,
+  removeEvent: null,
   arrayOfRandomSigns: [],
   battleSelectorObj: {
     paper: {

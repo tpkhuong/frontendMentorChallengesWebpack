@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { storageObj } from "./api/storage";
 import Head from "next/head";
 import Image from "next/image";
@@ -12,6 +12,7 @@ import Link from "next/link";
 import data from "./api/data.json";
 import Header from "../Components/Header";
 import SectionWrapper from "../Components/SectionWrapper";
+import { horizontalVerticalTabpanel } from "../src/helperFunc";
 // import Navbar from "../Components/Navbar";
 
 function Destinations(props) {
@@ -22,7 +23,6 @@ function Destinations(props) {
    * **/
 
   storageObj.count = storageObj.count > 0 ? 0 : storageObj.count;
-
   const arratOfImgComponents = [Moon, Mars, Europa, Titan];
   const initialData = props.destinations[0];
   const dataObj = {
@@ -35,6 +35,23 @@ function Destinations(props) {
   };
 
   const [stateData, useStateData] = useState(dataObj);
+  /**
+   * keyboard functionality
+   * **/
+
+  // useEffect(() => {
+  //   const arrFirstBtnAndLastBtn = getTabButtons(
+  //     Array.from(document.querySelectorAll("[data-index]"))
+  //   );
+  //   const keyboardMovementForTabpanel = horizontalVerticalTabpanel.bind(
+  //     arrFirstBtnAndLastBtn
+  //   );
+  //   // save reference to event listener
+  //   storageObj.removeCallback = keyboardMovementForTabpanel;
+  //   document
+  //     .querySelector("[role='tablist']")
+  //     .addEventListener("keydown", keyboardMovementForTabpanel);
+  // });
 
   return (
     <React.Fragment>
@@ -50,7 +67,7 @@ function Destinations(props) {
         <section className={DestStyles[`title-content-img-wrapper`]}>
           {/* title wrapper */}
           <div className={DestStyles[`title-wrapper`]}>
-            <h1 className={DestStyles[`page-title`]} id="tablist-1">
+            <h1 className={DestStyles[`page-title`]}>
               <span className={DestStyles[`page-title-digit`]}>01</span> PICK
               YOUR DESTINATION
             </h1>
@@ -74,58 +91,55 @@ function Destinations(props) {
                   },
                 })}
                 role="tablist"
-                aria-labelledby="tablist-1"
+                onKeyDown={horizontalVerticalTabpanel}
+                // aria-labelledby="tablist-1"
                 className={DestStyles[`tablist-wrapper`]}
               >
                 {/* moon */}
                 {/* button aria-controls will match the value of the tabpanel id */}
-                <div className={DestStyles[`tab-wrapper`]}>
-                  <button
-                    data-index="0"
-                    role="tab"
-                    aria-selected="true"
-                    aria-controls="tabpanel-0"
-                    id="tab-0"
-                  >
-                    <span className={DestStyles[`bottom-line`]}>MOON</span>
-                  </button>
-                </div>
+                <button
+                  className={DestStyles[`tab-wrapper`]}
+                  data-index="0"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="tabpanel-0"
+                  id="tab-0"
+                >
+                  <span className={DestStyles[`bottom-line`]}>MOON</span>
+                </button>
                 {/* mars */}
-                <div className={DestStyles[`tab-wrapper`]}>
-                  <button
-                    data-index="1"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="tabpanel-1"
-                    id="tab-1"
-                  >
-                    <span className={DestStyles[`bottom-line`]}>MARS</span>
-                  </button>
-                </div>
+                <button
+                  className={DestStyles[`tab-wrapper`]}
+                  data-index="1"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="tabpanel-1"
+                  id="tab-1"
+                >
+                  <span className={DestStyles[`bottom-line`]}>MARS</span>
+                </button>
                 {/* europa */}
-                <div className={DestStyles[`tab-wrapper`]}>
-                  <button
-                    data-index="2"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="tabpanel-2"
-                    id="tab-2"
-                  >
-                    <span className={DestStyles[`bottom-line`]}>EUROPA</span>
-                  </button>
-                </div>
+                <button
+                  className={DestStyles[`tab-wrapper`]}
+                  data-index="2"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="tabpanel-2"
+                  id="tab-2"
+                >
+                  <span className={DestStyles[`bottom-line`]}>EUROPA</span>
+                </button>
                 {/* titan */}
-                <div className={DestStyles[`tab-wrapper`]}>
-                  <button
-                    data-index="3"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="tabpanel-4"
-                    id="tab-3"
-                  >
-                    <span className={DestStyles[`bottom-line`]}>TITAN</span>
-                  </button>
-                </div>
+                <button
+                  className={DestStyles[`tab-wrapper`]}
+                  data-index="3"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="tabpanel-3"
+                  id="tab-3"
+                >
+                  <span className={DestStyles[`bottom-line`]}>TITAN</span>
+                </button>
               </div>
               {/* tabpanel */}
               {/* tabpanel name will come from the button element with matching value of the button id attr and tabpanel aria-labelledby */}
@@ -136,7 +150,9 @@ function Destinations(props) {
                 className={DestStyles[`tabpanel`]}
               >
                 {/* title */}
-                <h2 className={DestStyles[`title`]}>{stateData.panelTitle}</h2>
+                <h2 tabIndex="-1" className={DestStyles[`title`]}>
+                  {stateData.panelTitle}
+                </h2>
                 {/* description */}
                 <p className={DestStyles[`description`]}>
                   {stateData.panelDescription}
@@ -157,6 +173,9 @@ function Destinations(props) {
                   </div>
                 </div>
               </div>
+              {/* <div id="tabpanel-"></div>
+              <div id="tabpanel-"></div>
+              <div id="tabpanel-"></div> */}
             </div>
           </div>
         </section>
@@ -189,10 +208,17 @@ function changeTabpanelContent(event) {
   /* <h2>{`${props.destinations[0].name}`}</h2> */
 
   // if user click on current selected button do nothing
+  console.log(storageObj);
   if (
     event.target.closest("BUTTON") &&
     event.target.closest("BUTTON").getAttribute("aria-selected") == "false"
   ) {
+    /**
+     * remove event listener
+     * **/
+    // document
+    //   .querySelector("[role='tablist']")
+    //   .removeEventListener("keyup", storageObj.removeCallback);
     // find button with aria-selected true
     const currentSelectedPanel = document.querySelector(
       "[aria-selected='true']"

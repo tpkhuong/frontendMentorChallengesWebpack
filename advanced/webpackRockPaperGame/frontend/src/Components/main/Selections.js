@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "../../styles.css";
 import Signs from "../main/SignChoices";
+import { cachedData } from "../../api/dataStorage";
 
 /**
  *
@@ -46,6 +47,12 @@ function PlayerSelections(props) {
       selectPreviousBtnObj,
       selectNextBtnObj,
     });
+    cachedData.removeEvent = arrowKeysMovement;
+    /**
+     * have to remove event listener when we add event listener using useEffect
+     * useEffect will run every time this components renders.
+     * when call/execute useState
+     * **/
     selectionsWrapper.addEventListener("keyup", arrowKeysMovement);
   });
   return (

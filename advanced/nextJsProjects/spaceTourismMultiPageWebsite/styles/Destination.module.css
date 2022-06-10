@@ -7,7 +7,7 @@
 
 /* color and font family */
 
-.tab-wrapper [role="tab"],
+.tab-wrapper,
 .description,
 .text {
   color: var(--color-secondary);
@@ -49,8 +49,10 @@
 /* tablist/tabs/buttons */
 
 .tab-wrapper {
-  padding-block-end: 8px;
   position: relative;
+  background-color: transparent;
+  font-size: 1.1rem;
+  padding: 0;
 }
 
 .tablist-wrapper {
@@ -59,27 +61,24 @@
   gap: 32px;
 }
 
-.tab-wrapper [role="tab"] {
+.tab-wrapper {
   background-color: transparent;
-  font-size: 1.1rem;
-}
-
-.tab-wrapper [role="tab"] {
   padding: 0;
+  font-size: 1.1rem;
 }
 
 .bottom-line {
   letter-spacing: 1px;
 }
 
-.tab-wrapper [aria-selected="true"] .bottom-line::after {
+.tab-wrapper[aria-selected="true"] .bottom-line::after {
   content: "";
   height: 2px;
   background-color: var(--color-neutral-white);
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -8px;
 }
 
 /* tabpanel */
@@ -89,7 +88,7 @@
 .title {
   font-size: var(--heading3);
   text-transform: uppercase;
-  /* margin-block-start: 20px; */
+  margin-block-start: 14px;
   margin-block-end: -12px;
 }
 
@@ -157,19 +156,16 @@
     margin-inline: auto;
   }
 
-  .tab-wrapper {
-    padding-block-end: 8px;
-  }
-
   .tablist-wrapper {
+    gap: 52px;
   }
 
-  .tab-wrapper [role="tab"] {
+  .tab-wrapper {
     font-size: 1.2rem;
   }
 
-  .tab-wrapper [role="tab"] {
-    padding: 0;
+  .tab-wrapper[aria-selected="true"] .bottom-line::after {
+    bottom: -12px;
   }
 
   .bottom-line {
@@ -182,7 +178,7 @@
 
   .title {
     font-size: 5rem;
-    margin-block: 14px;
+    margin-block: 20px;
     margin-block-end: -8px;
   }
 
@@ -236,21 +232,13 @@
     text-align: left;
   }
 
-  .tab-wrapper {
-    padding-block-end: 12px;
-  }
-
   .tablist-wrapper {
     justify-content: revert;
     gap: 35px;
   }
 
-  .tab-wrapper [role="tab"] {
+  .tab-wrapper {
     font-size: 1.1rem;
-  }
-
-  .tab-wrapper [role="tab"] {
-    padding: 0;
   }
 
   .bottom-line {
@@ -261,13 +249,14 @@
 
   /* on hover of button show bottom line for desktop layout */
 
-  .tab-wrapper button[aria-selected]:hover .bottom-line::after {
+  [aria-selected="false"].tab-wrapper:hover .bottom-line::after,
+  [aria-selected="false"].tab-wrapper:focus .bottom-line::after {
     content: "";
     height: 2px;
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -12px;
     background-color: var(--color-page-digit);
   }
 

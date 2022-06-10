@@ -1,11 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import HeaderStyles from "../styles/Header.module.css";
 
+const useMediaQuery = (width) => {
+  const [targetReached, setTargetReached] = useState(false);
+
+  const updateTarget = useCallback((e) => {
+    if (e.matches) {
+      setTargetReached(true);
+    } else {
+      setTargetReached(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia(`(max-width: ${width}px)`);
+    media.addListener(updateTarget);
+
+    // Check on mount (callback is not called until a change occurs)
+    if (media.matches) {
+      setTargetReached(true);
+    }
+
+    return () => media.removeListener(updateTarget);
+  }, []);
+
+  return targetReached;
+};
+
 function Header(props) {
   const { activeEffect } = props;
-
+  const isBreaking = useMediaQuery(768);
   return (
     <header className={HeaderStyles[`top-parent`]}>
       {/* svg logo */}
@@ -59,7 +85,9 @@ function Header(props) {
           </button>
           {/* better to build navbar inside our header instead of using component */}
           {/* because every time our page renders it will run Navbar component twice */}
-          <Navbar layout="secondary" currentPage={`${activeEffect}`} />
+          {isBreaking ? (
+            <Navbar layout="secondary" currentPage={`${activeEffect}`} />
+          ) : null}
         </div>
       </div>
       {/* desktop/tablet nav */}
