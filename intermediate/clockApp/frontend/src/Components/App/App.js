@@ -1,34 +1,61 @@
-import React from "react";
-import Test from "../test";
+import React, { useEffect, useState } from "react";
+import ExpandContainer from "../ExpandContainer/ExpandContainer";
+import { dataStorage } from "../../api/storage";
+import { makeApiCall } from "../../helperFunc";
 import "../../styles.css";
 
 async function makeCall() {
   //   const response = await fetch(
   //     "http://worldtimeapi.org/api/timezone/Australia/Sydney"
   //   );
-  const response = await fetch(
-    "https://ipgeolocation.abstractapi.com/v1/?api_key=7b0805dd1fa64899875012c29142a033"
-  );
-  const data = await response.json();
-  console.log(data);
+  // const response = await axios.get(
+  //   "https://programming-quotes-api.herokuapp.com/Quotes/random"
+  // );
+  // "https://api.ipbase.com/json/8.8.8.8?apikey=7b0805dd1fa64899875012c29142a033"
+  // "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&formatted=1";
+  // ("https://programming-quotes-api.herokuapp.com/Quotes/random");
+  // const data = await response.json();
+  console.log(response);
 }
 
-makeCall();
+// makeCall();
 
 function App(props) {
   const { children } = props;
+
   //   const response = await fetch(
   //     "http://worldtimeapi.org/api/timezone/America/New_York"
   //   );
   //   const data = await response.json();
-
+  useEffect(() => {
+    makeApiCall("http://worldtimeapi.org/api/timezone/America/New_York").then(
+      (response) => {
+        console.log(response.data);
+      }
+    );
+    // passing an empty array our useEffect will run once
+  }, []);
   return (
     <React.Fragment>
-      <section>
-        <Test>{"Hello this a string"}</Test>
+      <section data-daynight="" className="bg-img">
+        {/* top */}
+        {/* middle */}
+        {/* bottom */}
+        <ExpandContainer />
       </section>
     </React.Fragment>
   );
 }
+// var second;
+// function clock() {
+//   second = new Date().getSeconds();
+//   setInterval(() => {
+//     second++;
+//     if (second == 60) {
+//       second = 0;
+//     }
+//     console.log(second);
+//   }, 1000)
+// }
 
 export default App;
