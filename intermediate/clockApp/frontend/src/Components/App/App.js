@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import BottomContainer from "../BottomContainer/BottomContainer";
+import Quote from "../QuoteContainer/QuoteContainer";
 import ExpandContainer from "../ExpandContainer/ExpandContainer";
 import { dataStorage } from "../../api/storage";
 import { makeApiCall } from "../../helperFunc";
@@ -20,28 +22,33 @@ async function makeCall() {
 
 // makeCall();
 
+//   const response = await fetch(
+//     "http://worldtimeapi.org/api/timezone/America/New_York"
+//   );
+//   const data = await response.json();
+// useEffect(() => {
+//   makeApiCall("http://worldtimeapi.org/api/timezone/America/New_York").then(
+//     (response) => {
+//       console.log(response.data);
+//     }
+//   );
+//   // passing an empty array our useEffect will run once
+// }, []);
+
 function App(props) {
   const { children } = props;
 
-  //   const response = await fetch(
-  //     "http://worldtimeapi.org/api/timezone/America/New_York"
-  //   );
-  //   const data = await response.json();
-  useEffect(() => {
-    makeApiCall("http://worldtimeapi.org/api/timezone/America/New_York").then(
-      (response) => {
-        console.log(response.data);
-      }
-    );
-    // passing an empty array our useEffect will run once
-  }, []);
   return (
     <React.Fragment>
-      <section data-daynight="" className="bg-img">
+      <section
+        data-more-clicked="true"
+        data-daynight="evening"
+        className="bg-img"
+      >
         {/* top */}
-        {/* middle */}
+        <Quote />
         {/* bottom */}
-        <ExpandContainer />
+        <BottomContainer />
       </section>
     </React.Fragment>
   );

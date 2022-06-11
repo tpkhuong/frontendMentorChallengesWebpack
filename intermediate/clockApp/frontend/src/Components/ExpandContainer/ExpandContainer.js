@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpandContent from "./ExpandContent";
+import { dataStorage } from "../../api/storage";
+import { makeApiCall } from "../../helperFunc";
 
 function ExpandContainer(props) {
-  const { children } = props;
+  useEffect(() => {
+    makeApiCall(
+      `https://api.ipbase.com/json/${dataStorage.ip}?apikey=${dataStorage.apiKey}`
+    ).then(function getResponse(resonse) {
+      console.log(resonse);
+    });
+  });
 
   return (
     <React.Fragment>
