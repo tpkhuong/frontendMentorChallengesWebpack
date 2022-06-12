@@ -41,7 +41,7 @@ function App(props) {
   return (
     <React.Fragment>
       <section
-        data-more-clicked="true"
+        data-more-clicked="false"
         data-daynight="evening"
         className="bg-img"
       >

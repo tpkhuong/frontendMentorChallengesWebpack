@@ -6,6 +6,7 @@
   --color-secondary: hsl(0, 0%, 19%);
   --color-refresh: hsl(200, 6%, 79%);
   --color-arrow-bg: hsl(0, 0%, 60%);
+  --color-btn-color: hsl(0, 0%, 58.4%);
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
@@ -119,10 +120,28 @@
   --padding-small: 8px;
   --padding-medium: 16px;
   --padding-large: 24px;
+  --padding-extra-large: 32px;
   /* margin */
   --margin-small: 8px;
   --margin-medium: 16px;
   --margin-large: 24px;
+  --margin-extra-large: 32px;
+
+  /* timezone-wrapper children padding */
+
+  --mobile-match-padding: 25px;
+  --tablet-match-padding: 64px;
+  --desktop-match-padding: 165px;
+
+  --mobile-padding-margin-match: 16px;
+  --tablet-padding-margin-match: 64px;
+  --tablet-padding-margin-match: 166px;
+  --desktop-padding-margin-match-start: 165px;
+  --desktop-padding-margin-match-end: 431px;
+
+  /* translate x and y match */
+
+  --translate-match: -200%;
 
   /* --color-hsl-black: 0, 0%, 0%; */
 
@@ -348,8 +367,9 @@ button {
   background-image: var(--section-img);
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 25px;
+  padding-inline: var(--mobile-match-padding);
   padding-block-start: 42px;
+  /* need 40px margin-block-end for data-more-click= false algorithm or else more button will touch bottom of screen */
   padding-block-end: 40px;
   display: flex;
   flex-direction: column;
@@ -377,7 +397,8 @@ button {
 
 /* top container: quote */
 [data-more-clicked="true"] .top-container {
-  display: none;
+  position: absolute;
+  transform: translateY(var(--translate-match));
 }
 
 /* clock-expand-container: clock and bottom content containers */
@@ -389,7 +410,9 @@ button {
 /* expand-container */
 
 [data-more-clicked="false"] .expand-wrapper {
-  display: none;
+  /* add position aboslute using settimeout in our onClick listener for more-less-btn */
+  position: absolute;
+  transform: translateX(var(--translate-match));
 }
 
 /* ******** */
@@ -423,16 +446,25 @@ button {
 
 [data-daynight="evening"] {
   --section-img: var(--mobile-evening);
+  --evening-blur-color: hsl(0, 0%, 0%, 0.7);
+  --evening-filter: blur(1.3rem);
 }
 
 /* top */
-
+/* translateY(-200%) */
 .top-container {
+  max-width: 575px;
   display: flex;
+  /* ***** transition on this property ***** */
+
+  transition: transform 500ms ease-out;
+}
+
+.quote-wrapper {
+  font-size: 0.9rem;
 }
 
 .quote {
-  font-size: 0.8rem;
   line-height: 1.8;
   font-weight: 100;
   margin-block-end: 8px;
@@ -452,6 +484,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-block-start: 100px;
 }
 
 /* clock container */
@@ -459,7 +492,7 @@ button {
 /* greeting */
 
 .greeting {
-  margin-block-end: 16px;
+  margin-block-end: var(--margin-medium);
   display: flex;
   gap: 16px;
 }
@@ -500,7 +533,7 @@ button {
 /* location-more-less-btn */
 
 .location-more-less-btn {
-  margin-block-start: 16px;
+  margin-block-start: var(---margin-medium);
   display: flex;
   flex-direction: column;
 }
@@ -516,52 +549,95 @@ button {
 }
 
 .btn-bg-text {
-  color: var(--color-secondary);
+  color: var(--color-arrow-bg);
   letter-spacing: 2px;
+  margin-inline-end: 12px;
 }
 
+/* more-less-btn */
+
 .more-less-btn {
-  transform: scale(0.75);
+  transform: scale(0.75) rotate(180deg);
+  transition: transform 750ms ease-out;
+  border-radius: 50%;
+}
+
+/* [data-more-clicked="false"] .more-less-btn {
+  transform: rotate(360deg);
+} */
+
+[data-more-clicked="true"] .more-less-btn {
+  transform: scale(0.75) rotate(3600deg);
+  transition: transform 750ms ease-out;
+}
+
+.more-less-btn:hover,
+.more-less-btn:focus {
+  outline: 5px solid blue;
 }
 
 /* expand container */
-
+/* translateX(-200%) */
 .expand-wrapper {
   margin-inline: -25px;
-  margin-block: 40px;
+  margin-block-end: -40px;
+  padding-block: 48px;
+  background-color: var(--evening-blur-color, hsl(0, 100%, 100%, 0.5));
+  backdrop-filter: var(--evening-filter, blur(0.4));
   /* morning blur */
   /* background-color: hsl(0, 100%, 100%, .5);
     backdrop-filter: blur(0.4rem); */
   /* evening blur */
   /* background-color: hsl(0, 0%, 0%, 0.7);
     backdrop-filter: blur(1.3rem); */
+
+  /* ***** transition on this property ***** */
+  transition: transform 500ms ease-out 250ms;
 }
 
-.timezone-year {
-  padding-inline: 25px;
+/* display flex */
+
+.timezone,
+.day-year,
+.day-week,
+.week-number {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timezone-year,
+.day-week-number {
+  padding-inline: var(--mobile-match-padding);
 }
 
 .day-year,
-.week-number {
+.week-number,
+.day-week-number {
   margin-block-start: 16px;
 }
 
-.day-week-number {
-  padding-inline: 25px;
-  margin-block-start: 16px;
+.timezone .bottom-value {
+  text-transform: none;
 }
 
 .top-value {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .bottom-value {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 /* tablet */
 
 @media screen and (min-width: 48rem) {
+  .bg-img {
+    padding-block-start: 80px;
+    padding-inline-start: var(--tablet-match-padding);
+    /* need 64px margin-block-end for data-more-click= false algorithm or else more button will touch bottom of screen */
+    padding-block-end: var(--tablet-match-padding);
+  }
   /* bg-img */
   [data-daynight="morning"] {
     --section-img: var(--tablet-morning);
@@ -572,11 +648,127 @@ button {
   }
   /* top */
 
+  .top-container {
+    gap: 16px;
+  }
+
+  .quote-wrapper {
+    font-size: 1.3rem;
+  }
+
+  .quote {
+    margin-block-start: -8px;
+  }
+
   /* bottom: clock-expand-container */
+  /* greeting */
+  /*  */
+
+  .greeting {
+    margin-block-end: var(--margin-large);
+  }
+
+  .dynamic-text,
+  .location {
+    font-size: 1.1rem;
+    letter-spacing: 5px;
+  }
+
+  .notshow-mobile {
+    display: revert;
+  }
+
+  /* timezone */
+  .timezone-digit-code {
+    gap: 12px;
+  }
+
+  .location-more-less-btn {
+    margin-block-start: var(--margin-large);
+  }
+
+  .time-digit-wrapper {
+    font-size: 10.9375rem;
+    margin-block: -56px;
+  }
+  .am-pm-code-wrapper {
+    font-size: 2rem;
+    margin: 0;
+  }
+  /* more less btm */
+  .btn-bg {
+    padding-block: 6px;
+    padding-inline-end: 6px;
+    margin-block-start: 80px;
+  }
+
+  .more-less-btn {
+    transform: scale(1) rotate(180deg);
+  }
+
+  [data-more-clicked="true"] .more-less-btn {
+    transform: scale(1) rotate(360deg);
+  }
+  /* expand wrapper */
+
+  .expand-wrapper {
+    display: flex;
+    margin-inline-start: -64px;
+    margin-block-end: -64px;
+    padding-block: 119px;
+    gap: 80px;
+    /* margin-inline: -64px; */
+  }
+
+  .timezone-year,
+  .day-week-number {
+    padding-inline: 0;
+  }
+  .day-year,
+  .week-number,
+  .day-week-number {
+    margin-block-start: 0;
+  }
+
+  .timezone,
+  .day-year,
+  .day-week,
+  .week-number {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: revert;
+  }
+
+  .timezone-year {
+    padding-inline-start: var(--tablet-match-padding);
+  }
+
+  .day-year,
+  .week-number {
+    margin-block-start: 48px;
+  }
+
+  /* top/bottom value */
+
+  .top-value {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  .bottom-value {
+    font-size: 2.2rem;
+  }
 }
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  /* hover/focus effect */
+
+  .more-less-btn:hover circle,
+  .more-less-btn:focus circle {
+    fill: var(--color-arrow-bg);
+  }
+
   /* bg-img */
   [data-daynight="morning"] {
     --section-img: var(--desktop-morning);
@@ -587,5 +779,83 @@ button {
   }
   /* top */
 
+  .bg-img {
+    padding-block-start: 56px;
+    padding-inline: var(--desktop-match-padding);
+    /* need 98px margin-block-end for data-more-click= false algorithm or else more button will touch bottom of screen */
+    padding-block-end: 98px;
+  }
+
   /* bottom: clock-expand-container */
+
+  .clock-expand-container {
+    padding-block-start: 0;
+  }
+
+  .greeting {
+    margin-block-end: 30px;
+  }
+
+  .dynamic-text,
+  .location {
+    font-size: 1.3rem;
+  }
+
+  .time-digit-wrapper {
+    font-size: 13.5rem;
+    margin-block: -72px;
+  }
+
+  .location-more-less-btn {
+    margin-block-start: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btn-bg {
+    margin-block-start: 0;
+  }
+
+  /* expand wrapper */
+
+  .expand-wrapper {
+    margin-inline: -165px;
+    margin-block-end: -98px;
+    padding-block: 74px;
+  }
+
+  .timezone-year {
+    padding-inline-start: var(--desktop-match-padding);
+    position: relative;
+  }
+
+  /* vertical line between timezone and day-week-number */
+
+  .timezone-year::after {
+    content: "";
+    background-color: var(--color-arrow-bg);
+    width: 2px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -38%;
+  }
+
+  .day-week-number {
+    margin-inline: auto;
+  }
+
+  /* top/bottom value */
+
+  .top-value {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+  }
+
+  .bottom-value {
+    font-size: 3.5rem;
+    margin-block-start: 16px;
+  }
 }
