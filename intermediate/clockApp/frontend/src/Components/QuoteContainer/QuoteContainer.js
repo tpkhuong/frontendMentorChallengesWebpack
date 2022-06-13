@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { dataStorage } from "../../api/storage";
 import { makeApiCall } from "../../helperFunc";
 
 function Quote(props) {
+  const url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
+  // make api call to "https://programming-quotes-api.herokuapp.com/Quotes/random" in this component
+  const initialQuoteValue = {
+    quote: "",
+    author: "",
+  };
+  const [quoteObj, useQuote] = useState(initialQuoteValue);
+  useEffect(() => {
+    makeApiCall(url).then(function getQuote(response) {
+      response.status == 200
+        ? useQuote({
+            ...quoteObj,
+            quote: response.data.en,
+            author: response.data.author,
+          })
+        : console.log("Oops");
+    });
+  }, []);
   return (
     <div className="top-container">
       <div className="quote-wrapper">
-        <blockquote className="quote">
-          “The science of operations, as derived from mathematics more
-          especially, is a science of itself, and has its own abstract truth and
-          value.”
-        </blockquote>
-        <span className="author">Ada Lovelace</span>
+        <blockquote className="quote">{`${quoteObj.quote}`}</blockquote>
+        <span className="author">{quoteObj.author}</span>
       </div>
       <button className="refresh-icon-btn">
         {/* svg */}

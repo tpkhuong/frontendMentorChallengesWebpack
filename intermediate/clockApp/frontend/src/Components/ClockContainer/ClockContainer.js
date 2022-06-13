@@ -5,6 +5,12 @@ import { makeApiCall } from "../../helperFunc";
 // const ip = "5.152.197.179";
 // const url = `https://api.ipbase.com/json/${ip}?apikey=${api}`;
 function ClockContainer(props) {
+  // make api call to `https://api.ipbase.com/json/${ip}?apikey=${api}`
+  // use timezone id for split "/" use [1] to get city
+  // use country alpha2 to get abbrv
+  // use timezone current_time
+  // use location get latitude and longitude use value to make api call to https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=today
+  // to get sunrise and sunset
   return (
     <React.Fragment>
       <div className="greeting">
