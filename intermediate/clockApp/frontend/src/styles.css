@@ -567,7 +567,7 @@ button {
 } */
 
 [data-more-clicked="true"] .more-less-btn {
-  transform: scale(0.75) rotate(3600deg);
+  transform: scale(0.75) rotate(360deg);
   transition: transform 750ms ease-out;
 }
 
@@ -592,8 +592,12 @@ button {
     backdrop-filter: blur(1.3rem); */
 
   /* ***** transition on this property ***** */
-  transition: transform 500ms ease-out 250ms;
+  transition: transform 500ms ease-out;
 }
+
+/* [data-absolute="true"] {
+  position: absolute;
+} */
 
 /* display flex */
 
@@ -762,6 +766,13 @@ button {
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  /* refresh btn */
+
+  .refresh-icon-btn:hover svg path,
+  .refresh-icon-btn:focus svg path {
+    fill: red;
+  }
+
   /* hover/focus effect */
 
   .more-less-btn:hover circle,
@@ -794,6 +805,7 @@ button {
 
   .greeting {
     margin-block-end: 30px;
+    align-items: center;
   }
 
   .dynamic-text,

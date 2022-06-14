@@ -1,5 +1,6 @@
 export const dataStorage = {
   apiKey: process.env.IPBASE_API,
+  weatherKey: process.env.WEATHERBIT_API,
   ip: "5.152.197.179",
   area: "",
   location: "",

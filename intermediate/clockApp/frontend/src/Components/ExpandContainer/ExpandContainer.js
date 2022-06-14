@@ -18,41 +18,40 @@ function ExpandContainer(props) {
   // use those value to make api call to http://worldtimeapi.org/api/timezone/:area/:location
   useEffect(() => {
     // initial api call to get area and location
-    const dataForUseWithWorldTimeApi = makeApiCall(
-      `https://api.ipbase.com/json/${dataStorage.ip}?apikey=${dataStorage.apiKey}`
-    ).then(function getResponse(response) {
-      const areaLocation =
-        response.status == 200 ? response.data.time_zone : null;
-
-      if (areaLocation) {
-        const [area, location] = areaLocation.split("/");
-        dataStorage.area = area;
-        dataStorage.location = location;
-        return Promise.resolve({
-          responseArea: area,
-          responseLocation: location,
-        });
-      }
-    });
-    // make api call to world time api to get expand container content
-    dataForUseWithWorldTimeApi.then(function makeApiCallToWorldTime(obj) {
-      makeApiCall(
-        `http://worldtimeapi.org/api/timezone/${obj.responseArea}/${obj.responseLocation}`
-      ).then(function getData(response) {
-        const dataApi = response.status == 200 ? response.data : null;
-        if (dataApi) {
-          const { day_of_year, day_of_week, week_number } = dataApi;
-          // update UI with data from api call
-          useExpand({
-            ...expandObj,
-            region: `${obj.responseArea}/${obj.responseLocation}`,
-            dayOfYear: day_of_year,
-            dayOfWeek: day_of_week,
-            weekNum: week_number,
-          });
-        }
-      });
-    });
+    // const dataForUseWithWorldTimeApi = makeApiCall(
+    //   `https://api.ipbase.com/json/${dataStorage.ip}?apikey=${dataStorage.apiKey}`
+    // ).then(function getResponse(response) {
+    //   const areaLocation =
+    //     response.status == 200 ? response.data.time_zone : null;
+    //   if (areaLocation) {
+    //     const [area, location] = areaLocation.split("/");
+    //     dataStorage.area = area;
+    //     dataStorage.location = location;
+    //     return Promise.resolve({
+    //       responseArea: area,
+    //       responseLocation: location,
+    //     });
+    //   }
+    // });
+    // // make api call to world time api to get expand container content
+    // dataForUseWithWorldTimeApi.then(function makeApiCallToWorldTime(obj) {
+    //   makeApiCall(
+    //     `http://worldtimeapi.org/api/timezone/${obj.responseArea}/${obj.responseLocation}`
+    //   ).then(function getData(response) {
+    //     const dataApi = response.status == 200 ? response.data : null;
+    //     if (dataApi) {
+    //       const { day_of_year, day_of_week, week_number } = dataApi;
+    //       // update UI with data from api call
+    //       useExpand({
+    //         ...expandObj,
+    //         region: `${obj.responseArea}/${obj.responseLocation}`,
+    //         dayOfYear: day_of_year,
+    //         dayOfWeek: day_of_week,
+    //         weekNum: week_number,
+    //       });
+    //     }
+    //   });
+    // });
     // console.log(dataStorage);
     // makeApiCall(
     //   `http://worldtimeapi.org/api/timezone/${dataStorage.area}/${dataStorage.location}`
@@ -66,21 +65,25 @@ function ExpandContainer(props) {
       <div className="timezone-year">
         <ExpandContent contentClass="timezone">
           {"Current Timzone"}
-          {expandObj.region}
+          {"Europe/London"}
+          {/* {expandObj.region} */}
         </ExpandContent>
         <ExpandContent contentClass="day-year">
           {"Day of the year"}
-          {expandObj.dayOfYear}
+          {116}
+          {/* {expandObj.dayOfYear} */}
         </ExpandContent>
       </div>
       <div className="day-week-number">
         <ExpandContent contentClass="day-week">
           {"Day of the week"}
-          {expandObj.dayOfWeek}
+          {5}
+          {/* {expandObj.dayOfWeek} */}
         </ExpandContent>
         <ExpandContent contentClass="week-number">
           {"week number"}
-          {expandObj.weekNum}
+          {26}
+          {/* {expandObj.weekNum} */}
         </ExpandContent>
       </div>
     </React.Fragment>

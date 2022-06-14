@@ -1,0 +1,81 @@
+{
+  "data": {
+    "timezone": {
+      "id": "Australia/Sydney",
+      "current_time": "2022-04-25T18:56:38+10:00",
+      "code": "AEST",
+      "is_daylight_saving": false,
+      "gmt_offset": 36000
+    },
+    "ip": "1.1.1.1",
+    "type": "v4",
+    "connection": {
+      "asn": 13335,
+      "organization": "CLOUDFLARENET",
+      "isp": "Cloudflare"
+    },
+    "location": {
+      "geonames_id": 2147714,
+      "latitude": -33.86714172363281,
+      "longitude": 151.2071075439453,
+      "zip": "2000",
+      "continent": {
+        "code": "OC",
+        "name": "Oceania",
+        "name_translated": "Oceania"
+      },
+      "country": {
+        "alpha2": "AU",
+        "alpha3": "AUS",
+        "calling_codes": ["+61"],
+        "currencies": [
+          {
+            "symbol": "AU$",
+            "name": "Australian Dollar",
+            "symbol_native": "$",
+            "decimal_digits": 2,
+            "rounding": 0,
+            "code": "AUD",
+            "name_plural": "Australian dollars"
+          }
+        ],
+        "emoji": "🇦🇺",
+        "ioc": "AUS",
+        "languages": [
+          {
+            "name": "English",
+            "name_native": "English"
+          }
+        ],
+        "name": "Australia",
+        "name_translated": "Australia",
+        "timezones": [
+          "Australia/Lord_Howe",
+          "Antarctica/Macquarie",
+          "Australia/Hobart",
+          "Australia/Currie",
+          "Australia/Melbourne",
+          "Australia/Sydney",
+          "Australia/Broken_Hill",
+          "Australia/Brisbane",
+          "Australia/Lindeman",
+          "Australia/Adelaide",
+          "Australia/Darwin",
+          "Australia/Perth",
+          "Australia/Eucla"
+        ],
+        "is_in_european_union": false
+      },
+      "city": {
+        "name": "Sydney",
+        "name_translated": "Sydney"
+      },
+      "region": {
+        "fips": "AS-02",
+        "alpha2": "AU-NSW",
+        "name": "New South Wales",
+        "name_translated": "New South Wales"
+      }
+    }
+  }
+}
