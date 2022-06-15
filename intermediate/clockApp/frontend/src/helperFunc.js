@@ -18,19 +18,20 @@ export function getTime(currentTime) {
 
 export function convertTimeFormat(hour) {
   // pass in number form of hour
-  // time starts at 0 hours is 12am
+  // time starts at 0 hours which is 12am
   // when time is 12 it is pm because 13 hr in 24 hr format is 1pm
   const meridiem = hour < 12 ? "am" : "pm";
   // if hr is 13 or greater , take hr subtract 12 from that number
-  const convertedHour = hour >= 13 ? hour - 12 : null;
-  return { meridiem, convertedHour };
+  const convertedHour = hour >= 13 ? hour - 12 : hour == 0 ? 12 : hour;
+  // will check if hour is 0 and am then we will return
+  return { convertedHour, meridiem };
 }
 
 export function getCity(region) {
   return region.split("/")[1];
 }
 
-export function greetingMessageIconCalculation(hour) {
+export function greetingMessageIconCalculation(hour, meridiem) {
   // 12am-5am: early morning
   // 6am-11am: good morning
   // 12pm-5pm: good afternoon
@@ -74,4 +75,22 @@ export function greetingMessageIconCalculation(hour) {
     "good evening": "moon",
     "night time": "moon",
   };
+  // greeting message
+  const greetingsMessage = messagesObj[meridiem][`${hour}`];
+  // day/night icon
+  const sunMoonIcon = iconBasedOnMessage[greetingsMessage];
+  return { greetingsMessage, sunMoonIcon };
+}
+
+export function clock(elements, timeObj, stateObj) {
+  // we want hour,minute,seconds
+  // hrs will be 1-12. minutes will be 0-59
+  // check if hr is 12 make hr 1 if it is. check minute if it is 59 make minute 0
+  // when hr is 11 check current meridiem. change to pm if current meridiem is am and vice versa
+  // hour, minute, meridiem element
+  // sunMoonIcon, greetings that will be from initial values obj(timezoneObj) and
+  // useTimezone(useState) func that we will call to update UI/render the component
+  /**
+   * update UI first then run algorithm to update value in storage obj
+   * **/
 }

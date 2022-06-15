@@ -199,13 +199,27 @@ function crewDataPanelChnage(event) {
     // data from json file
     const currentData = this.pageData[index];
     // call useState to update data
-    this.stateObj.useCrewState({
-      ...this.stateObj.crewStateData,
-      crewImg: imgComponent,
-      crewIndex: index,
-      crewPosition: currentData.role,
-      crewName: currentData.name,
-      crewDescription: currentData.bio,
+    // this.stateObj.useCrewState({
+    //   ...this.stateObj.crewStateData,
+    //   crewImg: imgComponent,
+    //   crewIndex: index,
+    //   crewPosition: currentData.role,
+    //   crewName: currentData.name,
+    //   crewDescription: currentData.bio,
+    // });
+    /**
+     * using functional updates form of useState. the parameter is the previous state of the
+     * variables that was set when we called useState
+     * **/
+    this.stateObj.useCrewState((prevValues) => {
+      return {
+        ...prevValues,
+        crewImg: imgComponent,
+        crewIndex: index,
+        crewPosition: currentData.role,
+        crewName: currentData.name,
+        crewDescription: currentData.bio,
+      };
     });
   }
 }

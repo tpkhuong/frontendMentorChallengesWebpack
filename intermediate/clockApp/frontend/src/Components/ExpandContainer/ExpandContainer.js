@@ -42,13 +42,20 @@ function ExpandContainer(props) {
     //     if (dataApi) {
     //       const { day_of_year, day_of_week, week_number } = dataApi;
     //       // update UI with data from api call
-    //       useExpand({
-    //         ...expandObj,
-    //         region: `${obj.responseArea}/${obj.responseLocation}`,
+    //       // useExpand({
+    //       //   ...expandObj,
+    //       //   region: `${obj.responseArea}/${obj.responseLocation}`,
+    //       //   dayOfYear: day_of_year,
+    //       //   dayOfWeek: day_of_week,
+    //       //   weekNum: week_number,
+    //       // });
+    //       // update UI using functional updates form of useState
+    //       useExpand((prevValues) => {
+    //         return {...prevValues, region: `${obj.responseArea}/${obj.responseLocation}`,
     //         dayOfYear: day_of_year,
     //         dayOfWeek: day_of_week,
-    //         weekNum: week_number,
-    //       });
+    //         weekNum: week_number,}
+    //       })
     //     }
     //   });
     // });

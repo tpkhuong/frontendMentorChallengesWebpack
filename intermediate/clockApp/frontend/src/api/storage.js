@@ -2,6 +2,11 @@ export const dataStorage = {
   apiKey: process.env.IPBASE_API,
   weatherKey: process.env.WEATHERBIT_API,
   ip: "5.152.197.179",
+  time: {
+    hour: 0,
+    minute: 0,
+    meridiem: "",
+  },
   area: "",
   location: "",
   //   initialUrl: `https://api.ipbase.com/json/${ip}?apikey=${apiKey}`,

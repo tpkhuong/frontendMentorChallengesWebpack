@@ -371,6 +371,9 @@ button {
   padding-block-start: 42px;
   /* need 40px margin-block-end for data-more-click= false algorithm or else more button will touch bottom of screen */
   padding-block-end: 40px;
+  /* we could use display: grid on this element. grid item(its children will stretch) 
+  vertical and horizontal then use align-self:end on element with class clock-expand-container
+  */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -412,7 +415,11 @@ button {
 [data-more-clicked="false"] .expand-wrapper {
   /* add position aboslute using settimeout in our onClick listener for more-less-btn */
   position: absolute;
-  transform: translateX(var(--translate-match));
+  /* transform: translateX(var(--translate-match)); */
+  /* reason we are using scale(0) instead of translateX(-200%) 
+  we dont want to have vertical scroll on desktop display cause by this element.
+  */
+  transform: scale(0);
 }
 
 /* ******** */

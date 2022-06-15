@@ -239,16 +239,31 @@ function changeTabpanelContent(event) {
     const ourImgComponent = this.arrOfImgComp[index];
     // we will pass in an object
     // and call useState re-render once
-    this.ourState.useStateData({
-      ...this.ourState.stateData,
-      imgSrc: ourImgComponent,
-      tabIndex: index,
-      panelTitle: getOurDataFromProp.name,
-      panelDescription: getOurDataFromProp.description,
-      panelDistance: getOurDataFromProp.distance,
-      panelTravel: getOurDataFromProp.travel,
-    });
+    // this.ourState.useStateData({
+    //   ...this.ourState.stateData,
+    //   imgSrc: ourImgComponent,
+    //   tabIndex: index,
+    //   panelTitle: getOurDataFromProp.name,
+    //   panelDescription: getOurDataFromProp.description,
+    //   panelDistance: getOurDataFromProp.distance,
+    //   panelTravel: getOurDataFromProp.travel,
+    // });
     // console.log("this", this[index]);
+    /**
+     * using functional updates form of useState. the parameter is the previous state of the
+     * variables that was set when we called useState
+     * **/
+    this.ourState.useStateData((prevValues) => {
+      return {
+        ...prevValues,
+        imgSrc: ourImgComponent,
+        tabIndex: index,
+        panelTitle: getOurDataFromProp.name,
+        panelDescription: getOurDataFromProp.description,
+        panelDistance: getOurDataFromProp.distance,
+        panelTravel: getOurDataFromProp.travel,
+      };
+    });
   }
 }
 

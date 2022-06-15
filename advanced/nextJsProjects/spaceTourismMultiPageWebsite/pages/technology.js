@@ -302,12 +302,25 @@ function techDataChange(event) {
     // imgElement.setAttribute("src", imgComponentSrc);
     const currentTechData = this.pageData[index];
     // call usestate to update props
-    this.stateObj.useTechState({
-      ...this.stateObj.techStateData,
-      techIndex: index,
-      techImg: imgComponentSrc,
-      techName: currentTechData.name,
-      techDescription: currentTechData.description,
+    // this.stateObj.useTechState({
+    //   ...this.stateObj.techStateData,
+    //   techIndex: index,
+    //   techImg: imgComponentSrc,
+    //   techName: currentTechData.name,
+    //   techDescription: currentTechData.description,
+    // });
+    /**
+     * using functional updates form of useState. the parameter is the previous state of the
+     * variables that was set when we called useState
+     * **/
+    this.stateObj.useTechState((prevValues) => {
+      return {
+        ...prevValues,
+        techIndex: index,
+        techImg: imgComponentSrc,
+        techName: currentTechData.name,
+        techDescription: currentTechData.description,
+      };
     });
   }
 }
