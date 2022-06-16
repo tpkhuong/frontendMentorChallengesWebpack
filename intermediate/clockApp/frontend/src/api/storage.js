@@ -5,7 +5,10 @@ export const dataStorage = {
   time: {
     hour: 0,
     minute: 0,
+    seconds: 0,
     meridiem: "",
+    sunMoonIcon: "",
+    greetingMessage: "",
   },
   area: "",
   location: "",

@@ -45,6 +45,7 @@ function ClockContainer(props) {
     const hourElement = document.querySelector(".hour");
     const minuteElement = document.querySelector(".minute");
     const meridiemElement = document.querySelector(".am-pm");
+    const greetingElement = document.querySelector(".dynamic-greeting");
     const { data } = dataFile;
     const city = getCity(data.timezone.id);
     const standardTimezone = data.timezone.code;
@@ -53,6 +54,7 @@ function ClockContainer(props) {
     const { latitude, longitude } = latLongObj;
     // hour,minute, seconds are number type
     const { hour, minute, seconds } = getTime(data.timezone.current_time);
+    // meridiem value for meridiemElement is lowercase we use css to make it uppercase
     const { convertedHour, meridiem } = convertTimeFormat(hour);
     // const currentTime = `${convertedHour}:${minute}`;
     // time: currentTime,
@@ -87,19 +89,36 @@ function ClockContainer(props) {
         dayNightIcon: sunMoonIcon,
       };
     });
-
+    // setTimeout(() => {
+    //   dataStorage.time.greetingMessage =
+    //     document.querySelector(".dynamic-greeting").innerText;
+    //   dataStorage.time.sunMoonIcon = sunMoonIcon;
+    // }, 53);
     /**
      * clock algorithm. set value of hour and minute element
      * outside useState
+     * if we call clock func inside our api .then() we won't have to get the innerText value of hour,minute,meridiem,greeting and icon elements
      * **/
     hourElement.innerText = convertedHour;
     minuteElement.innerText = minute;
     meridiemElement.innerText = meridiem;
 
-    // save reference to hr and minute
-    (dataStorage.time.hour = convertedHour), (dataStorage.time.minute = minute);
+    // save reference to hr,minute,seconds,meridiem, sunmoonicon, greetingMessage
+    dataStorage.time.hour = convertedHour;
+    dataStorage.time.minute = minute;
+    dataStorage.time.seconds = seconds;
     dataStorage.time.meridiem = meridiem;
-    console.log(meridiemElement.innerText);
+    dataStorage.time.sunMoonIcon = sunMoonIcon;
+    dataStorage.time.greetingMessage = greetingsMessage;
+
+    /**
+     * calling clock func which takes three arguments
+     * elements obj, storage data obj, stateObj
+     * **/
+
+    // clock({ hourElement, minuteElement, meridiemElement }, dataStorage, {
+    //   useTimezone,
+    // });
     /**
      * ***** *****
      * instead of making another api call to get location's sunrise/sunset time
