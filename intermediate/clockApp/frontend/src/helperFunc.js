@@ -83,6 +83,7 @@ export function greetingMessageIconCalculation(hour, meridiem) {
 }
 
 export function clock(elements, storageTimeObj, stateObj) {
+  console.log(elements["minuteElement"]);
   // hourElement;
   // minuteElement;
   // meridiemElement;
@@ -153,20 +154,62 @@ export function clock(elements, storageTimeObj, stateObj) {
           // check current greetings and sunmoonicon
           // only call useState for greetings and sunmoonicon if current and new calculated greeting and sunmoonicon are different
           // useState for sunmoonicon
-          sunMoonIcon != storageTimeObj.time.sunMoonIcon
-            ? stateObj.useTimezone((prevValues) => {
-                return { ...prevValues, dayNightIcon: sunMoonIcon };
-              })
-            : null;
+          // if sunMoonIcon is moon assign value "evening" to element with attr data-daynight
+          // if sunMoonIcon is sun assign value "morning" to element with attr data-daynight
+          updateSunMoonIcon(sunMoonIcon, elements, storageTimeObj, stateObj);
+          /**
+           * moved algorithm below in to updateSunMoonIcon
+           * **/
+          // sunMoonIcon != storageTimeObj.time.sunMoonIcon
+          //   ? (stateObj.useTimezone((prevValues) => {
+          //       return { ...prevValues, dayNightIcon: sunMoonIcon };
+          //     }),
+          //     updatePropValue(storageTimeObj, "sunMoonIcon", sunMoonIcon),
+          //     sunMoonIcon == "sun"
+          //       ? elements.sectionWrapperElement.setAttribute(
+          //           "data-daynight",
+          //           "morning"
+          //         )
+          //       : elements.sectionWrapperElement.setAttribute(
+          //           "data-daynight",
+          //           "evening"
+          //         ))
+          //   : null;
           // useState for greetings
-          greetingsMessage != storageTimeObj.time.greetingMessage
-            ? stateObj.useTimezone((prevValues) => {
-                return { ...prevValues, greetings: greetingsMessage };
-              })
-            : null;
+          updateGreetingMessage(greetingsMessage, storageTimeObj, stateObj);
+          /**
+           * moved algorithm below in to updateGreetingMessage
+           * **/
+          // greetingsMessage != storageTimeObj.time.greetingMessage
+          //   ? (stateObj.useTimezone((prevValues) => {
+          //       return { ...prevValues, greetings: greetingsMessage };
+          //     }),
+          //     updatePropValue(
+          //       storageTimeObj,
+          //       "greetingMessage",
+          //       greetingsMessage
+          //     ))
+          //   : null;
 
           // update hr element. check if hour value is less than if it is we want to prepend 0 to hr
-          elements.hourElement.innerText = `${storageTimeObj.time.hour}`;
+          updateElementValue(elements, storageTimeObj, "hourElement", "hour");
+          /**
+           * moved algorithm below into updateElementValue func
+           * **/
+          // elements.hourElement.innerText =
+          //   storageTimeObj.time.hour < 10
+          //     ? `0${storageTimeObj.time.hour}`
+          //     : `${storageTimeObj.time.hour}`;
+          // update assistive text element
+          assistiveTextHelper(
+            elements.assistiveTextElement,
+            greetingsMessage,
+            storageTimeObj.time.hour,
+            storageTimeObj.time.minute,
+            storageTimeObj.time.meridiem,
+            storageTimeObj.location.city,
+            storageTimeObj.location.country
+          );
         } else {
           // want to increase hour by one if it is
           addOne("hour", storageTimeObj);
@@ -179,33 +222,131 @@ export function clock(elements, storageTimeObj, stateObj) {
           // check current greetings and sunmoonicon
           // only call useState for greetings and sunmoonicon if current and new calculated greeting and sunmoonicon are different
           // useState for sunmoonicon
-          sunMoonIcon == storageTimeObj.time.sunMoonIcon
-            ? stateObj.useTimezone((prevValues) => {
-                return { ...prevValues, dayNightIcon: sunMoonIcon };
-              })
-            : null;
+          // if sunMoonIcon is moon assign value "evening" to element with attr data-daynight
+          // if sunMoonIcon is sun assign value "morning" to element with attr data-daynight
+          /**
+           * moved algorithm below in to updateSunMoonIcon
+           * **/
+          updateSunMoonIcon(sunMoonIcon, elements, storageTimeObj, stateObj);
+          // sunMoonIcon != storageTimeObj.time.sunMoonIcon
+          //   ? (stateObj.useTimezone((prevValues) => {
+          //       return { ...prevValues, dayNightIcon: sunMoonIcon };
+          //     }),
+          //     updatePropValue(storageTimeObj, "sunMoonIcon", sunMoonIcon),
+          //     sunMoonIcon == "sun"
+          //       ? elements.sectionWrapperElement.setAttribute(
+          //           "data-daynight",
+          //           "morning"
+          //         )
+          //       : elements.sectionWrapperElement.setAttribute(
+          //           "data-daynight",
+          //           "evening"
+          //         ))
+          //   : null;
           // useState for greetings
-          greetingsMessage == storageTimeObj.time.greetingMessage
-            ? stateObj.useTimezone((prevValues) => {
-                return { ...prevValues, greetings: greetingsMessage };
-              })
-            : null;
+          /**
+           * moved algorithm below in to updateGreetingMessage
+           * **/
+          updateGreetingMessage(greetingsMessage, storageTimeObj, stateObj);
+          // greetingsMessage != storageTimeObj.time.greetingMessage
+          //   ? (stateObj.useTimezone((prevValues) => {
+          //       return { ...prevValues, greetings: greetingsMessage };
+          //     }),
+          //     updatePropValue(
+          //       storageTimeObj,
+          //       "greetingsMessage",
+          //       greetingsMessage
+          //     ))
+          //   : null;
           // update hr element. check if hour value is less than if it is we want to prepend 0 to hr
-          elements.hourElement.innerText = `${storageTimeObj.time.hour}`;
+          updateElementValue(elements, storageTimeObj, "hourElement", "hour");
+          /**
+           * moved algorithm below into updateElementValue func
+           * **/
+          // elements.hourElement.innerText =
+          //   storageTimeObj.time.hour < 10
+          //     ? `0${storageTimeObj.time.hour}`
+          //     : `${storageTimeObj.time.hour}`;
+          // update assistive text element
+          assistiveTextHelper(
+            elements.assistiveTextElement,
+            greetingsMessage,
+            storageTimeObj.time.hour,
+            storageTimeObj.time.minute,
+            storageTimeObj.time.meridiem,
+            storageTimeObj.location.city,
+            storageTimeObj.location.country
+          );
         }
         // assign 0 to storage.time.minute
         updatePropValue(storageTimeObj, "minute", 0);
         // update minute element. check if minute value is less than if it is we want to prepend 0 to minute
-        elements.minuteElement.innerText = `${storageTimeObj.time.minute}`;
+        updateElementValue(elements, storageTimeObj, "minuteElement", "minute");
+        /**
+         * moved algorithm below into updateElementValue func
+         * **/
+        // elements.minuteElement.innerText =
+        //   storageTimeObj.time.minute < 10
+        //     ? `0${storageTimeObj.time.minute}`
+        //     : `${storageTimeObj.time.minute}`;
       } else {
         // minute is not 59 add one to minute
         addOne("minute", storageTimeObj);
         // update minute element. check if minute value is less than if it is we want to prepend 0 to minute
-        elements.minuteElement.innerText = `${storageTimeObj.time.minute}`;
+        updateElementValue(elements, storageTimeObj, "minuteElement", "minute");
+        /**
+         * moved algorithm below into updateElementValue func
+         * **/
+        // elements.minuteElement.innerText =
+        //   storageTimeObj.time.minute < 10
+        //     ? `0${storageTimeObj.time.minute}`
+        //     : `${storageTimeObj.time.minute}`;
       }
     }
     console.log(storageTimeObj.time);
   }, 1000);
+}
+
+export function assistiveTextHelper(element, ...rest) {
+  const [greetingMsg, hour, minute, meridiem, city, country] = rest;
+  element.innerText = `${greetingMsg}, it's currently. ${hour} ${minute} ${meridiem} in ${city} ${country}`;
+}
+
+function updateSunMoonIcon(icon, elementsObj, storageObj, state) {
+  icon != storageObj.time.sunMoonIcon
+    ? (state.useTimezone((prevValues) => {
+        return { ...prevValues, dayNightIcon: icon };
+      }),
+      updatePropValue(storageObj, "sunMoonIcon", icon),
+      icon == "sun"
+        ? elementsObj.sectionWrapperElement.setAttribute(
+            "data-daynight",
+            "morning"
+          )
+        : elementsObj.sectionWrapperElement.setAttribute(
+            "data-daynight",
+            "evening"
+          ))
+    : null;
+}
+
+function updateGreetingMessage(greet, storage, state) {
+  greet != storage.time.greetingMessage
+    ? (state.useTimezone((prevValues) => {
+        return {
+          ...prevValues,
+          greetings: greet,
+        };
+      }),
+      updatePropValue(storage, "greetingsMessage", greet))
+    : null;
+}
+
+function updateElementValue(elementObj, storageObj, propSelector, objProp) {
+  elementObj[propSelector].innerText =
+    storageObj.time[objProp] < 10
+      ? `0${storageObj.time[objProp]}`
+      : `${storageObj.time[objProp]}`;
 }
 
 function addOne(timeProp, storage) {

@@ -10,8 +10,8 @@ export const dataStorage = {
     sunMoonIcon: "",
     greetingMessage: "",
   },
+  location: { city: "", country: "" },
   area: "",
-  location: "",
   //   initialUrl: `https://api.ipbase.com/json/${ip}?apikey=${apiKey}`,
 };
 

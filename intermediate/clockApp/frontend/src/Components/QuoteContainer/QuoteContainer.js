@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { dataStorage } from "../../api/storage";
 import { makeApiCall } from "../../helperFunc";
+const url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
 
 function Quote(props) {
-  const url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
   // make api call to "https://programming-quotes-api.herokuapp.com/Quotes/random" in this component
   const initialQuoteValue = {
     quote: "",
@@ -13,10 +13,12 @@ function Quote(props) {
   useEffect(() => {
     makeApiCall(url).then(function getQuote(response) {
       response.status == 200
-        ? useQuote({
-            ...quoteObj,
-            quote: response.data.en,
-            author: response.data.author,
+        ? useQuote((prevValues) => {
+            return {
+              ...prevValues,
+              quote: response.data.en,
+              author: response.data.author,
+            };
           })
         : console.log("Oops");
     });
@@ -27,7 +29,10 @@ function Quote(props) {
         <blockquote className="quote">{`${quoteObj.quote}`}</blockquote>
         <span className="author">{quoteObj.author}</span>
       </div>
-      <button className="refresh-icon-btn">
+      <button
+        onClick={refreshQuoteBtn.bind({ quoteObj, useQuote })}
+        className="refresh-icon-btn"
+      >
         {/* svg */}
         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -40,6 +45,20 @@ function Quote(props) {
       </button>
     </div>
   );
+}
+
+function refreshQuoteBtn(event) {
+  makeApiCall(url).then((response) => {
+    response.status == 200
+      ? this.useQuote((prevValues) => {
+          return {
+            ...prevValues,
+            quote: response.data.en,
+            author: response.data.author,
+          };
+        })
+      : null;
+  });
 }
 
 export default Quote;

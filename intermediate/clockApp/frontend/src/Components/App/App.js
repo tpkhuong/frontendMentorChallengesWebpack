@@ -40,11 +40,11 @@ function App(props) {
 
   return (
     <React.Fragment>
-      <section
-        data-more-clicked="false"
-        data-daynight="evening"
-        className="bg-img"
-      >
+      <section data-more-clicked="false" data-daynight="" className="bg-img">
+        <div
+          className="visually-hidden assistive-text"
+          aria-live="assertive"
+        ></div>
         {/* top */}
         <Quote />
         {/* bottom */}

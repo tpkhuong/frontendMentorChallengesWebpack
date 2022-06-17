@@ -8,6 +8,7 @@ import {
   getCity,
   convertTimeFormat,
   greetingMessageIconCalculation,
+  assistiveTextHelper,
   clock,
 } from "../../helperFunc";
 // const api = process.env.IPBASE_API;
@@ -42,10 +43,12 @@ function ClockContainer(props) {
     // responseData.then(function workWithData(response) {
     //   console.log(response);
     // });
+    const sectionWrapperElement = document.querySelector("[data-daynight]");
     const hourElement = document.querySelector(".hour");
     const minuteElement = document.querySelector(".minute");
     const meridiemElement = document.querySelector(".am-pm");
     const greetingElement = document.querySelector(".dynamic-greeting");
+    const assistiveTextElement = document.querySelector(".assistive-text");
     const { data } = dataFile;
     const city = getCity(data.timezone.id);
     const standardTimezone = data.timezone.code;
@@ -89,6 +92,37 @@ function ClockContainer(props) {
         dayNightIcon: sunMoonIcon,
       };
     });
+
+    /**
+     * assign morning or evening to data-daynight attr of bg-img element
+     * **/
+
+    sunMoonIcon == "sun"
+      ? sectionWrapperElement.setAttribute("data-daynight", "morning")
+      : sectionWrapperElement.setAttribute("data-daynight", "evening");
+
+    /**
+     * assistive text element
+     * **/
+
+    // assistiveTextElement.innerText = `${greetingsMessage}, it's currently. ${convertedHour} ${minute} ${meridiem} in ${city} ${country}`;
+    assistiveTextHelper(
+      assistiveTextElement,
+      greetingsMessage,
+      convertedHour,
+      minute,
+      meridiem,
+      city,
+      country
+    );
+
+    /**
+     * bg-img section container
+     * **/
+
+    // if sunMoonIcon is moon assign value "evening" to element with attr data-daynight
+    // if sunMoonIcon is sun assign value "morning" to element with attr data-daynight
+
     // setTimeout(() => {
     //   dataStorage.time.greetingMessage =
     //     document.querySelector(".dynamic-greeting").innerText;
@@ -99,8 +133,9 @@ function ClockContainer(props) {
      * outside useState
      * if we call clock func inside our api .then() we won't have to get the innerText value of hour,minute,meridiem,greeting and icon elements
      * **/
-    hourElement.innerText = convertedHour;
-    minuteElement.innerText = minute;
+    hourElement.innerText =
+      convertedHour < 10 ? `0${convertedHour}` : `${convertedHour}`;
+    minuteElement.innerText = minute < 10 ? `0${minute}` : `${minute}`;
     meridiemElement.innerText = meridiem;
 
     // save reference to hr,minute,seconds,meridiem, sunmoonicon, greetingMessage
@@ -110,15 +145,27 @@ function ClockContainer(props) {
     dataStorage.time.meridiem = meridiem;
     dataStorage.time.sunMoonIcon = sunMoonIcon;
     dataStorage.time.greetingMessage = greetingsMessage;
+    dataStorage.location.city = city;
+    dataStorage.location.country = country;
 
     /**
      * calling clock func which takes three arguments
      * elements obj, storage data obj, stateObj
      * **/
 
-    // clock({ hourElement, minuteElement, meridiemElement }, dataStorage, {
-    //   useTimezone,
-    // });
+    // clock(
+    //   {
+    //     hourElement,
+    //     minuteElement,
+    //     meridiemElement,
+    //     assistiveTextElement,
+    //     sectionWrapperElement,
+    //   },
+    //   dataStorage,
+    //   {
+    //     useTimezone,
+    //   }
+    // );
     /**
      * ***** *****
      * instead of making another api call to get location's sunrise/sunset time
@@ -204,7 +251,7 @@ function ClockContainer(props) {
           <span className="notshow-mobile">, it's currently</span>
         </div>
       </div>
-      <div className="timezone-digit-code">
+      <div aria-hidden="true" className="timezone-digit-code">
         {/* time-digit */}
         <div className="time-digit-wrapper">
           {/* will work with separate hr and minute for running clock algorithm*/}

@@ -473,7 +473,7 @@ button {
 
 .quote {
   line-height: 1.8;
-  font-weight: 100;
+  font-weight: 500;
   margin-block-end: 8px;
 }
 
@@ -567,6 +567,10 @@ button {
   transform: scale(0.75) rotate(180deg);
   transition: transform 750ms ease-out;
   border-radius: 50%;
+}
+
+[data-daynight="morning"] .more-less-btn {
+  box-shadow: 0 0 0 100vmax hsl(0, 0%, 0%, 0.2);
 }
 
 /* [data-more-clicked="false"] .more-less-btn {
