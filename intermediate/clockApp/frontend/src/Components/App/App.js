@@ -43,7 +43,7 @@ function App(props) {
       <section data-more-clicked="false" data-daynight="" className="bg-img">
         <div
           className="visually-hidden assistive-text"
-          aria-live="assertive"
+          aria-live="polite"
         ></div>
         {/* top */}
         <Quote />

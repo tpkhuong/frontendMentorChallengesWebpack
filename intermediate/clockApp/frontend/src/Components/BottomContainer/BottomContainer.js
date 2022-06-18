@@ -10,7 +10,7 @@ function BottomContainer(props) {
         <ClockContainer />
       </div>
       {/* expand content */}
-      <div className="expand-wrapper">
+      <div tabIndex="-1" className="expand-wrapper">
         <ExpandContainer />
       </div>
     </div>

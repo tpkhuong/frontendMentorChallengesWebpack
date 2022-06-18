@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { dataStorage } from "../../api/storage";
+import {
+  dataStorage,
+  arrOfQuotes,
+  getRandomInitialQuote,
+} from "../../api/storage";
 import { makeApiCall } from "../../helperFunc";
 const url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
+
+const { author, en } = getRandomInitialQuote(arrOfQuotes);
 
 function Quote(props) {
   // make api call to "https://programming-quotes-api.herokuapp.com/Quotes/random" in this component
   const initialQuoteValue = {
-    quote: "",
-    author: "",
+    quote: en,
+    author,
   };
   const [quoteObj, useQuote] = useState(initialQuoteValue);
-  useEffect(() => {
-    makeApiCall(url).then(function getQuote(response) {
-      response.status == 200
-        ? useQuote((prevValues) => {
-            return {
-              ...prevValues,
-              quote: response.data.en,
-              author: response.data.author,
-            };
-          })
-        : console.log("Oops");
-    });
-  }, []);
+  // useEffect(() => {
+  //   makeApiCall(url).then(function getQuote(response) {
+  //     response.status == 200
+  //       ? useQuote((prevValues) => {
+  //           return {
+  //             ...prevValues,
+  //             quote: response.data.en,
+  //             author: response.data.author,
+  //           };
+  //         })
+  //       : console.log("Oops");
+  //   });
+  // }, []);
   return (
     <div className="top-container">
       <div className="quote-wrapper">
@@ -30,6 +36,7 @@ function Quote(props) {
         <span className="author">{quoteObj.author}</span>
       </div>
       <button
+        aria-label="generate new quote"
         onClick={refreshQuoteBtn.bind({ quoteObj, useQuote })}
         className="refresh-icon-btn"
       >

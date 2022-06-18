@@ -106,15 +106,15 @@ function ClockContainer(props) {
      * **/
 
     // assistiveTextElement.innerText = `${greetingsMessage}, it's currently. ${convertedHour} ${minute} ${meridiem} in ${city} ${country}`;
-    assistiveTextHelper(
-      assistiveTextElement,
-      greetingsMessage,
-      convertedHour,
-      minute,
-      meridiem,
-      city,
-      country
-    );
+    // assistiveTextHelper(
+    //   assistiveTextElement,
+    //   greetingsMessage,
+    //   convertedHour,
+    //   minute,
+    //   meridiem,
+    //   city,
+    //   country
+    // );
 
     /**
      * bg-img section container
@@ -251,7 +251,7 @@ function ClockContainer(props) {
           <span className="notshow-mobile">, it's currently</span>
         </div>
       </div>
-      <div aria-hidden="true" className="timezone-digit-code">
+      <div className="timezone-digit-code">
         {/* time-digit */}
         <div className="time-digit-wrapper">
           {/* will work with separate hr and minute for running clock algorithm*/}
@@ -273,6 +273,7 @@ function ClockContainer(props) {
         <div className="btn-bg">
           <span className="btn-bg-text">more</span>
           <button
+            aria-label="show additional date information"
             onClick={moreLessBtn.bind({ timezoneObj, useTimezone })}
             className="more-less-btn"
           >
@@ -300,6 +301,10 @@ function moreLessBtn(event) {
   //   });
   // select element with data-more-clicked
   const mainAppWrapper = document.querySelector("[data-more-clicked]");
+  // select more less btn
+  const moreLessElement = document.querySelector(".more-less-btn");
+  // expand wrapper one of two children of bottom container
+  const expandWrapper = document.querySelector(".expand-wrapper");
   // data-absolute
   //   const expandContentContainer = document.querySelector("[data-absolute]");
   const btnText = document.querySelector(".btn-bg-text");
@@ -310,11 +315,23 @@ function moreLessBtn(event) {
     btnText.innerText = "less";
     // change value of data-absolute to false to show expand content element
     // expandContentContainer.setAttribute("data-absolute", "false");
+    // change value of aria-label of more less btn
+    moreLessElement.setAttribute(
+      "aria-label",
+      "hide additional date information"
+    );
+    // focus expand-wrapper
+    expandWrapper.focus();
   } else {
     // change value of data-more-clicked to false
     mainAppWrapper.setAttribute("data-more-clicked", "false");
     // change btnText to more
     btnText.innerText = "more";
+    // change value of aria-label of more less btn
+    moreLessElement.setAttribute(
+      "aria-label",
+      "show additional date information"
+    );
     // change value of data-absolute to true to show expand content element in a settime
     // setTimeout(() => {
     //   expandContentContainer.setAttribute("data-absolute", "true");

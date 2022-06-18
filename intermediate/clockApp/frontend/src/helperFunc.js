@@ -50,7 +50,7 @@ export function greetingMessageIconCalculation(hour, meridiem) {
       9: "good morning",
       10: "good morning",
       11: "good morning",
-      12: "early morning",
+      12: "midnight",
     },
     pm: {
       1: "good afternoon",
@@ -74,6 +74,7 @@ export function greetingMessageIconCalculation(hour, meridiem) {
     "good afternoon": "sun",
     "good evening": "moon",
     "night time": "moon",
+    midnight: "moon",
   };
   // greeting message
   const greetingsMessage = messagesObj[meridiem][`${hour}`];
@@ -203,9 +204,7 @@ export function clock(elements, storageTimeObj, stateObj) {
           // update assistive text element
           assistiveTextHelper(
             elements.assistiveTextElement,
-            greetingsMessage,
             storageTimeObj.time.hour,
-            storageTimeObj.time.minute,
             storageTimeObj.time.meridiem,
             storageTimeObj.location.city,
             storageTimeObj.location.country
@@ -270,9 +269,7 @@ export function clock(elements, storageTimeObj, stateObj) {
           // update assistive text element
           assistiveTextHelper(
             elements.assistiveTextElement,
-            greetingsMessage,
             storageTimeObj.time.hour,
-            storageTimeObj.time.minute,
             storageTimeObj.time.meridiem,
             storageTimeObj.location.city,
             storageTimeObj.location.country
@@ -308,8 +305,9 @@ export function clock(elements, storageTimeObj, stateObj) {
 }
 
 export function assistiveTextHelper(element, ...rest) {
-  const [greetingMsg, hour, minute, meridiem, city, country] = rest;
-  element.innerText = `${greetingMsg}, it's currently. ${hour} ${minute} ${meridiem} in ${city} ${country}`;
+  const [hour, meridiem, city, country] = rest;
+  //
+  element.innerText = `Updated clock time, it's currently. ${hour} ${meridiem} in ${city} ${country}`;
 }
 
 function updateSunMoonIcon(icon, elementsObj, storageObj, state) {
@@ -338,7 +336,7 @@ function updateGreetingMessage(greet, storage, state) {
           greetings: greet,
         };
       }),
-      updatePropValue(storage, "greetingsMessage", greet))
+      updatePropValue(storage, "greetingMessage", greet))
     : null;
 }
 
