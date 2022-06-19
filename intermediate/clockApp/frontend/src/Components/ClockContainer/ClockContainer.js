@@ -49,6 +49,11 @@ function ClockContainer(props) {
     const meridiemElement = document.querySelector(".am-pm");
     const greetingElement = document.querySelector(".dynamic-greeting");
     const assistiveTextElement = document.querySelector(".assistive-text");
+    const dayYearElement = document.querySelector(".day-year .bottom-value");
+    const dayWeekElement = document.querySelector(".day-week .bottom-value");
+    const weekNumberElement = document.querySelector(
+      ".week-number .bottom-value"
+    );
     const { data } = dataFile;
     const city = getCity(data.timezone.id);
     const standardTimezone = data.timezone.code;
@@ -160,6 +165,9 @@ function ClockContainer(props) {
     //     meridiemElement,
     //     assistiveTextElement,
     //     sectionWrapperElement,
+    // dayYearElement,
+    // dayWeekElement,
+    // weekNumberElement,
     //   },
     //   dataStorage,
     //   {
@@ -251,6 +259,7 @@ function ClockContainer(props) {
           <span className="notshow-mobile">, it's currently</span>
         </div>
       </div>
+      {/* use aria-live if we want screen reader to annonce changes. we dont need aria-hidden on element with timezone-digit-code */}
       <div className="timezone-digit-code">
         {/* time-digit */}
         <div className="time-digit-wrapper">

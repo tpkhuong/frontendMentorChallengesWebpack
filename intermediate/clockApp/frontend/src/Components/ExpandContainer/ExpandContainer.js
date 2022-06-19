@@ -17,7 +17,7 @@ function ExpandContainer(props) {
   // use timezone id then call/execute .split on "/" to get area and location
   // use those value to make api call to http://worldtimeapi.org/api/timezone/:area/:location
   useEffect(() => {
-    // initial api call to get area and location
+    // // initial api call to get area and location
     // const dataForUseWithWorldTimeApi = makeApiCall(
     //   `https://api.ipbase.com/json/${dataStorage.ip}?apikey=${dataStorage.apiKey}`
     // ).then(function getResponse(response) {
@@ -51,11 +51,17 @@ function ExpandContainer(props) {
     //       // });
     //       // update UI using functional updates form of useState
     //       useExpand((prevValues) => {
-    //         return {...prevValues, region: `${obj.responseArea}/${obj.responseLocation}`,
-    //         dayOfYear: day_of_year,
-    //         dayOfWeek: day_of_week,
-    //         weekNum: week_number,}
-    //       })
+    //         return {
+    //           ...prevValues, region: `${obj.responseArea}/${obj.responseLocation}`,
+    //           dayOfYear: day_of_year,
+    //           dayOfWeek: day_of_week,
+    //           weekNum: week_number,
+    //         }
+    //       });
+    //       // save reference to dayOfWeek,dayOfYear,weekNumber to storage obj
+    //       dataStorage.dateInfo.dayOfWeek = day_of_week;
+    //       dataStorage.dateInfo.dayOfYear = day_of_year;
+    //       dataStorage.dateInfo.weekNumber = week_number;
     //     }
     //   });
     // });

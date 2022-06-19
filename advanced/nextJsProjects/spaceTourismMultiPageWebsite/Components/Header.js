@@ -86,12 +86,14 @@ function Header(props) {
           {/* better to build navbar inside our header instead of using component */}
           {/* because every time our page renders it will run Navbar component twice */}
           {isBreaking ? (
-            <Navbar layout="secondary" currentPage={`${activeEffect}`} />
-          ) : null}
+            <Navbar layout="secondary" currentPage={activeEffect} />
+          ) : // <Navbar layout="secondary" currentPage={`${activeEffect}`} />
+          null}
         </div>
       </div>
       {/* desktop/tablet nav */}
-      <Navbar layout="primary" currentPage={`${activeEffect}`} />
+      <Navbar layout="primary" currentPage={activeEffect} />
+      {/* <Navbar layout="primary" currentPage={`${activeEffect}`} /> */}
     </header>
   );
 }

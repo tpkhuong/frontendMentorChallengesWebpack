@@ -28,14 +28,14 @@ function Navbar(props) {
                     <span
                       className={NavStyles[`link-digit`]}
                     >{`0${index}`}</span>
-                    {`${element}`}
+                    {element}
                   </a>
                 ) : (
                   <a role="menuitem" className={NavStyles[`navlink`]}>
                     <span
                       className={NavStyles[`link-digit`]}
                     >{`0${index}`}</span>
-                    {`${element}`}
+                    {element}
                   </a>
                 )}
               </Link>
