@@ -1,2 +1,248 @@
 /* box shadow */
 /* 0px 0px 35px rgb(0 0 0 / 18%) */
+
+html,
+body {
+  height: 100%;
+}
+
+#__next {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+body {
+  font-family: "League Spartan";
+  margin: 0;
+}
+
+/* hero content */
+
+.hero-img-content-wrapper {
+  position: relative;
+  /* padding-inline: 32px; */
+}
+
+.text-content {
+  color: hsl(0, 100%, 100%);
+  position: absolute;
+  /* width: fit-content; */
+  height: min-content;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  bottom: 0;
+  margin-block: auto;
+}
+
+.text-content h1 {
+  line-height: 0.9;
+  margin-block-end: 11px;
+}
+
+.text-content h1 span {
+  font-size: 3rem;
+  display: block;
+}
+
+.text-content p {
+  font-size: 1.25rem;
+}
+
+.middle-child-margin-block {
+  margin-block: 32px;
+}
+
+.header-btn {
+  max-width: 252px;
+  margin-block-start: 83px;
+}
+
+.wrapper {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid;
+  position: absolute;
+  align-items: center;
+}
+
+.vertical-line {
+  display: inline-block;
+  width: 2px;
+  height: 45px;
+  background-color: red;
+}
+
+.vertical {
+  writing-mode: vertical-lr;
+  padding-block: 25px;
+}
+
+.none {
+  display: none;
+}
+
+footer {
+  margin-block-start: auto;
+}
+
+.footer-logo-nav-container {
+  background-color: hsl(230, 21%, 95%);
+  padding-inline: 44px;
+  padding-block: 42px;
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-nav {
+  margin-block-end: 32px;
+  margin-block-start: -72px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav,
+span {
+  font-size: 1.25rem;
+}
+
+a {
+  color: hsl(223, 7%, 53%);
+  font-weight: 700;
+}
+
+.logo-wrapper {
+  /* this is svg container
+    we removed width and height on svg element
+    add viewbox 0 0 100 45.
+    we control the size of the svg element by declaring width and height on its
+    parent containing element.
+    */
+  /* width:97px
+    height:40px
+    at desktop layout
+    */
+  width: 58px;
+  height: 24.2px;
+  background-color: black;
+  padding-block-start: 49px;
+  padding-block-end: 47px;
+  padding-inline-start: 30px;
+  padding-inline-end: 32px;
+  transform: translateY(-108px);
+}
+
+.logo-wrapper path {
+  fill: white;
+}
+
+.footer-btn,
+.header-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background-color: hsl(0, 0%, 0%);
+  padding: 22px;
+  padding-block-start: 25px;
+  padding-inline-start: 37px;
+  padding-inline-end: 32px;
+  color: white;
+}
+
+.footer-btn g,
+.header-btn g {
+  stroke: white;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    padding-inline: 118px;
+  }
+
+  .text-content h1 span {
+    font-size: 6rem;
+    display: block;
+  }
+
+  .header-btn {
+    margin-block-start: 72px;
+  }
+
+  footer {
+    position: relative;
+  }
+  .style-wrapper {
+    padding-inline-end: 156px;
+  }
+  .footer-logo-nav-container {
+    padding: 0;
+    flex-direction: revert;
+  }
+  .logo-wrapper {
+    transform: translateY(0);
+  }
+  .footer-nav {
+    margin-block-start: revert;
+    margin-block-end: revert;
+    padding-inline-start: 60px;
+  }
+
+  .footer-nav ul {
+    display: flex;
+    gap: 32px;
+  }
+
+  .middle-child-margin-block {
+    margin-block: revert;
+  }
+  .footer-btn {
+    position: absolute;
+    height: min-content;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin-block: auto;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .header {
+    padding-inline: 165px;
+  }
+  footer {
+    padding-inline: 165px;
+    position: revert;
+  }
+  .style-wrapper {
+    padding-inline-end: 126px;
+    position: relative;
+  }
+  .logo-wrapper {
+    width: 96.16px;
+    height: 40px;
+    padding-block: 80px;
+    padding-inline-start: 52px;
+    padding-inline-end: 51.84px;
+  }
+  .footer-nav {
+    padding-inline-start: 85px;
+  }
+  .footer-nav ul {
+    gap: 62px;
+  }
+}
