@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import LinkButton from "../Components/LinkButton";
 
 function Home(props) {
   return (
@@ -39,7 +40,11 @@ function Home(props) {
               Project made for an art museum near Southwest London. Project
               Paramour is a statement of bold, modern architecture.
             </p>
-            <a className="header-btn" href="">
+            {/* Header Btn */}
+            <LinkButton btnStyle="header-btn" linkRef="/about">
+              See Our Portfolio
+            </LinkButton>
+            {/* <a className="header-btn" href="">
               <span>See Our Portfolio</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20">
                 <g
@@ -51,10 +56,21 @@ function Home(props) {
                   <path d="M15 1l9 9-9 9M0 10h24" />
                 </g>
               </svg>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
+      <article className="feature-test-second">
+        <LinkButton btnStyle="about-btn" linkRef="/contact">
+          {/* {"About Us"} */}
+          {<span>About Us</span>}
+        </LinkButton>
+      </article>
+      <article className="feature-test">
+        <LinkButton btnStyle="featured-btn" linkRef="/contact">
+          See All
+        </LinkButton>
+      </article>
       {/* <img src="/logo.svg" alt="" /> */}
       <footer>
         <div className="style-wrapper">
@@ -87,7 +103,11 @@ function Home(props) {
             </nav>
             <div className="spacer-portfolio-btn-container">
               <div className="spacer"></div>
-              <a className="footer-btn" href="">
+              {/* Footer Btn */}
+              <LinkButton btnStyle="footer-btn" linkRef="/portfolio">
+                See Our Portfolio
+              </LinkButton>
+              {/* <a className="footer-btn" href="">
                 <span>See Our Portfolio</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20">
                   <g
@@ -99,7 +119,7 @@ function Home(props) {
                     <path d="M15 1l9 9-9 9M0 10h24" />
                   </g>
                 </svg>
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

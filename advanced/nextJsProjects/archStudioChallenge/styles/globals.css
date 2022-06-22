@@ -60,10 +60,10 @@ body {
   margin-block: 32px;
 }
 
-.header-btn {
+/* .header-btn {
   max-width: 252px;
   margin-block-start: 83px;
-}
+} */
 
 .wrapper {
   display: none;
@@ -150,7 +150,13 @@ a {
   fill: white;
 }
 
-.footer-btn,
+.feature-test,
+.feature-test-second {
+  padding-block-end: 132px;
+  padding-inline: 32px;
+}
+
+/* .footer-btn,
 .header-btn {
   display: flex;
   justify-content: center;
@@ -162,12 +168,12 @@ a {
   padding-inline-start: 37px;
   padding-inline-end: 32px;
   color: white;
-}
+} */
 
-.footer-btn g,
+/* .footer-btn g,
 .header-btn g {
   stroke: white;
-}
+} */
 
 @media screen and (min-width: 768px) {
   .header {
@@ -179,9 +185,9 @@ a {
     display: block;
   }
 
-  .header-btn {
+  /* .header-btn {
     margin-block-start: 72px;
-  }
+  } */
 
   footer {
     position: relative;
@@ -210,14 +216,14 @@ a {
   .middle-child-margin-block {
     margin-block: revert;
   }
-  .footer-btn {
+  /* .footer-btn {
     position: absolute;
     height: min-content;
     top: 0;
     bottom: 0;
     right: 0;
     margin-block: auto;
-  }
+  } */
 }
 
 @media screen and (min-width: 1440px) {

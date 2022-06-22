@@ -1,0 +1,75 @@
+.arrow-icon g {
+  stroke: hsl(0, 100%, 100%);
+}
+
+/* general */
+
+.general {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background-color: hsl(0, 0%, 0%);
+  color: white;
+  padding-block-start: 25px;
+  padding-block-end: 22px;
+}
+
+.header-btn,
+.footer-btn {
+  padding-inline-start: 37px;
+  padding-inline-end: 32px;
+}
+
+/* header btn */
+
+.header-btn {
+  max-width: 200px;
+  margin-block-start: 83px;
+}
+
+/* about btn */
+
+.about-btn {
+  max-width: 188px;
+}
+
+/* featured btn */
+
+/* footer btn */
+
+@media screen and (min-width: 48rem) {
+  /* header btn */
+
+  .header-btn {
+    margin-block-start: 72px;
+  }
+
+  /* about btn */
+
+  /* featured btn */
+
+  .featured-btn {
+    max-width: 169px;
+  }
+
+  /* footer btn */
+  .footer-btn {
+    position: absolute;
+    height: min-content;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin-block: auto;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  /* header btn */
+
+  /* about btn */
+
+  /* featured btn */
+
+  /* footer btn */
+}
