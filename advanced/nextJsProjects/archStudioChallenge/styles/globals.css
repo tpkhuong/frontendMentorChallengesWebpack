@@ -8,9 +8,9 @@ body {
 
 #__next {
   min-height: 100%;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 100px; */
 }
 
 h1,

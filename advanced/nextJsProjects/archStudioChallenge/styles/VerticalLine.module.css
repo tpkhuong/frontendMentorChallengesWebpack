@@ -1,0 +1,24 @@
+.wrapper {
+  text-decoration: none;
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+
+.vertical-line {
+  width: 1.5px;
+  height: 104px;
+  background-color: hsl(224, 17%, 82%);
+  display: inline-block;
+}
+
+.vertical-text {
+  color: hsl(224, 17%, 82%);
+  text-transform: uppercase;
+  writing-mode: vertical-lr;
+  padding-block: 39.5px;
+  letter-spacing: 8px;
+  font-weight: 500;
+}

@@ -1,5 +1,7 @@
 export const storeData = {};
 
+export const arrOfLinkText = ["Portfolio", "About Us", "Contact"];
+
 export const portfolioImgContents = [
   // Seraph Station
   {
@@ -120,5 +122,35 @@ export const portfolioImgContents = [
     },
     title: "Project Paramour",
     date: "February 2008",
+  },
+];
+
+export const featuredSectionContents = [
+  // project del sol
+  {
+    imgSrc: {
+      mobile: "/portfolio/mobile/image-del-sol.jpg",
+      tablet: "/portfolio/tablet/image-del-sol.jpg",
+      desktop: "/portfolio/desktop/image-del-sol.jpg",
+    },
+    title: "Project Del Sol",
+  },
+  // 228B Tower
+  {
+    imgSrc: {
+      mobile: "/portfolio/mobile/image-228b.jpg",
+      tablet: "/portfolio/tablet/image-228b.jpg",
+      desktop: "/portfolio/desktop/image-228b.jpg",
+    },
+    title: "228B Tower",
+  },
+  // Le Prototype
+  {
+    imgSrc: {
+      mobile: "/portfolio/mobile/image-prototype.jpg",
+      tablet: "/portfolio/tablet/image-prototype.jpg",
+      desktop: "/portfolio/desktop/image-prototype.jpg",
+    },
+    title: "Le Prototype",
   },
 ];

@@ -1,8 +1,41 @@
 import React from "react";
 import Head from "next/head";
 import LinkButton from "../Components/LinkButton";
+import VerticalLine from "../Components/VerticalLine";
+import LogoNavbar from "../Components/LogoNavbarContainer";
+import MobileNav from "../Components/MobileNav";
+// import Navbar from "../Components/Navbar";
+
+const useMediaQuery = (width) => {
+  const [targetReached, setTargetReached] = React.useState(false);
+
+  const updateTarget = React.useCallback((e) => {
+    if (e.matches) {
+      setTargetReached(true);
+    } else {
+      setTargetReached(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const media = window.matchMedia(`(max-width: ${width}px)`);
+    // media.addListener(updateTarget);
+    media.addEventListener("change", (e) => updateTarget(e));
+
+    // Check on mount (callback is not called until a change occurs)
+    if (media.matches) {
+      setTargetReached(true);
+    }
+
+    // return () => media.removeListener(updateTarget);
+    return () => media.removeEventListener("change", (e) => updateTarget(e));
+  }, []);
+
+  return targetReached;
+};
 
 function Home(props) {
+  const mobileSize = useMediaQuery(378);
   return (
     <React.Fragment>
       <Head>
@@ -13,13 +46,30 @@ function Home(props) {
           type="image/x-icon"
         />
       </Head>
-      <div className="wrapper">
+      {/* <div className="wrapper">
         <span className="vertical-line"></span>
         <span className="vertical">this is our home page</span>
-      </div>
-      <div className="none">hello world</div>
+      </div> */}
+      <VerticalLine pageRef="/aboutus">portfolio</VerticalLine>
+      {/* <a className={`${LinkStyle[`${props.btnStyle}`]} ${LinkStyle.general}`}>
+        <span className={LinkStyle[`icon-text`]}>{children}</span>
+        <svg
+          className={LinkStyle[`arrow-icon`]}
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="20"
+        >
+          <g fill="none" fillRule="evenodd" stroke="#1B1D23" strokeWidth="2">
+            <path d="M15 1l9 9-9 9M0 10h24" />
+          </g>
+        </svg>
+      </a> */}
+      {/* <div className="none">hello world</div> */}
       <div className="header">
+        <LogoNavbar></LogoNavbar>
+        {/* mobile navbar */}
         <div className="hero-img-content-wrapper">
+          {mobileSize ? <MobileNav /> : null}
           <picture>
             <source
               srcSet="/home/desktop/image-hero-paramour.jpg"

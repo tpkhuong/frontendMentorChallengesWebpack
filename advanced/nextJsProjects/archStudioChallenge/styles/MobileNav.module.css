@@ -1,0 +1,37 @@
+[data-showmenu="false"].navbar {
+  display: none;
+}
+
+.navbar {
+  background-color: red;
+  font-size: 2rem;
+  position: absolute;
+  /* z-index of 1 or higher than the text-content of the hero section in home page
+  because our container that house hero section and mobile menu has position relative
+  and the text-content element has declaration of position absolute.
+  since the mobile menu is above the text-content in the DOM tree
+  it will be render first then its siblings will render above it.
+  think stacking(stacking context).
+  */
+  z-index: 1;
+  top: 0;
+  left: 32px;
+  right: 0;
+  bottom: 331px;
+  padding-block-start: 39px;
+  padding-inline-start: 42px;
+}
+
+.navitem:nth-child(2) {
+  margin-block: 17px;
+}
+
+.navlink {
+  color: hsl(0, 0%, 0%);
+}
+
+@media screen and (min-width: 48rem) {
+  .navbar {
+    display: none;
+  }
+}
