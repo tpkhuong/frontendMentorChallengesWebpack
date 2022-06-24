@@ -1,0 +1,119 @@
+.footer-logo-nav-container {
+  background-color: hsl(230, 21%, 95%);
+  padding-inline: 44px;
+  padding-block: 42px;
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-nav {
+  margin-block-end: 32px;
+  margin-block-start: -72px;
+}
+
+.middle-child-margin-block {
+  margin-block: 32px;
+}
+
+.footer-logo-bg {
+  background-color: black;
+  padding-block-start: 49px;
+  padding-block-end: 47px;
+  padding-inline-start: 30px;
+  padding-inline-end: 32px;
+  transform: translateY(-108px);
+}
+
+.footer-logo-wrapper {
+  /* parent element of logo
+    when we declared box-sizing: border-box, it made the logo not show
+    we will wrap this element in another element. apply padding and bg on that element
+    this element will control width/height of logo
+    */
+  /* this is svg container
+    we removed width and height on svg element
+    add viewbox 0 0 100 45.
+    we control the size of the svg element by declaring width and height on its
+    parent containing element.
+    */
+  /* width:97px
+    height:40px
+    at desktop layout
+    */
+  width: 58px;
+  height: 24.2px;
+}
+
+.footer-logo-path {
+  fill: white;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .footer-wrapper {
+    position: relative;
+  }
+  .footer-style-wrapper {
+    padding-inline-end: 156px;
+  }
+  .footer-logo-nav-container {
+    padding: 0;
+    flex-direction: revert;
+  }
+  .footer-logo-bg {
+    transform: translateY(0);
+  }
+  .footer-nav {
+    margin-block-start: revert;
+    margin-block-end: revert;
+    padding-inline-start: 60px;
+  }
+
+  .navlist {
+    display: flex;
+    gap: 32px;
+  }
+
+  .middle-child-margin-block {
+    margin-block: revert;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .footer-wrapper {
+    padding-inline: 165px;
+    position: revert;
+  }
+  .footer-style-wrapper {
+    padding-inline-end: 126px;
+    position: relative;
+  }
+
+  .footer-logo-bg {
+    padding-block: 80px;
+    padding-inline-start: 52px;
+    padding-inline-end: 51.84px;
+  }
+
+  .footer-logo-wrapper {
+    width: 96.16px;
+    height: 40px;
+  }
+  .footer-nav {
+    padding-inline-start: 85px;
+  }
+  .navlist {
+    gap: 62px;
+  }
+}

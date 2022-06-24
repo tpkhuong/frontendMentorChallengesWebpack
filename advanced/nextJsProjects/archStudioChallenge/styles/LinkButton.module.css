@@ -2,6 +2,11 @@
   stroke: hsl(0, 100%, 100%);
 }
 
+.icon-text {
+  font-size: 1.25rem;
+  font-size: 700;
+}
+
 /* general */
 
 .general {
@@ -24,7 +29,7 @@
 /* header btn */
 
 .header-btn {
-  max-width: 200px;
+  max-width: 270px;
   margin-block-start: 83px;
 }
 
@@ -66,7 +71,9 @@
 
 @media screen and (min-width: 90rem) {
   /* header btn */
-
+  .header-btn {
+    margin-block-start: 41px;
+  }
   /* about btn */
 
   /* featured btn */

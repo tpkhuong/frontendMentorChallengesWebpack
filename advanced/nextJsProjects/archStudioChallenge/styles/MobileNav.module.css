@@ -1,4 +1,12 @@
-[data-showmenu="false"].navbar {
+/* faded mobile menu effect */
+
+.mobilenav-wrapper {
+  position: absolute;
+  inset: 0;
+  background-color: hsl(0 0% 0% / 0.5);
+}
+
+[data-showmenu="false"].mobilenav-wrapper {
   display: none;
 }
 
