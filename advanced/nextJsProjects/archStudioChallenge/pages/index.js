@@ -1,11 +1,17 @@
 import React from "react";
 import Head from "next/head";
-import { featuredSectionContents, slideElementContent } from "./api/storage";
+import { featuredSectionContents } from "./api/storage";
 import HomeStyles from "../styles/Home/Home.module.css";
+import SlideControllerButton from "../Components/HomePage/Header/SlideControllerButton";
+import CarouselSlidesContainer from "../Components/HomePage/Header/CarouselSlidesContainer";
 import LinkButton from "../Components/LinkButton";
 import VerticalLine from "../Components/VerticalLine";
 import LogoNavbar from "../Components/LogoNavbarContainer";
 import MobileNav from "../Components/MobileNav";
+import WelcomeMessage from "../Components/HomePage/Main/WelcomeMessage";
+import AboutSection from "../Components/HomePage/Main/AboutLinkSection";
+import FeaturedSection from "../Components/HomePage/Main/FeaturedSection";
+import PortfolioCard from "../Components/PortfolioCard";
 import Footer from "../Components/Footer";
 // import Navbar from "../Components/Navbar";
 
@@ -39,8 +45,6 @@ const useMediaQuery = (width) => {
 
 function Home(props) {
   const mobileSize = useMediaQuery(378);
-  const [first] = slideElementContent;
-  const { imgSrc, title, text } = first;
   return (
     <React.Fragment>
       <Head>
@@ -53,7 +57,7 @@ function Home(props) {
       </Head>
 
       <VerticalLine pageRef="/">portfolio</VerticalLine>
-      <header className={HomeStyles[`header`]}>
+      <header role="banner" className={HomeStyles[`header`]}>
         <LogoNavbar></LogoNavbar>
         <div className={HomeStyles[`hero-img-content-wrapper`]}>
           {/* mobile navbar */}
@@ -64,87 +68,44 @@ function Home(props) {
             aria-roledescription="carousel"
           >
             {/* carousel controller btns */}
-            <div className={HomeStyles[`slide-btns-container`]}>
-              <button
-                className={HomeStyles[`slide-controller-btn`]}
-                aria-label="Select Project Paramour slide"
-                aria-controls="carousel-items"
+            <div
+              onClick={selectSlide}
+              className={HomeStyles[`slide-btns-container`]}
+            >
+              {/* Project Paramour */}
+              <SlideControllerButton
+                labelAttr={"Select Project Paramour slide"}
+                datacontrol={"1"}
+                isActive="true"
               >
                 01
-              </button>
-              <button
-                className={HomeStyles[`slide-controller-btn`]}
-                aria-label="Select Seraph Station slide"
-                aria-controls="carousel-items"
+              </SlideControllerButton>
+              {/* Seraph Station */}
+              <SlideControllerButton
+                labelAttr={"Select Seraph Station slide"}
+                datacontrol={"2"}
               >
                 02
-              </button>
-              <button
-                className={HomeStyles[`slide-controller-btn`]}
-                aria-label="Select Federal II Tower slide"
-                aria-controls="carousel-items"
+              </SlideControllerButton>
+              {/* Federal II Tower */}
+              <SlideControllerButton
+                labelAttr={"Select Federal II Tower slide"}
+                datacontrol={"3"}
               >
                 03
-              </button>
-              <button
-                className={HomeStyles[`slide-controller-btn`]}
-                aria-label="Select Trinity Bank Tower slide"
-                aria-controls="carousel-items"
+              </SlideControllerButton>
+              {/* Trinity Bank Tower */}
+              <SlideControllerButton
+                labelAttr={"Select Trinity Bank Tower slide"}
+                datacontrol={"4"}
               >
                 04
-              </button>
+              </SlideControllerButton>
             </div>
             {/* carousel-slides container */}
-            <div
-              id="carousel-items"
-              className={HomeStyles[`carousel-slides`]}
-              aria-live="polite"
-            >
-              {/* carousel-slide there are four */}
-
-              {slideElementContent.map(function makeSlide(element, index) {
-                const { imgSrc, title, text } = element;
-                const noAdd = false;
-                return (
-                  <div
-                    role="group"
-                    data-activeslide={index == 0 ? "true" : null}
-                    data-slideindex={index + 1}
-                    aria-roledescription="slide"
-                    aria-label={`${index + 1} of 4`}
-                    className={HomeStyles[`carousel-slide`]}
-                    key={index}
-                  >
-                    <picture>
-                      <source
-                        srcSet={imgSrc.desktop}
-                        media="(min-width: 1440px)"
-                      />
-                      <source
-                        srcSet={imgSrc.tablet}
-                        media="(min-width: 768px)"
-                      />
-                      <img src={imgSrc.mobile} alt="" />
-                    </picture>
-                    {/* text content container */}
-                    <div className={HomeStyles[`home-hero-text-content`]}>
-                      <h1 className={HomeStyles[`home-title`]}>
-                        <span className={HomeStyles[`top`]}>{title.top}</span>
-                        <span className={HomeStyles[`bottom`]}>
-                          {title.bottom}
-                        </span>
-                      </h1>
-                      <p className={HomeStyles[`description`]}>{text}</p>
-                      {/* Header Btn */}
-                      <LinkButton btnStyle="header-btn" linkRef="/about">
-                        See Our Portfolio
-                      </LinkButton>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <CarouselSlidesContainer />
           </section>
+
           {/* <picture>
             <source
               srcSet="/home/desktop/image-hero-paramour.jpg"
@@ -172,51 +133,123 @@ function Home(props) {
           </div> */}
         </div>
       </header>
+      <main className={HomeStyles[`main-section`]} role="main">
+        <WelcomeMessage></WelcomeMessage>
+        <AboutSection />
+        <FeaturedSection />
+        <PortfolioCard
+          desktop="/portfolio/desktop/image-del-sol.jpg"
+          tablet="/portfolio/tablet/image-del-sol.jpg"
+          mobile="/portfolio/mobile/image-del-sol.jpg"
+          pageApplied="homepage"
+          digit="1"
+        >
+          Project Del Sol
+        </PortfolioCard>
+      </main>
       <Footer />
     </React.Fragment>
   );
 }
 
+function selectSlide(event) {
+  // console.log(event.target.closest("BUTTON"));
+  const activeSlide = document.querySelector("[data-activeslide='true']");
+  const activeButton = document.querySelector("[data-activebutton='true']");
+  if (!event.target.getAttribute("data-activebutton")) {
+    // we only want to run algorithm when the clicked button is not the current active button
+    const clickedBtnIndex = event.target.getAttribute("data-controlindex");
+    // since the typeof for both data-controlindex and data-slideindex values are string form
+    // we wont convert clickedBtnIndex to number form
+    const matchingSlideElement = document.querySelector(
+      `[data-slideindex='${clickedBtnIndex}']`
+    );
+    // remove data-activeslide from activeSlide element and data-activebutton from activeButton element
+    activeSlide.removeAttribute("data-activeslide");
+    activeButton.removeAttribute("data-activebutton");
+    // add data-activeslide and data-activebutton to btn clicked and matchslidelement
+    event.target.setAttribute("data-activebutton", "true");
+    matchingSlideElement.setAttribute("data-activeslide", "true");
+  }
+}
+
 export default Home;
-//   ../public/portfolio/tablet/image-228b.jpg 580w
-//   ../public/portfolio/desktop/image-228b.jpg 355w
 
 function note() {
-  <div
-    role="group"
-    aria-roledescription="slide"
-    // aria-label={`${index + 1} of 4`}
-    className={HomeStyles[`carousel-slide`]}
-    // key={index}
-  >
-    <picture>
-      {/* <source srcSet={imgSrc.desktop} media="(min-width: 1440px)" />
-                  <source srcSet={imgSrc.tablet} media="(min-width: 768px)" />
-                  <img src={imgSrc.mobile} alt="" /> */}
-      <source
-        srcSet="/home/desktop/image-hero-paramour.jpg"
-        media="(min-width: 1440px)"
-      />
-      <source
-        srcSet="/home/tablet/image-hero-paramour.jpg"
-        media="(min-width: 768px)"
-      />
-      <img src="/home/mobile/image-hero-paramour.jpg" alt="" />
-    </picture>
-    {/* text content container */}
-    <div className={HomeStyles[`home-hero-text-content`]}>
-      <h1 className={HomeStyles[`home-title`]}>
-        <span className={HomeStyles[`top`]}>Project</span>
-        <span className={HomeStyles[`bottom`]}>Paramour</span>
-      </h1>
-      <p className={HomeStyles[`description`]}>
-        Project made for an art museum near Southwest London. Project Paramour
-        is a statement of bold, modern architecture.
-      </p>
-      {/* Header Btn */}
-      <LinkButton btnStyle="header-btn" linkRef="/about">
-        See Our Portfolio
-      </LinkButton>
+  <section className={HomeStyles[`carousel`]} aria-roledescription="carousel">
+    {/* carousel controller btns */}
+    <div onClick={selectSlide} className={HomeStyles[`slide-btns-container`]}>
+      {/* Project Paramour */}
+      <SlideControllerButton
+        labelAttr={"Select Project Paramour slide"}
+        datacontrol={"1"}
+        isActive="true"
+      >
+        01
+      </SlideControllerButton>
+      {/* Seraph Station */}
+      <SlideControllerButton
+        labelAttr={"Select Seraph Station slide"}
+        datacontrol={"2"}
+      >
+        02
+      </SlideControllerButton>
+      {/* Federal II Tower */}
+      <SlideControllerButton
+        labelAttr={"Select Federal II Tower slide"}
+        datacontrol={"3"}
+      >
+        03
+      </SlideControllerButton>
+      {/* Trinity Bank Tower */}
+      <SlideControllerButton
+        labelAttr={"Select Trinity Bank Tower slide"}
+        datacontrol={"4"}
+      >
+        04
+      </SlideControllerButton>
     </div>
-  </div>;
+    {/* carousel-slides container */}
+    <div
+      id="carousel-items"
+      className={HomeStyles[`carousel-slides`]}
+      aria-live="polite"
+    >
+      {/* carousel-slide there are four */}
+
+      {slideElementContent.map(function makeSlide(element, index) {
+        const { imgSrc, title, text } = element;
+        const noAdd = false;
+        return (
+          <div
+            role="group"
+            data-activeslide={index == 0 ? "true" : null}
+            data-slideindex={index + 1}
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of 4`}
+            className={HomeStyles[`carousel-slide`]}
+            key={index}
+          >
+            <picture>
+              <source srcSet={imgSrc.desktop} media="(min-width: 1440px)" />
+              <source srcSet={imgSrc.tablet} media="(min-width: 768px)" />
+              <img src={imgSrc.mobile} alt="" />
+            </picture>
+            {/* text content container */}
+            <div className={HomeStyles[`home-hero-text-content`]}>
+              <h1 className={HomeStyles[`home-title`]}>
+                <span className={HomeStyles[`top`]}>{title.top}</span>
+                <span className={HomeStyles[`bottom`]}>{title.bottom}</span>
+              </h1>
+              <p className={HomeStyles[`description`]}>{text}</p>
+              {/* Header Btn */}
+              <LinkButton btnStyle="header-btn" linkRef="/about">
+                See Our Portfolio
+              </LinkButton>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>;
 }

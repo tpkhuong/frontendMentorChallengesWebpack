@@ -1,0 +1,27 @@
+.slide-controller-btn {
+  background-color: transparent;
+  font-size: 1.125rem;
+  padding: 20px;
+  padding-inline: 26px;
+  font-weight: 700;
+  background-color: var(--color-neutral-white);
+  color: var(--color-med-grey);
+}
+
+[data-activebutton="true"].slide-controller-btn {
+  background-color: var(--color-neutral-black);
+  color: var(--color-neutral-white);
+}
+
+:not([data-activebutton]).slide-controller-btn:hover,
+:not([data-activebutton]).slide-controller-btn:focus {
+  background-color: var(--color-very-light-grey);
+  /* color: var(--color-neutral-white); */
+}
+
+@media screen and (min-width: 48rem) {
+  .slide-controller-btn {
+    padding: 25px;
+    padding-inline: 32px;
+  }
+}

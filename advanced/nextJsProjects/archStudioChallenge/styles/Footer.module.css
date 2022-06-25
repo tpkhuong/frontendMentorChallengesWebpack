@@ -14,6 +14,11 @@
   padding: 0;
 }
 
+.navlink {
+  font-weight: 700;
+  color: var(--color-med-grey);
+}
+
 .footer-nav {
   margin-block-end: 32px;
   margin-block-start: -72px;

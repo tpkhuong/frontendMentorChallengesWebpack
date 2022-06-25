@@ -3,11 +3,12 @@
 
 :root {
   /* primary */
-  --color-primary: hsl(0, 0%, 0%);
-  --color-secondary: hsl(0, 0%, 19%);
-  --color-refresh: hsl(200, 6%, 79%);
-  --color-arrow-bg: hsl(0, 0%, 60%);
-  --color-btn-color: hsl(0, 0%, 58.4%);
+  --color-vary-dark-blue: hsl(225, 13%, 12%);
+  --color-dark-grey: hsl(226, 6%, 40%);
+  --color-med-grey: hsl(223, 7%, 53%);
+  --color-light-grey: hsl(225, 17%, 82%);
+  --color-very-light-grey: hsl(230, 21%, 95%);
+  --color-red: hsl(0, 68%, 61%);
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
@@ -98,12 +99,12 @@
 
   --matching-gap-padding: 16px; */
 
-  --heading1: 12.5rem;
-  --heading2: 3.5rem;
-  --heading3: 1.5rem;
-  --heading4: 1.2rem;
-  --heading5: 1.125rem;
-  --heading6: 0.9375rem;
+  --heading-extra-lrg: 15.625rem;
+  --heading-lrg: 6rem;
+  --heading-med: 4.5rem;
+  --heading-sm: 2rem;
+  --font-size-body: 1.125rem;
+  /* --heading-xxsm: 0.9375rem; */
 
   --subheading1: 1.75rem;
   --subheading2: 0.875rem;
@@ -209,6 +210,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-family-league-spartan);
   color: var(--color-neutral-black);
+  font-size: var(--font-size-body);
 }
 /*
   6. Improve media defaults
@@ -311,6 +313,10 @@ a {
   /* display: flex;
   flex-direction: column;
   gap: 100px; */
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 @media screen and (min-width: 70rem) {

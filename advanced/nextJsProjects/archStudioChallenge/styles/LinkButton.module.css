@@ -14,8 +14,9 @@
   justify-content: center;
   align-items: center;
   gap: 24px;
-  background-color: hsl(0, 0%, 0%);
-  color: white;
+  font-weight: 700;
+  background-color: var(--bg, var(--color-neutral-black));
+  color: var(--fg, var(--color-neutral-white));
   padding-block-start: 25px;
   padding-block-end: 22px;
 }
@@ -37,6 +38,11 @@
 
 .about-btn {
   max-width: 188px;
+}
+
+.general:hover,
+.general:focus {
+  --bg: var(--color-dark-grey);
 }
 
 /* featured btn */

@@ -1,0 +1,54 @@
+.home-hero-text-content {
+  color: hsl(0, 100%, 100%);
+  position: absolute;
+  /* width: fit-content; */
+  height: min-content;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  bottom: 0;
+  margin-block: auto;
+}
+
+.home-title {
+  font-size: 3rem;
+  line-height: 0.9;
+  margin-block-end: 11px;
+}
+
+[data-activeslide="true"].carousel-slide {
+  display: revert;
+}
+
+.carousel-slide {
+  display: none;
+}
+
+.top,
+.bottom {
+  display: block;
+}
+
+.description {
+  font-size: 1.25rem;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .home-title {
+    font-size: 6rem;
+  }
+  .home-hero-text-content {
+    left: 58px;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .home-hero-text-content {
+    left: 190px;
+    width: min-content;
+  }
+}

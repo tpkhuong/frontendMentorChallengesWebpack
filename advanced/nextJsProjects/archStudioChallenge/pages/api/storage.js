@@ -134,6 +134,7 @@ export const featuredSectionContents = [
       desktop: "/portfolio/desktop/image-del-sol.jpg",
     },
     title: "Project Del Sol",
+    altText: "White Glass building near water",
   },
   // 228B Tower
   {
@@ -143,6 +144,7 @@ export const featuredSectionContents = [
       desktop: "/portfolio/desktop/image-228b.jpg",
     },
     title: "228B Tower",
+    altText: "Grey Arc Tower. Blue sky background",
   },
   // Le Prototype
   {
@@ -152,6 +154,7 @@ export const featuredSectionContents = [
       desktop: "/portfolio/desktop/image-prototype.jpg",
     },
     title: "Le Prototype",
+    altText: "Outside view of Two Story white building.",
   },
 ];
 
