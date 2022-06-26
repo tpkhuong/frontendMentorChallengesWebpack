@@ -8,7 +8,11 @@ function FeaturedSection({ children, ...props }) {
   return (
     <article className={FeaturedStyles[`featured`]}>
       <h2 className={FeaturedStyles[`section-title`]}>Featured</h2>
-      <LinkButton btnStyle="featured-btn" linkRef="/portfolio">
+      <LinkButton
+        className={FeaturedStyles[`link-btn`]}
+        btnStyle="featured-btn"
+        linkRef="/portfolio"
+      >
         See All
       </LinkButton>
       {/* featured-items-container */}

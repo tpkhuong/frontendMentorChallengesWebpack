@@ -1,0 +1,36 @@
+.featured {
+  padding: 32px;
+  padding-block-start: 73px;
+  padding-block-end: 132px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.section-title {
+  font-size: calc(var(--heading-sm) + 1rem);
+  font-weight: 700;
+}
+
+.link-btn {
+  grid-row: 3 / span 1;
+}
+
+.featured-items-container {
+  /* flex container */
+  grid-row: 2 / span 1;
+  margin-block-start: 28px;
+  margin-block-end: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media screen and (min-width: 48rem) {
+  .featured {
+    padding: 0;
+    padding-block: 200px;
+    padding-block-start: 150px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

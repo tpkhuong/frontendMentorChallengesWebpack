@@ -137,7 +137,7 @@ function Home(props) {
         <WelcomeMessage></WelcomeMessage>
         <AboutSection />
         <FeaturedSection />
-        <PortfolioCard
+        {/* <PortfolioCard
           desktop="/portfolio/desktop/image-del-sol.jpg"
           tablet="/portfolio/tablet/image-del-sol.jpg"
           mobile="/portfolio/mobile/image-del-sol.jpg"
@@ -145,7 +145,7 @@ function Home(props) {
           digit="1"
         >
           Project Del Sol
-        </PortfolioCard>
+        </PortfolioCard> */}
       </main>
       <Footer />
     </React.Fragment>
