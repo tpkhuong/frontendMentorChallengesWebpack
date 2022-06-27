@@ -47,6 +47,10 @@
 
 /* featured btn */
 
+.featured-btn {
+  grid-row: 3 / span 1;
+}
+
 /* footer btn */
 
 @media screen and (min-width: 48rem) {
@@ -61,7 +65,11 @@
   /* featured btn */
 
   .featured-btn {
-    max-width: 169px;
+    min-width: 169px;
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+    justify-self: end;
+    align-self: center;
   }
 
   /* footer btn */

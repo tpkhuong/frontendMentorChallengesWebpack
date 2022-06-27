@@ -16,9 +16,15 @@ function PortfolioCard({ children, ...props }) {
       </picture>
       <div className={PortfolioCardStyles[`text-content`]}>
         <span className={PortfolioCardStyles[`card-title`]}>{children}</span>
-        <Link href="/portfolio">
-          <a className={PortfolioCardStyles[`link-text`]}>View All Projects</a>
-        </Link>
+        {props.pageApplied == "homepage" ? (
+          <Link href="/portfolio">
+            <a className={PortfolioCardStyles[`link-text`]}>
+              View All Projects
+            </a>
+          </Link>
+        ) : (
+          <span className={PortfolioCardStyles[`date`]}>{props.monthYear}</span>
+        )}
       </div>
       {/* number rendered for portfolio card component will be based on pageApplied prop */}
       {props.pageApplied == "homepage" ? (

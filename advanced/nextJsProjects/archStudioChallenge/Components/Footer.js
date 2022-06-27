@@ -37,7 +37,7 @@ function Footer({ children, ...props }) {
                   FooterStyles[`middle-child-margin-block`]
                 }`}
               >
-                <Link href="/aboutus">
+                <Link href="/about">
                   <a className={FooterStyles[`navlink`]}>About Us</a>
                 </Link>
               </li>

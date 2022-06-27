@@ -1,6 +1,36 @@
+import React from "react";
+
 export const storeData = {};
 
 export const arrOfLinkText = ["Portfolio", "About Us", "Contact"];
+
+export const useMediaQuery = (minMax, width) => {
+  const [targetReached, setTargetReached] = React.useState(false);
+
+  const updateTarget = React.useCallback((e) => {
+    if (e.matches) {
+      setTargetReached(true);
+    } else {
+      setTargetReached(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const media = window.matchMedia(`(${minMax}-width: ${width}px)`);
+    // media.addListener(updateTarget);
+    media.addEventListener("change", (e) => updateTarget(e));
+
+    // Check on mount (callback is not called until a change occurs)
+    if (media.matches) {
+      setTargetReached(true);
+    }
+
+    // return () => media.removeListener(updateTarget);
+    return () => media.removeEventListener("change", (e) => updateTarget(e));
+  }, []);
+
+  return targetReached;
+};
 
 export const portfolioImgContents = [
   // Seraph Station
@@ -12,6 +42,8 @@ export const portfolioImgContents = [
     },
     title: "Seraph Station",
     date: "September 2019",
+    altText:
+      "Inside of building with White walls, black ceiling and huge light in middle of ceiling.",
   },
   // Eebox Building
   {
@@ -22,6 +54,7 @@ export const portfolioImgContents = [
     },
     title: "Eebox Building",
     date: "August 2017",
+    altText: "Looking up at building with Purple Red paint.",
   },
   // Federal II Tower
   {
@@ -32,6 +65,7 @@ export const portfolioImgContents = [
     },
     title: "Federal II Tower",
     date: "March 2017",
+    altText: "Outside view of high rise tower.",
   },
   // Project Del Sol
   {
@@ -42,6 +76,7 @@ export const portfolioImgContents = [
     },
     title: "Project Del Sol",
     date: "January 2016",
+    altText: "White Glass building near water",
   },
   // Le Prototype
   {
@@ -52,6 +87,7 @@ export const portfolioImgContents = [
     },
     title: "Le Prototype",
     date: "October 2015",
+    altText: "Outside view of Two Story white building.",
   },
   // 228B Tower
   {
@@ -62,6 +98,7 @@ export const portfolioImgContents = [
     },
     title: "228B Tower",
     date: "April 2015",
+    altText: "Grey Arc Tower. Blue sky background.",
   },
   // Grand Edelweiss Hotel
   {
@@ -72,6 +109,8 @@ export const portfolioImgContents = [
     },
     title: "Grand Edelweiss Hotel",
     date: "December 2013",
+    altText:
+      "Outside view of top floors of a glass building with light blue skys.",
   },
   // Netcry Tower
   {
@@ -82,6 +121,7 @@ export const portfolioImgContents = [
     },
     title: "Netcry Tower",
     date: "August 2012",
+    altText: "Inside building looking up at glassed ceiling.",
   },
   // Hypers
   {
@@ -92,6 +132,7 @@ export const portfolioImgContents = [
     },
     title: "Hypers",
     date: "January 2012",
+    altText: "Looking up inside of red painted building with no ceiling.",
   },
   // SXIV Tower
   {
@@ -102,6 +143,7 @@ export const portfolioImgContents = [
     },
     title: "SXIV Tower",
     date: "March 2011",
+    altText: "Outside view of top floors of a building with curve designs.",
   },
   // Trinity Bank Tower
   {
@@ -112,6 +154,7 @@ export const portfolioImgContents = [
     },
     title: "Trinity Bank Tower",
     date: "September 2010",
+    altText: "Outside looking up of building with 30 floors.",
   },
   // Project Paramour
   {
@@ -122,6 +165,7 @@ export const portfolioImgContents = [
     },
     title: "Project Paramour",
     date: "February 2008",
+    altText: "Outside view of building with purple and blue triangles.",
   },
 ];
 

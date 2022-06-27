@@ -6,11 +6,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: hsl(0 0% 0% /0.4);
+  background: hsl(0 0% 0% /0.2);
 }
 
 .text-content,
-.link-text {
+.link-text,
+.date {
   color: var(--color-neutral-white);
 }
 
@@ -27,11 +28,27 @@
 }
 
 .large-digit {
-  position: absolute;
-  display: inline-block;
-  top: -48px;
-  right: 16px;
-  font-size: var(--heading-extra-lrg);
-  font-weight: 700;
-  color: hsl(0 100% 100% / 0.5);
+  display: none;
+}
+
+@media screen and (min-width: 48rem) {
+  .text-content {
+    bottom: 40px;
+    left: 40px;
+  }
+  .large-digit {
+    position: absolute;
+    display: inline-block;
+    top: -48px;
+    right: 16px;
+    font-size: var(--heading-extra-lrg);
+    font-weight: 700;
+    color: hsl(0 100% 100% / 0.3);
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  .large-digit {
+    right: -15px;
+  }
 }

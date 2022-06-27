@@ -8,11 +8,7 @@ function FeaturedSection({ children, ...props }) {
   return (
     <article className={FeaturedStyles[`featured`]}>
       <h2 className={FeaturedStyles[`section-title`]}>Featured</h2>
-      <LinkButton
-        className={FeaturedStyles[`link-btn`]}
-        btnStyle="featured-btn"
-        linkRef="/portfolio"
-      >
+      <LinkButton btnStyle="featured-btn" linkRef="/portfolio">
         See All
       </LinkButton>
       {/* featured-items-container */}
@@ -31,6 +27,7 @@ function FeaturedSection({ children, ...props }) {
               desktop={imgSrc.desktop}
               tablet={imgSrc.tablet}
               mobile={imgSrc.mobile}
+              digit={`${index + 1}`}
             >
               {title}
             </PortfolioCard>

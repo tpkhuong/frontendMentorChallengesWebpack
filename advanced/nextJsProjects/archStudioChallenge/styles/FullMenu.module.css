@@ -1,4 +1,16 @@
+[data-activepage="true"].navlink::before {
+  content: "";
+  width: 25px;
+  display: inline-block;
+  height: 2px;
+  background: black;
+  position: absolute;
+  bottom: -5px;
+  left: 26px;
+}
+
 .navlink {
+  position: relative;
   font-weight: 600;
   color: var(--color-med-grey);
 }

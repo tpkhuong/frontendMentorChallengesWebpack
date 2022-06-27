@@ -2,37 +2,10 @@ import React from "react";
 import Link from "next/link";
 import FullMenu from "./FullMenu";
 import LogoNavbarStyles from "../styles/LogoNavbarContainer.module.css";
-
-const useMediaQuery = (width) => {
-  const [targetReached, setTargetReached] = React.useState(false);
-
-  const updateTarget = React.useCallback((e) => {
-    if (e.matches) {
-      setTargetReached(true);
-    } else {
-      setTargetReached(false);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    const media = window.matchMedia(`(min-width: ${width}px)`);
-    // media.addListener(updateTarget);
-    media.addEventListener("change", (e) => updateTarget(e));
-
-    // Check on mount (callback is not called until a change occurs)
-    if (media.matches) {
-      setTargetReached(true);
-    }
-
-    // return () => media.removeListener(updateTarget);
-    return () => media.removeEventListener("change", (e) => updateTarget(e));
-  }, []);
-
-  return targetReached;
-};
+import { useMediaQuery } from "../pages/api/storage";
 
 function LogoNavbar({ children, ...props }) {
-  const isTabletSize = useMediaQuery(768);
+  const isTabletSize = useMediaQuery("min", 768);
   return (
     <div className={LogoNavbarStyles[`logo-nav-wrapper`]}>
       <Link href="/">
@@ -75,7 +48,7 @@ function LogoNavbar({ children, ...props }) {
         </button>
       </div>
       {/* fullmenu navbar */}
-      {isTabletSize ? <FullMenu /> : null}
+      {isTabletSize ? <FullMenu fullUnderline={props.currActive} /> : null}
     </div>
   );
 }

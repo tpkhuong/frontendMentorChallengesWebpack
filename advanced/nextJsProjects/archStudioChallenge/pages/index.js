@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { featuredSectionContents } from "./api/storage";
+import { useMediaQuery } from "./api/storage";
 import HomeStyles from "../styles/Home/Home.module.css";
 import SlideControllerButton from "../Components/HomePage/Header/SlideControllerButton";
 import CarouselSlidesContainer from "../Components/HomePage/Header/CarouselSlidesContainer";
@@ -15,36 +16,36 @@ import PortfolioCard from "../Components/PortfolioCard";
 import Footer from "../Components/Footer";
 // import Navbar from "../Components/Navbar";
 
-const useMediaQuery = (width) => {
-  const [targetReached, setTargetReached] = React.useState(false);
+// const useMediaQuery = (width) => {
+//   const [targetReached, setTargetReached] = React.useState(false);
 
-  const updateTarget = React.useCallback((e) => {
-    if (e.matches) {
-      setTargetReached(true);
-    } else {
-      setTargetReached(false);
-    }
-  }, []);
+//   const updateTarget = React.useCallback((e) => {
+//     if (e.matches) {
+//       setTargetReached(true);
+//     } else {
+//       setTargetReached(false);
+//     }
+//   }, []);
 
-  React.useEffect(() => {
-    const media = window.matchMedia(`(max-width: ${width}px)`);
-    // media.addListener(updateTarget);
-    media.addEventListener("change", (e) => updateTarget(e));
+//   React.useEffect(() => {
+//     const media = window.matchMedia(`(max-width: ${width}px)`);
+//     // media.addListener(updateTarget);
+//     media.addEventListener("change", (e) => updateTarget(e));
 
-    // Check on mount (callback is not called until a change occurs)
-    if (media.matches) {
-      setTargetReached(true);
-    }
+//     // Check on mount (callback is not called until a change occurs)
+//     if (media.matches) {
+//       setTargetReached(true);
+//     }
 
-    // return () => media.removeListener(updateTarget);
-    return () => media.removeEventListener("change", (e) => updateTarget(e));
-  }, []);
+//     // return () => media.removeListener(updateTarget);
+//     return () => media.removeEventListener("change", (e) => updateTarget(e));
+//   }, []);
 
-  return targetReached;
-};
+//   return targetReached;
+// };
 
 function Home(props) {
-  const mobileSize = useMediaQuery(378);
+  const mobileSize = useMediaQuery("max", 378);
   return (
     <React.Fragment>
       <Head>
@@ -56,7 +57,7 @@ function Home(props) {
         />
       </Head>
 
-      <VerticalLine pageRef="/">portfolio</VerticalLine>
+      <VerticalLine pageRef="/">home</VerticalLine>
       <header role="banner" className={HomeStyles[`header`]}>
         <LogoNavbar></LogoNavbar>
         <div className={HomeStyles[`hero-img-content-wrapper`]}>

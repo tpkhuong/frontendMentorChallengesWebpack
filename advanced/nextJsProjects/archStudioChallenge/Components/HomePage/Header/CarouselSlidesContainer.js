@@ -42,7 +42,7 @@ function CarouselSlidesContainer({ children, ...props }) {
               </h1>
               <p className={CarouselSlidesStyles[`description`]}>{text}</p>
               {/* Header Btn */}
-              <LinkButton btnStyle="header-btn" linkRef="/about">
+              <LinkButton btnStyle="header-btn" linkRef="/portfolio">
                 See Our Portfolio
               </LinkButton>
             </div>

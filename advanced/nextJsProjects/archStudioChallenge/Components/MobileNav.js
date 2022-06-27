@@ -18,8 +18,8 @@ function MobileNav({ children, ...props }) {
                 key={Math.random() * index}
                 className={MobileNavStyles[`navitem`]}
               >
-                <Link href={`/${element}`}>
-                  {props.TODO == element ? (
+                <Link href={index == 1 ? `/about` : `${element.toLowerCase()}`}>
+                  {props.mobileCurrActive == element ? (
                     <a
                       data-activePage="true"
                       role="menuitem"

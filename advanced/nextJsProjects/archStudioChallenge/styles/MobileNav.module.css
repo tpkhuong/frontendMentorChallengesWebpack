@@ -11,7 +11,7 @@
 }
 
 .navbar {
-  background-color: red;
+  background-color: var(--color-very-light-grey);
   font-size: 2rem;
   position: absolute;
   /* z-index of 1 or higher than the text-content of the hero section in home page
@@ -24,10 +24,10 @@
   z-index: 1;
   top: 0;
   left: 32px;
-  right: 0;
-  bottom: 331px;
   padding-block-start: 39px;
+  padding-block-end: 34px;
   padding-inline-start: 42px;
+  padding-inline-end: 173px;
 }
 
 .navitem:nth-child(2) {
@@ -36,6 +36,11 @@
 
 .navlink {
   color: hsl(0, 0%, 0%);
+  font-weight: 700;
+}
+
+[data-activepage="true"].navlink {
+  border-bottom: 2px solid var(--color-neutral-black);
 }
 
 @media screen and (min-width: 48rem) {

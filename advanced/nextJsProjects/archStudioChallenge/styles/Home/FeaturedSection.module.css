@@ -1,3 +1,5 @@
+/* grid container */
+
 .featured {
   padding: 32px;
   padding-block-start: 73px;
@@ -6,10 +8,14 @@
   grid-template-columns: 1fr;
 }
 
+/* grid items */
+
 .section-title {
   font-size: calc(var(--heading-sm) + 1rem);
   font-weight: 700;
 }
+
+/* declaration for linkbutton with btnStyle featured-btn has to be declared in LinkButton component */
 
 .link-btn {
   grid-row: 3 / span 1;
@@ -30,7 +36,30 @@
     padding: 0;
     padding-block: 200px;
     padding-block-start: 150px;
-    display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-title {
+    font-size: var(--heading-med);
+  }
+
+  .link-btn {
+    grid-row: 3 / span 1;
+    justify-self: end;
+    align-self: center;
+  }
+  .featured-items-container {
+    /* flex container */
+    margin-block-start: 85px;
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  .featured-items-container {
+    /* flex container */
+    flex-direction: revert;
+    gap: 30px;
   }
 }

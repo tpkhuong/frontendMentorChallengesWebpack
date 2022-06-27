@@ -18,7 +18,21 @@
   color: hsl(224, 17%, 82%);
   text-transform: uppercase;
   writing-mode: vertical-lr;
-  padding-block: 39.5px;
-  letter-spacing: 8px;
+  letter-spacing: 16px;
   font-weight: 500;
+}
+
+@media screen and (min-width: 48rem) {
+  .wrapper {
+    display: flex;
+  }
+  .vertical-text {
+    padding-block: 45px;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  .vertical-text {
+    padding-block: 69px;
+  }
 }

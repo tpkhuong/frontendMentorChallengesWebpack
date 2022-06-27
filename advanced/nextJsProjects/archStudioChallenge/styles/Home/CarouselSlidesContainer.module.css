@@ -41,6 +41,7 @@
   }
   .home-hero-text-content {
     left: 58px;
+    max-width: 457px;
   }
 }
 
@@ -49,6 +50,6 @@
 @media screen and (min-width: 90rem) {
   .home-hero-text-content {
     left: 190px;
-    width: min-content;
+    max-width: 544px;
   }
 }
