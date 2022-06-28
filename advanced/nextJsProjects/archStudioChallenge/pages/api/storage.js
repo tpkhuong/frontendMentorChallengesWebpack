@@ -32,6 +32,25 @@ export const useMediaQuery = (minMax, width) => {
   return targetReached;
 };
 
+export const heroImgContent = {
+  about: {
+    src: {
+      desktop: "/about/desktop/image-hero.jpg",
+      tablet: "/about/tablet/image-hero.jpg",
+      mobile: "/about/mobile/image-hero.jpg",
+    },
+    altText: "Person doing work on Mac book Pro with I phone next to Mac Book.",
+  },
+  contact: {
+    src: {
+      desktop: "/contact/desktop/image-hero.jpg",
+      tablet: "/contact/tablet/image-hero.jpg",
+      mobile: "/contact/mobile/image-hero.jpg",
+    },
+    altText: "Black Rotary Phone.",
+  },
+};
+
 export const portfolioImgContents = [
   // Seraph Station
   {

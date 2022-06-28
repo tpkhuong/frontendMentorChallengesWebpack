@@ -1,0 +1,26 @@
+@media screen and (max-width: 48rem) {
+  .title {
+    display: none;
+  }
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .title {
+    color: var(--color-very-light-grey);
+    font-size: 9rem;
+    position: absolute;
+    top: 163px;
+    right: 0;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .title {
+    font-size: 15rem;
+    top: 90px;
+  }
+}

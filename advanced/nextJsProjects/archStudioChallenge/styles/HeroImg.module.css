@@ -1,0 +1,37 @@
+.img-wrapper {
+  position: relative;
+}
+
+.img-wrapper::before {
+  content: "";
+  background-color: var(--color-neutral-white);
+  position: absolute;
+  width: 343px;
+  height: 45px;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.img-wrapper::after {
+  content: "";
+  background-color: hsl(0 0% 0% / 0.3);
+  position: absolute;
+  inset: 0;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .img-wrapper::before {
+    display: none;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .img-wrapper {
+    width: max-content;
+  }
+}
