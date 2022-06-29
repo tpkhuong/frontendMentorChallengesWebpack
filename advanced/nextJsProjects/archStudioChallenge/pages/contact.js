@@ -1,9 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import ContactStyles from "../styles/Contact/Contact.module.css";
-import { useMediaQuery } from "./api/storage";
+import { heroImgContent, useMediaQuery } from "./api/storage";
 import VerticalLine from "../Components/VerticalLine";
-
 import LogoNavbar from "../Components/LogoNavbarContainer";
 import MobileNav from "../Components/MobileNav";
 import Footer from "../Components/Footer";

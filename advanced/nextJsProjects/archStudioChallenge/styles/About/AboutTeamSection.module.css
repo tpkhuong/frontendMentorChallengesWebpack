@@ -1,0 +1,66 @@
+.leaders-sections {
+  margin-block-start: 112px;
+  padding-block-end: 171px;
+}
+
+.title {
+  font-size: 3rem;
+  width: min-content;
+  line-height: 1;
+}
+
+.team-container {
+  margin-block-start: 55px;
+}
+
+.second-row {
+  margin-block-start: 79px;
+}
+
+@media screen and (min-width: 48rem) {
+  .leaders-sections {
+    margin-block-start: 207px;
+    margin-block-end: 242px;
+    padding-block-end: 0;
+  }
+  .title {
+    font-size: var(--heading-med);
+  }
+
+  .team-container {
+    margin-block-start: 49px;
+  }
+
+  .second-row {
+    margin-block-start: 100px;
+  }
+
+  .first-row,
+  .second-row {
+    display: flex;
+    gap: 11px;
+  }
+}
+@media screen and (min-width: 90rem) {
+  .leaders-sections {
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: 210px;
+    margin-block-end: 159px;
+  }
+
+  .title {
+    align-self: flex-start;
+  }
+
+  .team-container {
+    margin-block-start: 0;
+  }
+  .second-row {
+    margin-block-start: 63px;
+  }
+  .first-row,
+  .second-row {
+    gap: 30px;
+  }
+}

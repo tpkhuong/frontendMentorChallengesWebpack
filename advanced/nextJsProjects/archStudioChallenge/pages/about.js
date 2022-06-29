@@ -9,6 +9,7 @@ import HeroImg from "../Components/HeroImg";
 import HeroTextContent from "../Components/HeroTextContent";
 import HeroTitle from "../Components/HeroTitle";
 import HeritageSection from "../Components/AboutPage/Main/AboutHeritage";
+import TeamSection from "../Components/AboutPage/Main/AboutTeamSection";
 import Footer from "../Components/Footer";
 
 function About() {
@@ -60,8 +61,11 @@ function About() {
       <main role="main" className={AboutStyles[`main`]}>
         {/* heritage section */}
         <HeritageSection />
+        {/* Team Member Section */}
+        <TeamSection />
       </main>
       {/* footer component */}
+      <Footer />
     </React.Fragment>
   );
 }

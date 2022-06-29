@@ -51,6 +51,7 @@
     margin-block: 28px;
   }
 }
+
 @media screen and (min-width: 90rem) {
   .heritage-wrapper {
     display: flex;
