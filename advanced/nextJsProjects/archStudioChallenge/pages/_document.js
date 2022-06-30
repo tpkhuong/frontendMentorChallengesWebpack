@@ -14,6 +14,10 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;300;400;500;700&family=Libre+Caslon+Text&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
       <Main />
       <NextScript />

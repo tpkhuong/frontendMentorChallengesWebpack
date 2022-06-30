@@ -324,3 +324,7 @@ button:hover {
     display: inline-block;
   }
 }
+
+.leaflet-container {
+  height: 150px;
+}
