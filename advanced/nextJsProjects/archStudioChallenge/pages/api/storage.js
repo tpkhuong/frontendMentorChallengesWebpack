@@ -51,6 +51,19 @@ export const heroImgContent = {
   },
 };
 
+export const detailsAddressContent = {
+  firstOffice: {
+    email: "archone@email.com",
+    address: "1892 Chenoweth Drive TN",
+    phone: "123-456-3451",
+  },
+  secondOffice: {
+    email: "archtwo@email.com",
+    address: "3399 Wines Lane TX",
+    phone: "832-123-4321",
+  },
+};
+
 export const portfolioImgContents = [
   // Seraph Station
   {

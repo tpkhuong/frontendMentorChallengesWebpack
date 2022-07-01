@@ -5,7 +5,7 @@ import FooterStyles from "../styles/Footer.module.css";
 
 function Footer({ children, ...props }) {
   return (
-    <footer className={FooterStyles[`footer-wrapper`]}>
+    <footer role="content-info" className={FooterStyles[`footer-wrapper`]}>
       <div className={FooterStyles[`footer-style-wrapper`]}>
         <div className={FooterStyles[`footer-logo-nav-container`]}>
           <div className={FooterStyles[`footer-logo-bg`]}>

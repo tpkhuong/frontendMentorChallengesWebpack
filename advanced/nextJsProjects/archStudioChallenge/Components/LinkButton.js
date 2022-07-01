@@ -14,7 +14,13 @@ function LinkButton({ children, ...props }) {
           width="26"
           height="20"
         >
-          <g fill="none" fillRule="evenodd" stroke="#1B1D23" strokeWidth="2">
+          <g
+            className={LinkStyle[`element`]}
+            fill="none"
+            fillRule="evenodd"
+            stroke="#1B1D23"
+            strokeWidth="2"
+          >
             <path d="M15 1l9 9-9 9M0 10h24" />
           </g>
         </svg>

@@ -1,4 +1,4 @@
-.arrow-icon g {
+.arrow-icon .element {
   stroke: hsl(0, 100%, 100%);
 }
 
@@ -49,6 +49,17 @@
 
 .featured-btn {
   grid-row: 3 / span 1;
+}
+
+/* contact btn */
+
+.contact-btn {
+  --bg: var(--color-neutral-white);
+  --fg: var(--color-neutral-black);
+}
+
+.contact-btn .element {
+  stroke: var(--color-neutral-black);
 }
 
 /* footer btn */

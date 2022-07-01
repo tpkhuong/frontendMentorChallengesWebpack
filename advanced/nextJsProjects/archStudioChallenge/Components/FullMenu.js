@@ -20,7 +20,7 @@ function FullMenu({ children, ...props }) {
               <Link href={index == 1 ? `/about` : `${element.toLowerCase()}`}>
                 {props.fullUnderline == element ? (
                   <a
-                    data-activePage="true"
+                    data-activepage="true"
                     role="menuitem"
                     className={FullMenuStyles[`navlink`]}
                   >

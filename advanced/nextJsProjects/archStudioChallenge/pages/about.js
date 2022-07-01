@@ -10,6 +10,7 @@ import HeroTextContent from "../Components/HeroTextContent";
 import HeroTitle from "../Components/HeroTitle";
 import HeritageSection from "../Components/AboutPage/Main/AboutHeritage";
 import TeamSection from "../Components/AboutPage/Main/AboutTeamSection";
+import LinkButton from "../Components/LinkButton";
 import Footer from "../Components/Footer";
 
 function About() {
