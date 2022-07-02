@@ -56,6 +56,8 @@
 .contact-btn {
   --bg: var(--color-neutral-white);
   --fg: var(--color-neutral-black);
+  padding-block: 0;
+  width: max-content;
 }
 
 .contact-btn .element {
@@ -81,6 +83,13 @@
     grid-column: 2 / span 1;
     justify-self: end;
     align-self: center;
+  }
+
+  /* contact btn */
+
+  .contact-btn {
+    align-self: flex-end;
+    margin-block-end: 20px;
   }
 
   /* footer btn */

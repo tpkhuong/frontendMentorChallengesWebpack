@@ -4,7 +4,7 @@ import InfoStyles from "../../../styles/Contact/InfoDetails.module.css";
 function InfoDetails({ children, ...props }) {
   const [emailAddress, officeAddress, telephone] = children;
   return (
-    <div>
+    <div className={InfoStyles[`info-container`]}>
       {/* email */}
       <div>
         <span className={InfoStyles[`info-name`]}>Email :</span>

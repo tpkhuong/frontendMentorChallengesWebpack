@@ -1,0 +1,31 @@
+.address-container:nth-of-type(2) {
+  margin-block-start: 40px;
+}
+
+.title {
+  color: var(--color-dark-grey);
+  font-weight: 700;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .info-map-container {
+    margin-block-start: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .address-container:nth-of-type(2) {
+    margin-block-start: 0;
+  }
+  .info-map-container {
+    margin-block-start: 14px;
+    display: revert;
+    justify-content: space-between;
+  }
+}

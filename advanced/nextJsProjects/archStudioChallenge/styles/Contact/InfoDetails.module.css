@@ -1,0 +1,25 @@
+.info-container {
+  color: var(--color-dark-grey);
+  margin-block: 43px;
+  margin-block-start: 14px;
+}
+
+.info-name {
+  font-weight: 700;
+  margin-inline-end: 10px;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .info-container {
+    margin-block: 0;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 90rem) {
+  .info-container {
+    margin-block-end: 59px;
+  }
+}
