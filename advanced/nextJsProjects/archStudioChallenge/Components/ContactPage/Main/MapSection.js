@@ -18,12 +18,17 @@ function MapSection({ children, ...props }) {
       container: "our-map",
       style: "mapbox://styles/mapbox/streets-v11",
       accessToken: `${process.env.NEXT_PUBLIC_MAPBOX_API}`,
-      center: [-74.5, 40],
-      zoom: 9,
+      // lng,lat
+      center: [-91.831833, 35.20105],
+      zoom: 4,
       projection: "globe",
     });
-    const marker1 = new mapboxgl.Marker().setLngLat([-74.5, 40]).addTo(map);
-    const marker2 = new mapboxgl.Marker().setLngLat([-74.6, 40.5]).addTo(map);
+    const marker1 = new mapboxgl.Marker()
+      .setLngLat([-86.686206, 36.2062843])
+      .addTo(map);
+    const marker2 = new mapboxgl.Marker()
+      .setLngLat([-96.8493325, 32.8300299])
+      .addTo(map);
   });
   return <div className={MapStyles[`map`]} id="our-map"></div>;
 }

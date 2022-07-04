@@ -64,7 +64,7 @@ function Contact() {
         {/* contact details */}
         <DetailsSection />
         {/* map */}
-        {/* <MapSection /> */}
+        <MapSection />
       </main>
       {/* footer component */}
     </React.Fragment>
