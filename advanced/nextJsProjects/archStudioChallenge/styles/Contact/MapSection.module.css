@@ -1,4 +1,22 @@
 .map {
-  width: 375px;
-  height: 367px;
+  max-width: 375px;
+  min-height: 367px;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .map {
+    max-width: 572px;
+    min-height: 560px;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .map {
+    max-width: 1110px;
+    min-height: 560px;
+  }
 }
