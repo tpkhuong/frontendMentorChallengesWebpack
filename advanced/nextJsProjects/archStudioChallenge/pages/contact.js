@@ -11,6 +11,7 @@ import HeroTitle from "../Components/HeroTitle";
 import MobileNav from "../Components/MobileNav";
 import DetailsSection from "../Components/ContactPage/Main/ContactDetailsSection";
 import MapSection from "../Components/ContactPage/Main/MapSection";
+import ConnectSection from "../Components/ContactPage/Main/ConnectSection";
 import Footer from "../Components/Footer";
 // process.env is used with export async function getStaticProps
 // for server side in env.local we dont have to prefix NEXT_PUBLIC_
@@ -65,6 +66,8 @@ function Contact() {
         <DetailsSection />
         {/* map */}
         <MapSection />
+        {/* Connect Section */}
+        <ConnectSection></ConnectSection>
       </main>
       {/* footer component */}
     </React.Fragment>

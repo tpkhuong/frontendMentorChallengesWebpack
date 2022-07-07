@@ -4,10 +4,14 @@ import LinkStyle from "../styles/LinkButton.module.css";
 
 function LinkButton({ children, ...props }) {
   console.log(props);
+
   return (
     <Link href={props.linkRef}>
       <a className={`${LinkStyle[`${props.btnStyle}`]} ${LinkStyle.general}`}>
-        <span className={LinkStyle[`icon-text`]}>{children}</span>
+        {/* if children is null render nothing */}
+        {children != null ? (
+          <span className={LinkStyle[`icon-text`]}>{children}</span>
+        ) : null}
         <svg
           className={LinkStyle[`arrow-icon`]}
           xmlns="http://www.w3.org/2000/svg"

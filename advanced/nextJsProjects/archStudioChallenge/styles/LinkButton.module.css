@@ -64,6 +64,10 @@
   stroke: var(--color-neutral-black);
 }
 
+/* arrow non text btn */
+
+/* .arrow-btn{} */
+
 /* footer btn */
 
 @media screen and (min-width: 48rem) {

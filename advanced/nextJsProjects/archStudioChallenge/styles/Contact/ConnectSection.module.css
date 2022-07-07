@@ -1,0 +1,39 @@
+.arrow {
+  stroke: var(--color-neutral-white);
+}
+
+/* form: mobile: 311px, tablet: 572px, desktop: 730px */
+
+.submit-btn {
+  background-color: var(--color-neutral-black);
+}
+
+.input-name,
+.input-email,
+.input-message {
+  border: 0;
+}
+
+.input-name::placeholder,
+.input-email::placeholder,
+.input-message::placeholder {
+  font-weight: 700;
+  color: hsl(0 68% 61% / 0.7);
+}
+
+/* .input-name:empty,
+.input-email:empty,
+.input-message:empty {
+  border-bottom: 1px solid red;
+} */
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
