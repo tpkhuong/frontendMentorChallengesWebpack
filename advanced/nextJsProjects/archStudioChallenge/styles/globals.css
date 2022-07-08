@@ -232,6 +232,7 @@ button,
 textarea,
 select {
   font: inherit;
+  border: 0;
 }
 /*
   8. Avoid text overflows

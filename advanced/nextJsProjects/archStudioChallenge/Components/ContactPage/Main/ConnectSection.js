@@ -4,7 +4,7 @@ import LinkButton from "../../LinkButton";
 
 function ConnectSection({ children, ...props }) {
   return (
-    <article className={ConnectStyles[`connet-section`]}>
+    <article className={ConnectStyles[`connect-section`]}>
       {/* title */}
       <h2 className={ConnectStyles[`title`]}>Connect with us</h2>
       {/* form */}
@@ -24,7 +24,7 @@ function ConnectSection({ children, ...props }) {
             placeholder="Name"
             data-isempty="false"
           />
-          <span></span>
+          <span className={ConnectStyles[`error-message`]}>Can't be empty</span>
         </div>
         {/* label and input: email */}
         <div className={ConnectStyles[`email-container`]}>
@@ -38,7 +38,7 @@ function ConnectSection({ children, ...props }) {
             placeholder="Email"
             data-isempty="false"
           />
-          <span></span>
+          <span className={ConnectStyles[`error-message`]}>Can't be empty</span>
         </div>
         {/* label and input: textarea */}
         <div className={ConnectStyles[`message-container`]}>
@@ -52,10 +52,11 @@ function ConnectSection({ children, ...props }) {
             placeholder="Message"
             data-isempty="false"
           />
-          <span></span>
+          <span className={ConnectStyles[`error-message`]}>Can't be empty</span>
         </div>
         {/* button */}
         <button
+          onClick={handleErrorMessage}
           aria-label="submit message"
           type="button"
           className={ConnectStyles[`submit-btn`]}
@@ -80,6 +81,19 @@ function ConnectSection({ children, ...props }) {
       </form>
     </article>
   );
+}
+
+function handleErrorMessage(event) {
+  //   find input/textarea with empty values
+  const arrayOfEmptyInputs = [
+    ...document.querySelectorAll("[data-isempty]"),
+  ].reduce(function findEmptyElement(buildingUp, currentElement) {
+    if (currentElement.value === "") {
+      buildingUp = [...buildingUp, currentElement];
+    }
+    return buildingUp;
+  }, []);
+  // loop through arrayOfEmptyInputs and change data-isempty value to true
 }
 
 export default ConnectSection;

@@ -1,6 +1,7 @@
 .map {
   max-width: 375px;
   min-height: 367px;
+  margin-block: 72px;
 }
 
 /* tablet */

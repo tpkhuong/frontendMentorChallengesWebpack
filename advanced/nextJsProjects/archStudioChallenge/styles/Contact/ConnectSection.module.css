@@ -1,24 +1,89 @@
+.connect-section {
+  padding-inline: 32px;
+}
+
+.title {
+  font-size: 3rem;
+  width: min-content;
+  line-height: 1;
+  margin-block-end: 42px;
+}
+
+.form {
+  position: relative;
+}
+
 .arrow {
   stroke: var(--color-neutral-white);
+}
+
+.email-container {
+  margin-block: 32px;
+}
+
+.name-container,
+.email-container,
+.message-container {
+  position: relative;
 }
 
 /* form: mobile: 311px, tablet: 572px, desktop: 730px */
 
 .submit-btn {
   background-color: var(--color-neutral-black);
+  padding-inline: 27px;
+  padding-block: 30px;
+  position: absolute;
+  right: 0;
+  bottom: -75px;
 }
 
 .input-name,
 .input-email,
 .input-message {
-  border: 0;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-light-grey);
+  width: 100%;
+  padding: 34px;
+  padding-block-start: 0;
+  /* border: 0; */
+}
+
+[data-isempty="true"].input-name,
+[data-isempty="true"].input-email,
+[data-isempty="true"].input-message {
+  border-bottom-color: hsl(0 68% 61% / 0.7);
 }
 
 .input-name::placeholder,
 .input-email::placeholder,
 .input-message::placeholder {
   font-weight: 700;
+  color: hsl(225 17% 82% / 0.8);
+  /* color: hsl(0 68% 61% / 0.7); */
+}
+
+[data-isempty="true"].input-name::placeholder,
+[data-isempty="true"].input-email::placeholder,
+[data-isempty="true"].input-message::placeholder {
   color: hsl(0 68% 61% / 0.7);
+}
+
+.error-message {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-red);
+  position: absolute;
+  display: none;
+  left: 32px;
+  bottom: -32px;
+}
+
+[data-isempty="true"].input-name + .error-message,
+[data-isempty="true"].input-email + .error-message,
+[data-isempty="true"].input-message + .error-message {
+  display: revert;
 }
 
 /* .input-name:empty,
