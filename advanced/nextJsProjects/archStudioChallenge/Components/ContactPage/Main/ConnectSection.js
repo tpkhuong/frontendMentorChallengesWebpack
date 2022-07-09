@@ -34,7 +34,7 @@ function ConnectSection({ children, ...props }) {
           <input
             className={ConnectStyles[`input-email`]}
             type="email"
-            id="full-name"
+            id="email"
             placeholder="Email"
             data-isempty="false"
           />
@@ -47,8 +47,7 @@ function ConnectSection({ children, ...props }) {
           </label>
           <textarea
             className={ConnectStyles[`input-message`]}
-            name="message"
-            id="full-name"
+            id="message"
             placeholder="Message"
             data-isempty="false"
           />
@@ -84,16 +83,28 @@ function ConnectSection({ children, ...props }) {
 }
 
 function handleErrorMessage(event) {
-  //   find input/textarea with empty values
-  const arrayOfEmptyInputs = [
+  //   use reduce return an array with two subarrays
+  //  one find input/textarea with empty values
+  //  one find input/textarea with values
+  const arrayOfSubarrays = [
     ...document.querySelectorAll("[data-isempty]"),
-  ].reduce(function findEmptyElement(buildingUp, currentElement) {
-    if (currentElement.value === "") {
-      buildingUp = [...buildingUp, currentElement];
-    }
-    return buildingUp;
-  }, []);
+  ].reduce(
+    function findEmptyElement(buildingUp, currentElement) {
+      if (currentElement.value === "") {
+        buildingUp = [...buildingUp, currentElement];
+      }
+      return buildingUp;
+    },
+    [[], []]
+  );
+  console.log(arrayOfSubarrays);
   // loop through arrayOfEmptyInputs and change data-isempty value to true
+  // loop through arrayOfInputs and change data-isempty value to false
+  //   for (let element of arrayOfEmptyInputs) {
+  //     element.getAttribute("data-isempty") == "false"
+  //       ? element.setAttribute("data-isempty", "true")
+  //       : null;
+  //   }
 }
 
 export default ConnectSection;
