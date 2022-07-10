@@ -10,6 +10,8 @@
   .map {
     max-width: 572px;
     min-height: 560px;
+    margin-block: 226px;
+    margin-block-end: 200px;
   }
 }
 
@@ -19,5 +21,6 @@
   .map {
     max-width: 1110px;
     min-height: 560px;
+    margin-block-end: 159px;
   }
 }

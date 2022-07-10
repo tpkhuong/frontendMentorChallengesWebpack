@@ -54,6 +54,10 @@ function ClockContainer(props) {
     const weekNumberElement = document.querySelector(
       ".week-number .bottom-value"
     );
+    /**
+     * call code in .then(function workWithData(response){}) func
+     *  **/
+    // data file is placeholder data. we will work with data from api call
     const { data } = dataFile;
     const city = getCity(data.timezone.id);
     const standardTimezone = data.timezone.code;
@@ -174,6 +178,9 @@ function ClockContainer(props) {
     //     useTimezone,
     //   }
     // );
+    /**
+     * call code in .then(function workWithData(response){}) func
+     *  **/
     /**
      * ***** *****
      * instead of making another api call to get location's sunrise/sunset time

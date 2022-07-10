@@ -27,7 +27,7 @@
   .contact-details {
     padding-inline: 0;
     padding-block-start: 49px;
-    margin-block: 226px;
+    /* margin-block: 226px; */
     margin-block-start: 200px;
   }
 
@@ -42,7 +42,7 @@
     padding-block-start: 73px;
     display: flex;
     justify-content: space-between;
-    margin-block: 200px;
+    /* margin-block-star: 200px; */
   }
   .address-content-container {
     display: flex;

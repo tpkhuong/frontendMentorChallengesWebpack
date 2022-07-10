@@ -1,6 +1,5 @@
 import React from "react";
 import ConnectStyles from "../../../styles/Contact/ConnectSection.module.css";
-import LinkButton from "../../LinkButton";
 
 function ConnectSection({ children, ...props }) {
   return (
@@ -86,25 +85,32 @@ function handleErrorMessage(event) {
   //   use reduce return an array with two subarrays
   //  one find input/textarea with empty values
   //  one find input/textarea with values
-  const arrayOfSubarrays = [
+  const [arrayEmptyValueElements, arrayValueElements] = [
     ...document.querySelectorAll("[data-isempty]"),
   ].reduce(
     function findEmptyElement(buildingUp, currentElement) {
       if (currentElement.value === "") {
-        buildingUp = [...buildingUp, currentElement];
+        buildingUp[0] = [...buildingUp[0], currentElement];
+      } else {
+        buildingUp[1] = [...buildingUp[1], currentElement];
       }
       return buildingUp;
     },
     [[], []]
   );
-  console.log(arrayOfSubarrays);
+  console.log(arrayEmptyValueElements, arrayValueElements);
   // loop through arrayOfEmptyInputs and change data-isempty value to true
+  for (let element of arrayEmptyValueElements) {
+    element.getAttribute("data-isempty") == "false"
+      ? element.setAttribute("data-isempty", "true")
+      : null;
+  }
   // loop through arrayOfInputs and change data-isempty value to false
-  //   for (let element of arrayOfEmptyInputs) {
-  //     element.getAttribute("data-isempty") == "false"
-  //       ? element.setAttribute("data-isempty", "true")
-  //       : null;
-  //   }
+  arrayValueElements.forEach(function removeErrorMessage(element) {
+    element.getAttribute("data-isempty") == "true"
+      ? element.setAttribute("data-isempty", "false")
+      : null;
+  });
 }
 
 export default ConnectSection;

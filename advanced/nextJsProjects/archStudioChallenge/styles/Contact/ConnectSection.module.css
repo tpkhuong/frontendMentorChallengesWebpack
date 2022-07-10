@@ -102,3 +102,22 @@
   padding: 0;
   border: 0;
 }
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .connect-section {
+    padding-inline: 0;
+  }
+
+  .title {
+    font-size: var(--heading-med);
+    width: revert;
+    line-height: revert;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+}
