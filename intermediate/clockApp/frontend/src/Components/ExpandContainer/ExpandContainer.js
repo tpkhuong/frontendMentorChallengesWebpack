@@ -11,9 +11,6 @@ function ExpandContainer(props) {
     dayOfWeek: "",
     weekNum: "",
   };
-  alert(
-    "check day of week for worldtimeapi tomorrow. refactor expand content algorithm"
-  );
 
   const [expandObj, useExpand] = useState(initialContent);
   // make api call to `https://api.ipbase.com/v2/info?apikey=${dataStorage.apiKey}&ip=${dataStorage.ip}`
@@ -89,19 +86,35 @@ function ExpandContainer(props) {
           //   weekNum: week_number,
           // });
           // update UI using functional updates form of useState
-          // useExpand((prevValues) => {
-          //   return {
-          //     ...prevValues,
-          //     region: `${obj.responseArea}/${obj.responseLocation}`,
-          //     dayOfYear: day_of_year,
-          //     dayOfWeek: day_of_week,
-          //     weekNum: week_number,
-          //   };
-          // });
+          useExpand((prevValues) => {
+            return {
+              ...prevValues,
+              region: `America/New York`,
+              dayOfYear: 323,
+              dayOfWeek: 2,
+              weekNum: 35,
+              /**
+               * umcomment code below to test clock algoritm with api call
+               * **/
+              // region: `${obj.responseArea}/${obj.responseLocation}`,
+              // dayOfYear: day_of_year,
+              // dayOfWeek: day_of_week,
+              // weekNum: week_number,
+            };
+          });
           // save reference to dayOfWeek,dayOfYear,weekNumber to storage obj
-          dataStorage.dateInfo.dayOfWeek = day_of_week;
-          dataStorage.dateInfo.dayOfYear = day_of_year;
-          dataStorage.dateInfo.weekNumber = week_number;
+          /**
+           * change value below to test our clock algorithm
+           * **/
+          dataStorage.dateInfo.dayOfWeek = 2;
+          dataStorage.dateInfo.dayOfYear = 323;
+          dataStorage.dateInfo.weekNumber = 35;
+          /**
+           * umcomment code below to test clock algoritm with api call
+           * **/
+          // dataStorage.dateInfo.dayOfWeek = day_of_week;
+          // dataStorage.dateInfo.dayOfYear = day_of_year;
+          // dataStorage.dateInfo.weekNumber = week_number;
         }
       }
     );
@@ -113,25 +126,25 @@ function ExpandContainer(props) {
       <div className="timezone-year">
         <ExpandContent contentClass="timezone">
           {"Current Timzone"}
-          {"Europe/London"}
-          {/* {expandObj.region} */}
+          {/* {"Europe/London"} */}
+          {expandObj.region}
         </ExpandContent>
         <ExpandContent contentClass="day-year">
           {"Day of the year"}
-          {116}
-          {/* {expandObj.dayOfYear} */}
+          {/* {116} */}
+          {expandObj.dayOfYear}
         </ExpandContent>
       </div>
       <div className="day-week-number">
         <ExpandContent contentClass="day-week">
           {"Day of the week"}
-          {5}
-          {/* {expandObj.dayOfWeek} */}
+          {/* {5} */}
+          {expandObj.dayOfWeek}
         </ExpandContent>
         <ExpandContent contentClass="week-number">
           {"week number"}
-          {26}
-          {/* {expandObj.weekNum} */}
+          {/* {26} */}
+          {expandObj.weekNum}
         </ExpandContent>
       </div>
     </React.Fragment>
@@ -142,15 +155,17 @@ export default ExpandContainer;
 
 function note() {
   function text(url) {
-    return fetch(url).then((res) => res.text());
+    return fetch(url).then((res) => {
+      return res.text();
+    });
   }
 
   text("https://www.cloudflare.com/cdn-cgi/trace").then((data) => {
-    let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-    let ip = data.match(ipRegex)[0];
+    const ip4and6Regex =
+      /(?:^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$)|(?:^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$)/gm;
+    // let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+    let ip = data.match(ip4and6Regex)[0];
     console.log(ip);
   });
   // regex to be used with text function above to parse ipv4 and ipv6 address
-  const ip4and6Regex =
-    /(?:^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$)|(?:^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$)/gm;
 }

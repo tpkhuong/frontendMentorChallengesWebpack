@@ -305,6 +305,7 @@ export function clock(elements, storageTimeObj, stateObj) {
         //     : `${storageTimeObj.time.minute}`;
       }
     }
+    console.log(storageTimeObj);
     console.log(storageTimeObj.time);
   }, 1000);
 }
@@ -357,6 +358,7 @@ function updateExpandContentValues(elementObj, storeObj) {
   // check if time is 12am
   if (storeObj.time.hour == 12 && storeObj.time.meridiem == "am") {
     // date info obj
+
     // week number add 1 start of new week: when value of dayOfWeek in dateInfo obj is 6 we will assign value of 0 to dayOfweek
     // which will be start of new week.
     // also check for last day of year
@@ -365,24 +367,27 @@ function updateExpandContentValues(elementObj, storeObj) {
         ? // update element
           // we will update week number when day of week is 6
           // && when storeObj.dateInfo.dayOfYear == 365 && storeObj.dateInfo.weekNumber == 52
-          (1,
-          (elementObj.weekNumberElement.innerText = `${storeObj.dateInfo.weekNumber}`))
+          1
         : // when dayOfYear is <= 365 we will check if dayOfWeek is 6. add one to weekNumber
         storeObj.dateInfo.dayOfWeek == 6
-        ? (storeObj.dateInfo.weekNumber++,
-          (elementObj.weekNumber.innerText = `${storeObj.dateInfo.weekNumber}`))
+        ? (storeObj.dateInfo.weekNumber += 1)
         : storeObj.dateInfo.weekNumber;
     // day of year add 1 at 12am. when day of year is 365 assign 1 to day of year in dateInfo obj
     storeObj.dateInfo.dayOfYear =
-      storeObj.dateInfo.dayOfYear == 365 ? 1 : storeObj.dateInfo.dayOfYear++;
-
+      storeObj.dateInfo.dayOfYear == 365
+        ? 1
+        : (storeObj.dateInfo.dayOfYear += 1);
+    // we want to update week number when day of week changes from 6 to 0
+    storeObj.dateInfo.dayOfWeek == 6
+      ? (elementObj.weekNumberElement.innerText = `${storeObj.dateInfo.weekNumber}`)
+      : null;
     // day of week add 1 at 12am: day of week will be assign value 0 when value of dayOfWeek in dateInfo obj is 6
     storeObj.dateInfo.dayOfWeek =
-      storeObj.dateInfo.dayOfWeek == 6 ? 0 : storeObj.dateInfo.dayOfWeek++;
+      storeObj.dateInfo.dayOfWeek == 6 ? 0 : (storeObj.dateInfo.dayOfWeek += 1);
     // update element
     // will always update day of year and day of week when time is 12am
     elementObj.dayYearElement.innerText = `${storeObj.dateInfo.dayOfYear}`;
-    elementObj.dayWeekElement.innerText = `${storeObj.dateInfo.dayWeekElement}`;
+    elementObj.dayWeekElement.innerText = `${storeObj.dateInfo.dayOfWeek}`;
   }
 }
 
