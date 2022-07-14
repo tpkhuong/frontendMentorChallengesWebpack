@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import ContactStyles from "../styles/Contact/Contact.module.css";
-import { heroImgContent, useMediaQuery } from "./api/storage";
+import { heroImgContent, useMediaQuery } from "../src/storage";
 import VerticalLine from "../Components/VerticalLine";
 import LogoNavbar from "../Components/LogoNavbarContainer";
 import HeroImg from "../Components/HeroImg";
@@ -70,6 +70,7 @@ function Contact() {
         <ConnectSection></ConnectSection>
       </main>
       {/* footer component */}
+      <Footer />
     </React.Fragment>
   );
 }

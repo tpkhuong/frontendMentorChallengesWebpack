@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import TechStyles from "../styles/Technology.module.css";
-import { storageObj } from "./api/storage";
+import { storageObj } from "../src/storage";
 import { horizontalVerticalTabpanel } from "../src/helperFunc";
 import Image from "next/image";
 /**
@@ -19,7 +19,7 @@ import Image from "next/image";
 import Head from "next/head";
 import favicon from "../public/favicon-32x32.png";
 import Link from "next/link";
-import data from "./api/data.json";
+import data from "../src/data.json";
 import Header from "../Components/Header";
 import SectionWrapper from "../Components/SectionWrapper";
 // import Navbar from "../Components/Navbar";

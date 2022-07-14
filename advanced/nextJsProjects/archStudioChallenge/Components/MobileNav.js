@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import MobileNavStyles from "../styles/MobileNav.module.css";
-import { arrOfLinkText } from "../pages/api/storage";
+import { arrOfLinkText } from "../src/storage";
 
 function MobileNav({ children, ...props }) {
   return (

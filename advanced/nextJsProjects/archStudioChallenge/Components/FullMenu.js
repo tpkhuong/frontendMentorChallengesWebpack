@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import FullMenuStyles from "../styles/FullMenu.module.css";
-import { arrOfLinkText } from "../pages/api/storage";
+import { arrOfLinkText } from "../src/storage";
 
 function FullMenu({ children, ...props }) {
   return (

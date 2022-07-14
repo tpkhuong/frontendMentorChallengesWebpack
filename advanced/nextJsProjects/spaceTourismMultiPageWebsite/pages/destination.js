@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { storageObj } from "./api/storage";
+import { storageObj } from "../src/storage";
 import Head from "next/head";
 import Image from "next/image";
 import Moon from "../starter-code/assets/destination/image-moon.png";
@@ -9,7 +9,7 @@ import Titan from "../starter-code/assets/destination/image-titan.png";
 import favicon from "../public/favicon-32x32.png";
 import DestStyles from "../styles/Destination.module.css";
 import Link from "next/link";
-import data from "./api/data.json";
+import data from "../src/data.json";
 import Header from "../Components/Header";
 import SectionWrapper from "../Components/SectionWrapper";
 import { horizontalVerticalTabpanel } from "../src/helperFunc";

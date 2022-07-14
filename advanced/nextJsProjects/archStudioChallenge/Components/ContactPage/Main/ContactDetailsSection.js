@@ -1,6 +1,6 @@
 import React from "react";
 import DetailStyles from "../../../styles/Contact/ContactDetailsSection.module.css";
-import { detailsAddressContent } from "../../../pages/api/storage";
+import { detailsAddressContent } from "../../../src/storage";
 import InfoDetails from "./InfoDetails";
 import Address from "./Address";
 import LinkButton from "../../LinkButton";

@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import PortfolioStyles from "../styles/Portfolio/Portfolio.module.css";
-import { useMediaQuery, portfolioImgContents } from "./api/storage";
+import { useMediaQuery, portfolioImgContents } from "../src/storage";
 import VerticalLine from "../Components/VerticalLine";
 import LogoNavbar from "../Components/LogoNavbarContainer";
 import MobileNav from "../Components/MobileNav";

@@ -1,4 +1,4 @@
-import { storageObj } from "../pages/api/storage";
+import { storageObj } from "./storage";
 
 export function horizontalVerticalTabpanel(event) {
   const [first, last] = getTabButtons(

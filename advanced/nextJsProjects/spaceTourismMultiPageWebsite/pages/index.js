@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home.module.css";
-import { storageObj } from "./api/storage";
-import data from "./api/data.json";
+import { storageObj } from "../src/storage";
+import data from "../src/data.json";
 import Link from "next/link";
 import Image from "next/image";
 // import sample from "../starter-code/assets/crew/image-douglas-hurley.png";

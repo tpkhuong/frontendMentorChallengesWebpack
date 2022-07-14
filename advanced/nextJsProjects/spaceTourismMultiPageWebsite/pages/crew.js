@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { storageObj } from "./api/storage";
+import { storageObj } from "../src/storage";
 import CrewStyles from "../styles/Crew.module.css";
 import Head from "next/head";
 import Hurley from "../starter-code/assets/crew/image-douglas-hurley.png";
@@ -8,7 +8,7 @@ import Shuttleworth from "../starter-code/assets/crew/image-mark-shuttleworth.pn
 import Glover from "../starter-code/assets/crew/image-victor-glover.png";
 import Ansari from "../starter-code/assets/crew/image-anousheh-ansari.png";
 import favicon from "../public/favicon-32x32.png";
-import data from "./api/data.json";
+import data from "../src/data.json";
 import Link from "next/link";
 import Header from "../Components/Header";
 import SectionWrapper from "../Components/SectionWrapper";

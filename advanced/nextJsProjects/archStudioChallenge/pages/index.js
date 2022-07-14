@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
-import { featuredSectionContents } from "./api/storage";
-import { useMediaQuery } from "./api/storage";
+// import { featuredSectionContents } from "./api/storage";
+import { useMediaQuery } from "../src/storage";
 import HomeStyles from "../styles/Home/Home.module.css";
 import SlideControllerButton from "../Components/HomePage/Header/SlideControllerButton";
 import CarouselSlidesContainer from "../Components/HomePage/Header/CarouselSlidesContainer";

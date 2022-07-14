@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import NavStyles from "../styles/Navbar.module.css";
-import { storageObj, arrayOfLinkText } from "../pages/api/storage";
+import { storageObj, arrayOfLinkText } from "../src/storage";
 
 function Navbar(props) {
   const { layout, currentPage } = props;

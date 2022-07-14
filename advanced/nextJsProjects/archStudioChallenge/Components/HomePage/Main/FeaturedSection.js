@@ -1,5 +1,5 @@
 import React from "react";
-import { featuredSectionContents } from "../../../pages/api/storage";
+import { featuredSectionContents } from "../../../src/storage";
 import FeaturedStyles from "../../../styles/Home/FeaturedSection.module.css";
 import PortfolioCard from "../../PortfolioCard";
 import LinkButton from "../../LinkButton";

@@ -3,7 +3,7 @@ import LinkButton from "../../LinkButton";
 import {
   featuredSectionContents,
   slideElementContent,
-} from "../../../pages/api/storage";
+} from "../../../src/storage.js";
 import CarouselSlidesStyles from "../../../styles/Home/CarouselSlidesContainer.module.css";
 
 function CarouselSlidesContainer({ children, ...props }) {

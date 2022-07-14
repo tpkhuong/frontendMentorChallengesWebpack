@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import FullMenu from "./FullMenu";
 import LogoNavbarStyles from "../styles/LogoNavbarContainer.module.css";
-import { useMediaQuery } from "../pages/api/storage";
+import { useMediaQuery } from "../src/storage";
 
 function LogoNavbar({ children, ...props }) {
   const isTabletSize = useMediaQuery("min", 768);

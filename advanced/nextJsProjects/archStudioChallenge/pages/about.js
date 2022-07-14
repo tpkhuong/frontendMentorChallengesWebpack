@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import AboutStyles from "../styles/About/About.module.css";
-import { heroImgContent, useMediaQuery } from "../pages/api/storage";
+import { heroImgContent, useMediaQuery } from "../src/storage";
 import VerticalLine from "../Components/VerticalLine";
 import LogoNavbar from "../Components/LogoNavbarContainer";
 import MobileNav from "../Components/MobileNav";
