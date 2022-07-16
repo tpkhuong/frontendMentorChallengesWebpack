@@ -22,3 +22,9 @@ const UserSchema = new mongoose.Schema(
 );
 
 module.exports = UserSchema;
+/**
+ * below: true return left of || false return right of ||
+ * works with export async connect func in database.js
+ * import connect and require user model in addUser.js
+ * **/
+// module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
