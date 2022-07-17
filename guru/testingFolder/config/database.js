@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const dbConnectString = process.env.MONGO_DB;
+const dbConnectString = process.env.NEXT_PUBLIC_MONGO_DB;
 
 const dbConnection = mongoose.createConnection(dbConnectString, {
   useNewUrlParser: true,

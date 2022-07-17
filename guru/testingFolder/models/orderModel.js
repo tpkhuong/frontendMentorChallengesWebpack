@@ -7,9 +7,14 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    quantity: {
-      type: Number,
+    item: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Item",
+      orderQuantity: Number,
     },
+    // quantity of purchase item will be in item property
+    totalPrice: Number,
   },
   {
     timestamps: true,

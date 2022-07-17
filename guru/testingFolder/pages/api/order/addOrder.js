@@ -1,6 +1,7 @@
 import dbConnection from "../../../utils/dbConnect";
 const User = dbConnection.models.User;
 const Order = dbConnection.models.Order;
+const Item = dbConnection.models.Item;
 
 /**
  * import connect work with const User = require("../../../models/userModel");
