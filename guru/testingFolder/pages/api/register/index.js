@@ -4,24 +4,6 @@ import jwtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 const User = dbConnection.models.User;
 
-/**
- * worked
- * **/
-
-// const apiObj = {
-//   GET: (response) => {
-//     response.json({ message: "hello" });
-//   },
-//   POST: (response) => {
-//     response.json({ message: "world" });
-//   },
-// };
-// console.log(apiObj[req.method](res));
-
-/**
- * worked
- * **/
-
 export default async function registerHandler(req, res) {
   const { name, email, password } = req.body;
   console.log(name, email, password);

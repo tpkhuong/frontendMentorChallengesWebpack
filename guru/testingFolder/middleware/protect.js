@@ -5,23 +5,23 @@ import jwtoken from "jsonwebtoken";
 import dbConnection from "../utils/dbConnect";
 const User = dbConnection.models.User;
 
-// export default async function protect(req, res, next) {
-//   nextConnect().use((req, res, next) => {
-//     req.customProp = "world";
-//     res.json({ message: "Hello" });
-//     next();
-//   });
-// }
-
-const auth = createRouter(NextApiRequest, NextApiResponse).use(
-  async (req, res) => {
+export default async function protect(req, res, next) {
+  nextConnect().use((req, res, next) => {
     req.customProp = "world";
     res.json({ message: "Hello" });
     next();
-  }
-);
+  });
+}
 
-export default auth;
+// const auth = createRouter(NextApiRequest, NextApiResponse).use(
+//   async (req, res) => {
+//     req.customProp = "world";
+//     res.json({ message: "Hello" });
+//     next();
+//   }
+// );
+
+// export default auth;
 
 // export default function middleware(handler) {
 //   return async function protect(req, res) {

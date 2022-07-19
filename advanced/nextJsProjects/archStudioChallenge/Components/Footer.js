@@ -25,25 +25,35 @@ function Footer({ children, ...props }) {
               </svg>
             </div>
           </div>
-          <nav className={FooterStyles[`footer-nav`]}>
-            <ul className={FooterStyles[`navlist`]}>
-              <li className={FooterStyles[`navitem`]}>
+          <nav
+            className={FooterStyles[`footer-nav`]}
+            role="navigation"
+            aria-label="tertiary"
+          >
+            <ul className={FooterStyles[`navlist`]} role="menubar">
+              <li className={FooterStyles[`navitem`]} role="none">
                 <Link href="/portfolio">
-                  <a className={FooterStyles[`navlink`]}>Portfolio</a>
+                  <a className={FooterStyles[`navlink`]} role="menuitem">
+                    Portfolio
+                  </a>
                 </Link>
               </li>
               <li
-                className={`${FooterStyles[`navitem`]} ${
+                className={`${FooterStyles[`navitem`]} role="none" ${
                   FooterStyles[`middle-child-margin-block`]
                 }`}
               >
                 <Link href="/about">
-                  <a className={FooterStyles[`navlink`]}>About Us</a>
+                  <a className={FooterStyles[`navlink`]} role="menuitem">
+                    About Us
+                  </a>
                 </Link>
               </li>
-              <li className={FooterStyles[`navitem`]}>
+              <li className={FooterStyles[`navitem`]} role="none">
                 <Link href="/contact">
-                  <a className={FooterStyles[`navlink`]}>Contact</a>
+                  <a className={FooterStyles[`navlink`]} role="menuitem">
+                    Contact
+                  </a>
                 </Link>
               </li>
             </ul>

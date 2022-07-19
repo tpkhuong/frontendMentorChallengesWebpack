@@ -61,7 +61,7 @@ function showMobileMenu(event) {
   const mobileBtnsContainer = document.querySelector("[data-showclosebtn]");
   const objOfActions = {
     "open mobile menu": () => {
-      // when user click on hamburger btn we want to element with data-showMenu to true
+      // when user click on hamburger btn we want to select the element with data-showMenu to true
       mobileNavElement.getAttribute("data-showmenu") == "false"
         ? mobileNavElement.setAttribute("data-showmenu", "true")
         : null;
@@ -71,7 +71,7 @@ function showMobileMenu(event) {
         : null;
     },
     "close mobile menu": () => {
-      // when user click on close btn we want to element with data-showMenu to false
+      // when user click on close btn we want to select the element with data-showMenu to false
       mobileNavElement.getAttribute("data-showmenu") == "true"
         ? mobileNavElement.setAttribute("data-showmenu", "false")
         : null;
