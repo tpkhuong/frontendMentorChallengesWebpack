@@ -32,3 +32,13 @@ function postResponse(response) {
 export default async function testRoute(req, res) {
   console.log(apiObj[req.method](res));
 }
+
+const testObj = {
+  first: {
+    second: {
+      innerFirst: {
+        name: "Marvel",
+      },
+    },
+  },
+};

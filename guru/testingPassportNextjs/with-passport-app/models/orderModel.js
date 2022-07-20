@@ -13,9 +13,7 @@ const OrderSchema = new mongoose.Schema(
       ref: "Item",
       orderQuantity: Number,
     },
-    // we cant treat schema type like obj and add properties to them
-    // if we want a key in a schema to have multiple types we have to define a schema model
-    // we will have two item and user schema models
+    // quantity of purchase item will be in item property
     totalPrice: Number,
   },
   {
@@ -23,7 +21,7 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
-module.exports = OrderSchema;
+// module.exports = OrderSchema;
 
 /**
  * below: true return left of || false return right of ||
@@ -31,4 +29,4 @@ module.exports = OrderSchema;
  * import connect and require user and order model in addOrder.js
  * **/
 
-// module.exports = mongoose.models.Order || mongoose.model("Order", OrderSchema);
+module.exports = mongoose.models.Order || mongoose.model("Order", OrderSchema);
