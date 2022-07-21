@@ -1,5 +1,6 @@
-import dbConnection from "../config/database";
-const User = dbConnection.models.User;
+// import dbConnection from "../config/database";
+// const User = dbConnection.models.User;
+import User from "../models/userModel"
 import Iron from "@hapi/iron";
 import {MAX_AGE, setTokenCookie, getTokenCookie} from "./auth-cookies"
 

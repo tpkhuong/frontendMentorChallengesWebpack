@@ -1,10 +1,10 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 const Form = ({ isLogin, errorMessage, onSubmit }) => (
   <form onSubmit={onSubmit}>
     <label>
-      <span>Username</span>
-      <input type="text" name="username" required />
+      <span>Email</span>
+      <input type="text" name="email" required />
     </label>
     <label>
       <span>Password</span>
@@ -77,6 +77,6 @@ const Form = ({ isLogin, errorMessage, onSubmit }) => (
       }
     `}</style>
   </form>
-)
+);
 
-export default Form
+export default Form;

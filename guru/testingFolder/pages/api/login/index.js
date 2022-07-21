@@ -1,4 +1,5 @@
-import dbConnection from "../../../utils/dbConnect";
+// import dbConnection from "../../../utils/dbConnect";
+import dbConnect from "../../../config/database";
 import { generateToken } from "../../../utils/helpers";
 import passport from "passport";
 import nextConnect from "next-connect";

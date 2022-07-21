@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
-import connect from "../config/database";
-const User = require("../models/userModel");
+import dbConnect from "../config/database";
+import User from "../models/userModel";
 
 /**
  * User methods. The example doesn't contain a DB, but for real applications you must use a
@@ -11,7 +11,7 @@ const User = require("../models/userModel");
 const users = [];
 
 export async function createUser({ name, email, password }) {
-  await connect();
+  await dbConnect();
   // Here you should create the user and save the salt and hashed password (some dbs may have
   // authentication methods that will do it for you so you don't have to worry about it):
   const salt = crypto.randomBytes(16).toString("hex");
@@ -44,18 +44,23 @@ export async function createUser({ name, email, password }) {
 
 // Here you should lookup for the user in your DB
 export async function findUser({ email }) {
+  await dbConnect();
   // This is an in memory store for users, there is no data persistence without a proper DB
   // return users.find((user) => user.username === username);
+  console.log(email);
   const userInDatabase = await User.findOne({ email });
+  console.log(userInDatabase);
   return userInDatabase;
 }
 
 // Compare the password of an already fetched user (using `findUser`) and compare the
 // password for a potential match
 export function validatePassword(user, inputPassword) {
+  console.log("validatePassword", user.salt);
   const inputHash = crypto
     .pbkdf2Sync(inputPassword, user.salt, 1000, 64, "sha512")
     .toString("hex");
-  const passwordsMatch = user.hash === inputHash;
+  console.log("inputHash", inputHash);
+  const passwordsMatch = user.password === inputHash;
   return passwordsMatch;
 }

@@ -74,6 +74,7 @@ function ExpandContainer(props) {
     /** testing **/
     makeApiCall(`http://worldtimeapi.org/api/timezone/America/New_York`).then(
       function getData(response) {
+        console.log(response);
         const dataApi = response.status == 200 ? response.data : null;
         if (dataApi) {
           const { day_of_year, day_of_week, week_number } = dataApi;

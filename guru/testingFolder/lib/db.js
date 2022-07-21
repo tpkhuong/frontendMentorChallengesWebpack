@@ -1,10 +1,12 @@
 // import crypto from "crypto";
 // import { v4 as uuidv4 } from "uuid";
-import dbConnection from "../utils/dbConnect";
+// import dbConnection from "../utils/dbConnect";
 import bcrypt from "bcryptjs";
 
 
-const User = dbConnection.models.User;
+// const User = dbConnection.models.User;
+import dbConnect from "../config/database";
+import User from "../models/userModel"
 
 export default async function createUser({ username, email, password }) {
     // Here you should create the user and save the salt and hashed password (some dbs may have

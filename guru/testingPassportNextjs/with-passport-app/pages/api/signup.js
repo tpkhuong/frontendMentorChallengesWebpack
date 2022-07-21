@@ -1,10 +1,10 @@
 import { createUser } from "../../lib/user";
-import connect from "../../config/database";
-const User = require("../../models/userModel");
+import dbConnect from "../../config/database";
+import User from "../../models/userModel";
 
 export default async function signup(req, res) {
   try {
-    await connect();
+    await dbConnect();
     const { name, email, password } = req.body;
     console.log(name, email, password);
     //   // if user forget a field
