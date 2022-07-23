@@ -89,6 +89,8 @@ async function dbConnect() {
   return cached.conn;
 }
 
+// to import below we don't have to use {}
+// export without "default" we will have to use {}
 export default dbConnect;
 
 // import { MongoClient } from "mongodb";

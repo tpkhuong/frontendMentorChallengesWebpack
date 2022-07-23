@@ -53,8 +53,10 @@
  * **/
 
 import { createUser } from "../../../lib/db";
-import dbConnection from "../../../utils/dbConnect";
-const User = dbConnection.models.User;
+// import dbConnection from "../../../utils/dbConnect";
+// const User = dbConnection.models.User;
+import dbConnect from "../../../config/database";
+import User from "../../../models/userModel";
 
 export default async function register(req, res) {
   try {

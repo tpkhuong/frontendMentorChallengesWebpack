@@ -3,8 +3,8 @@ import Link from "next/link";
 const Form = ({ isLogin, errorMessage, onSubmit }) => (
   <form onSubmit={onSubmit}>
     <label>
-      <span>Email</span>
-      <input type="text" name="email" required />
+      <span>Username</span>
+      <input type="text" name="username" required />
     </label>
     <label>
       <span>Password</span>

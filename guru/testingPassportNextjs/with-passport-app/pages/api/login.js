@@ -21,10 +21,11 @@ export default nextConnect()
   .post(async (req, res) => {
     try {
       const user = await authenticate("local", req, res);
+      console.log("user in login.js", user);
       // session is the payload to save in the token, it may contain basic info about the user
       const session = { ...user };
-      console.log("api login", user);
-      console.log("session login", session);
+      // console.log("api login", user);
+      // console.log("session login", session);
       await setLoginSession(res, session);
 
       res.status(200).send({ done: true });

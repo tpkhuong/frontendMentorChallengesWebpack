@@ -15,12 +15,13 @@ export default async function createUser({ username, email, password }) {
 // const hashedPassword = crypto
 //   .pbkdf2Sync(password, salt, 1000, 64, "sha512")
 //     .toString("hex");
+  await dbConnect();
   const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     // This is an in memory store for users, there is no data persistence without a proper DB
     const newUser = await User.create({
-        name: username,
-        email,
+        name,
+        username,
         password: hashedPassword,
         salt
     });

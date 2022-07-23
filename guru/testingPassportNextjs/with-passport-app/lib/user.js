@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
-import dbConnect from "../config/database";
+import { connectToDatabase } from "../config/database";
+// import clientPromise from "../config/database";
 import User from "../models/userModel";
 
 /**
@@ -10,8 +11,10 @@ import User from "../models/userModel";
 
 const users = [];
 
-export async function createUser({ name, email, password }) {
-  await dbConnect();
+export async function createUser({ username, password }) {
+  const client = await connectToDatabase();
+
+  const database = client.db();
   // Here you should create the user and save the salt and hashed password (some dbs may have
   // authentication methods that will do it for you so you don't have to worry about it):
   const salt = crypto.randomBytes(16).toString("hex");
@@ -26,10 +29,17 @@ export async function createUser({ name, email, password }) {
   //   salt,
   // };
 
-  const newUser = await User.create({
-    name,
-    email,
+  // const newUser = await User.create({
+  //   name,
+  //   email,
+  //   password: hash,
+  //   salt,
+  // });
+
+  const newUser = await database.collection("users").insertOne({
+    username,
     password: hash,
+    createdAt: new Date(),
     salt,
   });
 
@@ -38,18 +48,24 @@ export async function createUser({ name, email, password }) {
   // console.log(user);
   // This is an in memory store for users, there is no data persistence without a proper DB
   // users.push(user);
+  // client.close();
 
-  return { name, createdAt: Date.now() };
+  return { username, createdAt: Date.now() };
 }
 
 // Here you should lookup for the user in your DB
-export async function findUser({ email }) {
-  await dbConnect();
+export async function findUser({ username }) {
+  const client = await connectToDatabase();
+
+  const database = client.db();
   // This is an in memory store for users, there is no data persistence without a proper DB
   // return users.find((user) => user.username === username);
-  console.log(email);
-  const userInDatabase = await User.findOne({ email });
-  console.log(userInDatabase);
+  console.log(username);
+  const userInDatabase = await database
+    .collection("users")
+    .findOne({ username: username });
+  console.log("userInDatabase", userInDatabase);
+  // client.close();
   return userInDatabase;
 }
 

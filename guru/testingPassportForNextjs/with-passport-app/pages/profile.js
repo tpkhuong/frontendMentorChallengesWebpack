@@ -1,8 +1,8 @@
-import { useUser } from '../lib/hooks'
-import Layout from '../components/layout'
+import { useUser } from "../lib/hooks";
+import Layout from "../components/layout";
 
 const Profile = () => {
-  const user = useUser({ redirectTo: '/login' })
+  const user = useUser({ redirectTo: "/login" });
 
   return (
     <Layout>
@@ -21,7 +21,16 @@ const Profile = () => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Profile
+// export async function getStaticProps() {
+//   const user = useUser({ redirectTo: "/login" });
+//   return {
+//     props: {
+//       user,
+//     },
+//   };
+// }
+
+export default Profile;

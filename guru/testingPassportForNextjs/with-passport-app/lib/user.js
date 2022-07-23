@@ -47,16 +47,18 @@ export async function findUser({ username }) {
   // This is an in memory store for users, there is no data persistence without a proper DB
   // return users.find((user) => user.username === username)
   const userInDatabase = await User.findOne({ username: username });
-  console.log("userInDatabase", userInDatabase);
+  console.log("userInDatabase findUser", userInDatabase);
   return userInDatabase;
 }
 
 // Compare the password of an already fetched user (using `findUser`) and compare the
 // password for a potential match
 export function validatePassword(user, inputPassword) {
+  console.log("user in validatePassword user.js", user);
   const inputHash = crypto
     .pbkdf2Sync(inputPassword, user.salt, 1000, 64, "sha512")
     .toString("hex");
   const passwordsMatch = user.password === inputHash;
+  console.log(passwordsMatch);
   return passwordsMatch;
 }

@@ -3,7 +3,7 @@ import { useUser } from "../lib/hooks";
 
 const Header = () => {
   const user = useUser();
-  console.log("header", user);
+  // console.log("header", user);
   return (
     <header>
       <nav>
@@ -31,6 +31,24 @@ const Header = () => {
               </Link>
             </li>
           )}
+          {/* <li>
+            <Link href="/profile">
+              <a>Profile</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
+          </li> */}
+          {/* {user ? (
+            <>
+              <li>
+                <a href="/api/logout">Logout</a>
+              </li>
+            </>
+          ) : (
+          )} */}
         </ul>
       </nav>
       <style jsx>{`

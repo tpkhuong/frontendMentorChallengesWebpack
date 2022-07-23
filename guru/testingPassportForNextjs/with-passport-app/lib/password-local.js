@@ -6,8 +6,11 @@ export const localStrategy = new Local.Strategy(function (
   password,
   done
 ) {
-  findUser({ username: username })
+  console.log("username", username);
+  console.log("password", password);
+  findUser({ username })
     .then((user) => {
+      console.log("user password-local", user);
       if (user && validatePassword(user, password)) {
         done(null, user);
       } else {

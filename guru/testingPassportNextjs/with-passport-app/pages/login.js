@@ -15,7 +15,7 @@ const Login = () => {
     if (errorMsg) setErrorMsg("");
 
     const body = {
-      email: e.currentTarget.email.value,
+      username: e.currentTarget.username.value,
       password: e.currentTarget.password.value,
     };
 
@@ -27,7 +27,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      console.log(res);
+      console.log("response", res);
       if (res.status === 200) {
         Router.push("/");
       } else {

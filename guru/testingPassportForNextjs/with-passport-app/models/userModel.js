@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema(
     username: {
       type: String,
       required: [true, "Enter an email"],
-      unique: true,
     },
     password: {
       type: String,
@@ -31,8 +30,9 @@ const UserSchema = new mongoose.Schema(
  * **/
 
 // module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
-// export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);
 
 // test code below
-
-export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+// to import below we have to use {} and variable/identifier
+// export with "default" we don't have to use {}
+// export const User = mongoose.models.User || mongoose.model("User", UserSchema);

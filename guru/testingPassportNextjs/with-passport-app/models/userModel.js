@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -28,4 +30,5 @@ const UserSchema = new mongoose.Schema(
  * works with export async connect func in database.js
  * import connect and require user model in addUser.js
  * **/
-module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
+// module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);
