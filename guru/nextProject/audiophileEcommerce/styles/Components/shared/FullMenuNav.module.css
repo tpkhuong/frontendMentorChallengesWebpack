@@ -1,0 +1,15 @@
+/* mobile */
+
+.navlist {
+  display: flex;
+  gap: 34px;
+}
+
+.navlink {
+  color: var(--color-neutral-white);
+  font-size: var(--heading-reg-xx-sm);
+  font-weight: 700;
+}
+
+/* tablet */
+/* desktop */

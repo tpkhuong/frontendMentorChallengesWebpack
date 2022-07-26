@@ -8,6 +8,7 @@
   --color-primary-grey: hsl(0, 0%, 95%);
   --color-primary-white: hsl(0, 0%, 98%);
   --color-secondary-orange: hsl(21, 94%, 75%);
+  --color-nav-bar-line: hsl(0, 0%, 59%);
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
@@ -109,7 +110,6 @@
   --heading-reg-sm: 0.9375rem;
   --heading-reg-x-sm: 0.875rem;
   --heading-reg-xx-sm: 0.8125rem;
-  --heading-x-sm: ;
   --font-size-body: 1.125rem;
   /* --heading-xxsm: 0.9375rem; */
 
@@ -335,4 +335,11 @@ button:hover {
 
 .leaflet-container {
   height: 150px;
+}
+
+@media screen and (max-width: 375px) {
+  header {
+    /* position: relative; */
+    background-color: black;
+  }
 }
