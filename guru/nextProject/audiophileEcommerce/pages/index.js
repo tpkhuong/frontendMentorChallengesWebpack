@@ -2,7 +2,11 @@ import React from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home/Home.module.css";
 import LogoNavContainer from "../Components/shared/LogoNavContainer";
-import CategoryLinkCard from "../Components/shared/CategoryLinkCard";
+import MobileNav from "../Components/shared/MobileNav";
+import Footer from "../Components/shared/Footer";
+import MissionStatement from "../Components/shared/MissionStatement";
+import ProductButton from "../Components/shared/ProductButton";
+import HeroContent from "../Components/Home/HeroContent";
 
 function Home(props) {
   return (
@@ -17,8 +21,17 @@ function Home(props) {
       </Head>
       <header>
         <LogoNavContainer />
+        <HeroContent />
       </header>
-      <div className={HomeStyles[`test-container`]}>
+      <main>
+        {/* <MobileNav /> */}
+        {/* <MissionStatement /> */}
+        {/* <ProductButton productPage="/" fgBgColor="basic-btn" />
+        <ProductButton productPage="/" fgBgColor="orange-white" />
+        <ProductButton productPage="/" fgBgColor="black-white" /> */}
+      </main>
+      {/* <Footer /> */}
+      {/* <div className={HomeStyles[`test-container`]}>
         <CategoryLinkCard
           imageSrc="/shared/desktop/image-category-thumbnail-headphones.png"
           imageText="Black overhead headphones"
@@ -34,7 +47,7 @@ function Home(props) {
           imageText="Black overhead headphones"
           categoryName="EARPHONES"
         />
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

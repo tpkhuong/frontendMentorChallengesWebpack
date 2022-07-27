@@ -1,0 +1,29 @@
+/* mobile */
+
+/* show/hide modal */
+
+.mobile-bg[data-showmenu="false"] {
+  display: none;
+}
+
+.mobile-bg {
+  position: absolute;
+  inset: 0;
+  background-color: hsl(0 0% 0% / 0.3);
+}
+
+.mobile-nav {
+  background-color: var(--color-neutral-white);
+  padding-inline: 24px;
+  padding-block: 68px;
+  padding-block-end: 36px;
+}
+
+.navlist {
+  display: flex;
+  flex-direction: column;
+  gap: 68px;
+}
+
+/* tablet */
+/* desktop */

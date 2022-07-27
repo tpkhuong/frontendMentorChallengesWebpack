@@ -17,7 +17,7 @@ function FullMenu({ children, ...props }) {
               key={Math.random() * index}
               className={FullMenuStyles[`navitem`]}
             >
-              <Link href={index == 1 ? `/about` : `${element.toLowerCase()}`}>
+              <Link href={index == 1 ? `/about` : `/${element.toLowerCase()}`}>
                 {props.fullUnderline == element ? (
                   <a
                     data-activepage="true"

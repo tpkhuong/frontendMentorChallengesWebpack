@@ -6,7 +6,11 @@ import Link from "next/link";
 function FullMenuNav({ children, ...props }) {
   return (
     <nav role="navigation" aria-label={props.navLabel}>
-      <ul role="menubar" className={FullNavStyles[`navlist`]}>
+      <ul
+        role="menubar"
+        data-isfooternav={props.footerNav}
+        className={FullNavStyles[`navlist`]}
+      >
         {arrayOfLinkText.map(function listitems(element, index) {
           return (
             <li

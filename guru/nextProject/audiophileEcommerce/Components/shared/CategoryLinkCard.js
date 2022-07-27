@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function CategoryLinkCard({ children, ...props }) {
   return (
-    <div className={CategoryCardStyles[`card-wrapper`]}>
+    <div role={props.mobileRole} className={CategoryCardStyles[`card-wrapper`]}>
       <div className={CategoryCardStyles[`content-wrapper`]}>
         {/* img and title */}
         <Link href="/">
@@ -19,7 +19,7 @@ function CategoryLinkCard({ children, ...props }) {
         </Link>
         {/* shop link */}
         <Link href="/">
-          <a className={CategoryCardStyles[`shop-link`]}>
+          <a id={props.lastItem} className={CategoryCardStyles[`shop-link`]}>
             <span className={CategoryCardStyles[`link-text`]}>SHOP</span>
             <svg
               className={CategoryCardStyles[`link-icon`]}

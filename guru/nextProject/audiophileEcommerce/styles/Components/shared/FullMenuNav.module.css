@@ -13,3 +13,33 @@
 
 /* tablet */
 /* desktop */
+
+/*****
+declarations for footer nav for Footer component
+*****/
+
+.navlist[data-isfooternav="true"] {
+  display: flex;
+  flex-direction: column;
+  margin-block: 48px;
+  margin-block-start: 40px;
+  gap: 16px;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .navlist[data-isfooternav="true"] {
+    flex-direction: revert;
+    margin-block: 32px;
+    gap: 34px;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .navlist[data-isfooternav="true"] {
+    margin-block: 0;
+  }
+}
