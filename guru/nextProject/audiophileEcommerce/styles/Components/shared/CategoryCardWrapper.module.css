@@ -1,0 +1,43 @@
+/* mobile */
+
+.general {
+  display: flex;
+  flex-direction: column;
+  gap: 68px;
+}
+
+.home {
+  padding-block-start: 68px;
+  padding-block-end: 120px;
+}
+
+.category {
+}
+
+.product {
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .general {
+    display: flex;
+    flex-direction: revert;
+    gap: 10px;
+  }
+  .home {
+    padding-block-start: 120px;
+    padding-block-end: 96px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 90rem) {
+  .general {
+    gap: 30px;
+  }
+  .home {
+    padding-block-start: 144px;
+    padding-block-end: 168px;
+  }
+}

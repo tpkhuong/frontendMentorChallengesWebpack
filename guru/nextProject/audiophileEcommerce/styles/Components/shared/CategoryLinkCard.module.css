@@ -47,7 +47,19 @@
 }
 
 /* tablet */
+
+@media screen and (min-width: 48rem) {
+  .card-wrapper {
+    flex-basis: 223px;
+  }
+}
+
 /* desktop */
+@media screen and (min-width: 90rem) {
+  .card-wrapper {
+    flex-basis: 350px;
+  }
+}
 
 @media screen and (max-width: 1439px) {
   .title {

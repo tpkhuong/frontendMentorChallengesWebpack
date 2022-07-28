@@ -5,49 +5,37 @@ import LogoNavContainer from "../Components/shared/LogoNavContainer";
 import MobileNav from "../Components/shared/MobileNav";
 import Footer from "../Components/shared/Footer";
 import MissionStatement from "../Components/shared/MissionStatement";
-import ProductButton from "../Components/shared/ProductButton";
 import HeroContent from "../Components/Home/HeroContent";
+import FeatureProducts from "../Components/Home/FeatureProducts";
+import Main from "../Components/shared/Main";
+import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
 
 function Home(props) {
   return (
     <React.Fragment>
       <Head>
-        <title></title>
+        <title>Audiophile</title>
         <link
           rel="shortcut icon"
           href="/favicon-32x32.png"
           type="image/x-icon"
         />
       </Head>
-      <header>
+      <header className={HomeStyles[`header`]} role="banner">
+        {/* logo nav */}
         <LogoNavContainer />
+        {/* hero content */}
         <HeroContent />
       </header>
-      <main>
-        {/* <MobileNav /> */}
-        {/* <MissionStatement /> */}
-        {/* <ProductButton productPage="/" fgBgColor="basic-btn" />
-        <ProductButton productPage="/" fgBgColor="orange-white" />
-        <ProductButton productPage="/" fgBgColor="black-white" /> */}
-      </main>
-      {/* <Footer /> */}
-      {/* <div className={HomeStyles[`test-container`]}>
-        <CategoryLinkCard
-          imageSrc="/shared/desktop/image-category-thumbnail-headphones.png"
-          imageText="Black overhead headphones"
-          categoryName="HEADPHONES"
-        />
-        <CategoryLinkCard
-          imageSrc="/shared/desktop/image-category-thumbnail-speakers.png"
-          imageText="Black overhead headphones"
-          categoryName="SPEAKERS"
-        />
-        <CategoryLinkCard
-          imageSrc="/shared/desktop/image-category-thumbnail-earphones.png"
-          imageText="Black overhead headphones"
-          categoryName="EARPHONES"
-        />
-      </div> */}
+      <Main>
+        {/* category link container */}
+        <CategoryCardWrapper pageStyle="home" />
+        {/* featured products */}
+        <FeatureProducts />
+        {/* mission statement */}
+        <MissionStatement pageMargin="home" />
+      </Main>
+      <Footer />
     </React.Fragment>
   );
 }

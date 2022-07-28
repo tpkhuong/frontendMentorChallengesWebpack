@@ -17,7 +17,7 @@ function HeroContent({ children, ...props }) {
         {/* see product */}
         <ProductButton productPage="/" fgBgColor="orange-white" />
       </div>
-      <div className={HeroContentStyles[`img-wrapper`]}>
+      {/* <div className={HeroContentStyles[`img-wrapper`]}>
         <picture>
           <source
             media="(min-width: 1440px)"
@@ -32,7 +32,7 @@ function HeroContent({ children, ...props }) {
             alt="Black over the ear headphones"
           />
         </picture>
-      </div>
+      </div> */}
     </article>
   );
 }

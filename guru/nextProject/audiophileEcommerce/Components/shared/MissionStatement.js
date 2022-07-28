@@ -3,7 +3,11 @@ import MissionStatementStyles from "../../styles/Components/shared/MissionStatem
 
 function MissionStatement({ children, ...props }) {
   return (
-    <article className={MissionStatementStyles[`img-text-container`]}>
+    <article
+      className={`${MissionStatementStyles[`${props.pageMargin}`]} ${
+        MissionStatementStyles[`img-text-container`]
+      }`}
+    >
       {/* img */}
       <div className={MissionStatementStyles[`img-wrapper`]}>
         <picture>

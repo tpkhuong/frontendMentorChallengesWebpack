@@ -9,6 +9,7 @@ function FullMenuNav({ children, ...props }) {
       <ul
         role="menubar"
         data-isfooternav={props.footerNav}
+        data-isheadernav={props.headerNav}
         className={FullNavStyles[`navlist`]}
       >
         {arrayOfLinkText.map(function listitems(element, index) {

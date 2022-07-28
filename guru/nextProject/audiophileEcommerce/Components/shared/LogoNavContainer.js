@@ -60,7 +60,7 @@ function LogoNavContainer({ children, ...props }) {
         </a>
       </Link>
       {/* full menu */}
-      {isDesktop ? <FullMenuNav navLabel="primary" /> : null}
+      {isDesktop ? <FullMenuNav headerNav="true" navLabel="primary" /> : null}
       {/* login,register buttons */}
       <div className={LogoNavStyles[`register-login-container`]}>
         <Link href="/">

@@ -2,7 +2,7 @@ import React from "react";
 import BannerTitleStyles from "../../styles/Components/shared/BannerTitle.module.css";
 
 function BannerTitle({ children, ...props }) {
-  return <React.Fragment></React.Fragment>;
+  return <h1 className={BannerTitleStyles[`title`]}>{children}</h1>;
 }
 
 export default BannerTitle;

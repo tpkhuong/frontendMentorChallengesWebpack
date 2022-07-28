@@ -217,7 +217,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-family-manrope);
-  color: var(--color-neutral-black);
+  /* color: var(--color-neutral-black); */
   font-size: var(--font-size-body);
 }
 /*
@@ -336,11 +336,4 @@ button:hover {
 
 .leaflet-container {
   height: 150px;
-}
-
-@media screen and (max-width: 375px) {
-  header {
-    /* position: relative; */
-    background-color: black;
-  }
 }

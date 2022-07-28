@@ -42,4 +42,9 @@ declarations for footer nav for Footer component
   .navlist[data-isfooternav="true"] {
     margin-block: 0;
   }
+
+  .navlist[data-isheaderNav="true"] .navitem {
+    display: flex;
+    align-items: center;
+  }
 }
