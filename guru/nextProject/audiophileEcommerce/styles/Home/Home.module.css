@@ -1,4 +1,10 @@
 /* mobile */
 
+.test-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
 /* tablet */
 /* desktop */

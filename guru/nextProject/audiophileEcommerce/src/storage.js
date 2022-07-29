@@ -2,4 +2,4 @@
  * All data obj/variable goes here.
  * **/
 
-export const arrayOfLinkText = ["HOME", "HEADPHONES", "SPEAKERS", "EARPHONES"];
+export const arrayOfLinkText = ["home", "headphones", "speakers", "earphones"];

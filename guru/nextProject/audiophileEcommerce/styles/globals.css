@@ -100,17 +100,29 @@
 
   --matching-gap-padding: 16px; */
 
+  /* 250px */
   --heading-extra-lrg: 15.625rem;
+  /* 56px */
   --heading-lrg: 3.5rem;
+  /* 40px */
   --heading-med: 2.5rem;
+  /* 36px */
   --heading-sm: 2rem;
+  /* 28px */
   --heading-sm-two: 1.75rem;
+  /* 24px */
   --heading-sm-three: 1.5rem;
+  /* 18px */
   --heading-sm-four: 1.125rem;
+  /* 16px */
   --heading-reg: 1rem;
+  /* 15px */
   --heading-reg-sm: 0.9375rem;
+  /* 14px */
   --heading-reg-x-sm: 0.875rem;
+  /* 13px */
   --heading-reg-xx-sm: 0.8125rem;
+  /* 18px */
   --font-size-body: 1.125rem;
   /* --heading-xxsm: 0.9375rem; */
 

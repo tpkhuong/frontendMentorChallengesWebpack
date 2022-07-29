@@ -19,7 +19,7 @@ function FullMenuNav({ children, ...props }) {
               role="nole"
               className={FullNavStyles[`navitem`]}
             >
-              <Link href={`/${element.toLowerCase()}`}>
+              <Link href={`/${element}`}>
                 <a className={FullNavStyles[`navlink`]} role="menuitem">
                   {element}
                 </a>

@@ -1,0 +1,33 @@
+/* general */
+
+.new-product[data-isnew="false"] {
+  display: none;
+}
+
+/* mobile */
+
+.text-container {
+  text-align: center;
+}
+
+.new-product {
+  font-size: var(--heading-reg-x-sm);
+  color: var(--color-primary-orange);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: var(--heading-sm-two);
+  line-height: 1.2;
+  padding-block-start: 24px;
+}
+
+.description {
+  font-size: var(--heading-reg-sm);
+  color: var(--color-text);
+  padding-block: 24px;
+}
+
+/* tablet */
+/* desktop */

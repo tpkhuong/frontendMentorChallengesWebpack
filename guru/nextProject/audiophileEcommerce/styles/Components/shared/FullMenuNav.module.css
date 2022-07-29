@@ -9,6 +9,7 @@
   color: var(--color-neutral-white);
   font-size: var(--heading-reg-xx-sm);
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 /* tablet */

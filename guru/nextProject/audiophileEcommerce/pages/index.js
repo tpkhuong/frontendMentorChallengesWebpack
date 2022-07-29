@@ -9,8 +9,12 @@ import HeroContent from "../Components/Home/HeroContent";
 import FeatureProducts from "../Components/Home/FeatureProducts";
 import Main from "../Components/shared/Main";
 import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
+import CategoryImg from "../Components/Category/CategoryImgComponent";
+import CategoryTextContent from "../Components/Category/CategoryTextContent";
+import data from "../src/data.json";
 
 function Home(props) {
+  const item = data.category.headphones[0];
   return (
     <React.Fragment>
       <Head>
@@ -28,14 +32,27 @@ function Home(props) {
         <HeroContent />
       </header>
       <Main>
+        <div className={HomeStyles[`test-container`]}>
+          <CategoryImg
+            desktopSize={item.imgSrc.desktop}
+            tabletSize={item.imgSrc.tablet}
+            mobileSize={item.imgSrc.mobile}
+            text={item.imgText}
+          />
+          <CategoryTextContent
+            isNew={item.textContent.isNew}
+            title={item.textContent.name}
+            content={item.textContent.description}
+          />
+        </div>
         {/* category link container */}
-        <CategoryCardWrapper pageStyle="home" />
+        {/* <CategoryCardWrapper pageStyle="home" /> */}
         {/* featured products */}
-        <FeatureProducts />
+        {/* <FeatureProducts /> */}
         {/* mission statement */}
-        <MissionStatement pageMargin="home" />
+        {/* <MissionStatement pageMargin="home" /> */}
       </Main>
-      <Footer />
+      {/* <Footer /> */}
     </React.Fragment>
   );
 }

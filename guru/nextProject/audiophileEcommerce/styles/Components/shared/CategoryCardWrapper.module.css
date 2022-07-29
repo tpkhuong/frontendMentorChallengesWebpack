@@ -7,15 +7,17 @@
 }
 
 .home {
-  padding-block-start: 68px;
-  padding-block-end: 120px;
+  margin-block-start: 68px;
+  margin-block-end: 120px;
 }
 
-.category {
-}
-
+.category,
 .product {
+  margin-block: 120px;
 }
+
+/* .product {
+} */
 
 /* tablet */
 
@@ -26,8 +28,8 @@
     gap: 10px;
   }
   .home {
-    padding-block-start: 120px;
-    padding-block-end: 96px;
+    margin-block-start: 120px;
+    margin-block-end: 96px;
   }
 }
 
@@ -37,7 +39,11 @@
     gap: 30px;
   }
   .home {
-    padding-block-start: 144px;
-    padding-block-end: 168px;
+    margin-block-start: 144px;
+    margin-block-end: 168px;
+  }
+  .category,
+  .product {
+    margin-block: 160px;
   }
 }
