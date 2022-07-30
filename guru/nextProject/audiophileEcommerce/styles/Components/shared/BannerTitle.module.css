@@ -1,5 +1,9 @@
 /* mobile */
 
+/* .title-mobilenav-container {
+  position: relative;
+} */
+
 .title {
   text-transform: uppercase;
   background-color: var(--color-neutral-black);
@@ -13,6 +17,9 @@
 /* tablet */
 
 @media screen and (min-width: 48rem) {
+  /* .title-mobilenav-container {
+    position: revert;
+  } */
   .title {
     padding-block: 105px;
     padding-block-end: 97px;

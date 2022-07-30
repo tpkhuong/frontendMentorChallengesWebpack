@@ -8,3 +8,11 @@
 
 /* tablet */
 /* desktop */
+
+@media screen and (min-width: 90rem) {
+  .test-container {
+    flex-direction: revert;
+    align-items: center;
+    gap: 0;
+  }
+}

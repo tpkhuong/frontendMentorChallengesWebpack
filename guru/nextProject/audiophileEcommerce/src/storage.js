@@ -3,3 +3,7 @@
  * **/
 
 export const arrayOfLinkText = ["home", "headphones", "speakers", "earphones"];
+
+export const cachedObj = {
+  previousURLs: [],
+};

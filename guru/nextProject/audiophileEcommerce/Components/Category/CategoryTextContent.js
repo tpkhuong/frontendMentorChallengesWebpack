@@ -1,10 +1,14 @@
 import React from "react";
-import CategoryTextContentStyles from "../../styles/Categoty/CategoryTextContent.module.css";
+import CategoryTextContentStyles from "../../styles/Category/CategoryTextContent.module.css";
 import ProductButton from "../shared/ProductButton";
 
 function CategoryTextContent({ children, ...props }) {
   return (
-    <div className={CategoryTextContentStyles[`text-container`]}>
+    <div
+      data-isright={props.rightSide}
+      data-isnew={props.isNew}
+      className={CategoryTextContentStyles[`text-container`]}
+    >
       {/* is new product */}
       <span
         data-isnew={props.isNew}
@@ -19,7 +23,10 @@ function CategoryTextContent({ children, ...props }) {
         {props.content}
       </p>
       {/* product button */}
-      <ProductButton productPage="/" fgBgColor="orange-white" />
+      <ProductButton
+        productPage="http://localhost:3000/"
+        fgBgColor="orange-white"
+      />
     </div>
   );
 }

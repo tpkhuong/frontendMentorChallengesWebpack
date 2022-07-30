@@ -9,6 +9,7 @@
 .mobile-bg {
   position: absolute;
   inset: 0;
+  top: 91px;
   background-color: hsl(0 0% 0% / 0.3);
 }
 
@@ -17,6 +18,8 @@
   padding-inline: 24px;
   padding-block: 68px;
   padding-block-end: 36px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .navlist {
@@ -26,4 +29,18 @@
 }
 
 /* tablet */
+
+@media screen and (min-width: 48rem) {
+  .mobile-nav {
+    padding-inline: 40px;
+  }
+  .navlist {
+    flex-direction: revert;
+    gap: 10px;
+  }
+  .navitem {
+    flex-basis: 223px;
+  }
+}
+
 /* desktop */

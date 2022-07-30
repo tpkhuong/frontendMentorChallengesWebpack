@@ -23,6 +23,9 @@
 
 .img-wrapper {
   width: 110px;
+  /* make all img same height */
+  /* which will make parent container same height */
+  height: 105px;
   margin-block-start: -43px;
   /* height: 104px; */
 }

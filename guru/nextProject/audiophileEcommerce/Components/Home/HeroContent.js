@@ -15,8 +15,9 @@ function HeroContent({ children, ...props }) {
           for the passionate music enthusiast.
         </p>
         {/* see product */}
-        <ProductButton productPage="/" fgBgColor="orange-white" />
+        <ProductButton productPage="/speakers" fgBgColor="orange-white" />
       </div>
+
       {/* <div className={HeroContentStyles[`img-wrapper`]}>
         <picture>
           <source

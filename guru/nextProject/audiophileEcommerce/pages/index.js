@@ -9,11 +9,13 @@ import HeroContent from "../Components/Home/HeroContent";
 import FeatureProducts from "../Components/Home/FeatureProducts";
 import Main from "../Components/shared/Main";
 import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
-import CategoryImg from "../Components/Category/CategoryImgComponent";
+import CategoryImg from "../Components/Category/CategoryImgWrapper";
 import CategoryTextContent from "../Components/Category/CategoryTextContent";
 import data from "../src/data.json";
+import { useMediaQuery } from "../utils/helpers";
 
-function Home(props) {
+function Home({ children, ...props }) {
+  const isMobile = useMediaQuery("max", 768);
   const item = data.category.headphones[0];
   return (
     <React.Fragment>
@@ -53,10 +55,9 @@ function Home(props) {
         {/* <MissionStatement pageMargin="home" /> */}
       </Main>
       {/* <Footer /> */}
+      {isMobile ? <MobileNav /> : null}
     </React.Fragment>
   );
 }
-
-// export async function
 
 export default Home;
