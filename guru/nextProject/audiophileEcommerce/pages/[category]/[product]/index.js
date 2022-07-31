@@ -3,6 +3,7 @@ import { server } from "../../../config/index";
 
 function ProductPage({ children, ...props }) {
   console.log("product data", props.data);
+  // call helper func to add commas to price
   return <h2>Hello from product</h2>;
 }
 

@@ -1,8 +1,16 @@
 import React from "react";
-import ProductImgWrapper from "../../styles/Product/ProductImgWrapper.module.css";
+import ProductImgWrapperStyles from "../../styles/Product/ProductImgWrapper.module.css";
 
 function ProductImgWrapper({ children, ...props }) {
-  return <div></div>;
+  return (
+    <div className={ProductImgWrapperStyles[`img-wrapper`]}>
+      <picture>
+        <source media="(min-width: 1440px)" srcSet={props.desktop} />
+        <source media="(min-width: 768px)" srcSet={props.tablet} />
+        <img src={props.mobile} alt={props.textContent} />
+      </picture>
+    </div>
+  );
 }
 
 export default ProductImgWrapper;

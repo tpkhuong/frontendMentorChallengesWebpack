@@ -11,12 +11,18 @@ import Main from "../Components/shared/Main";
 import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
 import CategoryImg from "../Components/Category/CategoryImgWrapper";
 import CategoryTextContent from "../Components/Category/CategoryTextContent";
+import AddCart from "../Components/Product/AddCartContainer";
+import ProductTextPriceInfo from "../Components/Product/ProductTextPriceInfo";
 import data from "../src/data.json";
 import { useMediaQuery } from "../utils/helpers";
 
 function Home({ children, ...props }) {
   const isMobile = useMediaQuery("max", 768);
-  const item = data.category.headphones[0];
+  // const item = data.category.headphones[0];
+  const product = data.details["xx59"];
+  const { image, category, price, description, newProduct, name } = product;
+  // newProduct, product, category, description, price
+  console.log(category, price, description, newProduct);
   return (
     <React.Fragment>
       <Head>
@@ -34,7 +40,15 @@ function Home({ children, ...props }) {
         <HeroContent />
       </header>
       <Main>
-        <div className={HomeStyles[`test-container`]}>
+        {/* <ProductTextPriceInfo /> */}
+        <ProductTextPriceInfo
+          price={price}
+          newProduct={newProduct}
+          title={name}
+          description={description}
+        />
+        {/* <AddCart /> */}
+        {/* <div className={HomeStyles[`test-container`]}>
           <CategoryImg
             desktopSize={item.imgSrc.desktop}
             tabletSize={item.imgSrc.tablet}
@@ -46,7 +60,7 @@ function Home({ children, ...props }) {
             title={item.textContent.name}
             content={item.textContent.description}
           />
-        </div>
+        </div> */}
         {/* category link container */}
         {/* <CategoryCardWrapper pageStyle="home" /> */}
         {/* featured products */}

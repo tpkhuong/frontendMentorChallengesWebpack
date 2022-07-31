@@ -1,7 +1,8 @@
 import React from "react";
 import ProductButtonStyles from "../../styles/Components/shared/ProductButton.module.css";
 import Link from "next/link";
-import { cachedObj } from "../../src/storage";
+import { getCurrentUrl } from "../../utils/helpers";
+// import { cachedObj } from "../../src/storage";
 
 function ProductButton({ children, ...props }) {
   return (
@@ -18,10 +19,10 @@ function ProductButton({ children, ...props }) {
   );
 }
 
-function getCurrentUrl(event) {
-  console.log(cachedObj.previousURLs);
-  console.log(document.URL);
-  cachedObj.previousURLs.push(document.URL);
-}
+// function getCurrentUrl(event) {
+//   console.log(cachedObj.previousURLs);
+//   console.log(document.URL);
+//   cachedObj.previousURLs.push(document.URL);
+// }
 
 export default ProductButton;

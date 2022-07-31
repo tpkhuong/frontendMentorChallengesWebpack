@@ -1,14 +1,14 @@
 import React from "react";
 import GoBackButtonStyles from "../../styles/Components/shared/GoBackButton.module.css";
 import Link from "next/link";
-import { cachedObj } from "../../src/storage";
+import { previousURLs } from "../../src/storage";
 
 function GoBackButton({ children, ...props }) {
   //   const [urlPath, setPathState] = React.useState("/earphones");
-  const lastUrl = cachedObj.previousURLs.pop();
+  const lastUrl = previousURLs.pop();
   return (
     <Link href={`${lastUrl}`}>
-      <a>Go Back</a>
+      <a className={GoBackButtonStyles[`go-back-btn`]}>Go Back</a>
     </Link>
   );
 }

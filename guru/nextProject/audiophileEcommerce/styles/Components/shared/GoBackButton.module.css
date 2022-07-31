@@ -1,0 +1,5 @@
+.go-back-btn {
+  font-size: var(--heading-reg-sm);
+  color: var(--color-text);
+  display: inline-block;
+}
