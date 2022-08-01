@@ -7,12 +7,21 @@
 }
 
 /* tablet */
-/* desktop */
 
-@media screen and (min-width: 90rem) {
+@media screen and (min-width: 4rem) {
   .test-container {
     flex-direction: revert;
     align-items: center;
-    gap: 0;
+    gap: 70px;
   }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  /* .test-container {
+    flex-direction: revert;
+    align-items: center;
+    gap: 0;
+  } */
 }

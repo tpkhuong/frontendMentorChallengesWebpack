@@ -1,6 +1,6 @@
 import React from "react";
 import ProductTextPriceInfoStyles from "../../styles/Product/ProductTextPriceInfo.module.css";
-import AddCard from "./AddCartContainer";
+import AddCart from "./AddCartContainer";
 import { addCommasToPrice } from "../../utils/helpers";
 
 function ProductTextPriceInfo({ children, ...props }) {
@@ -36,6 +36,7 @@ function ProductTextPriceInfo({ children, ...props }) {
         </span>
       </div>
       {/* add cart component */}
+      <AddCart />
     </div>
   );
 }

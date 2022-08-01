@@ -52,4 +52,50 @@
 /* price */
 
 /* tablet */
+
+@media screen and (min-width: 48rem) {
+  /* info content wrapper */
+
+  /* set flex basis 340px */
+
+  /* new product */
+
+  .new-product {
+    font-size: 0.75rem;
+  }
+
+  /* title */
+
+  .info-content-wrapper[data-isnew="true"] .title {
+    margin-block-start: 17px;
+  }
+
+  /* description */
+
+  .description {
+    margin-block: 32px;
+  }
+}
+
 /* desktop */
+@media screen and (min-width: 90rem) {
+  /* set flex basis 445px */
+
+  /* new product */
+
+  .new-product {
+    font-size: var(--heading-reg-x-sm);
+  }
+
+  /* title */
+
+  .info-content-wrapper[data-isnew="true"] .title {
+    margin-block-start: 17px;
+  }
+
+  .title {
+    font-size: var(--heading-med);
+  }
+
+  /* description */
+}

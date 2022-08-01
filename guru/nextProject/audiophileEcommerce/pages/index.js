@@ -13,6 +13,7 @@ import CategoryImg from "../Components/Category/CategoryImgWrapper";
 import CategoryTextContent from "../Components/Category/CategoryTextContent";
 import AddCart from "../Components/Product/AddCartContainer";
 import ProductTextPriceInfo from "../Components/Product/ProductTextPriceInfo";
+import ProductImgWrapper from "../Components/Product/ProductImgWrapper";
 import data from "../src/data.json";
 import { useMediaQuery } from "../utils/helpers";
 
@@ -21,8 +22,9 @@ function Home({ children, ...props }) {
   // const item = data.category.headphones[0];
   const product = data.details["xx59"];
   const { image, category, price, description, newProduct, name } = product;
-  // newProduct, product, category, description, price
-  console.log(category, price, description, newProduct);
+  // newProduct, product, category, description,
+  const { mobile, tablet, desktop, text } = image;
+  // console.log(category, price, description, newProduct);
   return (
     <React.Fragment>
       <Head>
@@ -41,12 +43,20 @@ function Home({ children, ...props }) {
       </header>
       <Main>
         {/* <ProductTextPriceInfo /> */}
-        <ProductTextPriceInfo
-          price={price}
-          newProduct={newProduct}
-          title={name}
-          description={description}
-        />
+        <div className={HomeStyles[`test-container`]}>
+          <ProductImgWrapper
+            desktop={desktop}
+            tablet={tablet}
+            mobile={mobile}
+            textContent={text}
+          />
+          <ProductTextPriceInfo
+            price={price}
+            newProduct={newProduct}
+            title={name}
+            description={description}
+          />
+        </div>
         {/* <AddCart /> */}
         {/* <div className={HomeStyles[`test-container`]}>
           <CategoryImg
