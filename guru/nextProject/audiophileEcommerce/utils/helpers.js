@@ -209,3 +209,49 @@ export function updateQuantity(event) {
 
   // updateMethods[methodSelector]();
 }
+
+export function upperCaseFirstChar(array) {
+  // pass in array with items ["Headphone unit", "Replacement earcups", "User manual", "3.5mm 5m audio cable"] etc
+  // make an array with same length
+  // call split on each item in array
+  const arrayOfStringWithFirstCharUppercased = array.map(
+    function algorithmToUppercaseFirstChar(element) {
+      // each item in the array returned by using split method
+      const splitStrAtSpace = element.split(" ");
+      // use map method
+      const strWithUppercasedFirstChar = splitStrAtSpace.map(
+        function uppercaseFirstChar(eachStr) {
+          // each element in map method
+          // get first char
+          const firstChar = eachStr[0];
+          // convert firstChar to number
+          const convertFirstCharToNumType = Number(firstChar);
+          // our conditionals
+          // first char Number() is typeof "number" && Number.isNaN(first char) is false
+          // return that element
+          if (
+            typeof convertFirstCharToNumType == "number" &&
+            !Number.isNaN(convertFirstCharToNumType)
+          ) {
+            return eachStr;
+          }
+          // if first char Number(first char) is typeof "number" && Number.isNaN(first char) is true
+          if (
+            typeof convertFirstCharToNumType == "number" &&
+            Number.isNaN(convertFirstCharToNumType)
+          ) {
+            // uppercase the first char
+            const firstCharUpperCased = firstChar.toUpperCase();
+            // copy str starting at index 1 using String.slice(1)
+            const restOfStr = eachStr.slice(1);
+            // then concat first char with copied string starting at index 1
+            return firstCharUpperCased.concat(restOfStr);
+          }
+        }
+      );
+      // join the string in array with space operator
+      return strWithUppercasedFirstChar.join(" ");
+    }
+  );
+  return arrayOfStringWithFirstCharUppercased;
+}

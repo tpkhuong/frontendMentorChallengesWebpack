@@ -4,7 +4,15 @@ import { server } from "../../../config/index";
 function ProductPage({ children, ...props }) {
   console.log("product data", props.data);
   // call helper func to add commas to price
-  return <h2>Hello from product</h2>;
+  return (
+    <React.Fragment>
+      <h2>Hello from product</h2>
+      {/* product-img-textcontent */}
+      {/* product-features-includes */}
+      {/* product img grid */}
+      {/* recommendations */}
+    </React.Fragment>
+  );
 }
 
 export default ProductPage;

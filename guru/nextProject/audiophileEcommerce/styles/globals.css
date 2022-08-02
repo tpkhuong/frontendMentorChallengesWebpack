@@ -106,7 +106,7 @@
   --heading-lrg: 3.5rem;
   /* 40px */
   --heading-med: 2.5rem;
-  /* 36px */
+  /* 32px */
   --heading-sm: 2rem;
   /* 28px */
   --heading-sm-two: 1.75rem;
@@ -279,7 +279,8 @@ button {
 }
 
 ul[role],
-li[role] {
+li[role],
+li[class] {
   list-style: none;
   padding: 0;
 }

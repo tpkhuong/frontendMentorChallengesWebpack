@@ -55,6 +55,9 @@
 
 @media screen and (min-width: 48rem) {
   /* info content wrapper */
+  .info-content-wrapper {
+    flex-basis: 340px;
+  }
 
   /* set flex basis 340px */
 
@@ -79,6 +82,10 @@
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  /* info content wrapper */
+  .info-content-wrapper {
+    flex-basis: 445px;
+  }
   /* set flex basis 445px */
 
   /* new product */

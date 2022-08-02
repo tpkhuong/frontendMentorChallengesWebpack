@@ -14,6 +14,10 @@ import CategoryTextContent from "../Components/Category/CategoryTextContent";
 import AddCart from "../Components/Product/AddCartContainer";
 import ProductTextPriceInfo from "../Components/Product/ProductTextPriceInfo";
 import ProductImgWrapper from "../Components/Product/ProductImgWrapper";
+import ProductFeatures from "../Components/Product/ProductFeatures";
+import ProductIncludedItems from "../Components/Product/ProductIncludedItems";
+import ProductImageGrid from "../Components/Product/ProductImageGrid";
+import ProductRecommendations from "../Components/Product/ProductRecommendations";
 import data from "../src/data.json";
 import { useMediaQuery } from "../utils/helpers";
 
@@ -21,9 +25,10 @@ function Home({ children, ...props }) {
   const isMobile = useMediaQuery("max", 768);
   // const item = data.category.headphones[0];
   const product = data.details["xx59"];
-  const { image, category, price, description, newProduct, name } = product;
+  // const { image, category, price, description, newProduct, name } = product;
+  const { others } = product;
   // newProduct, product, category, description,
-  const { mobile, tablet, desktop, text } = image;
+  // const { mobile, tablet, desktop, text } = image;
   // console.log(category, price, description, newProduct);
   return (
     <React.Fragment>
@@ -42,9 +47,19 @@ function Home({ children, ...props }) {
         <HeroContent />
       </header>
       <Main>
+        {/* product features */}
+        {/* <ProductFeatures productText={product.features} /> */}
         {/* <ProductTextPriceInfo /> */}
+        {/* <ProductIncludedItems includedItems={includes} /> */}
+        {/* <div className={HomeStyles[`grid-container`]}>
+          <ProductImageGrid galleryImgData={gallery} />
+        </div> */}
+        {/* <div className={HomeStyles[`recommend-section`]}>
+
+        </div> */}
+        <ProductRecommendations recommendations={others} />
         <div className={HomeStyles[`test-container`]}>
-          <ProductImgWrapper
+          {/* <ProductImgWrapper
             desktop={desktop}
             tablet={tablet}
             mobile={mobile}
@@ -55,7 +70,7 @@ function Home({ children, ...props }) {
             newProduct={newProduct}
             title={name}
             description={description}
-          />
+          /> */}
         </div>
         {/* <AddCart /> */}
         {/* <div className={HomeStyles[`test-container`]}>

@@ -64,6 +64,8 @@ button.increment {
   padding-inline-end: 30.5px;
 }
 
+/* tablet */
+
 /* desktop */
 
 @media screen and (min-width: 90rem) {
