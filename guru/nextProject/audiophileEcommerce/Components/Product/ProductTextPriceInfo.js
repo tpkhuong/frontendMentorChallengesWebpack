@@ -4,9 +4,19 @@ import AddCart from "./AddCartContainer";
 import { addCommasToPrice } from "../../utils/helpers";
 
 function ProductTextPriceInfo({ children, ...props }) {
+  // use variable/identifier to build string for cart img
+  const nameForImgSrc = props.imgSrcName;
+  // using useRef to save reference to price and quantity of product for cart component
+  // newProduct, price, description from data.json
   // convert price to string form here
   const priceInStrForm = addCommasToPrice(props.price);
   // console.log(...props);
+  const propsForAddToCartBtn = {
+    nameForImgSrc,
+    priceInStrForm,
+    price: props.price,
+    name: props.title,
+  };
   return (
     <div
       // use console.log(data.details["xx59"].new);
@@ -36,7 +46,7 @@ function ProductTextPriceInfo({ children, ...props }) {
         </span>
       </div>
       {/* add cart component */}
-      <AddCart />
+      <AddCart objOfValues={propsForAddToCartBtn} />
     </div>
   );
 }

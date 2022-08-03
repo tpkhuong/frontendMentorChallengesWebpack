@@ -8,16 +8,6 @@ import MissionStatement from "../Components/shared/MissionStatement";
 import HeroContent from "../Components/Home/HeroContent";
 import FeatureProducts from "../Components/Home/FeatureProducts";
 import Main from "../Components/shared/Main";
-import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
-import CategoryImg from "../Components/Category/CategoryImgWrapper";
-import CategoryTextContent from "../Components/Category/CategoryTextContent";
-import AddCart from "../Components/Product/AddCartContainer";
-import ProductTextPriceInfo from "../Components/Product/ProductTextPriceInfo";
-import ProductImgWrapper from "../Components/Product/ProductImgWrapper";
-import ProductFeatures from "../Components/Product/ProductFeatures";
-import ProductIncludedItems from "../Components/Product/ProductIncludedItems";
-import ProductImageGrid from "../Components/Product/ProductImageGrid";
-import ProductRecommendations from "../Components/Product/ProductRecommendations";
 import data from "../src/data.json";
 import { useMediaQuery } from "../utils/helpers";
 
@@ -40,6 +30,10 @@ function Home({ children, ...props }) {
           type="image/x-icon"
         />
       </Head>
+      <a href="#main-content" className="skip-link">
+        Skip to Main Content
+      </a>
+      <h1 className="visually-hidden">Audiophile</h1>
       <header className={HomeStyles[`header`]} role="banner">
         {/* logo nav */}
         <LogoNavContainer />
@@ -57,7 +51,7 @@ function Home({ children, ...props }) {
         {/* <div className={HomeStyles[`recommend-section`]}>
 
         </div> */}
-        <ProductRecommendations recommendations={others} />
+        {/* <ProductRecommendations recommendations={others} /> */}
         <div className={HomeStyles[`test-container`]}>
           {/* <ProductImgWrapper
             desktop={desktop}

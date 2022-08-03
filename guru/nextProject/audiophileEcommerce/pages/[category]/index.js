@@ -10,7 +10,6 @@ import CategoryImg from "../../Components/Category/CategoryImgWrapper";
 import CategoryTextContent from "../../Components/Category/CategoryTextContent";
 import MissionStatement from "../../Components/shared/MissionStatement";
 import Footer from "../../Components/shared/Footer";
-import GoBackButton from "../../Components/shared/GoBackButton";
 import { server } from "../../config/index";
 import { useMediaQuery } from "../../utils/helpers";
 // import axios from "axios";
@@ -35,13 +34,16 @@ function CategoryPage({ children, ...props }) {
           type="image/x-icon"
         />
       </Head>
+      <a className="skip-link" href="#main-content">
+        Skip to Main Content
+      </a>
+      <h1 className="visually-hidden">{pageTitle}</h1>
       <header role="banner">
         <LogoNavContainer />
         <BannerTitle>{props.categoryStr}</BannerTitle>
       </header>
       <Main>
         <article className={CategoryPageStyles[`products-container`]}>
-          <GoBackButton />
           {/* use map loop through array make div with two children: one img wrapper and one text content */}
           {props.data.map(function makeProductContent(element, index) {
             // use destructuring

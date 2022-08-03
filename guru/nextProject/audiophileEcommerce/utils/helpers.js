@@ -255,3 +255,50 @@ export function upperCaseFirstChar(array) {
   );
   return arrayOfStringWithFirstCharUppercased;
 }
+
+/********
+ * Cart functionality
+ * Add to cart
+ * cart modal: calculate total
+ * ********/
+
+export function addToCartAlgorithm(event) {
+  // we want price with comma for display
+  // without comma for total calculation
+  // name for display, slug for building img src
+  // quantity ref for cart quantity control
+  // create obj push into an array then save it to local storage/session storage
+  // each obj will have img src, name, price with comma and without, quantity
+  // nameForImgSrc
+  // priceInStrForm
+  // price
+  // name
+  // this.quantityInputRef.current.value
+  const arrayFromLocalStorage =
+    localStorage.getItem("arrayOfObj") == null
+      ? []
+      : JSON.parse(localStorage.getItem("arrayOfObj"));
+  // destructure this obj
+  const { quantityInputRef, propsForCart } = this;
+  const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
+  // make obj
+  // /cart/image-xx59-headphones.jpg
+  // before we push obj into array check if array does not have
+  // obj with name already in the array
+  // length 0 push obj into array
+  // length 1 access obj at 0 index array[0]
+  // length greater than 1 loop through array
+  // check if array has obj with same name/title
+  arrayFromLocalStorage.push({
+    priceStr: priceInStrForm,
+    priceNum: price,
+    strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
+    title: name,
+    quantityForInput: quantityInputRef.current.value,
+  });
+  console.log(arrayFromLocalStorage);
+  localStorage.setItem("arrayOfObj", JSON.stringify(arrayFromLocalStorage));
+  // console.log(this.quantityInputRef.current.value);
+}
+
+export function cartBtnAlgorithm(event) {}

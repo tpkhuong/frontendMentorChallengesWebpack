@@ -1,8 +1,10 @@
 import React from "react";
 import AddCartStyles from "../../styles/Product/AddCartContainer.module.css";
-import { updateQuantity } from "../../utils/helpers";
+import { updateQuantity, addToCartAlgorithm } from "../../utils/helpers";
 
 function AddCart({ children, ...props }) {
+  // props obj from Product Text Price Info component
+  const propsForCart = props.objOfValues;
   const quantityInputRef = React.useRef();
 
   return (
@@ -20,7 +22,7 @@ function AddCart({ children, ...props }) {
           -
         </button>
         {/* number input */}
-        <input type="number" ref={quantityInputRef} defaultValue="0" />
+        <input type="number" ref={quantityInputRef} defaultValue="1" />
         {/* increment */}
         <button
           data-typeofupdate="increment"
@@ -30,7 +32,12 @@ function AddCart({ children, ...props }) {
         </button>
       </div>
       {/* add cart btn */}
-      <button className={AddCartStyles[`add-cart-btn`]}>add to cart</button>
+      <button
+        onClick={addToCartAlgorithm.bind({ quantityInputRef, propsForCart })}
+        className={AddCartStyles[`add-cart-btn`]}
+      >
+        add to cart
+      </button>
     </div>
   );
 }

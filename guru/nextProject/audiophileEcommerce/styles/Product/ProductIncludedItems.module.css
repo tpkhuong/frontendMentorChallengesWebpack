@@ -2,7 +2,7 @@
 
 .title-items {
   /* we could use flex and gap 88px instead of declaring margin-block-start on this element */
-  margin-block-start: 88px;
+  /* margin-block-start: 88px; */
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -43,7 +43,7 @@
 @media screen and (min-width: 48rem) {
   /* space between title and items in 162px */
   .title-items {
-    margin-block-start: 120px;
+    /* margin-block-start: 120px; */
     flex-direction: revert;
     display: flex;
     gap: 162px;
@@ -58,7 +58,7 @@
 /* desktop */
 @media screen and (min-width: 90rem) {
   .title-items {
-    margin-block-start: 0px;
+    /* margin-block-start: 0px; */
     flex-direction: column;
     gap: 32px;
   }
