@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import axios from "axios";
 import LogoNavContainer from "../../../Components/shared/LogoNavContainer";
 import MobileNav from "../../../Components/shared/MobileNav";
 import Main from "../../../Components/shared/Main";
@@ -62,6 +63,7 @@ function ProductPage({ children, ...props }) {
             newProduct={newProduct}
             price={price}
             description={description}
+            altText={image.text}
           />
         </article>
         {/* product-features-includes */}
@@ -122,10 +124,22 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   //   console.log(context.params);
-  const response = await fetch(
+  /**
+   * using fetch
+   * **/
+  // const response = await fetch(
+  //   `${server}/api/${context.params.category}/${context.params.product}`
+  // );
+  // const data = response.json();
+
+  /**
+   * using axios
+   * **/
+  const response = await axios(
     `${server}/api/${context.params.category}/${context.params.product}`
   );
-  const data = await response.json();
+
+  const data = response.data;
   //   console.log(data);
   return {
     props: { data },

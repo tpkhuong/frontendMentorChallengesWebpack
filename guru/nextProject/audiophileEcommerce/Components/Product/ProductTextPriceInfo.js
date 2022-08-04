@@ -16,6 +16,7 @@ function ProductTextPriceInfo({ children, ...props }) {
     priceInStrForm,
     price: props.price,
     name: props.title,
+    imgAltText: props.altText,
   };
   return (
     <div
@@ -46,6 +47,8 @@ function ProductTextPriceInfo({ children, ...props }) {
         </span>
       </div>
       {/* add cart component */}
+      {/* we will still pass props to AddCart component */}
+      {/* because we plan to use it again for summary component in checkout page */}
       <AddCart objOfValues={propsForAddToCartBtn} />
     </div>
   );

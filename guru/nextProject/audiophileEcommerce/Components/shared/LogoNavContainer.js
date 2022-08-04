@@ -2,11 +2,11 @@ import React from "react";
 import Link from "next/link";
 import LogoNavStyles from "../../styles/Components/shared/LogoNavContainer.module.css";
 import FullMenuNav from "./FullMenuNav";
+import CartBtnModal from "./CartBtnAndModal";
 import {
   useMediaQuery,
   showMobileNav,
   targetLastMobileNavElement,
-  cartBtnAlgorithm,
 } from "../../utils/helpers";
 console.log(useMediaQuery);
 
@@ -96,9 +96,10 @@ function LogoNavContainer({ children, ...props }) {
         </Link>
       </div>
       {/* cart button */}
-      <Link href="/">
-        <a
-          onClick={cartBtnAlgorithm}
+      <CartBtnModal />
+      {/* <Link href="/"> */}
+      {/* <button
+          onClick={cartIconBtnAlgorithm}
           className={LogoNavStyles[`cart-btn`]}
           aria-label="open cart modal"
         >
@@ -116,8 +117,11 @@ function LogoNavContainer({ children, ...props }) {
             <span className={LogoNavStyles[`quantity-number`]}>5</span>
             <span className={LogoNavStyles[`item-text`]}>items</span>
           </span>
-        </a>
-      </Link>
+        </button> */}
+      {/* we could have cart modal here. since we will declare position absolute on the modal */}
+      {/* and we want the cart modal to be rendered below the mobile menu. */}
+      {/* Using html order */}
+      {/* </Link> */}
     </div>
   );
 }

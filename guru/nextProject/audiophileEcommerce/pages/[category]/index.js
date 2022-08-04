@@ -12,7 +12,7 @@ import MissionStatement from "../../Components/shared/MissionStatement";
 import Footer from "../../Components/shared/Footer";
 import { server } from "../../config/index";
 import { useMediaQuery } from "../../utils/helpers";
-// import axios from "axios";
+import axios from "axios";
 
 function CategoryPage({ children, ...props }) {
   const firstLetter = props.categoryStr[0].toUpperCase();
@@ -105,8 +105,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   // make api calls here
-  const response = await fetch(`${server}/api/${context.params.category}`);
-  const data = await response.json();
+  /**
+   * using fetch
+   * **/
+  // const response = await fetch(`${server}/api/${context.params.category}`);
+  // const data = await response.json();
+
+  /**
+   * using axios
+   * **/
+
+  const response = await axios(`${server}/api/${context.params.category}`);
+  const { data } = response;
+
   const categoryStr = context.params.category;
 
   return {

@@ -74,6 +74,13 @@
   fill: var(--color-neutral-white);
 }
 
+/* cart-btn */
+
+.cart-btn {
+  background-color: transparent;
+  padding: 0;
+}
+
 .quantity-textbox {
   position: absolute;
   padding: 8px;

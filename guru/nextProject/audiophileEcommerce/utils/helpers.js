@@ -1,5 +1,5 @@
 import React from "react";
-import { previousURLs } from "../src/storage";
+import { previousURLs, cartItems } from "../src/storage";
 
 /**
  * All Helper funcs go here.
@@ -283,22 +283,47 @@ export function addToCartAlgorithm(event) {
   const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
   // make obj
   // /cart/image-xx59-headphones.jpg
+  const objOfCartItemValues = {
+    priceStr: priceInStrForm,
+    priceNum: price,
+    strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
+    title: name,
+    quantityForInput: quantityInputRef.current.value,
+    totalPrice: individualItemTotalCalculation(
+      price,
+      Number(quantityInputRef.current.value)
+    ),
+  };
   // before we push obj into array check if array does not have
   // obj with name already in the array
   // length 0 push obj into array
   // length 1 access obj at 0 index array[0]
   // length greater than 1 loop through array
   // check if array has obj with same name/title
-  arrayFromLocalStorage.push({
-    priceStr: priceInStrForm,
-    priceNum: price,
-    strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
-    title: name,
-    quantityForInput: quantityInputRef.current.value,
-  });
+  // calculate total price by taking quantity * price
+  // for cart modal we can loop through array of objs, take total property in each
+  // obj and add them.
+  arrayFromLocalStorage.push(objOfCartItemValues);
+
   console.log(arrayFromLocalStorage);
   localStorage.setItem("arrayOfObj", JSON.stringify(arrayFromLocalStorage));
   // console.log(this.quantityInputRef.current.value);
 }
 
-export function cartBtnAlgorithm(event) {}
+/**
+ * total calculations helper.
+ * **/
+
+function individualItemTotalCalculation(price, quantity) {
+  return price * quantity;
+}
+
+export function cartIconBtnAlgorithm(event) {
+  // have algorithm to show/hide cart modal here
+  const { useCartState } = this;
+  const data = JSON.parse(localStorage.getItem("arrayOfObj"));
+  useCartState(data);
+  console.log(data);
+  const { strImgSrc } = data[0];
+  console.log(strImgSrc);
+}

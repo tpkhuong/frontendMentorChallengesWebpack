@@ -88,6 +88,7 @@ function Home({ children, ...props }) {
         {/* <MissionStatement pageMargin="home" /> */}
       </Main>
       {/* <Footer /> */}
+      {/* Mobile menu modal */}
       {isMobile ? <MobileNav /> : null}
     </React.Fragment>
   );
