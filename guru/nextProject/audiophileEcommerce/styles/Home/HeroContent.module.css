@@ -7,7 +7,20 @@
   background-color: hsl(0 0% 0% / 0.7);
   background-blend-mode: darken;
   padding-block: 118px;
+  position: relative;
+  /* z-index: -1; */
 }
+
+/* .hero-content-wrapper::before {
+  content: "";
+  display: inline-block;
+  background-color: var(--color-nav-bar-line);
+  height: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+} */
 
 .text-content {
   color: var(--color-neutral-white);
@@ -56,6 +69,11 @@
     background-size: cover; */
   }
 
+  /* .hero-content-wrapper::before {
+    left: 40px;
+    right: 40px;
+  } */
+
   .title {
     font-size: var(--heading-lrg);
   }
@@ -79,6 +97,11 @@
     background-repeat: no-repeat;
     background-size: cover; */
   }
+
+  /* .hero-content-wrapper::before {
+    left: 164px;
+    right: 164px;
+  } */
 
   .text-content {
     margin-inline: revert;

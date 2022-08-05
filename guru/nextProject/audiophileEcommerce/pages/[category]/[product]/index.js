@@ -20,6 +20,7 @@ import { server } from "../../../config/index";
 
 function ProductPage({ children, ...props }) {
   // console.log("product data", props.data);
+  // console.log("category url", props.categoryUrl);
   const isTablet = useMediaQuery("max", 768);
   const {
     slug,
@@ -52,7 +53,7 @@ function ProductPage({ children, ...props }) {
       <Main>
         {/* product-img-textcontent */}
         {/* go back button component */}
-        <GoBackButton />
+        <GoBackButton baseCategoryUrl={props.categoryUrl} />
         <article className={ProductPageStyles[`product-img-textcontent`]}>
           {/* pass in image obj to ProductImgWraper as prop imageSrcObj*/}
           <ProductImgWrapper imageSrcObj={image} />
@@ -139,10 +140,12 @@ export async function getStaticProps(context) {
     `${server}/api/${context.params.category}/${context.params.product}`
   );
 
+  const categoryUrl = context.params.category;
+
   const data = response.data;
   //   console.log(data);
   return {
-    props: { data },
+    props: { data, categoryUrl },
   };
 }
 

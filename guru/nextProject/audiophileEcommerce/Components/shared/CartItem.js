@@ -9,12 +9,19 @@ function CartItem({ children, ...props }) {
     <div className={CartItemStyles[`item-wrapper`]}>
       {/* img */}
       <div className={CartItemStyles[`img-wrapper`]}>
-        <img src="/cart/image-xx59-headphones.jpg" alt="" />
+        <img
+          className={CartItemStyles[`cart-item-img`]}
+          src="/cart/image-xx59-headphones.jpg"
+          alt=""
+        />
       </div>
       {/* title and price */}
       <div className={CartItemStyles[`title-price-wrapper`]}>
-        <span className={CartItemStyles[`title`]}></span>
-        <span className={CartItemStyles[`price`]}></span>
+        <span className={CartItemStyles[`title`]}>xx59</span>
+        <span className={CartItemStyles[`price`]}>
+          <span className={CartItemStyles[`dollar-sign`]}>$</span>
+          <span className={CartItemStyles[`price-digit`]}>2,999</span>
+        </span>
       </div>
       {/* increment/decrement button */}
       <div className={CartItemStyles[`cart-quantity`]}>
@@ -25,5 +32,7 @@ function CartItem({ children, ...props }) {
     </div>
   );
 }
+
+// work on checkout btn and increment/decrement btn algorithm
 
 export default CartItem;

@@ -1,5 +1,5 @@
 import React from "react";
-import { previousURLs, cartItems } from "../src/storage";
+// import { previousURLs, cartItems } from "../src/storage";
 
 /**
  * All Helper funcs go here.
@@ -97,7 +97,36 @@ export function focusFirstModalElement(event) {
 }
 
 export function getCurrentUrl(event) {
-  previousURLs.push(document.URL);
+  // check if previousURLs array is in local storage
+  const previousURLsArray =
+    localStorage.getItem("previousLinks") === null
+      ? []
+      : JSON.parse(localStorage.getItem("previousLinks"));
+  previousURLsArray.push(document.URL);
+  // set urls to localstorage
+  console.log(JSON.stringify(previousURLsArray));
+  localStorage.setItem("previousLinks", JSON.stringify(previousURLsArray));
+  console.log(localStorage.getItem("previousLinks"));
+}
+
+export function goToPreviousPage(event) {
+  /**
+   * update the previousUrls array in localStorage
+   * **/
+  // destructure our this obj
+  // const { urlState } = this;
+  // get array from local storage
+  const arrayOfUrls = JSON.parse(localStorage.getItem("previousLinks"));
+  // call pop method on array to remove last added page url
+  // const lastUrl = arrayOfUrls.pop();
+  // console.log(lastUrl);
+  arrayOfUrls.pop();
+  // call urlState passing the value return by calling pop() method assigned to variable/identifier
+  // urlState(() => {
+  //   return lastUrl;
+  // });
+  // update array saved in local storage
+  localStorage.setItem("previousLinks", arrayOfUrls);
 }
 
 export function addCommasToPrice(number) {

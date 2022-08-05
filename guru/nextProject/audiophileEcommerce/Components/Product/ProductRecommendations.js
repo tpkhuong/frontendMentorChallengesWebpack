@@ -23,6 +23,7 @@ function ProductRecommendations({ children, ...props }) {
           mobile={first.image.mobile}
           text={first.text}
           name={first.name}
+          itemParams={first.url}
         />
         {/* second card*/}
         <ProductRecommendCard
@@ -31,6 +32,7 @@ function ProductRecommendations({ children, ...props }) {
           mobile={second.image.mobile}
           text={second.text}
           name={second.name}
+          itemParams={second.url}
         />
         {/* third card*/}
         <ProductRecommendCard
@@ -39,6 +41,7 @@ function ProductRecommendations({ children, ...props }) {
           mobile={third.image.mobile}
           text={third.text}
           name={third.name}
+          itemParams={third.url}
         />
       </div>
     </article>

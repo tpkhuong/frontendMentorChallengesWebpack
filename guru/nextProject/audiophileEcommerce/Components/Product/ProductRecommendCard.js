@@ -16,7 +16,10 @@ function ProductRecommendCard({ children, ...props }) {
       {/* title */}
       <h3 className={ProductCardStyles[`card-title`]}>{props.name}</h3>
       {/* see product component */}
-      <ProductButton productPage="/" fgBgColor="orange-white" />
+      <ProductButton
+        productPage={`/${props.itemParams.category}/${props.itemParams.product}`}
+        fgBgColor="orange-white"
+      />
     </div>
   );
 }

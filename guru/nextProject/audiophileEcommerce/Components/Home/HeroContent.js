@@ -1,5 +1,6 @@
 import React from "react";
 import HeroContentStyles from "../../styles/Home/HeroContent.module.css";
+import LogoNavBarLine from "../../Components/shared/LogoNavBarLine";
 import ProductButton from "../shared/ProductButton";
 // import Link from "next/link"
 
@@ -7,6 +8,7 @@ function HeroContent({ children, ...props }) {
   return (
     // use bg img for hero content
     <article className={HeroContentStyles[`hero-content-wrapper`]}>
+      <LogoNavBarLine />
       <div className={HeroContentStyles[`text-content`]}>
         <span className={HeroContentStyles[`new-product`]}>NEW PRODUCT</span>
         <h2 className={HeroContentStyles[`title`]}>XX99 MARK II HEADPHONES</h2>
@@ -15,7 +17,10 @@ function HeroContent({ children, ...props }) {
           for the passionate music enthusiast.
         </p>
         {/* see product */}
-        <ProductButton productPage="/speakers" fgBgColor="orange-white" />
+        <ProductButton
+          productPage="/headphones/xx99mark2"
+          fgBgColor="orange-white"
+        />
       </div>
 
       {/* <div className={HeroContentStyles[`img-wrapper`]}>

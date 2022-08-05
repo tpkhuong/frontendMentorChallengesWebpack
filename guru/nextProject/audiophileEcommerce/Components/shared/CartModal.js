@@ -17,8 +17,8 @@ function CartModal({ children, ...props }) {
     >
       <div className={CartModalStyles[`cart-wrapper`]}>
         {/* cart title, remove all and close btn */}
-        <div className={CartModalStyles[`title-remove-all-btn`]}>
-          <h2>
+        <div className={CartModalStyles[`title-remove-all-close-btn`]}>
+          <h2 className={CartModalStyles[`title-quantity`]}>
             <span className={CartModalStyles[`title`]}>Cart</span>
             <span>
               <span>(</span>
@@ -27,26 +27,28 @@ function CartModal({ children, ...props }) {
               </span>
               <span>)</span>
             </span>
-            {/* remove all */}
-            <button className={CartModalStyles[`remove-all-btn`]}>
-              Remove all
-            </button>
-            {/* close btn */}
-            <button
-              aria-label="close cart modal"
-              className={CartModalStyles[`close-btn`]}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21">
-                <path
-                  fill="#1B1D23"
-                  fillRule="evenodd"
-                  d="M17.425.954l2.12 2.121-7.424 7.425 7.425 7.425-2.121 2.12L10 12.622l-7.425 7.425-2.12-2.121L7.878 10.5.454 3.075 2.575.955 10 8.378 17.425.954z"
-                />
-              </svg>
-            </button>
           </h2>
+          {/* remove all */}
+          <button className={CartModalStyles[`remove-all-btn`]}>
+            Remove all
+          </button>
+          {/* close btn */}
+          <button
+            aria-label="close cart modal"
+            className={CartModalStyles[`close-btn`]}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21">
+              <path
+                fill="#1B1D23"
+                fillRule="evenodd"
+                d="M17.425.954l2.12 2.121-7.424 7.425 7.425 7.425-2.121 2.12L10 12.622l-7.425 7.425-2.12-2.121L7.878 10.5.454 3.075 2.575.955 10 8.378 17.425.954z"
+              />
+            </svg>
+          </button>
         </div>
-        <div className={CartModalStyles[`cart-test-container`]}>
+        <div className={CartModalStyles[`cart-items-container`]}>
+          <CartItem dataFromCartModal={cartModalData} />
+          <CartItem dataFromCartModal={cartModalData} />
           <CartItem dataFromCartModal={cartModalData} />
         </div>
         {/* list of items */}

@@ -71,6 +71,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-one-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-one-headphones.jpg",
             "text": "Black with gold circle over the ear headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark1"
           }
         },
         {
@@ -81,6 +85,10 @@
             "tablet": "/shared/tablet/image-xx59-headphones.jpg",
             "desktop": "/shared/desktop/image-xx59-headphones.jpg",
             "text": "All white over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx59"
           }
         },
         {
@@ -91,6 +99,10 @@
             "tablet": "/shared/tablet/image-zx9-speaker.jpg",
             "desktop": "/shared/desktop/image-zx9-speaker.jpg",
             "text": "Black speaker with large white top sub woofer and small black bottom sub woofer"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx9"
           }
         }
       ]
@@ -162,6 +174,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-two-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-two-headphones.jpg",
             "text": "All Black over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark2"
           }
         },
         {
@@ -172,6 +188,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-one-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-one-headphones.jpg",
             "text": "Black with gold circle over the ear headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark1"
           }
         },
         {
@@ -182,6 +202,10 @@
             "tablet": "/shared/tablet/image-zx9-speaker.jpg",
             "desktop": "/shared/desktop/image-zx9-speaker.jpg",
             "text": "Black speaker with large white top sub woofer and small black bottom sub woofer"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx9"
           }
         }
       ]
@@ -253,6 +277,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-two-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-two-headphones.jpg",
             "text": "All Black over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark2"
           }
         },
         {
@@ -263,6 +291,10 @@
             "tablet": "/shared/tablet/image-xx59-headphones.jpg",
             "desktop": "/shared/desktop/image-xx59-headphones.jpg",
             "text": "All white over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx59"
           }
         },
         {
@@ -273,6 +305,10 @@
             "tablet": "/shared/tablet/image-zx9-speaker.jpg",
             "desktop": "/shared/desktop/image-zx9-speaker.jpg",
             "text": "Black speaker with large white top sub woofer and small black bottom sub woofer"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx9"
           }
         }
       ]
@@ -348,6 +384,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-one-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-one-headphones.jpg",
             "text": "Black with gold circle over the ear headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark1"
           }
         },
         {
@@ -358,6 +398,10 @@
             "tablet": "/shared/tablet/image-xx59-headphones.jpg",
             "desktop": "/shared/desktop/image-xx59-headphones.jpg",
             "text": "All white over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx59"
           }
         },
         {
@@ -368,6 +412,10 @@
             "tablet": "/shared/tablet/image-zx9-speaker.jpg",
             "desktop": "/shared/desktop/image-zx9-speaker.jpg",
             "text": "Black speaker with large white top sub woofer and small black bottom sub woofer"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx9"
           }
         }
       ]
@@ -443,6 +491,10 @@
             "tablet": "/shared/tablet/image-zx9-speaker.jpg",
             "desktop": "/shared/desktop/image-zx9-speaker.jpg",
             "text": "Black speaker with large white top sub woofer and small black bottom sub woofer"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx9"
           }
         },
         {
@@ -453,6 +505,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-one-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-one-headphones.jpg",
             "text": "Black with gold circle over the ear headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark1"
           }
         },
         {
@@ -463,6 +519,10 @@
             "tablet": "/shared/tablet/image-xx59-headphones.jpg",
             "desktop": "/shared/desktop/image-xx59-headphones.jpg",
             "text": "All white over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx59"
           }
         }
       ]
@@ -538,6 +598,10 @@
             "tablet": "/shared/tablet/image-zx7-speaker.jpg",
             "desktop": "/shared/desktop/image-zx7-speaker.jpg",
             "text": "All black speaker"
+          },
+          "url": {
+            "category": "speakers",
+            "product": "zx7"
           }
         },
         {
@@ -548,6 +612,10 @@
             "tablet": "/shared/tablet/image-xx99-mark-one-headphones.jpg",
             "desktop": "/shared/desktop/image-xx99-mark-one-headphones.jpg",
             "text": "Black with gold circle over the ear headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx99mark1"
           }
         },
         {
@@ -558,6 +626,10 @@
             "tablet": "/shared/tablet/image-xx59-headphones.jpg",
             "desktop": "/shared/desktop/image-xx59-headphones.jpg",
             "text": "All white over the ears headphones"
+          },
+          "url": {
+            "category": "headphones",
+            "product": "xx59"
           }
         }
       ]

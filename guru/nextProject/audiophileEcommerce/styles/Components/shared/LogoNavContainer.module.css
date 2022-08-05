@@ -7,10 +7,10 @@
   padding-inline: 24px;
   padding-block: 32px;
   gap: 10px;
-  position: relative;
+  /* position: relative; */
 }
 
-.logo-nav-container::before {
+/* .logo-nav-container::before {
   content: "";
   display: inline-block;
   background-color: var(--color-nav-bar-line);
@@ -19,7 +19,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-}
+} */
 
 /* open/close mobile menu */
 
@@ -76,7 +76,7 @@
 
 /* cart-btn */
 
-.cart-btn {
+/* .cart-btn {
   background-color: transparent;
   padding: 0;
 }
@@ -89,7 +89,7 @@
   background-color: var(--color-neutral-white);
   font-weight: 500;
   color: var(--color-primary-orange);
-  /* border-radius: 4px; */
+  border-radius: 4px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -115,7 +115,7 @@
 
 .quantity-number {
   margin-inline-end: 5px;
-}
+} */
 
 /* tablet */
 
@@ -124,10 +124,10 @@
     padding-inline: 40px;
   }
 
-  .logo-nav-container::before {
+  /* .logo-nav-container::before {
     left: 40px;
     right: 40px;
-  }
+  } */
 
   .logo {
     margin-inline: auto;
@@ -139,9 +139,9 @@
     gap: 16px;
   }
 
-  .quantity-textbox {
+  /* .quantity-textbox {
     right: 38px;
-  }
+  } */
 }
 
 /* desktop */
@@ -151,10 +151,10 @@
     padding-inline: 165px;
   }
 
-  .logo-nav-container::before {
+  /* .logo-nav-container::before {
     left: 165px;
     right: 165px;
-  }
+  } */
   .button-container {
     display: none;
   }
@@ -169,8 +169,8 @@
     margin-inline-end: 36px;
     gap: 24px;
   }
-
+  /* 
   .quantity-textbox {
     right: 165px;
-  }
+  } */
 }
