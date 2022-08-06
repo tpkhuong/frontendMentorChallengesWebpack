@@ -6,7 +6,7 @@ import CartItem from "./CartItem";
 
 function CartModal({ children, ...props }) {
   // get data from AddCart component
-  const cartModalData = props.dataFromAddCart;
+  const cartModalData = props.addCartDataFromLocalStorage;
   console.log(cartModalData);
   return (
     <div

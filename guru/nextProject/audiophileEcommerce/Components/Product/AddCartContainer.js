@@ -1,8 +1,8 @@
 import React from "react";
 import AddCartStyles from "../../styles/Product/AddCartContainer.module.css";
-import AddCartBtnModal from "./AddCartBtnAndModal";
 import { updateQuantity, addToCartAlgorithm } from "../../utils/helpers";
-import CartModal from "../shared/CartModal";
+// import AddCartBtnModal from "./AddCartBtnAndModal";
+// import CartModal from "../shared/CartModal";
 
 function AddCart({ children, ...props }) {
   // useState. apply state value to prop dataFromAddCart of Cart Modal
@@ -12,7 +12,7 @@ function AddCart({ children, ...props }) {
   const propsForCart = props.objOfValues;
   const quantityInputRef = React.useRef();
 
-  const dataForCartModal = { propsForCart, quantityInputRef };
+  // const dataForCartModal = { propsForCart, quantityInputRef };
 
   return (
     <div className={AddCartStyles[`addcart-wrapper`]}>

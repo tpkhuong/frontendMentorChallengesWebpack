@@ -30,7 +30,7 @@ function CartBtnModal({ children, ...props }) {
       </button>
       {/* cart modal */}
       {(typeof cartState == "object") & (cartState !== null) ? (
-        <CartModal dataFromAddCart={cartState} />
+        <CartModal addCartDataFromLocalStorage={cartState} />
       ) : null}
     </React.Fragment>
   );

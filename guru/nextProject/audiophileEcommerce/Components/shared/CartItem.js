@@ -1,5 +1,6 @@
 import React from "react";
 import CartItemStyles from "../../styles/Components/shared/CartItem.module.css";
+import { cartItemQuantityFunc } from "../../utils/helpers";
 
 function CartItem({ children, ...props }) {
   // props.dataFromCartModal
@@ -24,10 +25,25 @@ function CartItem({ children, ...props }) {
         </span>
       </div>
       {/* increment/decrement button */}
-      <div className={CartItemStyles[`cart-quantity`]}>
-        <button className={CartItemStyles[`cart-increment`]}>-</button>
+      <div
+        onClick={cartItemQuantityFunc}
+        className={CartItemStyles[`cart-quantity`]}
+      >
+        {/* hitting increment/decrement button will update both quantity and total price of item in local storage */}
+        <button
+          data-typeofbtn="increment"
+          className={CartItemStyles[`cart-increment`]}
+        >
+          -
+        </button>
+        {/* value of input will be total quantity of item in local storage */}
         <input type="number" ref={cartQuantityRef} defaultValue={1} />
-        <button className={CartItemStyles[`cart-decrement`]}>+</button>
+        <button
+          data-typeofbtn="decrement"
+          className={CartItemStyles[`cart-decrement`]}
+        >
+          +
+        </button>
       </div>
     </div>
   );

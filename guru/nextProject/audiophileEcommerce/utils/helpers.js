@@ -104,9 +104,9 @@ export function getCurrentUrl(event) {
       : JSON.parse(localStorage.getItem("previousLinks"));
   previousURLsArray.push(document.URL);
   // set urls to localstorage
-  console.log(JSON.stringify(previousURLsArray));
+  // console.log(JSON.stringify(previousURLsArray));
   localStorage.setItem("previousLinks", JSON.stringify(previousURLsArray));
-  console.log(localStorage.getItem("previousLinks"));
+  // console.log(localStorage.getItem("previousLinks"));
 }
 
 export function goToPreviousPage(event) {
@@ -126,7 +126,7 @@ export function goToPreviousPage(event) {
   //   return lastUrl;
   // });
   // update array saved in local storage
-  localStorage.setItem("previousLinks", arrayOfUrls);
+  localStorage.setItem("previousLinks", JSON.stringify(arrayOfUrls));
 }
 
 export function addCommasToPrice(number) {
@@ -220,10 +220,14 @@ export function updateQuantity(event) {
       // arrow func will use this of parent func which is updateQuantity
       // convert input value to number type
       const numTypeInputValue = Number(this.quantityInputRef.current.value);
-      // add 1 to that value
+      // subtract 1 to that value
       const minusOne = numTypeInputValue - 1;
       // convert update value to string
-      this.quantityInputRef.current.value = String(minusOne);
+      // if minusOne == 0, assign 1 to this.quantityInputRef.current.value, we dont want input value to go to 0 or negative number
+      // else assign minusOne to this.quantityInputRef.current.value
+      minusOne == 0
+        ? (this.quantityInputRef.current.value = String(1))
+        : (this.quantityInputRef.current.value = String(minusOne));
     },
   };
 
@@ -323,16 +327,81 @@ export function addToCartAlgorithm(event) {
       Number(quantityInputRef.current.value)
     ),
   };
+  /**
+   * we will be working with arrayFromLocalStorage before we update data in localStorage
+   * **/
   // before we push obj into array check if array does not have
   // obj with name already in the array
   // length 0 push obj into array
   // length 1 access obj at 0 index array[0]
+  // check if array does not have obj with item name already in it
   // length greater than 1 loop through array
   // check if array has obj with same name/title
   // calculate total price by taking quantity * price
   // for cart modal we can loop through array of objs, take total property in each
   // obj and add them.
-  arrayFromLocalStorage.push(objOfCartItemValues);
+  /**
+   * we will be working with arrayFromLocalStorage before we update data in localStorage
+   * **/
+
+  const lengthOfArray = arrayFromLocalStorage.length;
+
+  if (lengthOfArray >= 1) {
+    /**
+     * array has more than one item loop through array
+     * update quantity and total price if title and name are the same
+     * since we want the index of the obj with the title that matches the name, it is best to use for loop
+     * **/
+    /**
+     * array has one item: we can make algorithm shorter by loop through array if length is 1 or greater
+     * since our algorithm when length is 1 or greater than 1 is similar
+     * **/
+    let indexOfObj;
+    // loop through array with for loop or foreach find index of obj where the obj title matches name
+    /**
+     * for loop
+     * **/
+    // for (let index = 0; index < lengthOfArray; index++) {
+    //   let element = arrayFromLocalStorage[index];
+    //   const { title } = element;
+    //   if (title === name) {
+    //     indexOfObj = index;
+    //   }
+    // }
+
+    /**
+     * for each loop
+     * **/
+
+    arrayFromLocalStorage.forEach(function findIndexOfObj(element, index) {
+      const { title } = element;
+      if (title === name) {
+        indexOfObj = index;
+      }
+    });
+    // if indexOfObj is undefined push objOfCartItemValues into array
+    /**
+     * shouldn't use !indexOfObj because when indexOfObj is 0, since 0 is a falsy value !indexOfObj will be true
+     * **/
+    if (indexOfObj == undefined) {
+      arrayFromLocalStorage.push(objOfCartItemValues);
+    } else {
+      // else update quantity and totalprice
+      // obj at index in arrayFromLocalStorage
+      const objAtIndex = arrayFromLocalStorage[indexOfObj];
+      const { updatedQuantity, updatedTotal } = updateQuantityAndTotalPrice(
+        objAtIndex,
+        this
+      );
+      objAtIndex.quantityForInput = `${updatedQuantity}`;
+      objAtIndex.totalPrice = updatedTotal;
+    }
+  } else {
+    /**
+     * array is empty
+     * **/
+    arrayFromLocalStorage.push(objOfCartItemValues);
+  }
 
   console.log(arrayFromLocalStorage);
   localStorage.setItem("arrayOfObj", JSON.stringify(arrayFromLocalStorage));
@@ -347,12 +416,64 @@ function individualItemTotalCalculation(price, quantity) {
   return price * quantity;
 }
 
+/**
+ * updateQuantityAndTotalPrice
+ * **/
+
+function updateQuantityAndTotalPrice(
+  objInLocalStorage,
+  objOfPropsAndQuantityInput
+) {
+  const { quantityInputRef, propsForCart } = objOfPropsAndQuantityInput;
+  const { quantityForInput } = objInLocalStorage;
+  // get quantity of localStorage and quantity from input add them
+  const updatedQuantity =
+    Number(quantityForInput) + Number(quantityInputRef.current.value);
+  // take that update quantity value multiply it with price to get new total
+  const updatedTotal = individualItemTotalCalculation(
+    updatedQuantity,
+    propsForCart.price
+  );
+  return {
+    updatedQuantity,
+    updatedTotal,
+  };
+}
+
 export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { useCartState } = this;
   const data = JSON.parse(localStorage.getItem("arrayOfObj"));
+  /**
+   * when user click on cart icon in logo nav bar, we will render cart modal
+   * when cartState changes. Which will be handled in this func, when useCartState func
+   * is called we will render Cart Modal passing data we get from calling
+   * localStorage.getItem("arrayOfObj")
+   * **/
   useCartState(data);
   console.log(data);
-  const { strImgSrc } = data[0];
-  console.log(strImgSrc);
+  // const { strImgSrc } = data[0];
+  // console.log(strImgSrc);
+}
+
+/**
+ * cart item quantity increment/decrement
+ * **/
+
+export function cartItemQuantityFunc(event) {
+  // method obj
+  const methodObj = {
+    increment: () => {
+      console.log("hello from increment method");
+    },
+    decrement: () => {
+      console.log("hello from derement method");
+    },
+  };
+
+  // check if element clicked is button
+  if (event.target.closest("BUTTON")) {
+    const btnAttrValue = event.target.getAttribute("data-typeofbtn");
+    methodObj[btnAttrValue]();
+  }
 }

@@ -53,6 +53,7 @@ function ProductPage({ children, ...props }) {
       <Main>
         {/* product-img-textcontent */}
         {/* go back button component */}
+        {/* <BackBtnWrapper baseCategoryUrl={props.categoryUrl} /> */}
         <GoBackButton baseCategoryUrl={props.categoryUrl} />
         <article className={ProductPageStyles[`product-img-textcontent`]}>
           {/* pass in image obj to ProductImgWraper as prop imageSrcObj*/}
