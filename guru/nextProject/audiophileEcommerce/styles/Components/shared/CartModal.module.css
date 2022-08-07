@@ -5,6 +5,7 @@
   inset: 0;
   top: 92px;
   z-index: 1;
+  background-color: hsl(0 0% 0% / 0.3);
 }
 
 .cart-wrapper {
@@ -45,6 +46,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding-inline-start: 0;
+}
+
+.item-wrapper {
+  list-style: none;
 }
 
 /* total and price */

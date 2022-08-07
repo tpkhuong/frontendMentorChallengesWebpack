@@ -11,8 +11,11 @@ function AddCart({ children, ...props }) {
   // props obj from Product Text Price Info component
   const propsForCart = props.objOfValues;
   const quantityInputRef = React.useRef();
-
+  console.log("add cart component");
   // const dataForCartModal = { propsForCart, quantityInputRef };
+  React.useEffect(() => {
+    quantityInputRef.current.value = "1";
+  });
 
   return (
     <div className={AddCartStyles[`addcart-wrapper`]}>
@@ -29,7 +32,7 @@ function AddCart({ children, ...props }) {
           -
         </button>
         {/* number input */}
-        <input type="number" ref={quantityInputRef} defaultValue="1" />
+        <input type="number" ref={quantityInputRef} />
         {/* increment */}
         <button
           data-typeofupdate="increment"

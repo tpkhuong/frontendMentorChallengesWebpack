@@ -320,13 +320,17 @@ export function addToCartAlgorithm(event) {
     priceStr: priceInStrForm,
     priceNum: price,
     strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
-    title: name,
+    title: itemTitleForSummaryAndCartModal(name),
     quantityForInput: quantityInputRef.current.value,
     totalPrice: individualItemTotalCalculation(
       price,
       Number(quantityInputRef.current.value)
     ),
   };
+  /**
+   * for each individual item add to localStorage we wont need total price in string form with commas.
+   * we will need it for summary in checkout page.
+   * **/
   /**
    * we will be working with arrayFromLocalStorage before we update data in localStorage
    * **/
@@ -409,6 +413,26 @@ export function addToCartAlgorithm(event) {
 }
 
 /**
+ * make title shorter
+ * **/
+
+function itemTitleForSummaryAndCartModal(title) {
+  const objOfNames = {
+    "XX99 Mark I": "XX99 MK I",
+    "XX99 Mark II": "XX99 MK II",
+  };
+  // call .split(" ") title which will be XX99 Mark II Headphones
+  // get first value in array returned from.split()
+  // if title includes mark we will run difference algorithm
+  if (title.includes("XX99")) {
+    const titleWithoutCategory = title.split(" ").slice(0, 3).join(" ");
+    return objOfNames[titleWithoutCategory];
+  } else {
+    return title.split(" ")[0];
+  }
+}
+
+/**
  * total calculations helper.
  * **/
 
@@ -443,17 +467,58 @@ function updateQuantityAndTotalPrice(
 export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { useCartState } = this;
-  const data = JSON.parse(localStorage.getItem("arrayOfObj"));
+  const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObj"));
   /**
    * when user click on cart icon in logo nav bar, we will render cart modal
    * when cartState changes. Which will be handled in this func, when useCartState func
    * is called we will render Cart Modal passing data we get from calling
    * localStorage.getItem("arrayOfObj")
    * **/
-  useCartState(data);
-  console.log(data);
+  // cartitem component will use value from each item dataObj in arrayOfItems
+  // cartModal will use length of arrayOfObj
+  // and total price in string type of all items in cart
+  const itemsInCartLength = arrayOfItems.length;
+  /**
+   * before we call useCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
+   * get length of arrayOfItems to be use for cart (number)
+   * **/
+  // calculate total price of items in cart;
+  const cartTotalPrice = cartModalTotalPrice(arrayOfItems);
+  // cart total price string type
+  const totalPriceInCartStrType = addCommasToPrice(cartTotalPrice);
+  /**
+   * we want to make an obj with arrayOfItems, total price of cart in number type and string type with commas
+   * save it to local storage. dataObjForSummary
+   * **/
+  localStorage.setItem(
+    "dataObjForSummary",
+    JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
+  );
+  /**
+   * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
+   * which will be passed into cart modal as prop, we can use the data in cart modal
+   * **/
+  useCartState({
+    arrayOfItems,
+    itemsInCartLength,
+    totalPriceInCartStrType,
+    useCartState,
+  });
+  // console.log(data);
   // const { strImgSrc } = data[0];
   // console.log(strImgSrc);
+}
+
+/**
+ * total price helper for cartIcon func
+ * **/
+
+function cartModalTotalPrice(array) {
+  // loop through array of objs, get total price and add them up
+  return array.reduce(function addTotalPrice(buildingUp, currentValue) {
+    const { totalPrice } = currentValue;
+    return buildingUp + totalPrice;
+  }, 0);
 }
 
 /**
@@ -476,4 +541,27 @@ export function cartItemQuantityFunc(event) {
     const btnAttrValue = event.target.getAttribute("data-typeofbtn");
     methodObj[btnAttrValue]();
   }
+}
+
+/**
+ * cart modal remove all btn
+ * **/
+
+export function removeAllBtnAlgorithm(event) {
+  // use bind when we can attach this func to remove all btn
+  // so we can use data that is passed to cart modal component
+  // arrayOfItems, itemsInCartLength, totalPriceInCartStrType
+  // when user hit remove all btn, we will update cart quanity, list of cart item and total
+  // we will pass useCartModalState func, when we call useCartModalState
+  // we will pass in a func useCartModalState((prevVales) => { return {} })
+  alert("start here. working on remove all btn and close btn");
+}
+
+/**
+ * cart modal close btn
+ * **/
+export function closeModalBtnAlgorithm(event) {
+  // use bind when we can attach this func to close btn
+  // so we can use data that is passed to cart modal component
+  // arrayOfItems, itemsInCartLength, totalPriceInCartStrType
 }

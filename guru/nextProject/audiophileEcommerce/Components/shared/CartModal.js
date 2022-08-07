@@ -1,15 +1,29 @@
 import React from "react";
 import CartModalStyles from "../../styles/Components/shared/CartModal.module.css";
 import CartItem from "./CartItem";
-
+import {
+  removeAllBtnAlgorithm,
+  closeModalBtnAlgorithm,
+} from "../../utils/helpers";
+alert("pass useCartModalState into removeAllBtnAlgorithm");
 // console.log(JSON.parse(localStorage.getItem("arrayOfObj")));
 
 function CartModal({ children, ...props }) {
   // get data from AddCart component
   const cartModalData = props.addCartDataFromLocalStorage;
-  console.log(cartModalData);
+  const { arrayOfItems, itemsInCartLength, totalPriceInCartStrType } =
+    cartModalData;
+  // use React.useState() to cause a re-render when use click on remove all btn
+  // initial values will be the values from obj item in local storage
+  const initialCartModalValues = {
+    cartQuantity: itemsInCartLength,
+    cartTotalPrice: totalPriceInCartStrType,
+  };
+  // useState() to cause a render of this component with different data
+  const [cartModalObj, useCartModalState] = useState(initialCartModalValues);
   return (
     <div
+      aria-labelledby="cart-modal"
       data-showcartmodal="false"
       role="dialog"
       aria-modal="true"
@@ -19,11 +33,13 @@ function CartModal({ children, ...props }) {
         {/* cart title, remove all and close btn */}
         <div className={CartModalStyles[`title-remove-all-close-btn`]}>
           <h2 className={CartModalStyles[`title-quantity`]}>
-            <span className={CartModalStyles[`title`]}>Cart</span>
+            <span id="cart-modal" className={CartModalStyles[`title`]}>
+              Cart
+            </span>
             <span>
               <span>(</span>
               <span data-cartitems className={CartModalStyles[`cart-quantity`]}>
-                3
+                {cartModalObj.cartQuantity}
               </span>
               <span>)</span>
             </span>
@@ -46,19 +62,32 @@ function CartModal({ children, ...props }) {
             </svg>
           </button>
         </div>
-        <div className={CartModalStyles[`cart-items-container`]}>
-          <CartItem dataFromCartModal={cartModalData} />
-          <CartItem dataFromCartModal={cartModalData} />
-          <CartItem dataFromCartModal={cartModalData} />
-        </div>
         {/* list of items */}
         {/* <ul></ul> */}
+        <ul className={CartModalStyles[`cart-items-container`]}>
+          {cartModalObj.cartQuantity > 0
+            ? arrayOfItems.map(function makeCartItem(element, index) {
+                // element will be each obj in arrayOfObj we saved in localStorage
+                // obj with these properties: priceStr,priceNum,strImgSrc,title,quantityiForInput,totalPrice
+                return (
+                  <li
+                    className={CartModalStyles[`item-wrapper`]}
+                    key={Math.random() * index}
+                  >
+                    <CartItem dataFromCartModal={element} />
+                  </li>
+                );
+              })
+            : null}
+        </ul>
         {/* total text and price */}
         <div className={CartModalStyles[`total-price-wrapper`]}>
           <span className={CartModalStyles[`total`]}>total</span>
           <span className={CartModalStyles[`price`]}>
             <span className={CartModalStyles[`dollar-sign`]}>$</span>
-            <span className={CartModalStyles[`price-digit`]}>5,396</span>
+            <span className={CartModalStyles[`price-digit`]}>
+              {cartModalObj.cartTotalPrice}
+            </span>
           </span>
         </div>
         {/* checkout btn */}
