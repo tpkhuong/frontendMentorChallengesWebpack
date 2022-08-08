@@ -308,9 +308,9 @@ export function addToCartAlgorithm(event) {
   // name
   // this.quantityInputRef.current.value
   const arrayFromLocalStorage =
-    localStorage.getItem("arrayOfObj") == null
+    localStorage.getItem("arrayOfObjs") == null
       ? []
-      : JSON.parse(localStorage.getItem("arrayOfObj"));
+      : JSON.parse(localStorage.getItem("arrayOfObjs"));
   // destructure this obj
   const { quantityInputRef, propsForCart } = this;
   const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
@@ -408,7 +408,7 @@ export function addToCartAlgorithm(event) {
   }
 
   console.log(arrayFromLocalStorage);
-  localStorage.setItem("arrayOfObj", JSON.stringify(arrayFromLocalStorage));
+  localStorage.setItem("arrayOfObjs", JSON.stringify(arrayFromLocalStorage));
   // console.log(this.quantityInputRef.current.value);
 }
 
@@ -467,15 +467,15 @@ function updateQuantityAndTotalPrice(
 export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { useCartState } = this;
-  const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObj"));
+  const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObjs"));
   /**
    * when user click on cart icon in logo nav bar, we will render cart modal
    * when cartState changes. Which will be handled in this func, when useCartState func
    * is called we will render Cart Modal passing data we get from calling
-   * localStorage.getItem("arrayOfObj")
+   * localStorage.getItem("arrayOfObjs")
    * **/
   // cartitem component will use value from each item dataObj in arrayOfItems
-  // cartModal will use length of arrayOfObj
+  // cartModal will use length of arrayOfObjs
   // and total price in string type of all items in cart
   const itemsInCartLength = arrayOfItems.length;
   /**
@@ -554,7 +554,17 @@ export function removeAllBtnAlgorithm(event) {
   // when user hit remove all btn, we will update cart quanity, list of cart item and total
   // we will pass useCartModalState func, when we call useCartModalState
   // we will pass in a func useCartModalState((prevVales) => { return {} })
-  alert("start here. working on remove all btn and close btn");
+  const { useCartModalState } = this;
+  useCartModalState((prevValues) => {
+    return {
+      ...prevValues,
+      cartQuantity: "0",
+      cartTotalPrice: "0",
+    };
+  });
+  /**
+   * allow user to restore their cart in case user click on remove all by accident
+   * **/
 }
 
 /**

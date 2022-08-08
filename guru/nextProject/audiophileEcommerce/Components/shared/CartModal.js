@@ -5,8 +5,7 @@ import {
   removeAllBtnAlgorithm,
   closeModalBtnAlgorithm,
 } from "../../utils/helpers";
-alert("pass useCartModalState into removeAllBtnAlgorithm");
-// console.log(JSON.parse(localStorage.getItem("arrayOfObj")));
+// console.log(JSON.parse(localStorage.getItem("arrayOfObjs")));
 
 function CartModal({ children, ...props }) {
   // get data from AddCart component
@@ -19,8 +18,10 @@ function CartModal({ children, ...props }) {
     cartQuantity: itemsInCartLength,
     cartTotalPrice: totalPriceInCartStrType,
   };
-  // useState() to cause a render of this component with different data
-  const [cartModalObj, useCartModalState] = useState(initialCartModalValues);
+  // React.useState() to cause a render of this component with different data
+  const [cartModalObj, useCartModalState] = React.useState(
+    initialCartModalValues
+  );
   return (
     <div
       aria-labelledby="cart-modal"
@@ -45,7 +46,10 @@ function CartModal({ children, ...props }) {
             </span>
           </h2>
           {/* remove all */}
-          <button className={CartModalStyles[`remove-all-btn`]}>
+          <button
+            onClick={removeAllBtnAlgorithm.bind({ useCartModalState })}
+            className={CartModalStyles[`remove-all-btn`]}
+          >
             Remove all
           </button>
           {/* close btn */}
@@ -67,7 +71,7 @@ function CartModal({ children, ...props }) {
         <ul className={CartModalStyles[`cart-items-container`]}>
           {cartModalObj.cartQuantity > 0
             ? arrayOfItems.map(function makeCartItem(element, index) {
-                // element will be each obj in arrayOfObj we saved in localStorage
+                // element will be each obj in arrayOfObjs we saved in localStorage
                 // obj with these properties: priceStr,priceNum,strImgSrc,title,quantityiForInput,totalPrice
                 return (
                   <li
