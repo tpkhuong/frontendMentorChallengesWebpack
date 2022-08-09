@@ -4,14 +4,22 @@ import CartModal from "./CartModal";
 import { cartIconBtnAlgorithm } from "../../utils/helpers";
 
 function CartBtnModal({ children, ...props }) {
+  // passing useCartState as prop stateOfCartFunc to Cart Modal component
+  // which we will bind to onclick callback to close modal btn
   const [cartState, useCartState] = React.useState(false);
   //   console.log(props.cartBtnModalData);
+  // save a reference to open cart modal btn, we want to focus on open cart modal btn
+  // when user click on close modal btn
+  // passing openModalBtnRef as prop refToOpenCartModal to Cart modal
+  // which we will bind to onclick callback to close modal btn
+  const openModalBtnRef = React.useRef();
   return (
     <React.Fragment>
       <button
         onClick={cartIconBtnAlgorithm.bind({ useCartState })}
         className={CartBtnModalStyles[`cart-btn`]}
         aria-label="open cart modal"
+        ref={openModalBtnRef}
       >
         <svg width="23" height="20" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -30,7 +38,11 @@ function CartBtnModal({ children, ...props }) {
       </button>
       {/* cart modal */}
       {(typeof cartState == "object") & (cartState !== null) ? (
-        <CartModal addCartDataFromLocalStorage={cartState} />
+        <CartModal
+          stateOfCartFunc={useCartState}
+          refToOpenCartModal={openModalBtnRef}
+          addCartDataFromLocalStorage={cartState}
+        />
       ) : null}
     </React.Fragment>
   );

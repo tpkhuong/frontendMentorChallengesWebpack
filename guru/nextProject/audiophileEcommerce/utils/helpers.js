@@ -316,9 +316,14 @@ export function addToCartAlgorithm(event) {
   const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
   // make obj
   // /cart/image-xx59-headphones.jpg
+  /**
+   * each cart item will have these values passed to it.
+   * as "element" in our map function which render cart item
+   * **/
   const objOfCartItemValues = {
     priceStr: priceInStrForm,
     priceNum: price,
+    nameForCartItemSearch: name,
     strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
     title: itemTitleForSummaryAndCartModal(name),
     quantityForInput: quantityInputRef.current.value,
@@ -448,6 +453,9 @@ function updateQuantityAndTotalPrice(
   objInLocalStorage,
   objOfPropsAndQuantityInput
 ) {
+  /**
+   * we assign the updated quantity and total price to obj at index after we find the obj that matches title/name
+   * **/
   const { quantityInputRef, propsForCart } = objOfPropsAndQuantityInput;
   const { quantityForInput } = objInLocalStorage;
   // get quantity of localStorage and quantity from input add them
@@ -468,6 +476,7 @@ export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { useCartState } = this;
   const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObjs"));
+
   /**
    * when user click on cart icon in logo nav bar, we will render cart modal
    * when cartState changes. Which will be handled in this func, when useCartState func
@@ -477,33 +486,35 @@ export function cartIconBtnAlgorithm(event) {
   // cartitem component will use value from each item dataObj in arrayOfItems
   // cartModal will use length of arrayOfObjs
   // and total price in string type of all items in cart
-  const itemsInCartLength = arrayOfItems.length;
-  /**
-   * before we call useCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
-   * get length of arrayOfItems to be use for cart (number)
-   * **/
-  // calculate total price of items in cart;
-  const cartTotalPrice = cartModalTotalPrice(arrayOfItems);
-  // cart total price string type
-  const totalPriceInCartStrType = addCommasToPrice(cartTotalPrice);
-  /**
-   * we want to make an obj with arrayOfItems, total price of cart in number type and string type with commas
-   * save it to local storage. dataObjForSummary
-   * **/
-  localStorage.setItem(
-    "dataObjForSummary",
-    JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
-  );
-  /**
-   * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
-   * which will be passed into cart modal as prop, we can use the data in cart modal
-   * **/
-  useCartState({
-    arrayOfItems,
-    itemsInCartLength,
-    totalPriceInCartStrType,
-    useCartState,
-  });
+  const itemsInCartLength = arrayOfItems ? arrayOfItems.length : null;
+  if (itemsInCartLength) {
+    /**
+     * before we call useCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
+     * get length of arrayOfItems to be use for cart (number)
+     * **/
+    // calculate total price of items in cart;
+    const cartTotalPrice = cartModalTotalPrice(arrayOfItems);
+    // cart total price string type
+    const totalPriceInCartStrType = addCommasToPrice(cartTotalPrice);
+    /**
+     * we want to make an obj with arrayOfItems, total price of cart in number type and string type with commas
+     * save it to local storage. dataObjForSummary
+     * **/
+    localStorage.setItem(
+      "dataObjForSummary",
+      JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
+    );
+    /**
+     * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
+     * which will be passed into cart modal as prop, we can use the data in cart modal
+     * **/
+    useCartState({
+      arrayOfItems,
+      itemsInCartLength,
+      totalPriceInCartStrType,
+      useCartState,
+    });
+  }
   // console.log(data);
   // const { strImgSrc } = data[0];
   // console.log(strImgSrc);
@@ -525,21 +536,229 @@ function cartModalTotalPrice(array) {
  * cart item quantity increment/decrement
  * **/
 
-export function cartItemQuantityFunc(event) {
-  // method obj
-  const methodObj = {
-    increment: () => {
-      console.log("hello from increment method");
-    },
-    decrement: () => {
-      console.log("hello from derement method");
-    },
-  };
+// export function cartItemQuantityFunc(event) {
+//   // method obj
+//   const methodObj = {
+//     increment: () => {
+//       console.log("hello from increment method");
+//     },
+//     decrement: () => {
+//       console.log("hello from derement method");
+//     },
+//   };
 
-  // check if element clicked is button
-  if (event.target.closest("BUTTON")) {
-    const btnAttrValue = event.target.getAttribute("data-typeofbtn");
-    methodObj[btnAttrValue]();
+//   // check if element clicked is button
+//   if (event.target.closest("BUTTON")) {
+//     const btnAttrValue = event.target.getAttribute("data-typeofbtn");
+//     methodObj[btnAttrValue]();
+//   }
+// }
+
+// const objOfCartItemValues = {
+//   priceStr: priceInStrForm,
+//   priceNum: price,
+//   nameForCartItemSearch: name,
+//   strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
+//   title: itemTitleForSummaryAndCartModal(name),
+//   quantityForInput: quantityInputRef.current.value,
+//   totalPrice: individualItemTotalCalculation(
+//     price,
+//     Number(quantityInputRef.current.value)
+//   ),
+// };
+
+export function cartItemIncrement(event) {
+  // cartItemQuantityRef, refTotalPrice, and dataForQuantityUpdate are bind to this func
+  const { cartItemQuantityRef, dataForQuantityUpdate, refTotalPrice } = this;
+  // each cart item component will have its own specific data
+  // only time the element this function is attached to is rendered is when
+  // there are items in localStorage, if length of array in localStorage is > 1 loop
+  // each access item of array at 0 index
+  // console.log(this.dataForQuantityUpdate);
+  const { itemsInArray, indexOfItem } = findMatchingCartItem(
+    dataForQuantityUpdate
+  );
+  /**
+   * moved algorithm to updateQuantityAndTotalPriceCartItemComponent
+   * **/
+  // const copyOfArray = [...itemsInArray];
+  // const itemAtIndex = copyOfArray[indexOfItem];
+  // we want to update quantity and total price of individual cart item
+  // which will mutate that values in of the properties in the obj assign to the array
+  // then we can loop through array, access total price of each item and them together
+  // to get total price for cart modal
+  /**
+   * update input display add one to cartItemQuantityRef
+   * **/
+  const convertNumInputToStr = Number(cartItemQuantityRef.current.value);
+  const plusOneToInput = convertNumInputToStr + 1;
+  // pass this, itemsInArray, indexOfItem and subtractOne/plusOneToInput to updateQuantityAndTotalPriceCartItemComponent
+  updateQuantityAndTotalPriceCartItemComponent(
+    this,
+    itemsInArray,
+    indexOfItem,
+    plusOneToInput
+  );
+}
+
+export function cartItemDecrement(event) {
+  // cartItemQuantityRef, refTotalPrice, and dataForQuantityUpdate are bind to this func
+  console.log(this);
+  const { cartItemQuantityRef, dataForQuantityUpdate, refTotalPrice } = this;
+  // each cart item component will have its own specific data
+  // only time the element this function is attached to is rendered is when
+  // there are items in localStorage, if length of array in localStorage is > 1 loop
+  // else access item of array at 0 index
+  // console.log(this.dataForQuantityUpdate);
+  const { itemsInArray, indexOfItem } = findMatchingCartItem(
+    dataForQuantityUpdate
+  );
+  /**
+   * moved algorithm to updateQuantityAndTotalPriceCartItemComponent
+   * **/
+  // const copyOfArray = [...itemsInArray];
+  // const itemAtIndex = copyOfArray[indexOfItem];
+  // we want to update quantity and total price of individual cart item
+  // which will mutate that values in of the properties in the obj assign to the array
+  // then we can loop through array, access total price of each item and them together
+  // to get total price for cart modal
+  /**
+   * update input display: minus one to cartItemQuantityRef
+   * **/
+  const convertNumInputToStr = Number(cartItemQuantityRef.current.value);
+  const subtractOne = convertNumInputToStr - 1;
+  if (subtractOne > 0) {
+    // pass this, itemsInArray, indexOfItem and subtractOne/plusOneToInput to updateQuantityAndTotalPriceCartItemComponent
+    updateQuantityAndTotalPriceCartItemComponent(
+      this,
+      itemsInArray,
+      indexOfItem,
+      subtractOne
+    );
+    // cartItemQuantityRef.current.value = `${subtractOne}`;
+    // // update quantity and total of cart item in obj
+    // itemAtIndex.quantityForInput = `${subtractOne}`;
+    // itemAtIndex.totalPrice = individualItemTotalCalculation(
+    //   dataForQuantityUpdate.priceNum,
+    //   subtractOne
+    // );
+    // // loop through copy of array add up each item total price
+    // const newTotalPrice = cartModalTotalPrice(copyOfArray);
+    // // assign new total price to refTotalPrice
+    // refTotalPrice.current.value = `${newTotalPrice}`;
+    // // saved updated cart item quantity and total price to local storage
+    // localStorage.setItem("arrayOfObjs", JSON.stringify(copyOfArray));
+  } else {
+    cartItemQuantityRef.current.value = `1`;
+  }
+}
+
+export function cartItemInputOnChange(event) {
+  // since input is string type
+  // we can check for empty string which is one of the 7 falsy values and negate that with !
+  // or check truthy which will be a number in string form "3"
+  // we are confident event will trigger on empty string "" when user click backspace
+  // "8" or any number when user keydown on number key when cursor is in input
+  // if (event.target.value !== "") {
+  //   console.log(event.target.value);
+  // }
+  if (event.target.value) {
+    const { dataForQuantityUpdate, refTotalPrice } = this;
+    // event.target.value will be cartItemQuantityRef which will be the parament updatedQuantity passed into updateQuantityAndTotalPriceCartItemComponent
+    console.log(event.target.value);
+    const { itemsInArray, indexOfItem } = findMatchingCartItem(
+      dataForQuantityUpdate
+    );
+    updateQuantityAndTotalPriceCartItemComponent(
+      this,
+      itemsInArray,
+      indexOfItem,
+      event.target.value
+    );
+  }
+}
+
+/**
+ * helper funcs for updating cart item quantity
+ * **/
+
+// pass this, itemsInArray, indexOfItem and subtractOne/plusOneToInput to updateQuantityAndTotalPriceCartItemComponent
+function updateQuantityAndTotalPriceCartItemComponent(
+  dataBindToThisObj,
+  array,
+  indexForArray,
+  updatedQuantity
+) {
+  console.log(dataBindToThisObj);
+  const copyOfArray = [...array];
+  const itemAtIndex = copyOfArray[indexForArray];
+  const { cartItemQuantityRef, dataForQuantityUpdate, refTotalPrice } =
+    dataBindToThisObj;
+  // use ternary operator here: we want to use cartItemQuantityRef.current.value for increment/decrement but not on change
+  cartItemQuantityRef
+    ? (cartItemQuantityRef.current.value = `${updatedQuantity}`)
+    : null;
+  // update quantity and total of cart item in obj
+  itemAtIndex.quantityForInput = `${updatedQuantity}`;
+  itemAtIndex.totalPrice = individualItemTotalCalculation(
+    dataForQuantityUpdate.priceNum,
+    updatedQuantity
+  );
+  console.log(copyOfArray);
+  console.log("refTotalPrice", refTotalPrice);
+  // loop through copy of array add up each item total price
+  const newTotalPrice = cartModalTotalPrice(copyOfArray);
+  console.log(newTotalPrice);
+  // assign new total price to refTotalPrice
+  // refTotalPrice element is a span we want to use .innerText not .value
+  // add comma to newTotalPrice
+  // addCommasToPrice func returns a string
+  alert("start here. see what span of total price render");
+  refTotalPrice.current.innerText = addCommasToPrice(newTotalPrice);
+  // saved updated cart item quantity and total price to local storage
+  localStorage.setItem("arrayOfObjs", JSON.stringify(copyOfArray));
+}
+
+/**
+ * find cart item in array assign in local storage
+ * **/
+
+function findMatchingCartItem(dataObj) {
+  // working with data from dataForQuantityUpdate which will be the obj passed in to this func as
+  // the dataObj parament
+  const { nameForCartItemSearch: title } = dataObj;
+  // get array from local storage
+  const arrayFromLocalStorage = JSON.parse(localStorage.getItem("arrayOfObjs"));
+  const lengthOfArray = arrayFromLocalStorage.length;
+  // return the item in the array
+  if (lengthOfArray > 1) {
+    // loop through array
+    let indexOfCartItem;
+    // for loop
+    for (let index = 0; index < lengthOfArray; index++) {
+      const element = arrayFromLocalStorage[index];
+      const { nameForCartItemSearch } = element;
+      if (nameForCartItemSearch == title) {
+        indexOfCartItem = index;
+      }
+    }
+    // for each loop
+    // arrayFromLocalStorage.forEach(function findMatchingObj(element, index) {
+    //   const { nameForCartItemSearch } = element;
+    //   if (nameForCartItemSearch == title) {
+    //     indexOfCartItem = index;
+    //   }
+    // });
+    return {
+      itemsInArray: arrayFromLocalStorage,
+      indexOfItem: indexOfCartItem,
+    };
+  } else {
+    // each access item of array at 0 index
+    return {
+      itemsInArray: arrayFromLocalStorage,
+      indexOfItem: 0,
+    };
   }
 }
 
@@ -555,13 +774,15 @@ export function removeAllBtnAlgorithm(event) {
   // we will pass useCartModalState func, when we call useCartModalState
   // we will pass in a func useCartModalState((prevVales) => { return {} })
   const { useCartModalState } = this;
-  useCartModalState((prevValues) => {
-    return {
-      ...prevValues,
-      cartQuantity: "0",
-      cartTotalPrice: "0",
-    };
-  });
+  if (event.target.closest("BUTTON")) {
+    useCartModalState((prevValues) => {
+      return {
+        ...prevValues,
+        cartQuantity: "0",
+        cartTotalPrice: "0",
+      };
+    });
+  }
   /**
    * allow user to restore their cart in case user click on remove all by accident
    * **/
@@ -570,8 +791,44 @@ export function removeAllBtnAlgorithm(event) {
 /**
  * cart modal close btn
  * **/
+
 export function closeModalBtnAlgorithm(event) {
   // use bind when we can attach this func to close btn
   // so we can use data that is passed to cart modal component
-  // arrayOfItems, itemsInCartLength, totalPriceInCartStrType
+  // refToOpenCartModal to focus cart btn in logonavbar component when user click close cart modal
+  // stateOfCartFunc to not render cart modal
+  if (event.target.closest("BUTTON")) {
+    const { refToOpenCartModal, stateOfCartFunc } = this;
+    stateOfCartFunc(false);
+    refToOpenCartModal.current.focus();
+  }
+}
+
+/**
+ * tab through cart modal
+ * **/
+
+export function keyboardFunctionalityFocusRemoveAllBtn(event) {
+  // passing ref of remove all btn and close modal btn to this func
+  const { refToRemoveAllBtn, refToCheckoutBtn } = this;
+  // when user focus is on checkout btn and user click tab we want to focus remove all btn
+  if (
+    !event.shiftKey &&
+    event.code == "Tab" &&
+    event.target == refToCheckoutBtn.current
+  ) {
+    event.preventDefault();
+    refToRemoveAllBtn.current.focus();
+  }
+}
+export function keyboardFunctionalityFocusCheckoutBtn(event) {
+  // passing ref of remove all btn and close modal btn to this func
+  const { refToRemoveAllBtn, refToCheckoutBtn } = this;
+  // when user focus is on remove all btn and user click shift + tab we want to focus checkout btn
+  if (
+    event.shiftKey &&
+    event.code == "Tab" &&
+    event.target == refToRemoveAllBtn.current
+  )
+    event.preventDefault(), refToCheckoutBtn.current.focus();
 }

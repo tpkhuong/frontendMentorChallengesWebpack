@@ -4,10 +4,13 @@ import CartItem from "./CartItem";
 import {
   removeAllBtnAlgorithm,
   closeModalBtnAlgorithm,
+  keyboardFunctionalityFocusRemoveAllBtn,
+  keyboardFunctionalityFocusCheckoutBtn,
 } from "../../utils/helpers";
 // console.log(JSON.parse(localStorage.getItem("arrayOfObjs")));
 
 function CartModal({ children, ...props }) {
+  const { refToOpenCartModal, stateOfCartFunc } = props;
   // get data from AddCart component
   const cartModalData = props.addCartDataFromLocalStorage;
   const { arrayOfItems, itemsInCartLength, totalPriceInCartStrType } =
@@ -22,6 +25,12 @@ function CartModal({ children, ...props }) {
   const [cartModalObj, useCartModalState] = React.useState(
     initialCartModalValues
   );
+  // we will use React.useRef() on remove all btn and checkout btn for keyboard user
+  const refToRemoveAllBtn = React.useRef();
+  const refToCheckoutBtn = React.useRef();
+  // save reference to total price, we want to update it when user click on
+  // - or + or hit number key when cursor is on input
+  const refToTotalPriceStr = React.useRef();
   return (
     <div
       aria-labelledby="cart-modal"
@@ -47,8 +56,13 @@ function CartModal({ children, ...props }) {
           </h2>
           {/* remove all */}
           <button
+            onKeyDown={keyboardFunctionalityFocusCheckoutBtn.bind({
+              refToRemoveAllBtn,
+              refToCheckoutBtn,
+            })}
             onClick={removeAllBtnAlgorithm.bind({ useCartModalState })}
             className={CartModalStyles[`remove-all-btn`]}
+            ref={refToRemoveAllBtn}
           >
             Remove all
           </button>
@@ -56,6 +70,10 @@ function CartModal({ children, ...props }) {
           <button
             aria-label="close cart modal"
             className={CartModalStyles[`close-btn`]}
+            onClick={closeModalBtnAlgorithm.bind({
+              refToOpenCartModal,
+              stateOfCartFunc,
+            })}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21">
               <path
@@ -78,7 +96,10 @@ function CartModal({ children, ...props }) {
                     className={CartModalStyles[`item-wrapper`]}
                     key={Math.random() * index}
                   >
-                    <CartItem dataFromCartModal={element} />
+                    <CartItem
+                      totalPriceRef={refToTotalPriceStr}
+                      dataFromCartModal={element}
+                    />
                   </li>
                 );
               })
@@ -89,13 +110,25 @@ function CartModal({ children, ...props }) {
           <span className={CartModalStyles[`total`]}>total</span>
           <span className={CartModalStyles[`price`]}>
             <span className={CartModalStyles[`dollar-sign`]}>$</span>
-            <span className={CartModalStyles[`price-digit`]}>
+            <span
+              ref={refToTotalPriceStr}
+              className={CartModalStyles[`price-digit`]}
+            >
               {cartModalObj.cartTotalPrice}
             </span>
           </span>
         </div>
         {/* checkout btn */}
-        <button className={CartModalStyles[`checkout-btn`]}>checkout</button>
+        <button
+          onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
+            refToRemoveAllBtn,
+            refToCheckoutBtn,
+          })}
+          ref={refToCheckoutBtn}
+          className={CartModalStyles[`checkout-btn`]}
+        >
+          checkout
+        </button>
       </div>
     </div>
   );

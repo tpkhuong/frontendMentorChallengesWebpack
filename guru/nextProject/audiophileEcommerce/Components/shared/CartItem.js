@@ -1,13 +1,23 @@
 import React from "react";
 import CartItemStyles from "../../styles/Components/shared/CartItem.module.css";
-import { cartItemQuantityFunc } from "../../utils/helpers";
+import {
+  // cartItemQuantityFunc,
+  cartItemInputOnChange,
+  cartItemIncrement,
+  cartItemDecrement,
+} from "../../utils/helpers";
 
 function CartItem({ children, ...props }) {
   // props.dataFromCartModal
   const { strImgSrc, quantityForInput, title, priceStr } =
     props.dataFromCartModal;
-  const cartQuantityRef = React.useRef();
-
+  // pass data to cart item click event listener
+  const dataForQuantityUpdate = props.dataFromCartModal;
+  // save ref of increment/decrement/quantity input using React.useRef()
+  const cartItemQuantityRef = React.useRef();
+  // const cartItemIncrementRef = React.useRef();
+  // const cartItemDecrementRef = React.useRef();
+  const refTotalPrice = props.totalPriceRef;
   return (
     <div className={CartItemStyles[`item-wrapper`]}>
       {/* img */}
@@ -28,23 +38,39 @@ function CartItem({ children, ...props }) {
       </div>
       {/* increment/decrement button */}
       <div
-        onClick={cartItemQuantityFunc}
+        // onClick={cartItemQuantityFunc}
         className={CartItemStyles[`cart-quantity`]}
       >
         {/* hitting increment/decrement button will update both quantity and total price of item in local storage */}
         <button
+          onClick={cartItemDecrement.bind({
+            cartItemQuantityRef,
+            dataForQuantityUpdate,
+            refTotalPrice,
+          })}
           data-typeofbtn="increment"
           className={CartItemStyles[`cart-increment`]}
+          // ref={cartItemIncrementRef}
         >
           -
         </button>
         {/* value of input will be total quantity of item in local storage */}
         <input
+          onChange={cartItemInputOnChange.bind({
+            dataForQuantityUpdate,
+            refTotalPrice,
+          })}
           type="number"
-          ref={cartQuantityRef}
+          ref={cartItemQuantityRef}
           defaultValue={quantityForInput}
         />
         <button
+          onClick={cartItemIncrement.bind({
+            cartItemQuantityRef,
+            dataForQuantityUpdate,
+            refTotalPrice,
+          })}
+          // ref={cartItemDecrementRef}
           data-typeofbtn="decrement"
           className={CartItemStyles[`cart-decrement`]}
         >
