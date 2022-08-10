@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import CartModalStyles from "../../styles/Components/shared/CartModal.module.css";
 import CartItem from "./CartItem";
 import {
@@ -13,8 +14,12 @@ function CartModal({ children, ...props }) {
   const { refToOpenCartModal, stateOfCartFunc } = props;
   // get data from AddCart component
   const cartModalData = props.addCartDataFromLocalStorage;
-  const { arrayOfItems, itemsInCartLength, totalPriceInCartStrType } =
-    cartModalData;
+  const {
+    arrayOfItems,
+    itemsInCartLength,
+    totalPriceInCartStrType,
+    dataForCheckoutBtn,
+  } = cartModalData;
   // use React.useState() to cause a re-render when use click on remove all btn
   // initial values will be the values from obj item in local storage
   const initialCartModalValues = {
@@ -119,16 +124,25 @@ function CartModal({ children, ...props }) {
           </span>
         </div>
         {/* checkout btn */}
-        <button
-          onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
-            refToRemoveAllBtn,
-            refToCheckoutBtn,
-          })}
-          ref={refToCheckoutBtn}
-          className={CartModalStyles[`checkout-btn`]}
+        {/* make checkout into a link. passing an obj into href attr for <Link> component */}
+        <Link
+          // href={{
+          //   pathname: "/checkout",
+          //   query: dataForCheckoutBtn,
+          // }}
+          href="/checkout"
         >
-          checkout
-        </button>
+          <a
+            onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
+              refToRemoveAllBtn,
+              refToCheckoutBtn,
+            })}
+            ref={refToCheckoutBtn}
+            className={CartModalStyles[`checkout-btn`]}
+          >
+            checkout
+          </a>
+        </Link>
       </div>
     </div>
   );

@@ -7,6 +7,10 @@
   padding: 0;
 }
 
+[data-iscartempty="true"].quantity-textbox {
+  display: none;
+}
+
 .quantity-textbox {
   position: absolute;
   padding: 8px;

@@ -29,10 +29,15 @@ function CartBtnModal({ children, ...props }) {
           />
         </svg>
         <span
-          data-iscartempty="false"
+          data-iscartempty="true"
           className={CartBtnModalStyles[`quantity-textbox`]}
         >
-          <span className={CartBtnModalStyles[`quantity-number`]}>5</span>
+          <span
+            id="cart-item-quantity"
+            className={CartBtnModalStyles[`quantity-number`]}
+          >
+            5
+          </span>
           <span className={CartBtnModalStyles[`item-text`]}>items</span>
         </span>
       </button>

@@ -9,8 +9,13 @@ import {
 
 function CartItem({ children, ...props }) {
   // props.dataFromCartModal
-  const { strImgSrc, quantityForInput, title, priceStr } =
-    props.dataFromCartModal;
+  const {
+    strImgSrc,
+    quantityForInput,
+    title,
+    priceStr,
+    altTextCartModalSummaryItem,
+  } = props.dataFromCartModal;
   // pass data to cart item click event listener
   const dataForQuantityUpdate = props.dataFromCartModal;
   // save ref of increment/decrement/quantity input using React.useRef()
@@ -25,7 +30,7 @@ function CartItem({ children, ...props }) {
         <img
           className={CartItemStyles[`cart-item-img`]}
           src={strImgSrc}
-          alt=""
+          alt={altTextCartModalSummaryItem}
         />
       </div>
       {/* title and price */}

@@ -296,6 +296,16 @@ export function upperCaseFirstChar(array) {
  * ********/
 
 export function addToCartAlgorithm(event) {
+  const itemTextObj = {
+    "xx99-mark-one-headphones":
+      "Black with gold circle over the ear headphones",
+    "xx99-mark-two-headphones": "All Black over the ears headphones",
+    "xx59-headphones": "All white over the ears headphones",
+    "zx7-speaker":
+      "Black speaker with large white top sub woofer and small black bottom sub woofer",
+    "zx9-speaker": "All black speaker",
+    "yx1-earphones": "Large round black wireless earphones",
+  };
   // we want price with comma for display
   // without comma for total calculation
   // name for display, slug for building img src
@@ -324,6 +334,7 @@ export function addToCartAlgorithm(event) {
     priceStr: priceInStrForm,
     priceNum: price,
     nameForCartItemSearch: name,
+    altTextCartModalSummaryItem: itemTextObj[nameForImgSrc],
     strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
     title: itemTitleForSummaryAndCartModal(name),
     quantityForInput: quantityInputRef.current.value,
@@ -356,6 +367,11 @@ export function addToCartAlgorithm(event) {
   const lengthOfArray = arrayFromLocalStorage.length;
 
   if (lengthOfArray >= 1) {
+    /**
+     * assign value string "false" to element with attribute data-iscartempty
+     * assign value of lengthOfArray in string type/form to element with id cart-item-quantity
+     * **/
+
     /**
      * array has more than one item loop through array
      * update quantity and total price if title and name are the same
@@ -505,14 +521,24 @@ export function cartIconBtnAlgorithm(event) {
       JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
     );
     /**
+     * get data from local storage to pass into cart modal which will can pass to checkout btn
+     * **/
+
+    const dataForCheckoutBtn = JSON.parse(
+      localStorage.getItem("dataObjForSummary")
+    );
+
+    /**
      * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
-     * which will be passed into cart modal as prop, we can use the data in cart modal
+     * which will be passed into cart modal as addCartDataFromLocalStorage prop, we can use the data in cart modal
+     * when we call useCartState passing in obj, it will assign that obj to cartState in the CartBtnAndModal component.
      * **/
     useCartState({
       arrayOfItems,
       itemsInCartLength,
       totalPriceInCartStrType,
       useCartState,
+      dataForCheckoutBtn,
     });
   }
   // console.log(data);
@@ -524,7 +550,7 @@ export function cartIconBtnAlgorithm(event) {
  * total price helper for cartIcon func
  * **/
 
-function cartModalTotalPrice(array) {
+export function cartModalTotalPrice(array) {
   // loop through array of objs, get total price and add them up
   return array.reduce(function addTotalPrice(buildingUp, currentValue) {
     const { totalPrice } = currentValue;
@@ -713,14 +739,14 @@ function updateQuantityAndTotalPriceCartItemComponent(
   // refTotalPrice element is a span we want to use .innerText not .value
   // add comma to newTotalPrice
   // addCommasToPrice func returns a string
-  alert("start here. see what span of total price render");
+
   refTotalPrice.current.innerText = addCommasToPrice(newTotalPrice);
   // saved updated cart item quantity and total price to local storage
   localStorage.setItem("arrayOfObjs", JSON.stringify(copyOfArray));
 }
 
 /**
- * find cart item in array assign in local storage
+ * find cart item in array assigned to local storage
  * **/
 
 function findMatchingCartItem(dataObj) {
@@ -783,6 +809,12 @@ export function removeAllBtnAlgorithm(event) {
       };
     });
   }
+
+  /**
+   * assign string value "0" to element with id cart-item-quantity
+   * assign string value "true" to element with attribute: data-iscartempty
+   * **/
+
   /**
    * allow user to restore their cart in case user click on remove all by accident
    * **/
