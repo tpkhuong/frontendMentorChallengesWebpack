@@ -1,15 +1,16 @@
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import CheckoutStyles from "../../styles/Checkout/CheckoutPage.module.css";
+import CheckoutSummary from "../../Components/Checkout/CheckoutSummary";
 import MobileNav from "../../Components/shared/MobileNav";
 import LogoNavContainer from "../../Components/shared/LogoNavContainer";
 import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
 function Checkout(props) {
-  const router = useRouter();
-  const dataFromCartModal = router.query;
+  // const router = useRouter();
+  // const dataFromCartModal = router.query;
   console.log(dataFromCartModal);
   return (
     <React.Fragment>
@@ -25,6 +26,7 @@ function Checkout(props) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
+      <CheckoutSummary dataPassedToSummary={dataFromCartModal} />
       {/* for each input of checkout form we want to save each key input to localstorage */}
       {/* in our summary component we can access that data when user click on checkout/pay */}
     </React.Fragment>

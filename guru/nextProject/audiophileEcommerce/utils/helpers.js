@@ -516,6 +516,7 @@ export function cartIconBtnAlgorithm(event) {
      * we want to make an obj with arrayOfItems, total price of cart in number type and string type with commas
      * save it to local storage. dataObjForSummary
      * **/
+    console.log(cartTotalPrice);
     localStorage.setItem(
       "dataObjForSummary",
       JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
@@ -524,10 +525,10 @@ export function cartIconBtnAlgorithm(event) {
      * get data from local storage to pass into cart modal which will can pass to checkout btn
      * **/
 
-    const dataForCheckoutBtn = JSON.parse(
-      localStorage.getItem("dataObjForSummary")
-    );
-
+    // const dataForCheckoutBtn = JSON.parse(
+    //   localStorage.getItem("dataObjForSummary")
+    // );
+    // console.log(dataForCheckoutBtn);
     /**
      * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
      * which will be passed into cart modal as addCartDataFromLocalStorage prop, we can use the data in cart modal
@@ -538,7 +539,7 @@ export function cartIconBtnAlgorithm(event) {
       itemsInCartLength,
       totalPriceInCartStrType,
       useCartState,
-      dataForCheckoutBtn,
+      // dataForCheckoutBtn,
     });
   }
   // console.log(data);
@@ -863,4 +864,13 @@ export function keyboardFunctionalityFocusCheckoutBtn(event) {
     event.target == refToRemoveAllBtn.current
   )
     event.preventDefault(), refToCheckoutBtn.current.focus();
+}
+
+/**
+ * calculate tax
+ * **/
+
+export function taxCalculation(price) {
+  const TAX_RATE = 12 / 100;
+  return Math.floor(TAX_RATE * price);
 }

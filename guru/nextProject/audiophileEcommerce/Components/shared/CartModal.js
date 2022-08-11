@@ -128,7 +128,7 @@ function CartModal({ children, ...props }) {
         <Link
           // href={{
           //   pathname: "/checkout",
-          //   query: dataForCheckoutBtn,
+          //   query: { dataForCheckoutBtn },
           // }}
           href="/checkout"
         >
