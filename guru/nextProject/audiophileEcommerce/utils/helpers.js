@@ -513,22 +513,60 @@ export function cartIconBtnAlgorithm(event) {
     // cart total price string type
     const totalPriceInCartStrType = addCommasToPrice(cartTotalPrice);
     /**
-     * we want to make an obj with arrayOfItems, total price of cart in number type and string type with commas
-     * save it to local storage. dataObjForSummary
-     * **/
-    console.log(cartTotalPrice);
-    localStorage.setItem(
-      "dataObjForSummary",
-      JSON.stringify({ arrayOfItems, cartTotalPrice, totalPriceInCartStrType })
-    );
-    /**
-     * get data from local storage to pass into cart modal which will can pass to checkout btn
+     * we want to make an obj with arrayOfItems, total price of cart in number type
+     * since we will add commas to other amounts in summary(value added tax and grand totla)
+     * save it to database
      * **/
 
-    // const dataForCheckoutBtn = JSON.parse(
-    //   localStorage.getItem("dataObjForSummary")
-    // );
-    // console.log(dataForCheckoutBtn);
+    // const objOfCartItemValues = {
+    //   priceStr: priceInStrForm,
+    //   priceNum: price,
+    //   nameForCartItemSearch: name,
+    //   strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
+    //   title: itemTitleForSummaryAndCartModal(name),
+    //   quantityForInput: quantityInputRef.current.value,
+    //   totalPrice: individualItemTotalCalculation(
+    //     price,
+    //     Number(quantityInputRef.current.value)
+    //   ),
+    // };
+
+    const arrayOfItemsForDatabase = arrayOfItems.map(function makeObj(element) {
+      const {
+        strImgSrc,
+        nameForCartItemSearch,
+        priceStr,
+        priceNum,
+        title,
+        quantityForInput,
+      } = element;
+      return {
+        name: {
+          display: title,
+          order_record: nameForCartItemSearch,
+        },
+        price: {
+          display: priceStr,
+          order_record: priceNum,
+        },
+        item_quantity: quantityForInput,
+        image_src: strImgSrc,
+      };
+    });
+
+    const randomNum = (Math.random() * new Date().getMilliseconds())
+      .toFixed(5)
+      .split(".")
+      .join("");
+
+    const cartInfoDatabase = {
+      items: [...arrayOfItemsForDatabase],
+      total_price: cartTotalPrice,
+    };
+    /**
+     * insert obj into database
+     * **/
+    addCartInfoToDatabase(cartInfoDatabase);
     /**
      * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
      * which will be passed into cart modal as addCartDataFromLocalStorage prop, we can use the data in cart modal
@@ -545,6 +583,23 @@ export function cartIconBtnAlgorithm(event) {
   // console.log(data);
   // const { strImgSrc } = data[0];
   // console.log(strImgSrc);
+}
+
+/**
+ * connect to db and add cart information
+ * **/
+
+export async function addCartInfoToDatabase(obj) {
+  const copyOfObj = Object.assign({ username: "Deadpool" }, obj);
+  const response = await fetch("/api/addcartinfo", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(copyOfObj),
+  });
+
+  console.log(response);
 }
 
 /**
@@ -580,19 +635,6 @@ export function cartModalTotalPrice(array) {
 //     methodObj[btnAttrValue]();
 //   }
 // }
-
-// const objOfCartItemValues = {
-//   priceStr: priceInStrForm,
-//   priceNum: price,
-//   nameForCartItemSearch: name,
-//   strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
-//   title: itemTitleForSummaryAndCartModal(name),
-//   quantityForInput: quantityInputRef.current.value,
-//   totalPrice: individualItemTotalCalculation(
-//     price,
-//     Number(quantityInputRef.current.value)
-//   ),
-// };
 
 export function cartItemIncrement(event) {
   // cartItemQuantityRef, refTotalPrice, and dataForQuantityUpdate are bind to this func

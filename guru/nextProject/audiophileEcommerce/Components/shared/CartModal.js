@@ -7,6 +7,8 @@ import {
   closeModalBtnAlgorithm,
   keyboardFunctionalityFocusRemoveAllBtn,
   keyboardFunctionalityFocusCheckoutBtn,
+  addCartInfoToDatabase,
+  getItem,
 } from "../../utils/helpers";
 // console.log(JSON.parse(localStorage.getItem("arrayOfObjs")));
 
@@ -143,6 +145,7 @@ function CartModal({ children, ...props }) {
             checkout
           </a>
         </Link>
+        <button onClick={addCartInfoToDatabase}>add item</button>
       </div>
     </div>
   );
