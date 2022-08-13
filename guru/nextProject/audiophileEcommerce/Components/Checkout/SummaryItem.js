@@ -7,7 +7,7 @@ function SummaryItem({ children, ...props }) {
     <div className={SummaryItemStyles[`item-wrapper`]}>
       {/* img wrapper */}
       <div className={SummaryItemStyles[`img-wrapper`]}>
-        <img src="image-xx59-headphones.jpg" alt="" />
+        <img src="/cart/image-xx59-headphones.jpg" alt="" />
       </div>
       {/* title and price */}
       <div className={SummaryItemStyles[`title-price-wrapper`]}>

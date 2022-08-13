@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import clientPromise from "../../config/database";
 import axios from "axios";
 import { server } from "../../config/index";
 // import { useRouter } from "next/router";
@@ -11,9 +12,6 @@ import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
 function Checkout(props) {
-  console.log(props.data);
-  // const router = useRouter();
-  // const dataFromCartModal = router.query;
   return (
     <React.Fragment>
       <Head>
@@ -28,7 +26,7 @@ function Checkout(props) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
-      <CheckoutSummary dataPassedToSummary />
+      <CheckoutSummary dataPassedToSummary={props.cartModalData} />
       {/* for each input of checkout form we want to save each key input to localstorage */}
       {/* in our summary component we can access that data when user click on checkout/pay */}
     </React.Fragment>
@@ -39,8 +37,18 @@ export default Checkout;
 
 export async function getStaticProps(context) {
   // connect to database
-  // get cart modal data
-  return {
-    props: { obj },
-  };
+  const client = await clientPromise;
+  const database = client.db();
+  const getCartModalInfo = await database
+    .collection("items")
+    .findOne({ username: "Deadpool" });
+  if (getCartModalInfo) {
+    // stringify data we get from database then JSON.parse it.
+    const dataReceived = JSON.stringify(getCartModalInfo);
+    const cartModalData = JSON.parse(dataReceived);
+
+    return {
+      props: { cartModalData },
+    };
+  }
 }

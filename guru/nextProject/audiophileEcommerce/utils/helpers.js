@@ -523,6 +523,7 @@ export function cartIconBtnAlgorithm(event) {
     //   priceNum: price,
     //   nameForCartItemSearch: name,
     //   strImgSrc: `/cart/image-${nameForImgSrc}.jpg`,
+    // altTextCartModalSummaryItem: itemTextObj[nameForImgSrc],
     //   title: itemTitleForSummaryAndCartModal(name),
     //   quantityForInput: quantityInputRef.current.value,
     //   totalPrice: individualItemTotalCalculation(
@@ -535,6 +536,7 @@ export function cartIconBtnAlgorithm(event) {
       const {
         strImgSrc,
         nameForCartItemSearch,
+        altTextCartModalSummaryItem,
         priceStr,
         priceNum,
         title,
@@ -551,6 +553,7 @@ export function cartIconBtnAlgorithm(event) {
         },
         item_quantity: quantityForInput,
         image_src: strImgSrc,
+        alt_text: altTextCartModalSummaryItem,
       };
     });
 

@@ -8,63 +8,70 @@ import {
 } from "../../utils/helpers";
 
 function CheckoutSummary({ children, ...props }) {
-  //   console.log(props.dataPassedToSummary);
-  const { arrayOfItems, cartTotalPrice, totalPriceInCartStrType } =
-    props.dataPassedToSummary;
-  // calculate tax and grand total before we assign them to values in our
-  const valueAddedTax = taxCalculation(cartTotalPrice);
+  const { total_price, items } = props.dataPassedToSummary;
+  //   calculate tax and grand total before we assign them to values in our
+  const valueAddedTax = taxCalculation(total_price);
   const shippingCost = 50;
-  const arrayOfValuesForGrandTotal = [
-    cartTotalPrice,
-    valueAddedTax,
-    shippingCost,
+  // array of values to calculate grand total
+  const arrayOfValuesForGrandTotal = [total_price, valueAddedTax, shippingCost];
+  const grandTotal = arrayOfValuesForGrandTotal.reduce(function getSum(
+    buildingUp,
+    currentValue
+  ) {
+    return buildingUp + currentValue;
+  },
+  0);
+  //   build array of obj
+  const arrayOfTaxShippingTotalObj = [
+    // total
+    {
+      textContent: "total",
+      totalPriceStrType: addCommasToPrice(total_price),
+    },
+    // shipping
+    {
+      textContent: "shipping",
+      totalPriceStrType: addCommasToPrice(shippingCost),
+    },
+    // value added tax
+    {
+      textContent: "vat (included)",
+      totalPriceStrType: addCommasToPrice(valueAddedTax),
+    },
+    // grand total
+    {
+      textContent: "grand total",
+      totalPriceStrType: addCommasToPrice(grandTotal),
+    },
   ];
-  // summary item obj: textContent, totalPriceStrType
-  //   const grandTotal = arrayOfValuesForGrandTotal.reduce(function getSum(
-  //     buildingUp,
-  //     currentValue
-  //   ) {
-  //     return buildingUp + currentValue;
-  //   },
-  //   0);
-  // build array of obj
-  //   const arrayOfTaxShippingTotalObj = [
-  //     // total
-  //     {
-  //       textContent: "total",
-  //       totalPriceStrType: totalPriceInCartStrType,
-  //     },
-  //     // shipping
-  //     {
-  //       textContent: "shipping",
-  //       totalPriceStrType: addCommasToPrice(shippingCost),
-  //     },
-  //     // value added tax
-  //     {
-  //       textContent: "vat (included)",
-  //       totalPriceStrType: addCommasToPrice(valueAddedTax),
-  //     },
-  //     // grand total
-  //     {
-  //       textContent: "grand total",
-  //       totalPriceStrType: addCommasToPrice(grandTotal),
-  //     },
-  //   ];
   return (
     <article className={CheckoutSummaryStyles[`summary-wrapper`]}>
       {/* title */}
       <h2 className={CheckoutSummaryStyles[`title`]}>summary</h2>
-      {/* ul>li using .map() */}
-      {/* loop through arrayOfItems */}
+
       <ul className={CheckoutSummaryStyles[`summary-item-list`]}>
-        <SummaryItem />
+        {/* ul>li using .map() */}
+        {/* loop through items */}
+        {/*   name: {
+          display: title,
+          order_record: nameForCartItemSearch,
+        },
+        price: {
+          display: priceStr,
+          order_record: priceNum,
+        },
+        item_quantity: quantityForInput,
+        image_src: strImgSrc,
+        alt_text: altTextCartModalSummaryItem, */}
+        {/* we will pass in name.display, price.display, item_quantity, image_src, alt_text  into SummaryItem */}
+        <SummaryItem name price quantity imageSrc imageAlt />
       </ul>
       <div className={CheckoutSummaryStyles[`total-tax-shipping-wrapper`]}>
         {/* total price */}
         {/* shipping price */}
         {/* VAT (tax) */}
         {/* grand total */}
-        {/* {arrayOfTaxShippingTotalObj.map(function buildPriceRowSummary(
+        {arrayOfTaxShippingTotalObj.map(function buildPriceRowSummary(
           element,
           index
         ) {
@@ -85,7 +92,7 @@ function CheckoutSummary({ children, ...props }) {
               </span>
             </div>
           );
-        })} */}
+        })}
       </div>
       {/* continue and pay btn */}
     </article>

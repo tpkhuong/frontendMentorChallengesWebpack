@@ -24,7 +24,7 @@ export default async function addCartInfoHandler(req, res) {
         const objectId = inforForDatabase._id;
         console.log("objectId", objectId);
       });
-    //   callback for insertOne
+    console.log(cartData);
     res.status(200).json({ message: "Item added" });
   }
   //   res.status(200).json({ message: "Hello there" });
