@@ -1,5 +1,9 @@
 /* mobile */
 
+.main[data-checkoutpage="true"] {
+  background-color: var(--color-primary-white);
+}
+
 .main {
   padding-inline: 24px;
 }

@@ -5,9 +5,11 @@ import axios from "axios";
 import { server } from "../../config/index";
 // import { useRouter } from "next/router";
 import CheckoutStyles from "../../styles/Checkout/CheckoutPage.module.css";
+import CheckoutForm from "../../Components/Checkout/CheckoutForm";
 import CheckoutSummary from "../../Components/Checkout/CheckoutSummary";
 import MobileNav from "../../Components/shared/MobileNav";
 import LogoNavContainer from "../../Components/shared/LogoNavContainer";
+import Main from "../../Components/shared/Main";
 import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
@@ -26,7 +28,10 @@ function Checkout(props) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
-      <CheckoutSummary dataPassedToSummary={props.cartModalData} />
+      <Main ischeckoutpage="true">
+        <CheckoutForm />
+        <CheckoutSummary dataPassedToSummary={props.cartModalData} />
+      </Main>
       {/* for each input of checkout form we want to save each key input to localstorage */}
       {/* in our summary component we can access that data when user click on checkout/pay */}
     </React.Fragment>

@@ -26,21 +26,25 @@ function CheckoutSummary({ children, ...props }) {
     // total
     {
       textContent: "total",
+      classText: "total-price-wrapper",
       totalPriceStrType: addCommasToPrice(total_price),
     },
     // shipping
     {
       textContent: "shipping",
+      classText: "shipping-price-wrapper",
       totalPriceStrType: addCommasToPrice(shippingCost),
     },
     // value added tax
     {
       textContent: "vat (included)",
+      classText: "vat-price-wrapper",
       totalPriceStrType: addCommasToPrice(valueAddedTax),
     },
     // grand total
     {
       textContent: "grand total",
+      classText: "grand-total-price-wrapper",
       totalPriceStrType: addCommasToPrice(grandTotal),
     },
   ];
@@ -75,11 +79,11 @@ function CheckoutSummary({ children, ...props }) {
           element,
           index
         ) {
-          const { textContent, totalPriceStrType } = element;
+          const { textContent, totalPriceStrType, classText } = element;
           return (
             <div
               key={Math.random() * index}
-              className={CheckoutSummaryStyles[`total-price-wrapper`]}
+              className={CheckoutSummaryStyles[`${classText}`]}
             >
               <span className={CheckoutSummaryStyles[`text`]}>
                 {textContent}
@@ -95,6 +99,12 @@ function CheckoutSummary({ children, ...props }) {
         })}
       </div>
       {/* continue and pay btn */}
+      <button
+        // aria-label="confirm order"
+        className={CheckoutSummaryStyles[`place-order-btn`]}
+      >
+        contine & pay
+      </button>
     </article>
   );
 }

@@ -1,0 +1,28 @@
+/* mobile */
+
+.personal-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(309px, 1fr));
+  /* flex-wrap: wrap; */
+  gap: 24px 16px;
+}
+
+.name label,
+.email label,
+.phone-number label {
+  display: block;
+  margin-block-end: 9px;
+}
+
+.name input,
+.email input,
+.phone-number input {
+  width: 100%;
+  padding-block: 18px;
+  padding-inline-start: 24px;
+  border-radius: 10px;
+  border: 1px solid var(--color-input-border);
+}
+
+/* table */
+/* desktop */
