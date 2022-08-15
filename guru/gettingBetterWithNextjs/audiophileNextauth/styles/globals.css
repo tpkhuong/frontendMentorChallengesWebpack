@@ -1,0 +1,358 @@
+/* box shadow */
+/* 0px 0px 35px rgb(0 0 0 / 18%) */
+
+:root {
+  /* primary */
+  --color-primary-orange: hsl(22, 65%, 57%);
+  --color-primary-black: hsl(0, 0%, 6%);
+  --color-primary-grey: hsl(0, 0%, 95%);
+  --color-primary-white: hsl(0, 0%, 98%);
+  --color-input-border: hsl(0, 0%, 81%);
+  --color-secondary-orange: hsl(21, 94%, 75%);
+  --color-nav-bar-line: hsl(0, 0%, 59%);
+  --color-text: hsl(0, 0%, 45%);
+
+  /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
+  /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
+  /* --color-primary-pale-red: hsl(357, 100%, 86%); */
+
+  /* --color-neutral-dark-blue: hsl(212, 24%, 26%); */
+  /* --color-neutral-grayish-blue: hsl(211, 10%, 45%); cancel btn */
+  /* --color-neutral-light-gray: hsl(223, 19%, 93%); */
+  /* --color-neutral-very-light-gray: hsl(228, 33%, 97%); app background */
+  --color-neutral-black: hsl(0, 0%, 0%);
+  --color-neutral-white: hsl(0, 0%, 100%);
+
+  /* --color-neutral-score: hsl(229, 64%, 46%); */
+  /* --color-neutral-score-digit: hsl(229, 25%, 31%); */
+  /* --color-neutral-logo-border: hsl(217, 16%, 45%); */
+
+  /* rock */
+
+  /* --color-top-rock: hsl(349, 71%, 52%); */
+  /* --color-bottom-rock: hsl(347, 75%, 35%); */
+
+  /* paper */
+  /* --color-top-paper: hsl(229, 89%, 62%); */
+  /* --color-bottom-paper: hsl(229, 65%, 46%); */
+
+  /* scisssor */
+  /* --color-top-scissors: hsl(39, 84%, 51%); */
+  /* --color-bottom-scissors: hsl(29, 75%, 44%); */
+
+  /* --color-bg-first-half: hsl(214, 47%, 23%); */
+  /* --color-bg-second-half: hsl(237, 49%, 15%); */
+
+  /* inner */
+  /* 226,33,24 */
+  /* middle */
+  /* 226,37,21 */
+  /* outer */
+  /* 227,41,20 */
+
+  /* light shadow */
+  /* 223,22,77 */
+
+  /* top-half */
+
+  /* --color-light-shadow: hsl(223, 22%, 77%);
+
+  --color-dark-circle: hsl(223, 46%, 17%); */
+
+  /* button circle shadows */
+
+  /* --inner-shadow: hsl(220, 33%, 27%);
+  --middle-shadow: hsl(218, 41%, 26%);
+  --outer-shadow: hsl(221, 38%, 25%); */
+
+  /* desktop */
+
+  /* --selections-wrapper-padding: 60px;
+  --picked-wrapper-padding: 100px;
+
+  --selections-img-width: 80px;
+  --picked-img-width: 100px;
+
+  --selections-brdr-width: 24px;
+  --picked-brdr-width: 36px;
+
+  --selections-slide-up: -9px;
+  --picked-slide-up: -12px;
+
+  --selections-img-height: 86px;
+  --picked-img-height: 105px; */
+
+  /* mobile */
+  /* selections and picked same size */
+
+  /* --mobile-circle-padding: 42px;
+  --mobile-circle-img: 35px;
+  --mobile-circle-brdr-width: 15px; */
+
+  /* dark circle size */
+
+  /* --dark-inset-size: 20px; */
+
+  /* shadow for picked button */
+
+  /* --mobile-first-shadow: 20px;
+  --mobile-second-shadow: 45px;
+  --mobile-third-shadow: 75px;
+
+  --matching-gap-padding: 16px; */
+
+  /* 250px */
+  --heading-extra-lrg: 15.625rem;
+  /* 56px */
+  --heading-lrg: 3.5rem;
+  /* 40px */
+  --heading-med: 2.5rem;
+  /* 32px */
+  --heading-sm: 2rem;
+  /* 28px */
+  --heading-sm-two: 1.75rem;
+  /* 24px */
+  --heading-sm-three: 1.5rem;
+  /* 18px */
+  --heading-sm-four: 1.125rem;
+  /* 16px */
+  --heading-reg: 1rem;
+  /* 15px */
+  --heading-reg-sm: 0.9375rem;
+  /* 14px */
+  --heading-reg-x-sm: 0.875rem;
+  /* 13px */
+  --heading-reg-xx-sm: 0.8125rem;
+  /* 18px */
+  --font-size-body: 1.125rem;
+  /* --heading-xxsm: 0.9375rem; */
+
+  --subheading1: 1.75rem;
+  --subheading2: 0.875rem;
+
+  --small-text-space: 2.35px;
+  --medium-text-space: 2.7px;
+  --large-text-space: 4.75px;
+
+  /* focus/hover outline */
+
+  --mobile-focus: 8px;
+
+  --brdr-radius: 16px;
+  /* padding */
+  --padding-small: 8px;
+  --padding-medium: 16px;
+  --padding-large: 24px;
+  --padding-extra-large: 32px;
+  /* margin */
+  --margin-small: 8px;
+  --margin-medium: 16px;
+  --margin-large: 24px;
+  --margin-extra-large: 32px;
+
+  /* timezone-wrapper children padding */
+
+  --mobile-match-padding: 25px;
+  --tablet-match-padding: 64px;
+  --desktop-match-padding: 165px;
+
+  --mobile-padding-margin-match: 16px;
+  --tablet-padding-margin-match: 64px;
+  --tablet-padding-margin-match: 166px;
+  --desktop-padding-margin-match-start: 165px;
+  --desktop-padding-margin-match-end: 431px;
+
+  /* translate x and y match */
+
+  --translate-match: -200%;
+
+  /* --color-hsl-black: 0, 0%, 0%; */
+
+  --box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.02),
+    0px 0px 5.3px rgba(0, 0, 0, 0.028), 0px 0px 10px rgba(0, 0, 0, 0.035),
+    0px 0px 17.9px rgba(0, 0, 0, 0.042), 0px 0px 33.4px rgba(0, 0, 0, 0.05),
+    0px 0px 80px rgba(0, 0, 0, 0.07);
+  /* --box-shadow: 0px 0.3px 0.7px rgba(0, 0, 0, 0.02),
+    0px 0.7px 1.7px rgba(0, 0, 0, 0.028), 0px 1.4px 3.3px rgba(0, 0, 0, 0.035),
+    0px 2.5px 5.8px rgba(0, 0, 0, 0.042), 0px 4.6px 10.9px rgba(0, 0, 0, 0.05),
+    0px 11px 26px rgba(0, 0, 0, 0.07); */
+
+  /***** background *****/
+  /* bg-img top and bg-color-bottom */
+  /* todo input,todo listitem,items left/complete, views btns(mobile) */
+  /***** foreground *****/
+  /***** example for foreground: *****/
+  /* --todo-input-foreground: var(--color-lighttheme-todo-listitem, var(--color-darktheme-todo-text-typing-btn-hover) */
+  /* input placeholder, input typing, todo list text, items left, views btns(mobile)  
+  todo list crossed-out, todo list hover, views btns and clear btn hover, text below todo list
+  */
+
+  /* --secondary-font: var(--font-family-bellefair);
+  --description-font: var(--font-family-barlow); */
+
+  /* headings */
+  /* --font-family-poppins: "Poppins", sans-serif; */
+  /* body, call-to-actions */
+  --font-family-manrope: "Manrope", sans-serif;
+  /* --font-family-barlow-condensed: "Barlow Condensed", sans-serif;
+  --font-family-bellefair: "Bellefair", serif; */
+  /* section bg img */
+}
+
+/* reset */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+  /* color: var(--color-primary); */
+}
+
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-family-manrope);
+  /* color: var(--color-neutral-black); */
+  font-size: var(--font-size-body);
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: 0;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+button {
+  border: none;
+}
+
+ul[role],
+li[role],
+li[class] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* utilities */
+
+.max-width {
+  /* or the width we want our container/parent element to be */
+  max-width: 1375px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  /* padding-inline-start: 16px;
+  padding-inline-end: 16px; */
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+[href="#main-content"] {
+  position: absolute;
+  top: 0;
+  left: 100%; /* move of the screen */
+}
+
+[href="#main-content"]:focus {
+  left: 62px;
+}
+
+.skip-link {
+  display: none;
+  font-weight: 700;
+  border: 1px solid red;
+  padding-block: 16px;
+  padding-inline: 32px;
+  z-index: 3;
+}
+
+#__next {
+  /* height: 100%; */
+  /* min-height: 100%; */
+  /* display: flex;
+  flex-direction: column;
+  gap: 100px; */
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 70rem) {
+  .skip-link {
+    display: inline-block;
+  }
+}
+
+.leaflet-container {
+  height: 150px;
+}

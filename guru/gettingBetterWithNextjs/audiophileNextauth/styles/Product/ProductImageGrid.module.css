@@ -1,0 +1,49 @@
+/* general */
+.top-left,
+.bottom-left,
+.large-right {
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* mobile */
+
+.two-row-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .two-row-left {
+    /* flex-basis: 277px; */
+    flex-basis: 445px;
+  }
+
+  /* large right max-height 368px */
+  /* grid-container max-height 368px */
+  .large-right {
+    /* grid-area: large-right;
+    max-height: 368px; */
+    /* using flex basis because parent container element is display flex. flex container */
+    /* flex-basis: 395px; */
+    /* at tablet size element with this declaration will be around 395px */
+    flex-basis: 635px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 90rem) {
+  .two-row-left {
+    /* flex-basis: 277px; */
+    gap: 32px;
+  }
+  /* large right max-height 592px */
+  /* grid-container max-height 592px */
+  /* at desktop size element with this declaration will be around 635px */
+  /* .large-right {
+    grid-area: large-right;
+    max-height: 592px;
+  } */
+}

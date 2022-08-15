@@ -1,0 +1,13 @@
+/* mobile */
+
+.radio-input {
+  display: flex;
+  align-items: center;
+}
+
+.radio-input input {
+  margin-inline-end: 8px;
+}
+
+/* tablet */
+/* desktop */

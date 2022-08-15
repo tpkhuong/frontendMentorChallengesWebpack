@@ -1,0 +1,29 @@
+/* circle */
+
+.width-wrapper {
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid red;
+  padding-block: 18px;
+  padding-inline-start: 16px;
+  padding-inline-end: 198px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.circle-border {
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.circle {
+  background-color: red;
+  border-radius: inherit;
+  min-width: 16px;
+  min-height: 16px;
+}

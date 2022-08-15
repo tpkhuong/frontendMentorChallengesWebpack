@@ -1,0 +1,23 @@
+/* mobile */
+
+.main[data-checkoutpage="true"] {
+  background-color: var(--color-primary-white);
+}
+
+.main {
+  padding-inline: 24px;
+}
+
+/* tablet */
+@media screen and (min-width: 48rem) {
+  .main {
+    padding-inline: 40px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 90rem) {
+  .main {
+    padding-inline: 165px;
+  }
+}
