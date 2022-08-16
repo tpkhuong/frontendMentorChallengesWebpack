@@ -917,5 +917,7 @@ export function keyboardFunctionalityFocusCheckoutBtn(event) {
 
 export function taxCalculation(price) {
   const TAX_RATE = 12 / 100;
-  return Math.floor(TAX_RATE * price);
+  return typeof price == "number"
+    ? Math.floor(TAX_RATE * price)
+    : Math.floor(TAX_RATE * Number(price));
 }

@@ -12,8 +12,13 @@ function CheckoutSummary({ children, ...props }) {
   //   calculate tax and grand total before we assign them to values in our
   const valueAddedTax = taxCalculation(total_price);
   const shippingCost = 50;
+  const convertTotalToNum = Number(total_price);
   // array of values to calculate grand total
-  const arrayOfValuesForGrandTotal = [total_price, valueAddedTax, shippingCost];
+  const arrayOfValuesForGrandTotal = [
+    convertTotalToNum,
+    valueAddedTax,
+    shippingCost,
+  ];
   const grandTotal = arrayOfValuesForGrandTotal.reduce(function getSum(
     buildingUp,
     currentValue
@@ -27,7 +32,7 @@ function CheckoutSummary({ children, ...props }) {
     {
       textContent: "total",
       classText: "total-price-wrapper",
-      totalPriceStrType: addCommasToPrice(total_price),
+      totalPriceStrType: addCommasToPrice(convertTotalToNum),
     },
     // shipping
     {

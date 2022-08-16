@@ -66,8 +66,8 @@ function LogoNavContainer({ children, ...props }) {
       <div className={LogoNavStyles[`register-login-container`]}>
         <Link href="/">
           <a
-            className={LogoNavStyles[`register-btn`]}
-            aria-label="regiser new user"
+            className={LogoNavStyles[`login-btn`]}
+            aria-label="login with your user account"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +81,8 @@ function LogoNavContainer({ children, ...props }) {
         </Link>
         <Link href="/">
           <a
-            className={LogoNavStyles[`login-btn`]}
-            aria-label="login with your user account"
+            className={LogoNavStyles[`register-btn`]}
+            aria-label="regiser new user"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +91,40 @@ function LogoNavContainer({ children, ...props }) {
               viewBox="0 0 25 25"
             >
               <path d="M19 7.001c0 3.865-3.134 7-7 7s-7-3.135-7-7c0-3.867 3.134-7.001 7-7.001s7 3.134 7 7.001zm-1.598 7.18c-1.506 1.137-3.374 1.82-5.402 1.82-2.03 0-3.899-.685-5.407-1.822-4.072 1.793-6.593 7.376-6.593 9.821h24c0-2.423-2.6-8.006-6.598-9.819z" />
+            </svg>
+          </a>
+        </Link>
+        <Link href="/">
+          <a
+            className={LogoNavStyles[`register-btn`]}
+            aria-label="regiser new user"
+          >
+            {/* logout */}
+            <svg
+              fill="none"
+              // height="24"
+              viewBox="0 0 23 23"
+              // width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                d="M3 13H15V11H3V13Z"
+                fill="black"
+                fillRule="evenodd"
+              />
+              <path
+                clipRule="evenodd"
+                d="M5.79282 7.79291L2.29282 11.2929C1.90229 11.6834 1.90229 12.3166 2.29282 12.7071L5.79282 16.2071L7.20703 14.7929L4.41414 12L7.20703 9.20712L5.79282 7.79291Z"
+                fill="black"
+                fillRule="evenodd"
+              />
+              <path
+                clipRule="evenodd"
+                d="M8 4C8 3.44772 8.44772 3 9 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H9C8.44772 21 8 20.5523 8 20V17H10V19H20V5H10V7H8V4Z"
+                fill="black"
+                fillRule="evenodd"
+              />
             </svg>
           </a>
         </Link>
