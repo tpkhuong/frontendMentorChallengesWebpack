@@ -6,6 +6,7 @@ import CartItem from "../../models/CartItems";
 import axios from "axios";
 import { server } from "../../config/index";
 // import { useRouter } from "next/router";
+import GoBackButton from "../../Components/shared/GoBackButton";
 import CheckoutStyles from "../../styles/Checkout/CheckoutPage.module.css";
 import CheckoutForm from "../../Components/Checkout/CheckoutForm";
 import CheckoutSummary from "../../Components/Checkout/CheckoutSummary";
@@ -16,7 +17,8 @@ import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
 function Checkout(props) {
-  console.log("cartModalData", props.cartModalData);
+  // console.log("cartModalData", props.cartModalData);
+  const isTablet = useMediaQuery("max", 768);
   return (
     <React.Fragment>
       <Head>
@@ -26,17 +28,26 @@ function Checkout(props) {
           href="/favicon-32x32.png"
           type="image/x-icon"
         />
-      </Head>{" "}
+      </Head>
       <a href="#main-content" className="skip-link">
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
-      <Main ischeckoutpage="true">
-        <CheckoutForm />
-        <CheckoutSummary dataPassedToSummary={props.cartModalData} />
+      <header role="banner">
+        {/* logo nav bar */}
+        <LogoNavContainer />
+      </header>
+      <Main isDarkerBgTrue="true">
+        {/* go back btn */}
+        <div className={CheckoutStyles[`form-summary-wrapper`]}>
+          <CheckoutForm />
+          <CheckoutSummary dataPassedToSummary={props.cartModalData} />
+        </div>
       </Main>
       {/* for each input of checkout form we want to save each key input to localstorage */}
       {/* in our summary component we can access that data when user click on checkout/pay */}
+      <Footer />
+      {isTablet ? <MobileNav /> : null}
     </React.Fragment>
   );
 }

@@ -123,6 +123,8 @@
   --heading-reg-x-sm: 0.875rem;
   /* 13px */
   --heading-reg-xx-sm: 0.8125rem;
+  /* 12px */
+  --heading-reg-xxx-sm: 0.75rem;
   /* 18px */
   --font-size-body: 1.125rem;
   /* --heading-xxsm: 0.9375rem; */

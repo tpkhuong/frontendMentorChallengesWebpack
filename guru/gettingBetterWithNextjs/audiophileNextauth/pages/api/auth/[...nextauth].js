@@ -66,19 +66,24 @@ export default NextAuth({
         // get users collection
         // const usersCollection = client.db().collection("users");
         // find user
-        const isUserExist = await TestUser.findOne({
+        console.log("credentials", credentials);
+        const foundUser = await TestUser.findOne({
           email: credentials.email,
         });
+        // console.log("foundUser", foundUser);
+
         // if user doesnt exist throw error
-        if (!isUserExist) {
+        if (!foundUser) {
           throw new Error("User not found!");
         }
+        // console.log(foundUser.password);
         // verify password
 
         const isPasswordValid = await verifyPassword(
           credentials.password,
-          user.password
+          foundUser.password
         );
+        // console.log("isPasswordValid", isPasswordValid);
         // if password not valid throw error
         if (!isPasswordValid) {
           throw new Error(
@@ -86,7 +91,7 @@ export default NextAuth({
           );
         }
         // return user
-        return { email: user.email };
+        return { email: foundUser.email };
       },
     }),
   ],

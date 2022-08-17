@@ -20,7 +20,7 @@ function CategoryPage({ children, ...props }) {
   const pageTitle = [firstLetter, ...restOfLetters].join("");
   // console.log("category data", props.data);
   // console.log("category string", props.categoryStr);
-  const isMobile = useMediaQuery("max", 768);
+  const isTablet = useMediaQuery("max", 768);
   return (
     <React.Fragment>
       {/* category items container: will be container of our div. The div */}
@@ -81,7 +81,7 @@ function CategoryPage({ children, ...props }) {
         <MissionStatement pageMargin="category" />
       </Main>
       <Footer />
-      {isMobile ? <MobileNav /> : null}
+      {isTablet ? <MobileNav /> : null}
     </React.Fragment>
   );
 }

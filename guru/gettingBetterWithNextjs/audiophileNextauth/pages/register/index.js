@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import RegisterStyles from ".."
 import { submitNewUserHandler } from "../../utils/authHelpers";
 
@@ -7,6 +8,14 @@ function Register({ children, ...props }) {
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
   const confirmPasswordInputRef = React.useRef();
+
+  const router = useRouter();
+  const [userCreated, setUser] = React.useState(false);
+  React.useEffect(() => {
+    if (userCreated) {
+      router.push("/login");
+    }
+  }, [userCreated]);
   return (
     <React.Fragment>
       <section>
@@ -16,6 +25,7 @@ function Register({ children, ...props }) {
             emailInputRef,
             passwordInputRef,
             confirmPasswordInputRef,
+            setUser,
           })}
         >
           <div>{/* email */}</div>
@@ -23,7 +33,6 @@ function Register({ children, ...props }) {
           <input required ref={emailInputRef} type="email" id="email" />
           <div>
             {/* password */}
-
             <label htmlFor="password">Password</label>
             <input
               required
@@ -57,3 +66,8 @@ function Register({ children, ...props }) {
 }
 
 export default Register;
+
+function fakeUsers() {
+  // marvel@tkhuong.dev
+  // marvel12345
+}

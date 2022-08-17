@@ -6,6 +6,7 @@ import PersonalInfo from "./PersonalInfo";
 function CheckoutForm({ children, ...props }) {
   return (
     <article className={CheckoutFormStyles[`form-wrapper`]}>
+      <h2 className={CheckoutFormStyles[`title`]}>Checkout</h2>
       {/* Personal Info */}
       <PersonalInfo />
       {/* <BillingShippingWrapper /> */}

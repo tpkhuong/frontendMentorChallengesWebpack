@@ -1,3 +1,37 @@
+/* mobile */
+
+.form-wrapper {
+  background-color: var(--color-neutral-white);
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
+  padding-inline-start: 24px;
+  padding-block-start: 24px;
+  padding-inline-end: 0px;
+  padding-block-end: 32px;
+}
+
+.title {
+  font-size: var(--heading-sm-two);
+  text-transform: uppercase;
+  margin-block-end: 32px;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .form-wrapper {
+    padding-inline-end: 24px;
+  }
+  .title {
+    font-size: var(--heading-sm);
+  }
+}
+
+@media screen and (min-width: 90rem) {
+}
+
+/* desktop */
+
 /* circle */
 
 .width-wrapper {

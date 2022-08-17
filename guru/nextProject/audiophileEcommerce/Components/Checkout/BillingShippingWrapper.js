@@ -6,15 +6,19 @@ import Shipping from "./Shipping";
 function BillingShippingWrapper({ children, ...props }) {
   const yesInputRef = React.useRef();
   const noInputRef = React.useRef();
-  const [showBillingShipping, useBillShipState] = React.useState(false);
+  const [showBillingShipping, setBillingShipping] = React.useState(false);
   return (
     <article className={BillShipWrapperStyles[`style-wrapper`]}>
       <div
-        onChange={testFunc.bind({ useBillShipState, yesInputRef, noInputRef })}
+        onChange={testFunc.bind({
+          setBillingShipping,
+          yesInputRef,
+          noInputRef,
+        })}
         className={BillShipWrapperStyles[`billing-shipping-inputs`]}
       >
         {/* <input
-          onChange={testFunc.bind({ useBillShipState })}
+          onChange={testFunc.bind({ setBillingShipping })}
           type="checkbox"
           id="billing-shipping"
         />
@@ -46,17 +50,17 @@ function BillingShippingWrapper({ children, ...props }) {
 }
 
 function testFunc(event) {
-  const { useBillShipState, yesInputRef, noInputRef } = this;
-  //   useBillShipState(event.target);
+  const { setBillingShipping, yesInputRef, noInputRef } = this;
+  //   setBillingShipping(event.target);
   //   use clicked on yes radio input shipping address same as billing
   if (event.target == yesInputRef.current) {
     console.log("hello this is yes radio input");
-    useBillShipState(false);
+    setBillingShipping(false);
   }
   //   use clicked on no radio input shipping address is different than billing
   if (event.target == noInputRef.current) {
     console.log("hello this is no radio input");
-    useBillShipState(true);
+    setBillingShipping(true);
   }
 }
 

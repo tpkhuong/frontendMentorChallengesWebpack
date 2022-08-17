@@ -1,6 +1,8 @@
 import { hash, compare } from "bcryptjs";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { server } from "../config/index";
 import { useRouter } from "next/router";
+import { set } from "mongoose";
 // import TestUser from "../models/TestUser";
 
 export async function hashPassword(password) {
@@ -23,8 +25,12 @@ export async function createUser(email, password) {
     },
     body: JSON.stringify({ email, password }),
   });
+  // browser console
+  console.log("response", response);
 
   const data = await response.json();
+  // browser console
+  console.log("data", data);
   if (!response.ok) {
     throw new Error(data.message || "Opps! Fun just getting Started!");
   }
@@ -34,7 +40,8 @@ export async function createUser(email, password) {
 
 export async function submitNewUserHandler(event) {
   event.preventDefault();
-  const { emailInputRef, passwordInputRef, confirmPasswordInputRef } = this;
+  const { emailInputRef, passwordInputRef, confirmPasswordInputRef, setUser } =
+    this;
   if (
     passwordInputRef.current.value !== confirmPasswordInputRef.current.value
   ) {
@@ -47,7 +54,17 @@ export async function submitNewUserHandler(event) {
   // create new user
   try {
     const result = await createUser(enteredEmail, enteredPassword);
-    console.log(result);
+    // result will be new user
+    // browser console
+    // console.log("result from calling createUser helper", result);
+    const { user } = result;
+    if (user) {
+      // we want to re-render register page to run code in React.useEffect()
+      // then run router.push("login")
+      setUser(true);
+    }
+    // if we are successful at creating new user
+    // redirect to log in page
   } catch (error) {
     console.log(error);
   }
@@ -59,13 +76,20 @@ export async function loginHandler(event) {
   const { emailRef, passwordRef } = this;
   const userEnteredEmail = emailRef.current.value;
   const userEnteredPassword = passwordRef.current.value;
-
+  console.log("userEnteredEmail", userEnteredEmail);
+  console.log("userEnteredPassword", userEnteredPassword);
   const loginResult = await signIn("credentials", {
     // signin method default behavior is user ends back on page they started
     // after completing sign in
-    redirect: "/",
+    // redirect false to handle sign in response on same page
+    // redirect: false,
+    callbackUrl: "/",
     email: userEnteredEmail,
     password: userEnteredPassword,
   });
-  console.log(loginResult);
+  // console.log("loginResult", loginResult);
+}
+
+export function logoutHandler(event) {
+  signOut();
 }

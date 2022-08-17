@@ -1,5 +1,5 @@
 import React from "react";
-// import { server } from "../../config/index";
+import { server } from "../../config/index";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
@@ -7,10 +7,10 @@ import axios from "axios";
 export default function Secret({ children, ...props }) {
   const { data: session, loading } = useSession();
   const [content, setContent] = React.useState();
-
-  //   React.useEffect(() => {
-  //     FetchData(setContent);
-  //   }, [session]);
+  // console.log(props.data);
+  React.useEffect(() => {
+    FetchData(setContent);
+  }, [session]);
 
   if (typeof window !== "undefined" && loading) return null;
 
@@ -28,7 +28,8 @@ export default function Secret({ children, ...props }) {
   return (
     <React.Fragment>
       <h2>Welcome to Protected Page</h2>
-      {/* <p>{content}</p> */}
+      <p>{content}</p>
+      {/* <p>{props.data.content}</p> */}
       <Link href="/">
         <a>Go to Home Page</a>
       </Link>
@@ -39,13 +40,16 @@ export default function Secret({ children, ...props }) {
 async function FetchData(callStateFunc) {
   const response = await fetch("/api/secret");
   console.log(response);
-  //   const json = response.json();
+  const json = await response.json();
 
-  //   if (json.content) {
-  //     callStateFunc(json.content);
-  //   }
+  if (json.content) {
+    callStateFunc(json.content);
+  }
 }
 
+/**
+ * getting object with error and not content
+ * **/
 // export async function getStaticProps(content) {
 //   const response = await axios.get(`${server}/api/secret`);
 //   const { data } = response;
