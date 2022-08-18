@@ -1,5 +1,16 @@
 /* mobile */
 
+.billing-shipping-radio-btns {
+  font-size: var(--heading-reg-sm);
+  font-weight: 700;
+  margin-block: 16px;
+}
+
+.question {
+  display: inline-block;
+  margin-block-end: 8px;
+}
+
 .radio-input {
   display: flex;
   align-items: center;

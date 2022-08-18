@@ -1,5 +1,4 @@
 import React from "react";
-import { server } from "../../config/index";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
@@ -7,7 +6,7 @@ import axios from "axios";
 export default function Secret({ children, ...props }) {
   const { data: session, loading } = useSession();
   const [content, setContent] = React.useState();
-  // console.log(props.data);
+
   React.useEffect(() => {
     fetchData(setContent);
   }, [session]);
@@ -38,23 +37,8 @@ export default function Secret({ children, ...props }) {
 }
 
 async function fetchData(callStateFunc) {
-  const response = await fetch("/api/secret");
-  console.log(response);
-  const json = await response.json();
-
-  if (json.content) {
-    callStateFunc(json.content);
+  const { data } = await axios.get("api/secret");
+  if (data.content) {
+    callStateFunc(data.content);
   }
 }
-
-/**
- * getting object with error and not content
- * **/
-// export async function getStaticProps(content) {
-//   const response = await axios.get(`${server}/api/secret`);
-//   const { data } = response;
-
-//   return {
-//     props: { data },
-//   };
-// }

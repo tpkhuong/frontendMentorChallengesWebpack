@@ -1,0 +1,142 @@
+/* mobile */
+
+/* chrome */
+
+.emoney-wrapper input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.emoney-wrapper input[type="number"] {
+  -moz-appearance: textfield; /** firefox **/
+}
+
+.section-title {
+  font-size: var(--heading-reg-xx-sm);
+  font-weight: 700;
+  color: var(--color-primary-orange);
+  text-transform: uppercase;
+  margin-block-end: 16px;
+}
+
+.title {
+  font-size: var(--heading-reg-xxx-sm);
+  font-weight: 700;
+}
+
+.methods-selection-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(309px, 1fr));
+  /* flex-wrap: wrap; */
+  gap: 16px 0px;
+  margin-block-end: 32px;
+}
+
+.methods-selection-wrapper [role="radiogroup"] {
+  padding-inline-end: 28px;
+}
+
+/* radio buttons */
+
+/* circle */
+
+.width-wrapper[data-isemoney="true"] {
+  margin-block-end: 16px;
+}
+
+.width-wrapper {
+  display: inline-block;
+  border-radius: 8px;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid var(--color-input-border);
+  padding-block: 18px;
+  padding-inline-start: 16px;
+  /* padding-inline-end: 198px; */
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.circle-border {
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.circle {
+  background-color: red;
+  border-radius: inherit;
+  min-width: 10px;
+  min-height: 10px;
+}
+
+.input-content {
+  font-size: var(--heading-reg-x-sm);
+  font-weight: 700;
+}
+
+/* emoney inputs */
+
+.emoney-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(309px, 1fr));
+  /* flex-wrap: wrap; */
+  gap: 32px 0px;
+}
+
+.e-money-number,
+.e-money-pin {
+  padding-inline-end: 28px;
+  font-weight: 700;
+  font-size: var(--heading-reg-xxx-sm);
+}
+
+.e-money-number label,
+.e-money-pin label {
+  display: block;
+  margin-block-end: 9px;
+}
+
+.e-money-number input,
+.e-money-pin input {
+  width: 100%;
+  padding-block: 18px;
+  padding-inline-start: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--color-input-border);
+  font-size: var(--heading-reg-x-sm);
+}
+
+/* cash on delivery */
+
+.description {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .methods-selection-wrapper {
+    gap: 16px 16px;
+    margin-block-end: 24px;
+  }
+  .methods-selection-wrapper [role="radiogroup"] {
+    padding-inline-end: 0px;
+  }
+  .emoney-wrapper {
+    gap: 0px 16px;
+  }
+  .e-money-number,
+  .e-money-pin {
+    padding-inline-end: 0px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 90rem) {
+}

@@ -1,8 +1,11 @@
+// import modules
 import { hash, compare } from "bcryptjs";
 import { signIn, signOut } from "next-auth/react";
-import { server } from "../config/index";
-import { useRouter } from "next/router";
-// import TestUser from "../models/TestUser";
+import axios from "axios";
+
+/**
+ * hashing password and verify helpers
+ * **/
 
 export async function hashPassword(password) {
   // bcryptjs.hash(password, salt)
@@ -13,34 +16,62 @@ export async function hashPassword(password) {
 export async function verifyPassword(loginPassword, hashedPassword) {
   // bcryptjs.compare(password, hashedPassword)
   const isValid = await compare(loginPassword, hashedPassword);
+
   return isValid;
 }
 
-export async function createUser(email, password) {
-  const response = await fetch(`/api/auth/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
-  // browser console
-  console.log("response", response);
+/**
+ * create new user
+ * **/
 
-  const data = await response.json();
-  // browser console
-  console.log("data", data);
-  if (!response.ok) {
+// using fetch
+
+// export async function createUser(email, password) {
+//   const response = await fetch("/api/auth/register", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ email, password }),
+//   });
+//   // browser console
+//   console.log("response", response);
+
+//   const data = await response.json();
+//   // browser console
+//   console.log("data", data);
+//   if (!response.ok) {
+//     throw new Error(data.message || "Oops! Fun just getting Started!");
+//   }
+
+//   return data;
+// }
+
+// using axios
+
+export async function createUser(email, password) {
+  const { data } = await axios.post("/api/auth/register", {
+    email,
+    password,
+  });
+
+  console.log(data);
+
+  if (!data) {
     throw new Error(data.message || "Oops! Fun just getting Started!");
   }
-
   return data;
 }
+
+/**
+ * submit button handler
+ * **/
 
 export async function submitNewUserHandler(event) {
   event.preventDefault();
   const { emailInputRef, passwordInputRef, confirmPasswordInputRef, setUser } =
     this;
+
   if (
     passwordInputRef.current.value !== confirmPasswordInputRef.current.value
   ) {
@@ -49,7 +80,6 @@ export async function submitNewUserHandler(event) {
 
   const enteredEmail = emailInputRef.current.value;
   const enteredPassword = passwordInputRef.current.value;
-
   // create new user
   try {
     const result = await createUser(enteredEmail, enteredPassword);
@@ -57,20 +87,24 @@ export async function submitNewUserHandler(event) {
     // browser console
     // console.log("result from calling createUser helper", result);
     const { user } = result;
+
     if (user) {
       // we want to re-render register page to run code in React.useEffect()
       // then run router.push("login")
+      // if we are successful at creating new user
+      // redirect to log in page
       setUser(true);
     }
-    // if we are successful at creating new user
-    // redirect to log in page
   } catch (error) {
     console.log(error);
   }
 }
 
+/**
+ * login handler
+ * **/
+
 export async function loginHandler(event) {
-  // const router = useRouter();
   event.preventDefault();
   const { emailRef, passwordRef } = this;
   const userEnteredEmail = emailRef.current.value;
@@ -86,8 +120,11 @@ export async function loginHandler(event) {
     email: userEnteredEmail,
     password: userEnteredPassword,
   });
-  // console.log("loginResult", loginResult);
 }
+
+/**
+ * logout handler
+ * **/
 
 export function logoutHandler(event) {
   signOut();

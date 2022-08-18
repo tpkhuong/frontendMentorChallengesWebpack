@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 // import { previousURLs, cartItems } from "../src/storage";
 
 /**
@@ -567,9 +568,17 @@ export function cartIconBtnAlgorithm(event) {
       total_price: cartTotalPrice,
     };
     /**
-     * insert obj into database
+     * insert obj into database using fetch
      * **/
-    addCartInfoToDatabase(cartInfoDatabase);
+
+    // addCartInfoToDatabase(cartInfoDatabase);
+
+    /**
+     * insert obj into database using axios
+     * **/
+
+    addCartInfoDatabaseAxios(cartInfoDatabase);
+
     /**
      * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
      * which will be passed into cart modal as addCartDataFromLocalStorage prop, we can use the data in cart modal
@@ -592,17 +601,44 @@ export function cartIconBtnAlgorithm(event) {
  * connect to db and add cart information
  * **/
 
-export async function addCartInfoToDatabase(obj) {
-  const copyOfObj = Object.assign({ username: "Deadpool" }, obj);
-  const response = await fetch("/api/addcartinfo", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(copyOfObj),
-  });
+/**
+ * using fetch
+ * **/
 
-  console.log(response);
+// export async function addCartInfoToDatabase(obj) {
+//   const copyOfObj = Object.assign({ username: "Deadpool" }, obj);
+//   const response = await fetch("/api/addcartinfo", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(copyOfObj),
+//   });
+
+//   console.log(response);
+// }
+
+/**
+ * using axios
+ * **/
+
+export async function addCartInfoDatabaseAxios(obj) {
+  const copyOfObj = Object.assign({}, obj);
+  const { items, total_price } = copyOfObj;
+  const username = "Deadpool";
+  /**
+   * By default, if the 2nd parameter to axios.post() is an object,
+   * Axios serializes the object to JSON using the JSON.stringify() function.
+   * If the 2nd parameter is an object, Axios also sets the content-type header to
+   * application/json
+   * **/
+  const { data } = await axios.post("/api/addcartinfo", {
+    username,
+    items,
+    total_price,
+  });
+  console.log("data addcartinfotodatabaseaxios", data);
+  // data is res.status(200).json({ message: "Item added" });
 }
 
 /**

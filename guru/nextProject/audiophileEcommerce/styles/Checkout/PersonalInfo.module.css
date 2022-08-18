@@ -1,5 +1,17 @@
 /* mobile */
 
+/* remove up and down arrow of input type number */
+
+/* chrome */
+
+.phone-number input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.phone-number input[type="number"] {
+  -moz-appearance: textfield; /** firefox **/
+}
+
 .title {
   font-weight: 700;
   color: var(--color-primary-orange);

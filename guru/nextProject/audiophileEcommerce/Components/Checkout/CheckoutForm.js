@@ -2,6 +2,7 @@ import React from "react";
 import CheckoutFormStyles from "../../styles/Checkout/CheckoutForm.module.css";
 import BillingShippingWrapper from "./BillingShippingWrapper";
 import PersonalInfo from "./PersonalInfo";
+import Payment from "./Payment";
 
 function CheckoutForm({ children, ...props }) {
   return (
@@ -10,9 +11,11 @@ function CheckoutForm({ children, ...props }) {
       {/* Personal Info */}
       <PersonalInfo />
       {/* <BillingShippingWrapper /> */}
+      <BillingShippingWrapper />
       {/* billing details */}
       {/* shipping details */}
       {/* payment details */}
+      <Payment />
     </article>
   );
 }

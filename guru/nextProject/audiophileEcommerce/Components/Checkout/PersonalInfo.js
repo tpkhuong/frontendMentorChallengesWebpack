@@ -23,7 +23,7 @@ function PersonalInfo({ children, ...props }) {
         <div className={PersonalInfoStyles[`phone-number`]}>
           <label htmlFor="personal-phone-number">Phone Number</label>
           <input
-            type="text"
+            type="number"
             id="personal-phone-number"
             placeholder="888-888-8888"
           />

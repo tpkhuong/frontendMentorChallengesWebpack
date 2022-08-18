@@ -41,27 +41,6 @@ function Home({ children, ...props }) {
         <HeroContent />
       </header>
       <Main>
-        {/* <div className={HomeStyles[`circle-border`]}>
-          <div className={HomeStyles[`circle`]}></div>
-        </div> */}
-        <div role="radiogroup" aria-labelledby="payment-method">
-          <h3 id="payment-method"></h3>
-          {/* each radio button */}
-          <div className={HomeStyles[`width-wrapper`]}>
-            <div
-              tabIndex=""
-              aria-checked=""
-              role="radio"
-              className={HomeStyles[`input-wrapper`]}
-            >
-              <div className={HomeStyles[`circle-border`]}>
-                <div className={HomeStyles[`circle`]}></div>
-              </div>
-              {/* <input id="e-money" type="radio" name="payment" /> */}
-              <span>e-Money</span>
-            </div>
-          </div>
-        </div>
         {/* product features */}
         {/* <ProductFeatures productText={product.features} /> */}
         {/* <ProductTextPriceInfo /> */}

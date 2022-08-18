@@ -1,6 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import clientPromise from "../../config/database";
+// import clientPromise from "../../config/database";
+import dbConnect from "../../config/mongooseMongoDatabase";
+import CartItem from "../../models/CartItems";
 import axios from "axios";
 import { server } from "../../config/index";
 // import { useRouter } from "next/router";
@@ -54,12 +56,16 @@ function Checkout(props) {
 export default Checkout;
 
 export async function getStaticProps(context) {
-  // connect to database
-  const client = await clientPromise;
-  const database = client.db();
-  const getCartModalInfo = await database
-    .collection("items")
-    .findOne({ username: "Deadpool" });
+  // connect to database only mongodb
+  // const client = await clientPromise;
+  // const database = client.db();
+  // const getCartModalInfo = await database
+  //   .collection("items")
+  //   .findOne({ username: "Deadpool" });
+
+  // mongoose and mongodb
+  await dbConnect();
+  const getCartModalInfo = await CartItem.findOne({ username: "Deadpool" });
   if (getCartModalInfo) {
     // stringify data we get from database then JSON.parse it.
     const dataReceived = JSON.stringify(getCartModalInfo);

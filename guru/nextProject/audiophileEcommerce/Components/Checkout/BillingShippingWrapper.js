@@ -15,7 +15,7 @@ function BillingShippingWrapper({ children, ...props }) {
           yesInputRef,
           noInputRef,
         })}
-        className={BillShipWrapperStyles[`billing-shipping-inputs`]}
+        className={BillShipWrapperStyles[`billing-shipping-radio-btns`]}
       >
         {/* <input
           onChange={testFunc.bind({ setBillingShipping })}
@@ -23,7 +23,9 @@ function BillingShippingWrapper({ children, ...props }) {
           id="billing-shipping"
         />
         <label htmlFor="billing-shipping">Shipping Same as Billing?</label> */}
-        <span>Is Shipping Address same as Billing Address?</span>
+        <span className={BillShipWrapperStyles[`question`]}>
+          Is Shipping Address same as Billing Address?
+        </span>
         <div className={[BillShipWrapperStyles[`radio-input`]]}>
           <input
             ref={yesInputRef}
@@ -65,3 +67,5 @@ function testFunc(event) {
 }
 
 export default BillingShippingWrapper;
+
+// 6205-B Peachtree Dunwoody Rd, Atlanta, GA 30328
