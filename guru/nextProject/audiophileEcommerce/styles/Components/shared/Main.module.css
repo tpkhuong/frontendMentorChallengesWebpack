@@ -4,12 +4,19 @@
   background-color: var(--color-primary-white);
 }
 
+[data-checkoutpage="true"].main {
+  padding-block-end: 97px;
+}
+
 .main {
   padding-inline: 24px;
 }
 
 /* tablet */
 @media screen and (min-width: 48rem) {
+  [data-checkoutpage="true"].main {
+    padding-block-end: 116px;
+  }
   .main {
     padding-inline: 40px;
   }
@@ -17,6 +24,9 @@
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  [data-checkoutpage="true"].main {
+    padding-block-end: 141px;
+  }
   .main {
     padding-inline: 165px;
   }

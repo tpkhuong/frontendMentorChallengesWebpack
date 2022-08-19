@@ -1,5 +1,9 @@
 /* mobile */
 
+.style-wrapper {
+  margin-block-end: 32px;
+}
+
 .billing-shipping-radio-btns {
   font-size: var(--heading-reg-sm);
   font-weight: 700;

@@ -3,6 +3,10 @@
   font-size: var(--heading-reg-sm);
   color: var(--color-text);
   display: inline-block;
+}
+
+.product,
+.checkout {
   margin-block-start: 16px;
   margin-block-end: 24px;
 }
@@ -10,15 +14,22 @@
 /* tablet */
 
 @media screen and (min-width: 48rem) {
-  .go-back-btn {
+  .product {
     margin-block-start: 33px;
+  }
+  .checkout {
+    margin-block-start: 48px;
   }
 }
 
 /* desktop */
 @media screen and (min-width: 90rem) {
-  .go-back-btn {
+  .product {
     margin-block-start: 79px;
     margin-block-end: 56px;
+  }
+  .checkout {
+    margin-block-start: 79px;
+    margin-block-end: 38px;
   }
 }

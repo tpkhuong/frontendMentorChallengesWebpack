@@ -44,7 +44,9 @@ function GoBackButton({ children, ...props }) {
         <Link href={props.baseCategoryUrl}>
           <a
             onClick={goToPreviousPage}
-            className={GoBackButtonStyles[`go-back-btn`]}
+            className={`${GoBackButtonStyles[`go-back-btn`]} ${
+              GoBackButtonStyles[`${props.pageMarginBlock}`]
+            }`}
           >
             Go Back
           </a>
@@ -53,7 +55,9 @@ function GoBackButton({ children, ...props }) {
         <Link href={urlData}>
           <a
             onClick={goToPreviousPage}
-            className={GoBackButtonStyles[`go-back-btn`]}
+            className={`${GoBackButtonStyles[`go-back-btn`]} ${
+              GoBackButtonStyles[`${props.pageMarginBlock}`]
+            }`}
           >
             Go Back
           </a>

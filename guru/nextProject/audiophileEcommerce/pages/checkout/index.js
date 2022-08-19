@@ -38,6 +38,7 @@ function Checkout(props) {
       </header>
       <Main isDarkerBgTrue="true">
         {/* go back button */}
+        <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
         <div className={CheckoutStyles[`form-summary-wrapper`]}>
           <CheckoutForm />
           <CheckoutSummary dataPassedToSummary={props.cartModalData} />

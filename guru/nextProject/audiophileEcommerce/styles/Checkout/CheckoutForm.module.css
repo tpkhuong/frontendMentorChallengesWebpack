@@ -8,12 +8,17 @@
   padding-block-start: 24px;
   padding-inline-end: 0px;
   padding-block-end: 32px;
+  max-width: 730px;
 }
 
 .title {
   font-size: var(--heading-sm-two);
   text-transform: uppercase;
   margin-block-end: 32px;
+}
+
+h2.title:hover {
+  color: red;
 }
 
 /* tablet */
@@ -28,6 +33,9 @@
 }
 
 @media screen and (min-width: 90rem) {
+  .form-wrapper {
+    min-width: 730px;
+  }
 }
 
 /* desktop */

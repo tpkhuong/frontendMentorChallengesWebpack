@@ -345,6 +345,11 @@ a {
   gap: 100px; */
 }
 
+fieldset {
+  padding: 0;
+  border: none;
+}
+
 button:hover {
   cursor: pointer;
 }
