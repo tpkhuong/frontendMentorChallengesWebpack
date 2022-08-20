@@ -39,7 +39,7 @@ function Footer({ children, ...props }) {
           </span>
           <div className={FooterStyles[`social-links`]}>
             {/* twitter */}
-            <Link href="/">
+            <Link href="https://www.youtube.com/">
               <a>
                 <svg width="24" height="20" xmlns="http://www.w3.org/2000/svg">
                   <path

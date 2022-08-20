@@ -350,6 +350,7 @@ fieldset {
   border: none;
 }
 
+a:hover,
 button:hover {
   cursor: pointer;
 }

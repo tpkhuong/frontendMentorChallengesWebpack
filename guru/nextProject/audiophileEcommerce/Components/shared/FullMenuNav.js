@@ -11,15 +11,23 @@ function FullMenuNav({ children, ...props }) {
         data-isfooternav={props.footerNav}
         data-isheadernav={props.headerNav}
         className={FullNavStyles[`navlist`]}
+        onClick={(event) => {
+          if (
+            event.target.closest("a[role='menuitem']") &&
+            document.URL.includes("checkout")
+          ) {
+            console.log(document.URL);
+          }
+        }}
       >
         {arrayOfLinkText.map(function listitems(element, index) {
           return (
             <li
               key={Math.random() * index}
-              role="nole"
+              role="none"
               className={FullNavStyles[`navitem`]}
             >
-              <Link href={`/${element}`}>
+              <Link href={index == 0 ? "/" : `/${element}`}>
                 <a className={FullNavStyles[`navlink`]} role="menuitem">
                   {element}
                 </a>

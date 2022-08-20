@@ -40,17 +40,23 @@
 
 import dbConnect from "../../../config/mongooseMongoDatabase";
 import CartItem from "../../../models/CartItems";
+// import { useRouter } from "next/router";
 
 export default async function CartItemHandler(req, res) {
+  // const router = useRouter();
   const { method } = req;
   // connect to db
   await dbConnect();
 
   if (method == "POST") {
+    // console.log("req.body", req.body);
     const { username, items, total_price } = req.body;
     const userInDatabse = await CartItem.findOne({ username: "Deadpool" });
+    // console.log("userInDatabse", userInDatabse);
     if (userInDatabse) {
-      res.status(401).json({ message: "Item already in database" });
+      res
+        .status(200)
+        .json({ message: "Item already in database", userInDatabse });
       return;
     } else {
       //   if username is not found, make create cart item data
@@ -59,7 +65,7 @@ export default async function CartItemHandler(req, res) {
         items,
         total_price,
       });
-      console.log(cartData);
+      // console.log("cartData", cartData);
       // when we make a POST request to this api
       // return from axios of fetch call will be json below
       res.status(200).json({ message: "Item added", cartData });

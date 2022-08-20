@@ -18,6 +18,39 @@ import { useMediaQuery } from "../../utils/helpers";
 
 function Checkout(props) {
   const isTablet = useMediaQuery("max", 768);
+  // const [isUserLeaving, setReload] = React.useState(false);
+  // const isVisible = usePageVisibility();
+
+  // if (isVisible) {
+  //   console.log("Welcome to our site!");
+  // } else {
+  //   console.log("You are leaving the site. Come back soon!");
+  // }
+
+  // React.useEffect(() => {
+  //   // using visibilitychange
+  //   document.addEventListener("visibilitychange", (event) => {
+  //     if (document.visibilityState == "hidden") {
+  //       const ourBlob = new Blob(
+  //         [JSON.stringify({ message: "Leaving Page" })],
+  //         {
+  //           type: "application/json; charset=UTF-8",
+  //         }
+  //       );
+  //       navigator.sendBeacon("/api/testcall", ourBlob);
+  //     }
+  //     if (document.visibilityState == "visible") {
+  //       const ourBlob = new Blob(
+  //         [JSON.stringify({ message: "Hello World. Welcome back!" })],
+  //         {
+  //           type: "application/json; charset=UTF-8",
+  //         }
+  //       );
+  //       navigator.sendBeacon("/api/testcall", ourBlob);
+  //     }
+  //   });
+  // }, []);
+
   return (
     <React.Fragment>
       <Head>
@@ -41,6 +74,8 @@ function Checkout(props) {
         <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
         <div className={CheckoutStyles[`form-summary-wrapper`]}>
           <CheckoutForm />
+          {/* code below: we're making api call to save data to our database */}
+          {/* <CheckoutSummary dataPassedToSummary={props.cartModalData} /> */}
           <CheckoutSummary dataPassedToSummary={props.cartModalData} />
         </div>
       </Main>
@@ -55,6 +90,48 @@ function Checkout(props) {
 }
 
 export default Checkout;
+
+function getBrowserDocumentHiddenProp() {
+  if (typeof document.hidden !== "undefined") {
+    return "hidden";
+  } else if (typeof document.msHidden !== "undefined") {
+    return "msHidden";
+  } else if (typeof document.webkitHidden !== "undefined") {
+    return "webkitHidden";
+  }
+}
+
+// function getIsDocumentHidden() {
+//   return !document[getBrowserDocumentHiddenProp()];
+// }
+
+// function getBrowserVisibilityProp() {
+//   if (typeof document.hidden !== "undefined") {
+//     // Opera 12.10 and Firefox 18 and later support
+//     return "visibilitychange";
+//   } else if (typeof document.msHidden !== "undefined") {
+//     return "msvisibilitychange";
+//   } else if (typeof document.webkitHidden !== "undefined") {
+//     return "webkitvisibilitychange";
+//   }
+// }
+
+// function usePageVisibility() {
+//   const [isVisible, setIsVisible] = React.useState(getIsDocumentHidden());
+//   const onVisibilityChange = () => setIsVisible(getIsDocumentHidden());
+
+//   React.useEffect(() => {
+//     const visibilityChange = getBrowserVisibilityProp();
+
+//     document.addEventListener(visibilityChange, onVisibilityChange, false);
+
+//     return () => {
+//       document.removeEventListener(visibilityChange, onVisibilityChange);
+//     };
+//   });
+
+//   return isVisible;
+// }
 
 export async function getStaticProps(context) {
   // connect to database only mongodb

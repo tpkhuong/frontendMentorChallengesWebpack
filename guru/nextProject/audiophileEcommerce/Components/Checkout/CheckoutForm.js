@@ -8,6 +8,7 @@ function CheckoutForm({ children, ...props }) {
   return (
     <article className={CheckoutFormStyles[`form-wrapper`]}>
       <h2 className={CheckoutFormStyles[`title`]}>Checkout</h2>
+      {/* each component will work with same obj in localstorage */}
       {/* Personal Info */}
       <PersonalInfo />
       {/* <BillingShippingWrapper /> */}

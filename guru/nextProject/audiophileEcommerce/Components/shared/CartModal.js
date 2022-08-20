@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import CartModalStyles from "../../styles/Components/shared/CartModal.module.css";
 import CartItem from "./CartItem";
 import {
@@ -8,11 +9,22 @@ import {
   keyboardFunctionalityFocusRemoveAllBtn,
   keyboardFunctionalityFocusCheckoutBtn,
   addCartInfoToDatabase,
+  addCartInfoDatabaseAxios,
   getItem,
 } from "../../utils/helpers";
 // console.log(JSON.parse(localStorage.getItem("arrayOfObjs")));
 
 function CartModal({ children, ...props }) {
+  // pass in state func to checkout btn
+  // trigger a re-render to run React.useEffect()
+  // inside useEffect run router.push("/checkout")
+  const [redirectValue, setRedirect] = React.useState(false);
+  const router = useRouter();
+  React.useEffect(() => {
+    if (redirectValue) {
+      router.push("/checkout");
+    }
+  }, [redirectValue]);
   const { refToOpenCartModal, stateOfCartFunc } = props;
   // get data from AddCart component
   const cartModalData = props.addCartDataFromLocalStorage;
@@ -20,7 +32,7 @@ function CartModal({ children, ...props }) {
     arrayOfItems,
     itemsInCartLength,
     totalPriceInCartStrType,
-    dataForCheckoutBtn,
+    cartInfoDatabase,
   } = cartModalData;
   // use React.useState() to cause a re-render when use click on remove all btn
   // initial values will be the values from obj item in local storage
@@ -38,6 +50,7 @@ function CartModal({ children, ...props }) {
   // save reference to total price, we want to update it when user click on
   // - or + or hit number key when cursor is on input
   const refToTotalPriceStr = React.useRef();
+
   return (
     <div
       aria-labelledby="cart-modal"
@@ -127,25 +140,29 @@ function CartModal({ children, ...props }) {
         </div>
         {/* checkout btn */}
         {/* make checkout into a link. passing an obj into href attr for <Link> component */}
-        <Link
-          // href={{
-          //   pathname: "/checkout",
-          //   query: { dataForCheckoutBtn },
-          // }}
+        {/* <Link
+          href={{
+            pathname: "/checkout",
+            query: { dataForCheckoutBtn },
+          }}
           href="/checkout"
         >
-          <a
-            onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
-              refToRemoveAllBtn,
-              refToCheckoutBtn,
-            })}
-            ref={refToCheckoutBtn}
-            className={CartModalStyles[`checkout-btn`]}
-          >
-            checkout
-          </a>
-        </Link>
-        <button onClick={addCartInfoToDatabase}>add item</button>
+        </Link> */}
+        <a
+          onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
+            refToRemoveAllBtn,
+            refToCheckoutBtn,
+          })}
+          ref={refToCheckoutBtn}
+          className={CartModalStyles[`checkout-btn`]}
+          onClick={addCartInfoDatabaseAxios.bind({
+            cartInfoDatabase,
+            setRedirect,
+          })}
+        >
+          checkout
+        </a>
+        {/* <button onClick={addCartInfoToDatabase}>add item</button> */}
       </div>
     </div>
   );

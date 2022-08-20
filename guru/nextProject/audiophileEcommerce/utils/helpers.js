@@ -489,6 +489,9 @@ function updateQuantityAndTotalPrice(
   };
 }
 
+/**
+ * function below is attached to CartBtnAndModal component
+ * **/
 export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { useCartState } = this;
@@ -574,10 +577,12 @@ export function cartIconBtnAlgorithm(event) {
     // addCartInfoToDatabase(cartInfoDatabase);
 
     /**
-     * insert obj into database using axios
+     * insert obj into database using axios when user click on cart icon btn in nav bar
+     * but we want to add item info to database when user click on checkout btn.
+     * bind obj and func to onClick event
      * **/
 
-    addCartInfoDatabaseAxios(cartInfoDatabase);
+    // addCartInfoDatabaseAxios(cartInfoDatabase);
 
     /**
      * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
@@ -589,6 +594,7 @@ export function cartIconBtnAlgorithm(event) {
       itemsInCartLength,
       totalPriceInCartStrType,
       useCartState,
+      cartInfoDatabase,
       // dataForCheckoutBtn,
     });
   }
@@ -619,11 +625,44 @@ export function cartIconBtnAlgorithm(event) {
 // }
 
 /**
- * using axios
+ * using axios: stand alone func
  * **/
 
-export async function addCartInfoDatabaseAxios(obj) {
-  const copyOfObj = Object.assign({}, obj);
+// export async function addCartInfoDatabaseAxios(obj) {
+//   const copyOfObj = Object.assign({}, obj);
+//   const { items, total_price } = copyOfObj;
+//   const username = "Deadpool";
+//   /**
+//    * By default, if the 2nd parameter to axios.post() is an object,
+//    * Axios serializes the object to JSON using the JSON.stringify() function.
+//    * If the 2nd parameter is an object, Axios also sets the content-type header to
+//    * application/json
+//    * **/
+//   const { data } = await axios.post("/api/addcartinfo", {
+//     username,
+//     items,
+//     total_price,
+//   });
+//   console.log("data addcartinfotodatabaseaxios", data);
+//   // using res.redirect
+//   // await axios.post("/api/addcartinfo", {
+//   //   username,
+//   //   items,
+//   //   total_price,
+//   // });
+//   // data is res.status(200).json({ message: "Item added" });
+// }
+
+/**
+ * using axios: bind to onClick for checkout btn in cart modal
+ * **/
+
+export async function addCartInfoDatabaseAxios() {
+  // obj is the parameter of this func but for this algorithm we will use obj bind to this
+  // of onClick event to addCartInfoDatabaseAxios func in cart modal component
+  // const copyOfObj = Object.assign({}, obj);
+  const { cartInfoDatabase, setRedirect } = this;
+  const copyOfObj = Object.assign({}, cartInfoDatabase);
   const { items, total_price } = copyOfObj;
   const username = "Deadpool";
   /**
@@ -637,9 +676,24 @@ export async function addCartInfoDatabaseAxios(obj) {
     items,
     total_price,
   });
-  console.log("data addcartinfotodatabaseaxios", data);
   // data is res.status(200).json({ message: "Item added" });
+  // will show in browser console
+  console.log("data addcartinfotodatabaseaxios", data);
+  // if data is truthy, we created item in database
+  if (data) {
+    setRedirect(true);
+  }
 }
+
+/**
+ * bind cartinfo to data base
+ * **/
+
+// export function bindCartDataToCheckoutClickListener(event) {
+//   const { cartInfoDatabase } = this;
+//   console.log(cartInfoDatabase);
+//   addCartInfoDatabaseAxios(cartInfoDatabase);
+// }
 
 /**
  * total price helper for cartIcon func

@@ -68,7 +68,19 @@ function CheckoutSummary({ children, ...props }) {
         image_src: strImgSrc,
         alt_text: altTextCartModalSummaryItem, */}
         {/* we will pass in name.display, price.display, item_quantity, image_src, alt_text  into SummaryItem */}
-        <SummaryItem name price quantity imageSrc imageAlt />
+        {items.map(function createItems(element, index) {
+          const { name, price, item_quantity, image_src, alt_text } = element;
+          return (
+            <SummaryItem
+              key={Math.random() * index}
+              name={name.display}
+              price={price.display}
+              quantity={item_quantity}
+              imageSrc={image_src}
+              imageAlt={alt_text}
+            />
+          );
+        })}
       </ul>
       <div className={CheckoutSummaryStyles[`total-tax-shipping-wrapper`]}>
         {/* total price */}

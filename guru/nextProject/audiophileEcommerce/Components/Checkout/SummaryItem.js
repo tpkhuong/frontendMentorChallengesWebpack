@@ -3,24 +3,25 @@ import SummaryItemStyles from "../../styles/Checkout/SummaryItem.module.css";
 
 function SummaryItem({ children, ...props }) {
   // props.dataForSummaryItem;
+  const { name, price, quantity, imageSrc, imageAlt } = props;
   return (
     <div className={SummaryItemStyles[`item-wrapper`]}>
       {/* img wrapper */}
       <div className={SummaryItemStyles[`img-wrapper`]}>
-        <img src="/cart/image-xx59-headphones.jpg" alt="" />
+        <img src={imageSrc} alt={imageAlt} />
       </div>
       {/* title and price */}
       <div className={SummaryItemStyles[`title-price-wrapper`]}>
-        <span className={SummaryItemStyles[`title`]}>XX99 MK II</span>
+        <span className={SummaryItemStyles[`title`]}>{name}</span>
         <span className={SummaryItemStyles[`dollar-sign-price-wrapper`]}>
           <span className={SummaryItemStyles[`dollar-sign`]}>$</span>
-          <span className={SummaryItemStyles[`price`]}>2,999</span>
+          <span className={SummaryItemStyles[`price`]}>{price}</span>
         </span>
       </div>
       {/* quantity */}
       <div className={SummaryItemStyles[`quantity`]}>
         <span>x</span>
-        <span className={SummaryItemStyles[`quantity-digit`]}>2</span>
+        <span className={SummaryItemStyles[`quantity-digit`]}>{quantity}</span>
       </div>
     </div>
   );
