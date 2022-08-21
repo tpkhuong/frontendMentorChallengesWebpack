@@ -60,20 +60,6 @@
   color: var(--color-primary-orange);
 }
 
-/* payment btn */
-
-.place-order-btn {
-  background-color: var(--color-primary-orange);
-  color: var(--color-neutral-white);
-  font-size: var(--heading-reg-xx-sm);
-  font-weight: 700;
-  text-align: center;
-  min-width: 100%;
-  padding-inline: 0;
-  padding-block: 15px;
-  text-transform: uppercase;
-}
-
 /* tablet */
 
 @media screen and (min-width: 48rem) {

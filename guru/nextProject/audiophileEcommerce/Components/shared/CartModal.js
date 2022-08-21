@@ -9,6 +9,7 @@ import {
   keyboardFunctionalityFocusRemoveAllBtn,
   keyboardFunctionalityFocusCheckoutBtn,
   addCartInfoToDatabase,
+  sendCartModalDataToLocalStorage,
   addCartInfoDatabaseAxios,
   getItem,
 } from "../../utils/helpers";
@@ -140,15 +141,29 @@ function CartModal({ children, ...props }) {
         </div>
         {/* checkout btn */}
         {/* make checkout into a link. passing an obj into href attr for <Link> component */}
-        {/* <Link
-          href={{
-            pathname: "/checkout",
-            query: { dataForCheckoutBtn },
-          }}
+        <Link
+          // href={{
+          //   pathname: "/checkout",
+          //   query: { dataForCheckoutBtn },
+          // }}
           href="/checkout"
         >
-        </Link> */}
-        <a
+          <a
+            onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
+              refToRemoveAllBtn,
+              refToCheckoutBtn,
+            })}
+            ref={refToCheckoutBtn}
+            className={CartModalStyles[`checkout-btn`]}
+            onClick={sendCartModalDataToLocalStorage.bind({
+              cartInfoDatabase,
+            })}
+          >
+            checkout
+          </a>
+        </Link>
+        {/* working with mongodb */}
+        {/* <a
           onKeyDown={keyboardFunctionalityFocusRemoveAllBtn.bind({
             refToRemoveAllBtn,
             refToCheckoutBtn,
@@ -161,7 +176,7 @@ function CartModal({ children, ...props }) {
           })}
         >
           checkout
-        </a>
+        </a> */}
         {/* <button onClick={addCartInfoToDatabase}>add item</button> */}
       </div>
     </div>

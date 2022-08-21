@@ -494,12 +494,12 @@ function updateQuantityAndTotalPrice(
  * **/
 export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
-  const { useCartState } = this;
+  const { setCartState } = this;
   const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObjs"));
 
   /**
    * when user click on cart icon in logo nav bar, we will render cart modal
-   * when cartState changes. Which will be handled in this func, when useCartState func
+   * when cartState changes. Which will be handled in this func, when setCartState func
    * is called we will render Cart Modal passing data we get from calling
    * localStorage.getItem("arrayOfObjs")
    * **/
@@ -509,7 +509,7 @@ export function cartIconBtnAlgorithm(event) {
   const itemsInCartLength = arrayOfItems ? arrayOfItems.length : null;
   if (itemsInCartLength) {
     /**
-     * before we call useCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
+     * before we call setCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
      * get length of arrayOfItems to be use for cart (number)
      * **/
     // calculate total price of items in cart;
@@ -585,15 +585,15 @@ export function cartIconBtnAlgorithm(event) {
     // addCartInfoDatabaseAxios(cartInfoDatabase);
 
     /**
-     * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into useCartState
+     * pass in an obj {arrayOfItems, quantity of cart, total with commas in string form} into setCartState
      * which will be passed into cart modal as addCartDataFromLocalStorage prop, we can use the data in cart modal
-     * when we call useCartState passing in obj, it will assign that obj to cartState in the CartBtnAndModal component.
+     * when we call setCartState passing in obj, it will assign that obj to cartState in the CartBtnAndModal component.
      * **/
-    useCartState({
+    setCartState({
       arrayOfItems,
       itemsInCartLength,
       totalPriceInCartStrType,
-      useCartState,
+      setCartState,
       cartInfoDatabase,
       // dataForCheckoutBtn,
     });
@@ -625,7 +625,8 @@ export function cartIconBtnAlgorithm(event) {
 // }
 
 /**
- * using axios: stand alone func
+ * using axios: stand alone func mongobdb to save data for rendering
+ * user picked items in /checkout page
  * **/
 
 // export async function addCartInfoDatabaseAxios(obj) {
@@ -654,7 +655,8 @@ export function cartIconBtnAlgorithm(event) {
 // }
 
 /**
- * using axios: bind to onClick for checkout btn in cart modal
+ * using axios: bind to onClick for checkout btn in cart modal working with mongobdb
+ * to save data for rendering user picked items in /checkout page
  * **/
 
 export async function addCartInfoDatabaseAxios() {
@@ -694,6 +696,20 @@ export async function addCartInfoDatabaseAxios() {
 //   console.log(cartInfoDatabase);
 //   addCartInfoDatabaseAxios(cartInfoDatabase);
 // }
+
+/**
+ * save user items in cart to local storage. we will use
+ * React.useEffect in /checkout page
+ * **/
+
+export function sendCartModalDataToLocalStorage() {
+  // we will bind cartInfoDatabase declared in cartIconBtnALgorithm to the this keyword
+  // of this function to the onClick event of checkout btn in cart modal component
+  const { cartInfoDatabase } = this;
+  const copyCartInfoObj = Object.assign({}, cartInfoDatabase);
+  // stringify our obj
+  localStorage.setItem("cartDataForCheckout", JSON.stringify(copyCartInfoObj));
+}
 
 /**
  * total price helper for cartIcon func

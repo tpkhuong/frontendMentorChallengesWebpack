@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 // import clientPromise from "../../config/database";
-import dbConnect from "../../config/mongooseMongoDatabase";
-import CartItem from "../../models/CartItems";
-import axios from "axios";
-import { server } from "../../config/index";
+// import dbConnect from "../../config/mongooseMongoDatabase";
+// import CartItem from "../../models/CartItems";
+// import axios from "axios";
+// import { server } from "../../config/index";
 // import { useRouter } from "next/router";
 import GoBackButton from "../../Components/shared/GoBackButton";
 import CheckoutStyles from "../../styles/Checkout/CheckoutPage.module.css";
@@ -18,38 +18,6 @@ import { useMediaQuery } from "../../utils/helpers";
 
 function Checkout(props) {
   const isTablet = useMediaQuery("max", 768);
-  // const [isUserLeaving, setReload] = React.useState(false);
-  // const isVisible = usePageVisibility();
-
-  // if (isVisible) {
-  //   console.log("Welcome to our site!");
-  // } else {
-  //   console.log("You are leaving the site. Come back soon!");
-  // }
-
-  // React.useEffect(() => {
-  //   // using visibilitychange
-  //   document.addEventListener("visibilitychange", (event) => {
-  //     if (document.visibilityState == "hidden") {
-  //       const ourBlob = new Blob(
-  //         [JSON.stringify({ message: "Leaving Page" })],
-  //         {
-  //           type: "application/json; charset=UTF-8",
-  //         }
-  //       );
-  //       navigator.sendBeacon("/api/testcall", ourBlob);
-  //     }
-  //     if (document.visibilityState == "visible") {
-  //       const ourBlob = new Blob(
-  //         [JSON.stringify({ message: "Hello World. Welcome back!" })],
-  //         {
-  //           type: "application/json; charset=UTF-8",
-  //         }
-  //       );
-  //       navigator.sendBeacon("/api/testcall", ourBlob);
-  //     }
-  //   });
-  // }, []);
 
   return (
     <React.Fragment>
@@ -74,9 +42,13 @@ function Checkout(props) {
         <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
         <div className={CheckoutStyles[`form-summary-wrapper`]}>
           <CheckoutForm />
-          {/* code below: we're making api call to save data to our database */}
+          {/* code below: we're making api call in getStaticProps func to get data */}
+          {/* from data. The data is push to database when user click on checkout btn */}
+          {/* in cart modal component */}
           {/* <CheckoutSummary dataPassedToSummary={props.cartModalData} /> */}
-          <CheckoutSummary dataPassedToSummary={props.cartModalData} />
+          {/* if we dont want to make a fetch call to mongodb database we can */}
+          {/* fetch data in CheckoutSummary component using React.useEffect */}
+          <CheckoutSummary />
         </div>
       </Main>
       {/* for each input of checkout form we want to save each key input to localstorage */}
@@ -91,15 +63,78 @@ function Checkout(props) {
 
 export default Checkout;
 
-function getBrowserDocumentHiddenProp() {
-  if (typeof document.hidden !== "undefined") {
-    return "hidden";
-  } else if (typeof document.msHidden !== "undefined") {
-    return "msHidden";
-  } else if (typeof document.webkitHidden !== "undefined") {
-    return "webkitHidden";
-  }
+export async function getStaticProps(context) {
+  // connect to database only mongodb
+  // const client = await clientPromise;
+  // const database = client.db();
+  // const getCartModalInfo = await database
+  //   .collection("items")
+  //   .findOne({ username: "Deadpool" });
+
+  // mongoose and mongodb
+  // await dbConnect();
+  // const getCartModalInfo = await CartItem.findOne({ username: "Deadpool" });
+  // if (getCartModalInfo) {
+  //   // stringify data we get from database then JSON.parse it.
+  //   const dataReceived = JSON.stringify(getCartModalInfo);
+  //   const cartModalData = JSON.parse(dataReceived);
+
+  //   return {
+  //     props: { cartModalData },
+  //   };
+  // }
+  // return empty props
+  return {
+    props: {},
+  };
 }
+
+/**
+ * save data when user leave our site
+ * **/
+
+// const [isUserLeaving, setReload] = React.useState(false);
+// const isVisible = usePageVisibility();
+
+// if (isVisible) {
+//   console.log("Welcome to our site!");
+// } else {
+//   console.log("You are leaving the site. Come back soon!");
+// }
+
+// React.useEffect(() => {
+//   // using visibilitychange
+//   document.addEventListener("visibilitychange", (event) => {
+//     if (document.visibilityState == "hidden") {
+//       const ourBlob = new Blob(
+//         [JSON.stringify({ message: "Leaving Page" })],
+//         {
+//           type: "application/json; charset=UTF-8",
+//         }
+//       );
+//       navigator.sendBeacon("/api/testcall", ourBlob);
+//     }
+//     if (document.visibilityState == "visible") {
+//       const ourBlob = new Blob(
+//         [JSON.stringify({ message: "Hello World. Welcome back!" })],
+//         {
+//           type: "application/json; charset=UTF-8",
+//         }
+//       );
+//       navigator.sendBeacon("/api/testcall", ourBlob);
+//     }
+//   });
+// }, []);
+
+// function getBrowserDocumentHiddenProp() {
+//   if (typeof document.hidden !== "undefined") {
+//     return "hidden";
+//   } else if (typeof document.msHidden !== "undefined") {
+//     return "msHidden";
+//   } else if (typeof document.webkitHidden !== "undefined") {
+//     return "webkitHidden";
+//   }
+// }
 
 // function getIsDocumentHidden() {
 //   return !document[getBrowserDocumentHiddenProp()];
@@ -132,25 +167,3 @@ function getBrowserDocumentHiddenProp() {
 
 //   return isVisible;
 // }
-
-export async function getStaticProps(context) {
-  // connect to database only mongodb
-  // const client = await clientPromise;
-  // const database = client.db();
-  // const getCartModalInfo = await database
-  //   .collection("items")
-  //   .findOne({ username: "Deadpool" });
-
-  // mongoose and mongodb
-  await dbConnect();
-  const getCartModalInfo = await CartItem.findOne({ username: "Deadpool" });
-  if (getCartModalInfo) {
-    // stringify data we get from database then JSON.parse it.
-    const dataReceived = JSON.stringify(getCartModalInfo);
-    const cartModalData = JSON.parse(dataReceived);
-
-    return {
-      props: { cartModalData },
-    };
-  }
-}

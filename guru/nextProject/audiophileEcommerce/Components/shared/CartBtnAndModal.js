@@ -4,9 +4,9 @@ import CartModal from "./CartModal";
 import { cartIconBtnAlgorithm } from "../../utils/helpers";
 
 function CartBtnModal({ children, ...props }) {
-  // passing useCartState as prop stateOfCartFunc to Cart Modal component
+  // passing setCartState as prop stateOfCartFunc to Cart Modal component
   // which we will bind to onclick callback to close modal btn
-  const [cartState, useCartState] = React.useState(false);
+  const [cartState, setCartState] = React.useState(false);
   //   console.log(props.cartBtnModalData);
   // save a reference to open cart modal btn, we want to focus on open cart modal btn
   // when user click on close modal btn
@@ -16,7 +16,7 @@ function CartBtnModal({ children, ...props }) {
   return (
     <React.Fragment>
       <button
-        onClick={cartIconBtnAlgorithm.bind({ useCartState })}
+        onClick={cartIconBtnAlgorithm.bind({ setCartState })}
         className={CartBtnModalStyles[`cart-btn`]}
         aria-label="open cart modal"
         ref={openModalBtnRef}
@@ -44,7 +44,7 @@ function CartBtnModal({ children, ...props }) {
       {/* cart modal */}
       {(typeof cartState == "object") & (cartState !== null) ? (
         <CartModal
-          stateOfCartFunc={useCartState}
+          stateOfCartFunc={setCartState}
           refToOpenCartModal={openModalBtnRef}
           addCartDataFromLocalStorage={cartState}
         />
