@@ -15,3 +15,7 @@
 .DS_Store
 
 .prettierignore
+
+/node_modules
+/.env
+/starter-code

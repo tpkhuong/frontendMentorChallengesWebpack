@@ -1,0 +1,10 @@
+/* mobile */
+
+.view-less-more-btn {
+  font-size: var(--heading-reg-xxx-sm);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* tablet */
+/* desktop */

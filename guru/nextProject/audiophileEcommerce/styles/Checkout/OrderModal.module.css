@@ -1,0 +1,75 @@
+/* mobile */
+
+/* modal wrapper */
+
+.order-modal-wrapper {
+  position: absolute;
+  inset: 0;
+  background-color: hsl(0 0% 0% / 0.3);
+  padding-inline: 24px;
+  /* display: flex 
+    justify-content: center;
+    align-items: center;
+    if we dont want to use position:absolute on order-wrapper element
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* order wrapper */
+
+.order-wrapper {
+  background-color: var(--color-neutral-white);
+  border-radius: 8px;
+  padding: 32px;
+  /* if we're not using display flex on parent element */
+  /* position: absolute;
+  inset: 0;
+  height: min-content;
+  width: max-content;
+  margin: auto; */
+  /* min-width: 540px; */
+}
+
+.title {
+  font-size: var(--heading-sm-three);
+  text-transform: uppercase;
+  margin-block-start: 24px;
+  margin-block-end: 16px;
+  line-height: 1.2;
+}
+
+.display-block {
+  display: block;
+}
+
+.description {
+  font-size: var(--heading-reg-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* back home btn */
+
+.back-to-home-btn {
+  background-color: var(--color-primary-orange);
+  color: var(--color-neutral-white);
+  text-transform: uppercase;
+  font-size: var(--heading-reg-xx-sm);
+  display: block;
+  text-align: center;
+  padding-block: 14px;
+}
+
+/* tablet */
+
+@media scree and (min-width: 48rem) {
+  .title {
+    font-size: var(--heading-sm);
+  }
+}
+
+/* desktop */
+@media scree and (min-width: 90rem) {
+}
