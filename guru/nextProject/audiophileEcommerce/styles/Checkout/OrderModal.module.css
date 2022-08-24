@@ -64,12 +64,16 @@
 
 /* tablet */
 
-@media scree and (min-width: 48rem) {
+@media screen and (min-width: 48rem) {
   .title {
     font-size: var(--heading-sm);
+  }
+  .order-wrapper {
+    min-width: 540px;
+    padding: 48px;
   }
 }
 
 /* desktop */
-@media scree and (min-width: 90rem) {
+@media screen and (min-width: 90rem) {
 }

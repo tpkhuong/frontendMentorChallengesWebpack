@@ -18,11 +18,11 @@ export default function OrderModal({ children, ...props }) {
           {/* svg icon */}
           <div className={OrderModalStyles[`checked-icon`]}>
             <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-              <g fill="none" fill-rule="evenodd">
+              <g fill="none" fillRule="evenodd">
                 <circle fill="#D87D4A" cx="32" cy="32" r="32" />
                 <path
                   stroke="#FFF"
-                  stroke-width="4"
+                  strokeWidth="4"
                   d="m20.754 33.333 6.751 6.751 15.804-15.803"
                 />
               </g>
@@ -42,7 +42,10 @@ export default function OrderModal({ children, ...props }) {
           </span>
           {/* ordered items component */}
           {/* padding block on ordered items component */}
-          <OrderedItems cartInfoArr={props.arrayOfItems} />
+          <OrderedItems
+            priceValue={props.grandPrice}
+            cartInfoArr={props.arrayOfItems}
+          />
           <div></div>
           {/* back home btn */}
           <a href="/" className={OrderModalStyles[`back-to-home-btn`]}>

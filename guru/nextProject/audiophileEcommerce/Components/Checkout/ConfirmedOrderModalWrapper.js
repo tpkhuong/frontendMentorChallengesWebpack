@@ -20,10 +20,13 @@ export default function OrderModalWrapper({ children, ...props }) {
       </button>
       {/* User order modal when user click on continue and pay */}
       {/* order modal needs items and grand total from summary component */}
-      {isOrderPlaced ? (
+      {/* only render modal if isOrderPlaced is truthy and length of props.itemsInfo */}
+      {/* greater than 0 */}
+      {isOrderPlaced && props.itemsInfo.length > 0 ? (
         <OrderModal
           arrayOfItems={props.itemsInfo}
           funcForHideModal={setOrderPlaced}
+          grandPrice={props.grandTotalValue}
         />
       ) : null}
     </React.Fragment>

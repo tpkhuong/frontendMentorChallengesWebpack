@@ -9,14 +9,30 @@
   display: inline-block;
 }
 
+.basis-btn:focus,
+.basis-btn:hover {
+  --bg: var(--color-neutral-black);
+  --fg: var(--color-neutral-white);
+}
+
 .basic-btn {
   --btn-border: 1px solid var(--color-neutral-black);
   --bg: transparent;
 }
 
+.orange-white:focus,
+.orange-white:hover {
+  --bg: var(--color-orange-hover);
+}
+
 .orange-white {
   --bg: var(--color-primary-orange);
   --fg: var(--color-neutral-white);
+}
+
+.black-white:focus,
+.black-white:hover {
+  --bg: var(--color-black-white-hover);
 }
 
 .black-white {
