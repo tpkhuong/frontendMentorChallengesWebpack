@@ -1,5 +1,19 @@
 /* remove up and down arrow of input type number */
 
+/* hover/focus for increment/decrement and add cart btn */
+
+.increment:focus,
+.decrement:focus,
+.increment:hover,
+.decrement:hover {
+  color: var(--color-primary-orange);
+}
+
+.add-cart-btn:focus,
+.add-cart-btn:hover {
+  background-color: var(--color-orange-hover);
+}
+
 /* chrome */
 .quantity-wrapper input[type="number"]::-webkit-outer-spin-button,
 .quantity-wrapper input[type="number"]::-webkit-inner-spin-button {

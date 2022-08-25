@@ -16,7 +16,30 @@ import Main from "../../Components/shared/Main";
 import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
+export const ErrorMessageContext = React.createContext(null);
+
 function Checkout(props) {
+  // create context and provider wrapper here
+  const inputsRefObj = {
+    personal: {
+      name: null,
+      phoneNum: null,
+      email: null,
+    },
+    billing: {
+      address: null,
+      zipCode: null,
+      city: null,
+      country: null,
+    },
+    shipping: {
+      address: null,
+      zipCode: null,
+      city: null,
+      country: null,
+    },
+  };
+
   const isTablet = useMediaQuery("max", 768);
 
   return (
@@ -41,14 +64,16 @@ function Checkout(props) {
         {/* go back button */}
         <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
         <div className={CheckoutStyles[`form-summary-wrapper`]}>
-          <CheckoutForm />
-          {/* code below: we're making api call in getStaticProps func to get data */}
-          {/* from data. The data is push to database when user click on checkout btn */}
-          {/* in cart modal component */}
-          {/* <CheckoutSummary dataPassedToSummary={props.cartModalData} /> */}
-          {/* if we dont want to make a fetch call to mongodb database we can */}
-          {/* fetch data in CheckoutSummary component using React.useEffect */}
-          <CheckoutSummary />
+          <ErrorMessageContext.Provider value={inputsRefObj}>
+            <CheckoutForm />
+            {/* code below: we're making api call in getStaticProps func to get data */}
+            {/* from data. The data is push to database when user click on checkout btn */}
+            {/* in cart modal component */}
+            {/* <CheckoutSummary dataPassedToSummary={props.cartModalData} /> */}
+            {/* if we dont want to make a fetch call to mongodb database we can */}
+            {/* fetch data in CheckoutSummary component using React.useEffect */}
+            <CheckoutSummary />
+          </ErrorMessageContext.Provider>
         </div>
       </Main>
       {/* for each input of checkout form we want to save each key input to localstorage */}

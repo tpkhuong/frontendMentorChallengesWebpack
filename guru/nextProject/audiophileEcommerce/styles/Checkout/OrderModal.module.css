@@ -1,5 +1,12 @@
 /* mobile */
 
+/* hover/focus for back to home btn */
+
+.back-to-home-btn:hover,
+.back-to-home-btn:focus {
+  background-color: var(--color-orange-hover);
+}
+
 /* modal wrapper */
 
 .order-modal-wrapper {
@@ -60,6 +67,7 @@
   display: block;
   text-align: center;
   padding-block: 14px;
+  font-weight: 700;
 }
 
 /* tablet */

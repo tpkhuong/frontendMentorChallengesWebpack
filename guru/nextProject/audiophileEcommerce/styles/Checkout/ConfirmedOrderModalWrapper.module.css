@@ -14,5 +14,10 @@
   text-transform: uppercase;
 }
 
+.place-order-btn:hover,
+.place-order-btn:focus {
+  background-color: var(--color-orange-hover);
+}
+
 /* tablet */
 /* desktop */

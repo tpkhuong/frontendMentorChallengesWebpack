@@ -7,6 +7,7 @@
   --color-primary-black: hsl(0, 0%, 6%);
   --color-primary-grey: hsl(0, 0%, 95%);
   --color-primary-white: hsl(0, 0%, 98%);
+  --color-primary-error: hsl(0, 65%, 49%);
   --color-input-border: hsl(0, 0%, 81%);
   --color-secondary-orange: hsl(21, 94%, 75%);
   --color-nav-bar-line: hsl(0, 0%, 59%);

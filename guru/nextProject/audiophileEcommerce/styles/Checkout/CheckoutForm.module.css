@@ -11,6 +11,17 @@
   max-width: 730px;
 }
 
+/* input hover */
+
+.form-wrapper input {
+  cursor: pointer;
+}
+
+.form-wrapper input:hover,
+.form-wrapper input:focus {
+  outline: 2px solid var(--color-primary-orange);
+}
+
 .title {
   font-size: var(--heading-sm-two);
   text-transform: uppercase;

@@ -1,5 +1,14 @@
 /* remove up and down arrow of input type number */
 
+/* hover/focus effect for increment/decrement btn */
+
+.cart-increment:hover,
+.cart-increment:focus,
+.cart-decrement:hover,
+.cart-decrement:focus {
+  color: var(--color-primary-orange);
+}
+
 /* chrome */
 .cart-quantity input[type="number"]::-webkit-outer-spin-button,
 .cart-quantity input[type="number"]::-webkit-inner-spin-button {

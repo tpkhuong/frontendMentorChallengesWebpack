@@ -2,11 +2,13 @@ import React from "react";
 import OrderModalStyles from "../../styles/Checkout/ConfirmedOrderModalWrapper.module.css";
 import OrderModal from "./OrderModal";
 import { showOrderModal } from "../../utils/orderHelpers";
+import { ErrorMessageContext } from "../../pages/checkout";
 
 export default function OrderModalWrapper({ children, ...props }) {
   const [isOrderPlaced, setOrderPlaced] = React.useState(false);
   // when isOrderPlaced is changed react will re-render this component
   // it is fine because this component is only the button and the order modal
+  const refValues = React.useContext(ErrorMessageContext);
   console.log(props.itemsInfo);
   return (
     <React.Fragment>
@@ -14,7 +16,7 @@ export default function OrderModalWrapper({ children, ...props }) {
       <button
         // aria-label="confirm order"
         className={OrderModalStyles[`place-order-btn`]}
-        onClick={showOrderModal.bind({ setOrderPlaced })}
+        onClick={showOrderModal.bind({ setOrderPlaced, refValues })}
       >
         contine & pay
       </button>

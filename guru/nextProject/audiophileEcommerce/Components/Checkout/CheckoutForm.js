@@ -4,9 +4,12 @@ import BillingShippingWrapper from "./BillingShippingWrapper";
 import PersonalInfo from "./PersonalInfo";
 import Payment from "./Payment";
 
+// Context here
+
 function CheckoutForm({ children, ...props }) {
   return (
     <article className={CheckoutFormStyles[`form-wrapper`]}>
+      {/* input assistive component here */}
       <h2 className={CheckoutFormStyles[`title`]}>Checkout</h2>
       {/* each component will work with same obj in localstorage */}
       {/* Personal Info */}

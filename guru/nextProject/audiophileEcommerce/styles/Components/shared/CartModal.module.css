@@ -1,5 +1,17 @@
 /* mobile */
 
+/* hover/focus for remove all and checkout btn */
+
+.remove-all-btn:focus,
+.remove-all-btn:hover {
+  color: var(--color-primary-orange);
+}
+
+.checkout-btn:focus,
+.checkout-btn:hover {
+  background-color: var(--color-orange-hover);
+}
+
 .cart-modal-wrapper {
   position: absolute;
   inset: 0;
@@ -35,6 +47,7 @@
   color: var(--color-text);
   font-size: var(--heading-reg-sm);
   background-color: transparent;
+  text-decoration: underline;
 }
 
 .close-btn {

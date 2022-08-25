@@ -1,5 +1,48 @@
 /* mobile */
 
+/* input hover */
+
+/* .personal-wrapper input:hover,
+.personal-wrapper input:focus {
+  outline: 2px solid var(--color-primary-orange);
+} */
+
+/* empty inputs */
+
+/* .name input:focus,
+.email input:focus,
+.phone-number input:focus {
+  outline: 2px solid var(--color-primary-orange);
+} */
+
+.name input[type="email"]:invalid,
+.email input[type="email"]:invalid,
+.phone-number input[type="email"]:invalid {
+  outline: 2px solid var(--color-primary-error);
+}
+
+.email [data-invalidEmail="true"] {
+  color: var(--color-primary-error);
+}
+
+.email {
+  position: relative;
+}
+
+.email-input:invalid + .email-error-text {
+  display: inline-block;
+}
+
+.email-error-text {
+  position: absolute;
+  font-size: var(--heading-reg-xxx-sm);
+  color: var(--color-primary-error);
+  display: none;
+  right: 0;
+  top: 0;
+  font-weight: 500;
+}
+
 /* remove up and down arrow of input type number */
 
 /* chrome */
