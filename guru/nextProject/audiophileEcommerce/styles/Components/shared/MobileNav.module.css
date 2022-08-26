@@ -11,6 +11,9 @@
   inset: 0;
   top: 91px;
   background-color: hsl(0 0% 0% / 0.3);
+  /* we always want mobile menu to be visible when user click on hamburger btn */
+  /* without z-index: 2 on this element. the cart modal will render on top of mobile menu */
+  z-index: 2;
 }
 
 .mobile-nav {

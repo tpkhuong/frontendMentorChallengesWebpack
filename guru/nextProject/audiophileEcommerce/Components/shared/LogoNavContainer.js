@@ -10,7 +10,7 @@ import {
   targetLastMobileNavElement,
 } from "../../utils/helpers";
 import { logoutHandler } from "../../utils/authHelpers";
-console.log(useMediaQuery);
+// console.log(useMediaQuery);
 
 function LogoNavContainer({ children, ...props }) {
   const [hasMounted, setHasMounted] = React.useState(false);

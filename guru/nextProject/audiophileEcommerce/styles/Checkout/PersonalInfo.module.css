@@ -38,7 +38,7 @@
   font-size: var(--heading-reg-xxx-sm);
   color: var(--color-primary-error);
   display: none;
-  right: 0;
+  right: 30px;
   top: 0;
   font-weight: 500;
 }
@@ -103,6 +103,9 @@
   .email,
   .phone-number {
     padding-inline-end: 0;
+  }
+  .email-error-text {
+    right: 0;
   }
 }
 

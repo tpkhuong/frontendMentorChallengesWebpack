@@ -19,6 +19,18 @@ import { useMediaQuery } from "../../utils/helpers";
 export const ErrorMessageContext = React.createContext(null);
 
 function Checkout(props) {
+  // React.useEffect(() => {
+  //   // using visibilitychange
+  //   document.addEventListener("visibilitychange", (event) => {
+  //     if (document.visibilityState == "hidden") {
+  //       const testObj = { name: "Hello React World!" };
+  //       localStorage.setItem("someObj", JSON.stringify(testObj));
+  //     }
+  //     if (document.visibilityState == "visible") {
+  //       console.log(JSON.parse(localStorage.getItem("someObj")));
+  //     }
+  //   });
+  // }, []);
   // create context and provider wrapper here
   const inputsRefObj = {
     personal: {
@@ -28,15 +40,21 @@ function Checkout(props) {
     },
     billing: {
       address: null,
-      zipCode: null,
       city: null,
+      state: null,
+      zipCode: null,
       country: null,
     },
     shipping: {
       address: null,
-      zipCode: null,
       city: null,
+      state: null,
+      zipCode: null,
       country: null,
+    },
+    paymentMethodSelection: {
+      eMoney: null,
+      cashDelivery: null,
     },
   };
 
@@ -56,15 +74,15 @@ function Checkout(props) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
-      <header role="banner">
-        {/* logonav container */}
-        <LogoNavContainer />
-      </header>
-      <Main isDarkerBgTrue="true">
-        {/* go back button */}
-        <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
-        <div className={CheckoutStyles[`form-summary-wrapper`]}>
-          <ErrorMessageContext.Provider value={inputsRefObj}>
+      <ErrorMessageContext.Provider value={inputsRefObj}>
+        <header role="banner">
+          {/* logonav container */}
+          <LogoNavContainer />
+        </header>
+        <Main isDarkerBgTrue="true">
+          {/* go back button */}
+          <GoBackButton pageMarginBlock="checkout" baseCategoryUrl="/" />
+          <div className={CheckoutStyles[`form-summary-wrapper`]}>
             <CheckoutForm />
             {/* code below: we're making api call in getStaticProps func to get data */}
             {/* from data. The data is push to database when user click on checkout btn */}
@@ -73,15 +91,15 @@ function Checkout(props) {
             {/* if we dont want to make a fetch call to mongodb database we can */}
             {/* fetch data in CheckoutSummary component using React.useEffect */}
             <CheckoutSummary />
-          </ErrorMessageContext.Provider>
-        </div>
-      </Main>
-      {/* for each input of checkout form we want to save each key input to localstorage */}
-      {/* in our summary component we can access that data when user click on checkout/pay */}
-      {/* footer */}
-      <Footer />
-      {/* mobile nav */}
-      {isTablet ? <MobileNav /> : null}
+          </div>
+        </Main>
+        {/* for each input of checkout form we want to save each key input to localstorage */}
+        {/* in our summary component we can access that data when user click on checkout/pay */}
+        {/* footer */}
+        <Footer />
+        {/* mobile nav */}
+        {isTablet ? <MobileNav /> : null}
+      </ErrorMessageContext.Provider>
     </React.Fragment>
   );
 }

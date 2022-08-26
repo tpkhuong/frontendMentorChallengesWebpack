@@ -1,5 +1,6 @@
 import React from "react";
 import PaymentStyles from "../../styles/Checkout/Payment.module.css";
+import { ErrorMessageContext } from "../../pages/checkout";
 import {
   eMoneyClickHandler,
   cashOnDeliveryClickHandler,
@@ -15,6 +16,11 @@ function Payment({ children, ...props }) {
   const emoneyRef = React.useRef();
   // cashdelivery
   const cashDeliveryRef = React.useRef();
+  // get context obj created in checkout page
+  const paymentRefObj = React.useContext(ErrorMessageContext);
+  paymentRefObj.paymentMethodSelection.eMoney = emoneyRef;
+  paymentRefObj.paymentMethodSelection.cashDelivery = cashDeliveryRef;
+  console.log(paymentRefObj);
   return (
     <React.Fragment>
       {/* title */}

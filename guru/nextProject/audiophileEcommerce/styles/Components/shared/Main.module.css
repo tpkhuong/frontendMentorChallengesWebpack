@@ -2,6 +2,7 @@
 
 .main[data-checkoutpage="true"] {
   background-color: var(--color-primary-white);
+  position: relative;
 }
 
 [data-checkoutpage="true"].main {

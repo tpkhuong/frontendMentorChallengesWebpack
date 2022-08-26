@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Main from "../../Components/shared/Main";
 import { useRouter } from "next/router";
 import { submitNewUserHandler } from "../../utils/authHelpers";
 
@@ -10,6 +11,8 @@ export default function Register({ children, ...props }) {
 
   const router = useRouter();
   const [userCreated, setUser] = React.useState(false);
+  // we call setUser in submitNewUserHandler func attached to onSumbit
+  // to cause a re-render which will run algorithm in React.useEffect
   React.useEffect(() => {
     if (userCreated) {
       router.push("/login");
@@ -28,6 +31,7 @@ export default function Register({ children, ...props }) {
             setUser,
           })}
         >
+          <p>Hello Friends</p>
           <div>{/* email */}</div>
           <label htmlFor="email">Email</label>
           <input required ref={emailInputRef} type="email" id="email" />

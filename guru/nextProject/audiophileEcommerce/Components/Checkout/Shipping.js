@@ -21,7 +21,10 @@ function Shipping({ children, ...props }) {
   shippingValuesObj.shipping.country = shippingCountryRef;
   return (
     <React.Fragment>
-      <fieldset>
+      <fieldset
+        data-showshippinginfo={props.showShipping}
+        className={ShippingStyles[`shipping-fieldset`]}
+      >
         <legend className={ShippingStyles[`title`]}>Shipping Address</legend>
         <article className={ShippingStyles[`shipping-wrapper`]}>
           {/* address */}

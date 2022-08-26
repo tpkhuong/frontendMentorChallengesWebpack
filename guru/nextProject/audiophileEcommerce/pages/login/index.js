@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Main from "../../Components/shared/Main";
 import { loginHandler } from "../../utils/authHelpers";
 
 export default function Login({ children, ...props }) {
@@ -9,6 +10,7 @@ export default function Login({ children, ...props }) {
   return (
     <section>
       <h2>Log In</h2>
+      <p>Welcome back </p>
       <span>New User?</span>
       <Link href="/register">
         <a>Register New Account</a>

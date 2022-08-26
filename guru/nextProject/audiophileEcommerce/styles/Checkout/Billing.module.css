@@ -19,6 +19,10 @@
   -moz-appearance: textfield; /** firefox **/
 }
 
+.billing-fieldset[data-hidebillinginfo="true"] {
+  display: none;
+}
+
 .title {
   font-weight: 700;
   color: var(--color-primary-orange);

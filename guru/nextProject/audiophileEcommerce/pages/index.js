@@ -41,6 +41,9 @@ function Home({ children, ...props }) {
         <HeroContent />
       </header>
       <Main>
+        <div>
+          <img src="/shared/login-screen.png" alt="" />
+        </div>
         {/* product features */}
         {/* <ProductFeatures productText={product.features} /> */}
         {/* <ProductTextPriceInfo /> */}
@@ -52,6 +55,7 @@ function Home({ children, ...props }) {
 
         </div> */}
         {/* <ProductRecommendations recommendations={others} /> */}
+
         <div className={HomeStyles[`test-container`]}>
           {/* <ProductImgWrapper
             desktop={desktop}

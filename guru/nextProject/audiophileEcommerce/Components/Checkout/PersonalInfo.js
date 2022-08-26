@@ -61,7 +61,8 @@ function PersonalInfo({ children, ...props }) {
             <label htmlFor="personal-phone-number">Phone Number</label>
             <input
               ref={personalPhoneNumRef}
-              type="number"
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               id="personal-phone-number"
               placeholder="888-888-8888"
             />

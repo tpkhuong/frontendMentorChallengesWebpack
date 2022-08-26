@@ -21,7 +21,8 @@
   */
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-block-start: 48px;
+  align-items: flex-start;
 }
 
 /* order wrapper */
@@ -84,4 +85,8 @@
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  .order-modal-wrapper {
+    padding-block-start: 0;
+    align-items: center;
+  }
 }

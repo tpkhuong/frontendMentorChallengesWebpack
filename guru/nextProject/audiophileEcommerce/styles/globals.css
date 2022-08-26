@@ -11,9 +11,12 @@
   --color-input-border: hsl(0, 0%, 81%);
   --color-secondary-orange: hsl(21, 94%, 75%);
   --color-nav-bar-line: hsl(0, 0%, 59%);
-  --color-text: hsl(0, 0%, 1%);
+  --color-text: hsl(0, 0%, 45%);
   --color-orange-hover: hsl(22, 93%, 75%);
   --color-black-white-hover: hsl(0, 0%, 30%);
+  --color-orange-hover: hsl(22, 93%, 75%);
+  --color-black-white-hover: hsl(0, 0%, 30%);
+  --color-illustration-bg-color: hsl(36, 74%, 56%);
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */

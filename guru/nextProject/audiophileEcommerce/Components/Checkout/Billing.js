@@ -21,7 +21,10 @@ function Billing({ children, ...props }) {
   billingValuesObj.billing.country = billingCountryRef;
   return (
     <React.Fragment>
-      <fieldset>
+      <fieldset
+        data-hidebillinginfo={props.hideBilling}
+        className={BillingStyles[`billing-fieldset`]}
+      >
         <legend className={BillingStyles[`title`]}>Billing Address</legend>
         <article className={BillingStyles[`billing-wrapper`]}>
           {/* address */}

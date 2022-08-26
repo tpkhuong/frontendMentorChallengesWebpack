@@ -1,5 +1,6 @@
 import React from "react";
 import BillShipWrapperStyles from "../../styles/Checkout/BillingShippingWrapper.module.css";
+import { displayPaymentMethods } from "../../utils/checkoutHelpers";
 import Billing from "./Billing";
 import Shipping from "./Shipping";
 
@@ -10,7 +11,7 @@ function BillingShippingWrapper({ children, ...props }) {
   return (
     <article className={BillShipWrapperStyles[`style-wrapper`]}>
       <div
-        onChange={testFunc.bind({
+        onChange={displayPaymentMethods.bind({
           setBillingShipping,
           yesInputRef,
           noInputRef,
@@ -18,7 +19,7 @@ function BillingShippingWrapper({ children, ...props }) {
         className={BillShipWrapperStyles[`billing-shipping-radio-btns`]}
       >
         {/* <input
-          onChange={testFunc.bind({ setBillingShipping })}
+          onChange={displayPaymentMethods.bind({ setBillingShipping })}
           type="checkbox"
           id="billing-shipping"
         />
@@ -46,24 +47,18 @@ function BillingShippingWrapper({ children, ...props }) {
         </div>
       </div>
       {/* Billing or Shipping inputs */}
-      {!showBillingShipping ? <Billing /> : <Shipping />}
+      {/* {!showBillingShipping ? (
+        <Billing hideBilling />
+      ) : (
+        <Shipping showShipping />
+      )} */}
+      {/* when showBillingShipping is false we will pass boolean value false to hideBilling and showShipping */}
+      {/* in billing component we will have an attr, when it is false normal display when it is true display none */}
+      {/* in shipping component we will have an attr, when it is false display none when it is true revert */}
+      <Billing hideBilling={showBillingShipping} />
+      <Shipping showShipping={showBillingShipping} />
     </article>
   );
-}
-
-function testFunc(event) {
-  const { setBillingShipping, yesInputRef, noInputRef } = this;
-  //   setBillingShipping(event.target);
-  //   use clicked on yes radio input shipping address same as billing
-  if (event.target == yesInputRef.current) {
-    console.log("hello this is yes radio input");
-    setBillingShipping(false);
-  }
-  //   use clicked on no radio input shipping address is different than billing
-  if (event.target == noInputRef.current) {
-    console.log("hello this is no radio input");
-    setBillingShipping(true);
-  }
 }
 
 export default BillingShippingWrapper;
