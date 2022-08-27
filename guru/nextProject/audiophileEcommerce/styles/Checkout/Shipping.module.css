@@ -19,9 +19,11 @@
   -moz-appearance: textfield; /** firefox **/
 }
 
-.shipping-fieldset[data-showshippinginfo="false"] {
+/* different approach for a11y */
+
+/* .shipping-fieldset[data-showshippinginfo="false"] {
   display: none;
-}
+} */
 
 .title {
   font-weight: 700;

@@ -1,6 +1,8 @@
 import React from "react";
 import ShippingStyles from "../../styles/Checkout/Shipping.module.css";
 import { ErrorMessageContext } from "../../pages/checkout/index";
+import { arrayOfStates } from "../../src/storage";
+import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Shipping({ children, ...props }) {
   // declare ref variables
@@ -11,22 +13,26 @@ function Shipping({ children, ...props }) {
   const shippingCountryRef = React.useRef();
 
   // get context obj created in checkout page
-  const shippingValuesObj = React.useContext(ErrorMessageContext);
+  const { billing, shipping } = React.useContext(ErrorMessageContext);
 
   // assign ref to context obj created using React.createContext in checkout page
-  shippingValuesObj.shipping.address = shippingAddressRef;
-  shippingValuesObj.shipping.city = shippingCityRef;
-  shippingValuesObj.shipping.state = shippingStateRef;
-  shippingValuesObj.shipping.zipCode = shippingZipCodeRef;
-  shippingValuesObj.shipping.country = shippingCountryRef;
+  shipping.address = shippingAddressRef;
+  shipping.city = shippingCityRef;
+  shipping.state = shippingStateRef;
+  shipping.zipCode = shippingZipCodeRef;
+  shipping.country = shippingCountryRef;
   return (
     <React.Fragment>
       <fieldset
-        data-showshippinginfo={props.showShipping}
+        /* different approach for a11y */
+        // data-showshippinginfo={props.showShipping}
         className={ShippingStyles[`shipping-fieldset`]}
       >
         <legend className={ShippingStyles[`title`]}>Shipping Address</legend>
-        <article className={ShippingStyles[`shipping-wrapper`]}>
+        <article
+          onChange={billingShippingInputListener.bind({ billing, shipping })}
+          className={ShippingStyles[`shipping-wrapper`]}
+        >
           {/* address */}
           <div className={ShippingStyles[`address`]}>
             <label htmlFor="shipping-address">Your Address</label>
@@ -60,7 +66,19 @@ function Shipping({ children, ...props }) {
                 required
                 type="text"
                 placeholder="California"
+                list="shipping-list-of-states"
               />
+              <datalist id="shipping-list-of-states">
+                {/* loop through arrayOfStates make option element */}
+                {arrayOfStates.map(function makeStates(element, index) {
+                  return (
+                    <option
+                      key={Math.random() * index}
+                      value={element}
+                    ></option>
+                  );
+                })}
+              </datalist>
             </div>
             {/* zip */}
             <div className={ShippingStyles[`zip`]}>
@@ -69,7 +87,9 @@ function Shipping({ children, ...props }) {
                 ref={shippingZipCodeRef}
                 id="shipping-zip"
                 required
-                type="number"
+                type="text"
+                maxLength="5"
+                pattern="[0-9]{5}"
                 placeholder="88888"
               />
             </div>
@@ -89,6 +109,13 @@ function Shipping({ children, ...props }) {
       </fieldset>
     </React.Fragment>
   );
+}
+
+function testEventShipping(event) {
+  const { shippingValuesObj } = this;
+  if (event.target.closest("input")) {
+    console.log(shippingValuesObj);
+  }
 }
 
 export default Shipping;

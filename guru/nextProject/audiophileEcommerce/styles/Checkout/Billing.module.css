@@ -19,9 +19,11 @@
   -moz-appearance: textfield; /** firefox **/
 }
 
-.billing-fieldset[data-hidebillinginfo="true"] {
+/* different approach for a11y */
+
+/* .billing-fieldset[data-hidebillinginfo="true"] {
   display: none;
-}
+} */
 
 .title {
   font-weight: 700;

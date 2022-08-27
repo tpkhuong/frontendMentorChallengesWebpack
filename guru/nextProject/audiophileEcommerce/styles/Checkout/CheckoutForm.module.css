@@ -28,10 +28,6 @@
   margin-block-end: 32px;
 }
 
-h2.title:hover {
-  color: red;
-}
-
 /* tablet */
 
 @media screen and (min-width: 48rem) {

@@ -1,5 +1,6 @@
 export function showOrderModal(event) {
   const { setOrderPlaced, refValues } = this;
+  /* check all inputs validity */
   console.log(refValues);
   setOrderPlaced(true);
 }

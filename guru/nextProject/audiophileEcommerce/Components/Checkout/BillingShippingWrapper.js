@@ -1,6 +1,7 @@
 import React from "react";
 import BillShipWrapperStyles from "../../styles/Checkout/BillingShippingWrapper.module.css";
 import { displayPaymentMethods } from "../../utils/checkoutHelpers";
+import { ErrorMessageContext } from "../../pages/checkout/index";
 import Billing from "./Billing";
 import Shipping from "./Shipping";
 
@@ -8,13 +9,30 @@ function BillingShippingWrapper({ children, ...props }) {
   const yesInputRef = React.useRef();
   const noInputRef = React.useRef();
   const [showBillingShipping, setBillingShipping] = React.useState(false);
+  // get context ref obj
+  const { billing: billingRef, shipping: shippingRef } =
+    React.useContext(ErrorMessageContext);
   return (
     <article className={BillShipWrapperStyles[`style-wrapper`]}>
+      {/* Billing or Shipping inputs */}
+      {/* {!showBillingShipping ? (
+        <Billing hideBilling />
+      ) : (
+        <Shipping showShipping />
+      )} */}
+      {/* when showBillingShipping is false we will pass boolean value false to hideBilling and showShipping */}
+      {/* in billing component we will have an attr, when it is false normal display when it is true display none */}
+      {/* in shipping component we will have an attr, when it is false display none when it is true revert */}
+      <Billing />
+      {/* different approach for a11y */}
+      {/* <Billing hideBilling={showBillingShipping} /> */}
       <div
         onChange={displayPaymentMethods.bind({
           setBillingShipping,
           yesInputRef,
           noInputRef,
+          billingRef,
+          shippingRef,
         })}
         className={BillShipWrapperStyles[`billing-shipping-radio-btns`]}
       >
@@ -46,17 +64,9 @@ function BillingShippingWrapper({ children, ...props }) {
           <label htmlFor="shipping-different">No</label>
         </div>
       </div>
-      {/* Billing or Shipping inputs */}
-      {/* {!showBillingShipping ? (
-        <Billing hideBilling />
-      ) : (
-        <Shipping showShipping />
-      )} */}
-      {/* when showBillingShipping is false we will pass boolean value false to hideBilling and showShipping */}
-      {/* in billing component we will have an attr, when it is false normal display when it is true display none */}
-      {/* in shipping component we will have an attr, when it is false display none when it is true revert */}
-      <Billing hideBilling={showBillingShipping} />
-      <Shipping showShipping={showBillingShipping} />
+      <Shipping />
+      {/* different approach for a11y */}
+      {/* <Shipping showShipping={showBillingShipping} /> */}
     </article>
   );
 }

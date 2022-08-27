@@ -7,7 +7,7 @@
 .billing-shipping-radio-btns {
   font-size: var(--heading-reg-sm);
   font-weight: 700;
-  margin-block: 16px;
+  margin-block: 32px;
 }
 
 .question {

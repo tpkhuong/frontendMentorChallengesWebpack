@@ -1,6 +1,8 @@
 import React from "react";
 import BillingStyles from "../../styles/Checkout/Billing.module.css";
 import { ErrorMessageContext } from "../../pages/checkout/index";
+import { arrayOfStates } from "../../src/storage";
+import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Billing({ children, ...props }) {
   // declare ref variables
@@ -11,23 +13,28 @@ function Billing({ children, ...props }) {
   const billingCountryRef = React.useRef();
 
   // get context obj created in checkout page
-  const billingValuesObj = React.useContext(ErrorMessageContext);
+  const { billing, shipping } = React.useContext(ErrorMessageContext);
 
   // assign ref to context obj created using React.createContext in checkout page
-  billingValuesObj.billing.address = billingAddressRef;
-  billingValuesObj.billing.city = billingCityRef;
-  billingValuesObj.billing.state = billingStateRef;
-  billingValuesObj.billing.zipCode = billingZipCodeRef;
-  billingValuesObj.billing.country = billingCountryRef;
+  billing.address = billingAddressRef;
+  billing.city = billingCityRef;
+  billing.state = billingStateRef;
+  billing.zipCode = billingZipCodeRef;
+  billing.country = billingCountryRef;
   return (
     <React.Fragment>
       <fieldset
-        data-hidebillinginfo={props.hideBilling}
+        /* different approach for a11y */
+        // data-hidebillinginfo={props.hideBilling}
         className={BillingStyles[`billing-fieldset`]}
       >
         <legend className={BillingStyles[`title`]}>Billing Address</legend>
-        <article className={BillingStyles[`billing-wrapper`]}>
+        <article
+          onChange={billingShippingInputListener.bind({ billing, shipping })}
+          className={BillingStyles[`billing-wrapper`]}
+        >
           {/* address */}
+          {/* add attr data-needsuserattention true */}
           <div className={BillingStyles[`address`]}>
             <label htmlFor="billing-address">Your Address</label>
             <input
@@ -37,6 +44,8 @@ function Billing({ children, ...props }) {
               type="text"
               placeholder="888 Eighth St"
             />
+            {/* add error text */}
+            {/* add correct text */}
           </div>
           {/* city, state, zip, country */}
           <div className={BillingStyles[`city-state-zip-country-wrapper`]}>
@@ -60,7 +69,19 @@ function Billing({ children, ...props }) {
                 required
                 type="text"
                 placeholder="California"
+                list="billing-list-of-states"
               />
+              <datalist id="billing-list-of-states">
+                {/* loop through arrayOfStates make option element */}
+                {arrayOfStates.map(function makeOptionElements(element, index) {
+                  return (
+                    <option
+                      key={Math.random() * index}
+                      value={element}
+                    ></option>
+                  );
+                })}
+              </datalist>
             </div>
             {/* zip */}
             <div className={BillingStyles[`zip`]}>
@@ -69,7 +90,9 @@ function Billing({ children, ...props }) {
                 ref={billingZipCodeRef}
                 id="billing-zip"
                 required
-                type="number"
+                type="text"
+                maxLength="5"
+                pattern="[0-9]{5}"
                 placeholder="88888"
               />
             </div>

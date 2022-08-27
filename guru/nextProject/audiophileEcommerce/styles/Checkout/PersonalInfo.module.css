@@ -15,33 +15,52 @@
   outline: 2px solid var(--color-primary-orange);
 } */
 
-.name input[type="email"]:invalid,
+/* different approach */
+
+/* .name input[type="email"]:invalid,
 .email input[type="email"]:invalid,
 .phone-number input[type="email"]:invalid {
   outline: 2px solid var(--color-primary-error);
+} */
+
+/* add similar declartion from here */
+.personal-wrapper [data-needUserAttention="true"] input {
+  outline: 3px solid var(--color-primary-error);
 }
 
-.email [data-invalidEmail="true"] {
+.personal-wrapper [data-needUserAttention="true"] label {
   color: var(--color-primary-error);
 }
 
-.email {
+.name,
+.email,
+.phone-number {
   position: relative;
 }
 
-.email-input:invalid + .email-error-text {
+.personal-wrapper [data-needUserAttention="true"] .error-text {
   display: inline-block;
 }
 
-.email-error-text {
+.personal-wrapper [data-needUserAttention="false"] .correct-text {
+  display: inline-block;
+}
+
+.error-text {
+  color: var(--color-primary-error);
+}
+
+.error-text,
+.correct-text {
   position: absolute;
   font-size: var(--heading-reg-xxx-sm);
-  color: var(--color-primary-error);
   display: none;
   right: 30px;
   top: 0;
-  font-weight: 500;
+  font-weight: 700;
 }
+
+/* to here for billing and shipping */
 
 /* remove up and down arrow of input type number */
 
@@ -53,6 +72,10 @@
 
 .phone-number input[type="number"] {
   -moz-appearance: textfield; /** firefox **/
+}
+
+.personal-fieldset {
+  margin-block-end: 32px;
 }
 
 .title {
@@ -104,8 +127,12 @@
   .phone-number {
     padding-inline-end: 0;
   }
-  .email-error-text {
+  .error-text,
+  .correct-text {
     right: 0;
+  }
+  .personal-fieldset {
+    /* margin-block-end: 40px; */
   }
 }
 

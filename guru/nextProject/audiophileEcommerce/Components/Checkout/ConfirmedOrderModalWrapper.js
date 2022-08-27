@@ -13,6 +13,7 @@ export default function OrderModalWrapper({ children, ...props }) {
   return (
     <React.Fragment>
       {/* continue and pay btn */}
+      {/* check all inputs validity */}
       <button
         // aria-label="confirm order"
         className={OrderModalStyles[`place-order-btn`]}
