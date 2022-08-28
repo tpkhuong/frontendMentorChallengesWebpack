@@ -8,7 +8,8 @@ import Shipping from "./Shipping";
 function BillingShippingWrapper({ children, ...props }) {
   const yesInputRef = React.useRef();
   const noInputRef = React.useRef();
-  const [showBillingShipping, setBillingShipping] = React.useState(false);
+  // const [showBillingShipping, setBillingShipping] = React.useState(false);
+  const [isShippingSame, setShippingSame] = React.useState(false);
   // get context ref obj
   const { billing: billingRef, shipping: shippingRef } =
     React.useContext(ErrorMessageContext);
@@ -23,12 +24,12 @@ function BillingShippingWrapper({ children, ...props }) {
       {/* when showBillingShipping is false we will pass boolean value false to hideBilling and showShipping */}
       {/* in billing component we will have an attr, when it is false normal display when it is true display none */}
       {/* in shipping component we will have an attr, when it is false display none when it is true revert */}
-      <Billing />
+      <Billing linkInputToShipping={isShippingSame} />
       {/* different approach for a11y */}
       {/* <Billing hideBilling={showBillingShipping} /> */}
       <div
         onChange={displayPaymentMethods.bind({
-          setBillingShipping,
+          setShippingSame,
           yesInputRef,
           noInputRef,
           billingRef,
@@ -64,7 +65,7 @@ function BillingShippingWrapper({ children, ...props }) {
           <label htmlFor="shipping-different">No</label>
         </div>
       </div>
-      <Shipping />
+      <Shipping inputsLinkedToBilling={isShippingSame} />
       {/* different approach for a11y */}
       {/* <Shipping showShipping={showBillingShipping} /> */}
     </article>

@@ -25,6 +25,36 @@
   display: none;
 } */
 
+/* label and input */
+
+/* text */
+
+.address,
+.city,
+.state,
+.zip,
+.country {
+  position: relative;
+}
+
+/* outline color */
+
+.error-text {
+  color: var(--color-primary-error);
+}
+
+.error-text,
+.correct-text {
+  position: absolute;
+  font-size: var(--heading-reg-xxx-sm);
+  display: none;
+  right: 30px;
+  top: 0;
+  font-weight: 700;
+}
+
+/* different approach for a11y */
+
 .title {
   font-weight: 700;
   color: var(--color-primary-orange);

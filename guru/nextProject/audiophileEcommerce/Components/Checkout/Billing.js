@@ -5,6 +5,7 @@ import { arrayOfStates } from "../../src/storage";
 import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Billing({ children, ...props }) {
+  const { linkInputToShipping } = props;
   // declare ref variables
   const billingAddressRef = React.useRef();
   const billingCityRef = React.useRef();
@@ -22,6 +23,10 @@ function Billing({ children, ...props }) {
   billing.zipCode = billingZipCodeRef;
   billing.country = billingCountryRef;
   return (
+    /**
+     * when user click on yes input btn
+     * we want billing inputs and shipping inputs to sync.
+     * **/
     <React.Fragment>
       <fieldset
         /* different approach for a11y */
@@ -30,12 +35,19 @@ function Billing({ children, ...props }) {
       >
         <legend className={BillingStyles[`title`]}>Billing Address</legend>
         <article
-          onChange={billingShippingInputListener.bind({ billing, shipping })}
+          onChange={billingShippingInputListener.bind({
+            billing,
+            shipping,
+            linkInputToShipping,
+          })}
           className={BillingStyles[`billing-wrapper`]}
         >
           {/* address */}
           {/* add attr data-needsuserattention true */}
-          <div className={BillingStyles[`address`]}>
+          <div
+            data-billinguserattention="true"
+            className={BillingStyles[`address`]}
+          >
             <label htmlFor="billing-address">Your Address</label>
             <input
               ref={billingAddressRef}
@@ -46,9 +58,14 @@ function Billing({ children, ...props }) {
             />
             {/* add error text */}
             {/* add correct text */}
+            <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+            <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
           </div>
           {/* city, state, zip, country */}
-          <div className={BillingStyles[`city-state-zip-country-wrapper`]}>
+          <div
+            data-billinguserattention="true"
+            className={BillingStyles[`city-state-zip-country-wrapper`]}
+          >
             {/* city */}
             <div className={BillingStyles[`city`]}>
               <label htmlFor="billing-city">City</label>
@@ -59,9 +76,16 @@ function Billing({ children, ...props }) {
                 type="text"
                 placeholder="Los Angeles"
               />
+              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
+            <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+            <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             {/* state */}
-            <div className={BillingStyles[`state`]}>
+            <div
+              data-billinguserattention="true"
+              className={BillingStyles[`state`]}
+            >
               <label htmlFor="billing-state">State</label>
               <input
                 ref={billingStateRef}
@@ -71,6 +95,8 @@ function Billing({ children, ...props }) {
                 placeholder="California"
                 list="billing-list-of-states"
               />
+              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
               <datalist id="billing-list-of-states">
                 {/* loop through arrayOfStates make option element */}
                 {arrayOfStates.map(function makeOptionElements(element, index) {
@@ -84,7 +110,10 @@ function Billing({ children, ...props }) {
               </datalist>
             </div>
             {/* zip */}
-            <div className={BillingStyles[`zip`]}>
+            <div
+              data-billinguserattention="true"
+              className={BillingStyles[`zip`]}
+            >
               <label htmlFor="billing-zip">ZIP Code</label>
               <input
                 ref={billingZipCodeRef}
@@ -95,9 +124,14 @@ function Billing({ children, ...props }) {
                 pattern="[0-9]{5}"
                 placeholder="88888"
               />
+              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
             {/* country */}
-            <div className={BillingStyles[`country`]}>
+            <div
+              data-billinguserattention="true"
+              className={BillingStyles[`country`]}
+            >
               <label htmlFor="billing-country">Country</label>
               <input
                 ref={billingCountryRef}
@@ -106,6 +140,8 @@ function Billing({ children, ...props }) {
                 type="text"
                 placeholder="United States"
               />
+              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
           </div>
         </article>

@@ -67,8 +67,8 @@ export function personalInputListener(event) {
 }
 
 export function billingShippingInputListener(event) {
-  const { billing, shipping } = this;
-  const methods = createObjOfMethods(billing, shipping);
+  const { billing, shipping, linkInputToShipping } = this;
+  const methods = createObjOfMethods(billing, shipping, linkInputToShipping);
   if (event.target.closest("input")) {
     // get element id
     const inputIdAttr = event.target.getAttribute("id");

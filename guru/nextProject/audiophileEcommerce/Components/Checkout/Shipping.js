@@ -5,6 +5,7 @@ import { arrayOfStates } from "../../src/storage";
 import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Shipping({ children, ...props }) {
+  const { inputsLinkedToBilling } = props;
   // declare ref variables
   const shippingAddressRef = React.useRef();
   const shippingCityRef = React.useRef();
@@ -22,6 +23,10 @@ function Shipping({ children, ...props }) {
   shipping.zipCode = shippingZipCodeRef;
   shipping.country = shippingCountryRef;
   return (
+    /**
+     * when user click on yes input btn
+     * we want billing inputs and shipping inputs to sync.
+     * **/
     <React.Fragment>
       <fieldset
         /* different approach for a11y */
@@ -30,7 +35,11 @@ function Shipping({ children, ...props }) {
       >
         <legend className={ShippingStyles[`title`]}>Shipping Address</legend>
         <article
-          onChange={billingShippingInputListener.bind({ billing, shipping })}
+          onChange={billingShippingInputListener.bind({
+            billing,
+            shipping,
+            inputsLinkedToBilling,
+          })}
           className={ShippingStyles[`shipping-wrapper`]}
         >
           {/* address */}
