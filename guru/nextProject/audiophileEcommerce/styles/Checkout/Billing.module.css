@@ -27,6 +27,17 @@
 
 /* label and input */
 
+/* first load we want user attention because the inputs will be empty */
+/* or when format is invalid */
+
+.billing-wrapper [data-billinguserattention="true"] label {
+  color: var(--color-primary-error);
+}
+
+.billing-wrapper [data-billinguserattention="true"] input {
+  outline: 3px solid var(--color-primary-error);
+}
+
 /* text */
 
 .address,

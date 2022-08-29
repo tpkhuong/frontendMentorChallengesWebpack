@@ -19,7 +19,7 @@
 
 .form-wrapper input:hover,
 .form-wrapper input:focus {
-  outline: 2px solid var(--color-primary-orange);
+  outline: 3px solid var(--color-primary-orange);
 }
 
 .title {
