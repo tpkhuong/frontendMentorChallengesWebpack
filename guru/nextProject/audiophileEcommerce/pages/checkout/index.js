@@ -55,6 +55,10 @@ function Checkout(props) {
     paymentMethodSelection: {
       eMoney: null,
       cashDelivery: null,
+      inputMoney: {
+        number: null,
+        pin: null,
+      },
     },
   };
 

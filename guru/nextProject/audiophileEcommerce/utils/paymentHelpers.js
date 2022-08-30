@@ -55,3 +55,46 @@ export function cashOnDeliveryClickHandler(event) {
     emoneyRef.current.setAttribute("tabindex", "-1");
   }
 }
+
+// check for validity emoney
+
+export function checkValidityEmoney(event) {
+  // remove letters or symbols
+  // then assign that string to event.target.value
+  const regex = /\d+/;
+  const onlyNumberInput = event.target.value.match(regex);
+  // we will check when user press down on letter key
+  // as first values in emoney number and emoney pin
+  event.target.value = !onlyNumberInput ? "" : onlyNumberInput.join("");
+  if (event.target.value === "" || !event.target.validity.valid) {
+    event.target.parentElement.setAttribute("data-emoneyattention", "true");
+  } else {
+    event.target.parentElement.setAttribute("data-emoneyattention", "false");
+  }
+  // emoney number
+  if (
+    event.target.getAttribute("id") == "emoney-number" &&
+    !event.target.validity.valid &&
+    event.target.value.length > 8
+  ) {
+    // inside this if statement we will make the input valid
+    // copy input up to index 7
+    const copiedNumberInput = event.target.value.slice(0, 8);
+    event.target.value = copiedNumberInput;
+    event.target.parentElement.setAttribute("data-emoneyattention", "false");
+    event.target.parentElement.setAttribute("data-emoneyattention", "false");
+  }
+
+  // emoney pin
+  if (
+    event.target.getAttribute("id") == "emoney-pin" &&
+    !event.target.validity.valid &&
+    event.target.value.length > 5
+  ) {
+    // inside this if statement we will make the input valid
+    // copy input up to index 5
+    const copiedPinInput = event.target.value.slice(0, 5);
+    event.target.value = copiedPinInput;
+    event.target.parentElement.setAttribute("data-emoneyattention", "false");
+  }
+}

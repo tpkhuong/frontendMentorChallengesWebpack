@@ -4,6 +4,7 @@ import { ErrorMessageContext } from "../../pages/checkout";
 import {
   eMoneyClickHandler,
   cashOnDeliveryClickHandler,
+  checkValidityEmoney,
 } from "../../utils/paymentHelpers";
 
 function Payment({ children, ...props }) {
@@ -14,13 +15,20 @@ function Payment({ children, ...props }) {
   const activeDescendantRef = React.useRef();
   // emoney
   const emoneyRef = React.useRef();
+  // number ref
+  const moneyNumberRef = React.useRef();
+  // pin ref
+  const pinRef = React.useRef();
   // cashdelivery
   const cashDeliveryRef = React.useRef();
   // get context obj created in checkout page
-  const paymentRefObj = React.useContext(ErrorMessageContext);
-  paymentRefObj.paymentMethodSelection.eMoney = emoneyRef;
-  paymentRefObj.paymentMethodSelection.cashDelivery = cashDeliveryRef;
-  console.log(paymentRefObj);
+  const { paymentMethodSelection } = React.useContext(ErrorMessageContext);
+  paymentMethodSelection.eMoney = emoneyRef;
+  paymentMethodSelection.cashDelivery = cashDeliveryRef;
+  const { inputMoney } = paymentMethodSelection;
+  inputMoney.number = moneyNumberRef;
+  inputMoney.pin = pinRef;
+  // console.log(paymentRefObj);
   return (
     <React.Fragment>
       {/* title */}
@@ -32,9 +40,11 @@ function Payment({ children, ...props }) {
         <article className={PaymentStyles[`content-wrapper`]}>
           {/* payment method title and radio btn wrapper */}
           <div className={PaymentStyles[`methods-selection-wrapper`]}>
-            <h2 className={PaymentStyles[`title`]} id="payment-method">
-              Payment Method
-            </h2>
+            <div className="wrapper">
+              <h2 className={PaymentStyles[`title`]} id="payment-method">
+                Payment Method
+              </h2>
+            </div>
             <div
               ref={activeDescendantRef}
               aria-activedescendant="rbtn1"
@@ -47,7 +57,7 @@ function Payment({ children, ...props }) {
                 data-isemoney="true"
                 className={PaymentStyles[`width-wrapper`]}
                 tabIndex="0"
-                aria-checked="false"
+                aria-checked="true"
                 role="radio"
                 // id will matched aria-activedescendant
                 id="rbtn1"
@@ -102,20 +112,49 @@ function Payment({ children, ...props }) {
           <div className={PaymentStyles[`payment-wrapper`]}>
             {!selectedPayment ? (
               // /* e-money */
-              <div className={PaymentStyles[`emoney-wrapper`]}>
+              <div
+                onChange={checkValidityEmoney}
+                className={PaymentStyles[`emoney-wrapper`]}
+              >
                 {/* e-money number */}
-                <div className={PaymentStyles[`e-money-number`]}>
+                <div
+                  data-emoneyattention="true"
+                  className={PaymentStyles[`e-money-number`]}
+                >
                   <label htmlFor="emoney-number">e-Money Number</label>
                   <input
                     id="emoney-number"
-                    type="number"
+                    type="text"
                     placeholder="8888888888"
+                    pattern="[0-9]{8}"
+                    ref={moneyNumberRef}
                   />
+                  <span className={PaymentStyles[`error-text`]}>
+                    NOT ACCEPTED
+                  </span>
+                  <span className={PaymentStyles[`correct-text`]}>
+                    ACCEPTED
+                  </span>
                 </div>
                 {/* e-money PIN */}
-                <div className={PaymentStyles[`e-money-pin`]}>
+                <div
+                  data-emoneyattention="true"
+                  className={PaymentStyles[`e-money-pin`]}
+                >
                   <label htmlFor="emoney-pin">e-Money PIN</label>
-                  <input id="emoney-pin" type="number" placeholder="88888" />
+                  <input
+                    id="emoney-pin"
+                    type="text"
+                    placeholder="88888"
+                    pattern="[0-9]{5}"
+                    ref={pinRef}
+                  />
+                  <span className={PaymentStyles[`error-text`]}>
+                    NOT ACCEPTED
+                  </span>
+                  <span className={PaymentStyles[`correct-text`]}>
+                    ACCEPTED
+                  </span>
                 </div>
               </div>
             ) : (

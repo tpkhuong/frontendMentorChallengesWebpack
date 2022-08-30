@@ -43,7 +43,10 @@ function Shipping({ children, ...props }) {
           className={ShippingStyles[`shipping-wrapper`]}
         >
           {/* address */}
-          <div className={ShippingStyles[`address`]}>
+          <div
+            data-shippinguserattention="true"
+            className={ShippingStyles[`address`]}
+          >
             <label htmlFor="shipping-address">Your Address</label>
             <input
               ref={shippingAddressRef}
@@ -52,11 +55,16 @@ function Shipping({ children, ...props }) {
               type="text"
               placeholder="888 Eighth St"
             />
+            <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
+            <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
           </div>
           {/* city, state, zip, country */}
           <div className={ShippingStyles[`city-state-zip-country-wrapper`]}>
             {/* city */}
-            <div className={ShippingStyles[`city`]}>
+            <div
+              data-shippinguserattention="true"
+              className={ShippingStyles[`city`]}
+            >
               <label htmlFor="shipping-city">City</label>
               <input
                 ref={shippingCityRef}
@@ -65,9 +73,14 @@ function Shipping({ children, ...props }) {
                 type="text"
                 placeholder="Los Angeles"
               />
+              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
             {/* state */}
-            <div className={ShippingStyles[`state`]}>
+            <div
+              data-shippinguserattention="true"
+              className={ShippingStyles[`state`]}
+            >
               <label htmlFor="shipping-state">State</label>
               <input
                 ref={shippingStateRef}
@@ -77,6 +90,8 @@ function Shipping({ children, ...props }) {
                 placeholder="California"
                 list="shipping-list-of-states"
               />
+              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
               <datalist id="shipping-list-of-states">
                 {/* loop through arrayOfStates make option element */}
                 {arrayOfStates.map(function makeStates(element, index) {
@@ -90,7 +105,10 @@ function Shipping({ children, ...props }) {
               </datalist>
             </div>
             {/* zip */}
-            <div className={ShippingStyles[`zip`]}>
+            <div
+              data-shippinguserattention="true"
+              className={ShippingStyles[`zip`]}
+            >
               <label htmlFor="shipping-zip">ZIP Code</label>
               <input
                 ref={shippingZipCodeRef}
@@ -101,9 +119,14 @@ function Shipping({ children, ...props }) {
                 pattern="[0-9]{5}"
                 placeholder="88888"
               />
+              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
             {/* country */}
-            <div className={ShippingStyles[`country`]}>
+            <div
+              data-shippinguserattention="true"
+              className={ShippingStyles[`country`]}
+            >
               <label htmlFor="shipping-country">Country</label>
               <input
                 ref={shippingCountryRef}
@@ -112,6 +135,8 @@ function Shipping({ children, ...props }) {
                 type="text"
                 placeholder="United States"
               />
+              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
+              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
           </div>
         </article>

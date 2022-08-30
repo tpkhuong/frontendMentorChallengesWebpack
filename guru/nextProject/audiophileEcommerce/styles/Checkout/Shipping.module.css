@@ -21,6 +21,45 @@
 
 /* different approach for a11y */
 
+/* outline color */
+
+.shipping-wrapper [data-shippinguserattention="true"] label {
+  color: var(--color-primary-error);
+}
+
+.shipping-wrapper [data-shippinguserattention="true"] input {
+  outline: 3px solid var(--color-primary-error);
+}
+
+/* text */
+
+.address,
+.city,
+.state,
+.zip,
+.country {
+  position: relative;
+}
+
+.shipping-wrapper [data-shippinguserattention="true"] .error-text,
+.shipping-wrapper [data-shippinguserattention="false"] .correct-text {
+  display: inline-block;
+}
+
+.error-text {
+  color: var(--color-primary-error);
+}
+
+.error-text,
+.correct-text {
+  position: absolute;
+  font-size: var(--heading-reg-xxx-sm);
+  display: none;
+  right: 30px;
+  top: 0;
+  font-weight: 700;
+}
+
 /* .shipping-fieldset[data-showshippinginfo="false"] {
   display: none;
 } */
@@ -86,6 +125,10 @@
   .zip,
   .country {
     padding-inline-end: 0;
+  }
+  .error-text,
+  .correct-text {
+    right: 0px;
   }
 }
 

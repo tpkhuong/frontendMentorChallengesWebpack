@@ -62,12 +62,12 @@ function Billing({ children, ...props }) {
             <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
           </div>
           {/* city, state, zip, country */}
-          <div
-            data-billinguserattention="true"
-            className={BillingStyles[`city-state-zip-country-wrapper`]}
-          >
+          <div className={BillingStyles[`city-state-zip-country-wrapper`]}>
             {/* city */}
-            <div className={BillingStyles[`city`]}>
+            <div
+              data-billinguserattention="true"
+              className={BillingStyles[`city`]}
+            >
               <label htmlFor="billing-city">City</label>
               <input
                 ref={billingCityRef}
@@ -79,8 +79,6 @@ function Billing({ children, ...props }) {
               <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
               <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             </div>
-            <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-            <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
             {/* state */}
             <div
               data-billinguserattention="true"

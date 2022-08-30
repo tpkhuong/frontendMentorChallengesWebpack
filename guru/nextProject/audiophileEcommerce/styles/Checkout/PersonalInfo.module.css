@@ -38,10 +38,7 @@
   position: relative;
 }
 
-.personal-wrapper [data-needUserAttention="true"] .error-text {
-  display: inline-block;
-}
-
+.personal-wrapper [data-needUserAttention="true"] .error-text,
 .personal-wrapper [data-needUserAttention="false"] .correct-text {
   display: inline-block;
 }

@@ -39,6 +39,16 @@ export function personalInputListener(event) {
       event.target.getAttribute("id") == "personal-email" ||
       event.target.getAttribute("id") == "personal-phone-number"
     ) {
+      // remove letters and only keep numbers and '-' when user is entering
+      // values in phone number input
+
+      if (event.target.getAttribute("id") == "personal-phone-number") {
+        const regex = /[0-9\-]/gi;
+        const onlyCharMatchPhoneNum = event.target.value.match(regex);
+        event.target.value = !onlyCharMatchPhoneNum
+          ? ""
+          : onlyCharMatchPhoneNum.join("");
+      }
       if (event.target.value === "" || !event.target.validity.valid) {
         // emailErrorColor.current.setAttribute("data-needuserattention", "true");
         event.target.parentElement.setAttribute(
@@ -52,16 +62,29 @@ export function personalInputListener(event) {
           "false"
         );
       }
+      // if phone number input is valid and value length is greater than 12
+      // copy value inputs and assign that value to phone number input
       return;
-    }
-    // if input is name check if input value is empty string
-    if (event.target.value === "") {
-      event.target.parentElement.setAttribute("data-needuserattention", "true");
     } else {
-      event.target.parentElement.setAttribute(
-        "data-needuserattention",
-        "false"
-      );
+      /**
+       * only allow letters and space for name
+       * **/
+      const regexForName = /[a-zA-Z\s]/g;
+      const onlyLettersAndSpace = event.target.value.match(regexForName);
+      event.target.value = !onlyLettersAndSpace
+        ? ""
+        : onlyLettersAndSpace.join("");
+      if (event.target.value === "") {
+        event.target.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        );
+      } else {
+        event.target.parentElement.setAttribute(
+          "data-needuserattention",
+          "false"
+        );
+      }
     }
   }
 }
@@ -72,9 +95,73 @@ export function billingShippingInputListener(event) {
   if (event.target.closest("input")) {
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
-    methods[inputIdAttr]();
+    // methods[inputIdAttr]();
     // check if input is zip code check entered value is correct
     // due to pattern attr
+    /**
+     * this event listener callback is for both billing and shipping
+     * **/
+    const eitherBillingOrShipping = inputIdAttr.includes("billing")
+      ? "data-billinguserattention"
+      : "data-shippinguserattention";
+    // console.log(inputIdAttr.includes("zip"));
+    if (inputIdAttr.includes("zip")) {
+      // remove letters or symbols
+      // then assign that string to event.target.value
+      const regex = /\d+/;
+      const onlyNumbers = event.target.value.match(regex);
+      // we will check when user press down on letter key
+      // as first values in zip code
+      event.target.value = !onlyNumbers ? "" : onlyNumbers.join("");
+      if (event.target.value === "" || !event.target.validity.valid) {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "true"
+        );
+      } else {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "false"
+        );
+      }
+      // dont want user input for zip to go pass length of 5
+      if (!event.target.validity.valid && event.target.value.length > 5) {
+        const copiedZipInput = event.target.value.slice(0, 5);
+        event.target.value = copiedZipInput;
+      }
+      return;
+    }
+    /**
+     * only allow letters and space for city, state, country
+     * **/
+    if (
+      inputIdAttr.includes("city") ||
+      inputIdAttr.includes("state") ||
+      inputIdAttr.includes("country")
+    ) {
+      const letterSpaceRegex = /[a-zA-Z\s]/g;
+      const onlyLettersAndSpace = event.target.value.match(letterSpaceRegex);
+      event.target.value = !onlyLettersAndSpace
+        ? ""
+        : onlyLettersAndSpace.join("");
+      if (event.target.value === "" || !event.target.validity.valid) {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "true"
+        );
+      } else {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "false"
+        );
+      }
+    }
+    if (event.target.value === "") {
+      // if user is entering values in other inputs
+      event.target.parentElement.setAttribute(eitherBillingOrShipping, "true");
+    } else {
+      event.target.parentElement.setAttribute(eitherBillingOrShipping, "false");
+    }
   }
 }
 

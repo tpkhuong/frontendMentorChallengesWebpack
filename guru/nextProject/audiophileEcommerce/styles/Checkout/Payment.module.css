@@ -17,12 +17,51 @@
 
 /* chrome */
 
-.emoney-wrapper input[type="number"]::-webkit-outer-spin-button {
+/* dont need to remove up/down arrows for emoney inputs, we changed it to
+type text
+*/
+/* .emoney-wrapper input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
 .emoney-wrapper input[type="number"] {
-  -moz-appearance: textfield; /** firefox **/
+  -moz-appearance: textfield; * firefox * */
+/* } */
+
+/* emoney inputs */
+
+.emoney-wrapper [data-emoneyattention="true"] label {
+  color: var(--color-primary-error);
+}
+
+.emoney-wrapper [data-emoneyattention="true"] input {
+  outline: 3px solid var(--color-primary-error);
+}
+
+/* emoney text */
+
+.e-money-number,
+.e-money-pin {
+  position: relative;
+}
+
+.emoney-wrapper [data-emoneyattention="true"] .error-text,
+.emoney-wrapper [data-emoneyattention="false"] .correct-text {
+  display: inline-block;
+}
+
+.error-text {
+  color: var(--color-primary-error);
+}
+
+.error-text,
+.correct-text {
+  position: absolute;
+  font-size: var(--heading-reg-xxx-sm);
+  display: none;
+  right: 30px;
+  top: 0;
+  font-weight: 700;
 }
 
 .section-title {
@@ -161,6 +200,10 @@
   }
   .emoney-wrapper {
     gap: 0px 16px;
+  }
+  .error-text,
+  .correct-text {
+    right: 0px;
   }
   .e-money-number,
   .e-money-pin {

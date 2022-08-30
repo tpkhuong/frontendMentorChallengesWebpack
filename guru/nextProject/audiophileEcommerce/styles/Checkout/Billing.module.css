@@ -30,6 +30,8 @@
 /* first load we want user attention because the inputs will be empty */
 /* or when format is invalid */
 
+/* outline color */
+
 .billing-wrapper [data-billinguserattention="true"] label {
   color: var(--color-primary-error);
 }
@@ -48,7 +50,10 @@
   position: relative;
 }
 
-/* outline color */
+.billing-wrapper [data-billinguserattention="true"] .error-text,
+.billing-wrapper [data-billinguserattention="false"] .correct-text {
+  display: inline-block;
+}
 
 .error-text {
   color: var(--color-primary-error);
@@ -127,6 +132,10 @@
   .zip,
   .country {
     padding-inline-end: 0;
+  }
+  .error-text,
+  .correct-text {
+    right: 0px;
   }
 }
 
