@@ -60,6 +60,7 @@ function Checkout(props) {
         pin: null,
       },
     },
+    renderFormAssistiveData: null,
   };
 
   const isTablet = useMediaQuery("max", 768);

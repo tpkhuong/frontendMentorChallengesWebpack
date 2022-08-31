@@ -125,6 +125,7 @@ function Payment({ children, ...props }) {
                   <input
                     id="emoney-number"
                     type="text"
+                    required
                     placeholder="8888888888"
                     pattern="[0-9]{8}"
                     ref={moneyNumberRef}
@@ -145,6 +146,7 @@ function Payment({ children, ...props }) {
                   <input
                     id="emoney-pin"
                     type="text"
+                    required
                     placeholder="88888"
                     pattern="[0-9]{5}"
                     ref={pinRef}

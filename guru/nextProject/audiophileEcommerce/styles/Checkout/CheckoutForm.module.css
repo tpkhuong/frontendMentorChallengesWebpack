@@ -25,7 +25,7 @@
 .title {
   font-size: var(--heading-sm-two);
   text-transform: uppercase;
-  margin-block-end: 32px;
+  margin-block-end: 20px;
 }
 
 /* tablet */

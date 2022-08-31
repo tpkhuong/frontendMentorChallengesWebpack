@@ -48,6 +48,11 @@ export function personalInputListener(event) {
         event.target.value = !onlyCharMatchPhoneNum
           ? ""
           : onlyCharMatchPhoneNum.join("");
+        // dont want user input for phone number to go pass length of 12
+        if (!event.target.validity.valid && event.target.value.length > 12) {
+          const copiedZipInput = event.target.value.slice(0, 12);
+          event.target.value = copiedZipInput;
+        }
       }
       if (event.target.value === "" || !event.target.validity.valid) {
         // emailErrorColor.current.setAttribute("data-needuserattention", "true");
@@ -64,7 +69,6 @@ export function personalInputListener(event) {
       }
       // if phone number input is valid and value length is greater than 12
       // copy value inputs and assign that value to phone number input
-      return;
     } else {
       /**
        * only allow letters and space for name

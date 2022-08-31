@@ -54,6 +54,7 @@ function PersonalInfo({ children, ...props }) {
               type="text"
               id="personal-name"
               placeholder="John Doe"
+              required
             />
             <span className={PersonalInfoStyles[`error-text`]}>
               NOT ACCEPTED
@@ -93,6 +94,7 @@ function PersonalInfo({ children, ...props }) {
               type="tel"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               id="personal-phone-number"
+              required
               placeholder="888-888-8888"
             />
             <span className={PersonalInfoStyles[`error-text`]}>
