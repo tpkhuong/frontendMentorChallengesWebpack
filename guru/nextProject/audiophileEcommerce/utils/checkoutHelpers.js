@@ -1,15 +1,16 @@
 export function checkoutSubmitHandler(event) {}
 
-export function displayPaymentMethods(event) {
+export function toggleBillingAndShippingAddress(event) {
   const {
-    setBillingShipping,
+    // setBillingShipping,
+    toggleObj,
     yesInputRef,
     noInputRef,
     billingRef,
     shippingRef,
   } = this;
   //   setBillingShipping(event.target);
-  //   use clicked on yes radio input shipping address same as billing
+  //   user clicked on yes radio input shipping address same as billing
   if (event.target == yesInputRef.current) {
     console.log("hello this is yes radio input");
     console.log("yes input", yesInputRef.current.checked);
@@ -17,15 +18,21 @@ export function displayPaymentMethods(event) {
     /* different approach for a11y */
     // setBillingShipping(false);
     /**
-     * we want to billing inputs validity when user click on yes input btns
-     * which means user billing and shipping address are the same
+     * we want to check billing inputs validity when user click on yes input btns
+     * which means user billing and shipping address are the same.
+     * only copy billing input value to shipping input value when billing inputs
+     * are valid.
      * **/
+    toggleObj.toggleLinkBetweenBillingAndShipping(true);
+    console.log("toggle", toggleObj);
   }
-  //   use clicked on no radio input shipping address is different than billing
+  //   user clicked on no radio input shipping address is different than billing
   if (event.target == noInputRef.current) {
     console.log("hello this is no radio input");
     console.log("yes input", yesInputRef.current.checked);
     console.log("no input", noInputRef.current.checked);
+    toggleObj.toggleLinkBetweenBillingAndShipping(false);
+    console.log("toggle", toggleObj);
     /* different approach for a11y */
     // setBillingShipping(true);
   }
@@ -33,6 +40,14 @@ export function displayPaymentMethods(event) {
 
 export function personalInputListener(event) {
   if (event.target.closest("input")) {
+    /**
+     * get data from local storage
+     * **/
+    const dataFromLocalStorage =
+      localStorage.getItem("someData") == null
+        ? initialCheckoutInputObjForLocalStorage
+        : JSON.parse(localStorage.getItem("someData"));
+
     // check if input is email or phone number check entered value is correct
     // due to pattern attr
     if (
@@ -53,6 +68,11 @@ export function personalInputListener(event) {
           const copiedZipInput = event.target.value.slice(0, 12);
           event.target.value = copiedZipInput;
         }
+        // save user personal info inputs: phone number
+        dataFromLocalStorage.personalInfo.phoneNumber = event.target.value;
+      } else {
+        // save user personal info inputs: email
+        dataFromLocalStorage.personalInfo.email = event.target.value;
       }
       if (event.target.value === "" || !event.target.validity.valid) {
         // emailErrorColor.current.setAttribute("data-needuserattention", "true");
@@ -89,25 +109,34 @@ export function personalInputListener(event) {
           "false"
         );
       }
+      // save user personal info inputs: name
+      dataFromLocalStorage.personalInfo.name = event.target.value;
     }
+    // save obj to local storage
+    localStorage.setItem("someData", JSON.stringify(dataFromLocalStorage));
   }
 }
 
 export function billingShippingInputListener(event) {
-  const { billing, shipping, linkInputToShipping } = this;
-  const methods = createObjOfMethods(billing, shipping, linkInputToShipping);
+  const { billing, shipping, toggleLinkBetweenBillingAndShipping } = this;
+  console.log(this);
+  const methods = createObjOfMethods(
+    billing,
+    shipping,
+    toggleLinkBetweenBillingAndShipping
+  );
   if (event.target.closest("input")) {
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
     // methods[inputIdAttr]();
-    // check if input is zip code check entered value is correct
-    // due to pattern attr
     /**
      * this event listener callback is for both billing and shipping
      * **/
     const eitherBillingOrShipping = inputIdAttr.includes("billing")
       ? "data-billinguserattention"
       : "data-shippinguserattention";
+    // check if input is zip code check entered value is correct
+    // due to pattern attr
     // console.log(inputIdAttr.includes("zip"));
     if (inputIdAttr.includes("zip")) {
       // remove letters or symbols
@@ -219,6 +248,32 @@ function createObjOfMethods(...objs) {
   };
   return objOfMethods;
 }
+
+export const initialCheckoutInputObjForLocalStorage = {
+  personalInfo: {
+    name: "",
+    phoneNumber: "",
+    email: "",
+  },
+  billingInfo: {
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+  },
+  shippingInfo: {
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+  },
+  paymentInfo: {
+    eMoneyMethod: "",
+    cashDeliveryMethod: "",
+  },
+};
 
 export function billingInputListener(event) {
   // const { billing, shipping } = this;

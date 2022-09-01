@@ -16,7 +16,7 @@ import Main from "../../Components/shared/Main";
 import Footer from "../../Components/shared/Footer";
 import { useMediaQuery } from "../../utils/helpers";
 
-export const ErrorMessageContext = React.createContext(null);
+export const ErrorMessageContext = React.createContext({});
 
 function Checkout(props) {
   // React.useEffect(() => {
@@ -32,36 +32,43 @@ function Checkout(props) {
   //   });
   // }, []);
   // create context and provider wrapper here
-  const inputsRefObj = {
-    personal: {
-      name: null,
-      phoneNum: null,
-      email: null,
-    },
-    billing: {
-      address: null,
-      city: null,
-      state: null,
-      zipCode: null,
-      country: null,
-    },
-    shipping: {
-      address: null,
-      city: null,
-      state: null,
-      zipCode: null,
-      country: null,
-    },
-    paymentMethodSelection: {
-      eMoney: null,
-      cashDelivery: null,
-      inputMoney: {
-        number: null,
-        pin: null,
+
+  const memoizedInputRefs = React.useMemo(() => {
+    return {
+      personal: {
+        name: null,
+        phoneNum: null,
+        email: null,
       },
-    },
-    renderFormAssistiveData: null,
-  };
+      billing: {
+        address: null,
+        city: null,
+        state: null,
+        zipCode: null,
+        country: null,
+      },
+      shipping: {
+        address: null,
+        city: null,
+        state: null,
+        zipCode: null,
+        country: null,
+      },
+      paymentMethodSelection: {
+        eMoney: null,
+        cashDelivery: null,
+        inputMoney: {
+          number: null,
+          pin: null,
+        },
+      },
+      renderFormAssistiveData: null,
+      toggleObj: {
+        toggleLinkBetweenBillingAndShipping: null,
+        billingAndShippingSame: null,
+      },
+    };
+  }, []);
 
   const isTablet = useMediaQuery("max", 768);
 
@@ -79,7 +86,7 @@ function Checkout(props) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">Checkout</h1>
-      <ErrorMessageContext.Provider value={inputsRefObj}>
+      <ErrorMessageContext.Provider value={memoizedInputRefs}>
         <header role="banner">
           {/* logonav container */}
           <LogoNavContainer />

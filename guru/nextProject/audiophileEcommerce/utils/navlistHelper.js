@@ -12,7 +12,6 @@ export function cachedCheckoutInputs(event) {
 
 function createObjForStorage(obj) {
   const { personal, billing, shipping, paymentMethodSelection } = obj;
-
   const inputValuesObj = {
     personalInfo: {
       name: personal.name.current.value,

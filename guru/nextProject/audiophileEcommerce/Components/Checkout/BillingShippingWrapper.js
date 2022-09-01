@@ -1,6 +1,6 @@
 import React from "react";
 import BillShipWrapperStyles from "../../styles/Checkout/BillingShippingWrapper.module.css";
-import { displayPaymentMethods } from "../../utils/checkoutHelpers";
+import { toggleBillingAndShippingAddress } from "../../utils/checkoutHelpers";
 import { ErrorMessageContext } from "../../pages/checkout/index";
 import Billing from "./Billing";
 import Shipping from "./Shipping";
@@ -9,10 +9,13 @@ function BillingShippingWrapper({ children, ...props }) {
   const yesInputRef = React.useRef();
   const noInputRef = React.useRef();
   // const [showBillingShipping, setBillingShipping] = React.useState(false);
-  const [isShippingSame, setShippingSame] = React.useState(false);
+  // const [isShippingSame, setShippingSame] = React.useState(false);
   // get context ref obj
-  const { billing: billingRef, shipping: shippingRef } =
-    React.useContext(ErrorMessageContext);
+  const {
+    billing: billingRef,
+    shipping: shippingRef,
+    toggleObj,
+  } = React.useContext(ErrorMessageContext);
   return (
     <article className={BillShipWrapperStyles[`style-wrapper`]}>
       {/* Billing or Shipping inputs */}
@@ -24,12 +27,12 @@ function BillingShippingWrapper({ children, ...props }) {
       {/* when showBillingShipping is false we will pass boolean value false to hideBilling and showShipping */}
       {/* in billing component we will have an attr, when it is false normal display when it is true display none */}
       {/* in shipping component we will have an attr, when it is false display none when it is true revert */}
-      <Billing linkInputToShipping={isShippingSame} />
+      <Billing />
       {/* different approach for a11y */}
       {/* <Billing hideBilling={showBillingShipping} /> */}
       <div
-        onChange={displayPaymentMethods.bind({
-          setShippingSame,
+        onChange={toggleBillingAndShippingAddress.bind({
+          toggleObj,
           yesInputRef,
           noInputRef,
           billingRef,
@@ -38,7 +41,7 @@ function BillingShippingWrapper({ children, ...props }) {
         className={BillShipWrapperStyles[`billing-shipping-radio-btns`]}
       >
         {/* <input
-          onChange={displayPaymentMethods.bind({ setBillingShipping })}
+          onChange={toggleBillingAndShippingAddress.bind({ setBillingShipping })}
           type="checkbox"
           id="billing-shipping"
         />
@@ -65,7 +68,7 @@ function BillingShippingWrapper({ children, ...props }) {
           <label htmlFor="shipping-different">No</label>
         </div>
       </div>
-      <Shipping inputsLinkedToBilling={isShippingSame} />
+      <Shipping />
       {/* different approach for a11y */}
       {/* <Shipping showShipping={showBillingShipping} /> */}
     </article>

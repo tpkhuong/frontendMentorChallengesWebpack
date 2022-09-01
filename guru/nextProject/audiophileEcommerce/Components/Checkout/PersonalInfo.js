@@ -17,18 +17,74 @@ function PersonalInfo({ children, ...props }) {
   personal.name = personalNameRef;
   personal.email = personalEmailRef;
   personal.phoneNum = personalPhoneNumRef;
-  React.useEffect(() => {
-    const personalValuesFromLocalStorage =
-      localStorage.getItem("personalData") == null
+  /** 
+ * localStorage.getItem("personalData") == null
         ? { name: "", email: "", phoneNumber: "" }
         : JSON.parse(localStorage.getItem("personalData"));
+ * **/
+
+  React.useEffect(() => {
+    // check if cached data obj is in local storage
+    // we want to call local storage getitem once in navlisthelper
+    const localStorageData =
+      localStorage.getItem("someData") == null
+        ? null
+        : JSON.parse(localStorage.getItem("someData"));
+    const personalValuesFromLocalStorage =
+      localStorageData == null ? null : localStorageData.personalInfo;
     // dont need to call use state since we have a ref to the inputs
     // due to useRef we can set the value on inputs using ref.current.value
     // in useEffect
-    personalNameRef.current.value = personalValuesFromLocalStorage.name;
-    personalEmailRef.current.value = personalValuesFromLocalStorage.email;
-    personalPhoneNumRef.current.value =
-      personalValuesFromLocalStorage.phoneNumber;
+    personalNameRef.current.value = !personalValuesFromLocalStorage
+      ? ""
+      : personalValuesFromLocalStorage.name;
+    personalEmailRef.current.value = !personalValuesFromLocalStorage
+      ? ""
+      : personalValuesFromLocalStorage.email;
+    personalPhoneNumRef.current.value = !personalValuesFromLocalStorage
+      ? ""
+      : personalValuesFromLocalStorage.phoneNumber;
+    // check if inputs are valid
+    // name
+    personalNameRef.current.value === ""
+      ? personalNameRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        )
+      : personalNameRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "false"
+        );
+    // email
+    personalEmailRef.current.value === ""
+      ? personalEmailRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        )
+      : !personalEmailRef.current.validity.valid
+      ? personalEmailRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        )
+      : personalEmailRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "false"
+        );
+    // phone number
+    personalPhoneNumRef.current.value === ""
+      ? personalPhoneNumRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        )
+      : !personalPhoneNumRef.current.validity.valid
+      ? personalPhoneNumRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "true"
+        )
+      : personalPhoneNumRef.current.parentElement.setAttribute(
+          "data-needuserattention",
+          "false"
+        );
   }, []);
 
   return (

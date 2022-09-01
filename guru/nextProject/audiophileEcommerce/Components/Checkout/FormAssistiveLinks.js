@@ -4,19 +4,36 @@ import { ErrorMessageContext } from "../../pages/checkout/index";
 
 export default function FormAssistiveLinks({ children, ...props }) {
   const checkoutRefObj = React.useContext(ErrorMessageContext);
-  const initialValues = {
-    errors: {
-      total: 0,
-      personal: 0,
-      billing: 0,
-      shipping: 0,
-      emoney: 0,
-    },
-    personalInputArray: null,
-    billingInputArray: null,
-    shippingInputArray: null,
-    emoneyInputArray: null,
-  };
+  //   const initialValues = {
+  //     errors: {
+  //       total: 0,
+  //       personal: 0,
+  //       billing: 0,
+  //       shipping: 0,
+  //       emoney: 0,
+  //     },
+  //     personalInputArray: null,
+  //     billingInputArray: null,
+  //     shippingInputArray: null,
+  //     emoneyInputArray: null,
+  //   };
+
+  const memoizedInitialValues = React.useMemo(() => {
+    return {
+      errors: {
+        total: 0,
+        personal: 0,
+        billing: 0,
+        shipping: 0,
+        emoney: 0,
+      },
+      personalInputArray: null,
+      billingInputArray: null,
+      shippingInputArray: null,
+      emoneyInputArray: null,
+    };
+  }, []);
+
   const [
     {
       errors: { total, personal, billing, shipping, emoney },
@@ -26,7 +43,7 @@ export default function FormAssistiveLinks({ children, ...props }) {
       emoneyInputArray,
     },
     setErrorInputValues,
-  ] = React.useState(initialValues);
+  ] = React.useState(memoizedInitialValues);
   //   const [isFormAssistiveActive, setFormAssistiveValue] = React.useState(true);
   //   checkoutRefObj.formAssistiveToggle = setFormAssistiveValue;
   checkoutRefObj.renderFormAssistiveData = setErrorInputValues;

@@ -5,7 +5,7 @@ import { arrayOfStates } from "../../src/storage";
 import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Billing({ children, ...props }) {
-  const { linkInputToShipping } = props;
+  // const { linkInputToShipping } = props;
   // declare ref variables
   const billingAddressRef = React.useRef();
   const billingCityRef = React.useRef();
@@ -14,8 +14,9 @@ function Billing({ children, ...props }) {
   const billingCountryRef = React.useRef();
 
   // get context obj created in checkout page
-  const { billing, shipping } = React.useContext(ErrorMessageContext);
-
+  const { billing, shipping, toggleObj } =
+    React.useContext(ErrorMessageContext);
+  // check if data obj is set in local storage
   // assign ref to context obj created using React.createContext in checkout page
   billing.address = billingAddressRef;
   billing.city = billingCityRef;
@@ -23,6 +24,8 @@ function Billing({ children, ...props }) {
   billing.zipCode = billingZipCodeRef;
   billing.country = billingCountryRef;
   return (
+    // check if cached data obj is in local storage
+    // we want to call local storage getitem once in navlisthelper
     /**
      * when user click on yes input btn
      * we want billing inputs and shipping inputs to sync.
@@ -38,7 +41,8 @@ function Billing({ children, ...props }) {
           onChange={billingShippingInputListener.bind({
             billing,
             shipping,
-            linkInputToShipping,
+            toggleObj,
+            // linkInputToShipping,
           })}
           className={BillingStyles[`billing-wrapper`]}
         >

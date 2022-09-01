@@ -9,7 +9,6 @@ export function showOrderModal(event) {
   } = refValues;
   const { eMoney, cashDelivery, inputMoney } = paymentMethodSelection;
   /* check all inputs validity */
-
   // only call setorderplace(true)
   // when all inputs are valid and a payment method is selected
   // personal email, phone num, billing and shipping zip code
@@ -33,6 +32,7 @@ export function showOrderModal(event) {
     eMoney.current.getAttribute("aria-checked") == "true"
       ? emoneyChecker({ eMoney, inputMoney })
       : { emoneyArray: [], emoneyErrors: 0 };
+
   const totalErrors = [
     personalErrors,
     billingErrors,

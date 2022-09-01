@@ -8,6 +8,7 @@ import {
 } from "../../utils/paymentHelpers";
 
 function Payment({ children, ...props }) {
+  // check if data obj is set in local storage
   const [selectedPayment, setPaymentMethod] = React.useState(false);
   // when selectedPayment is false we should emoney
   // show cash delivery when selectedPayment is true
