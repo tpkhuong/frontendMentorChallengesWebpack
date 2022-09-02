@@ -62,11 +62,15 @@ function Checkout(props) {
           pin: null,
         },
       },
-      renderFormAssistiveData: null,
+      sameAddressInputRef: {
+        yesBtn: null,
+        noBtn: null,
+      },
       toggleObj: {
         toggleLinkBetweenBillingAndShipping: null,
         billingAndShippingSame: null,
       },
+      renderFormAssistiveData: null,
     };
   }, []);
 

@@ -1,6 +1,5 @@
 import React from "react";
 import BillingStyles from "../../styles/Checkout/Billing.module.css";
-import { ErrorMessageContext } from "../../pages/checkout/index";
 import { arrayOfStates } from "../../src/storage";
 import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
@@ -14,8 +13,8 @@ function Billing({ children, ...props }) {
   const billingCountryRef = React.useRef();
 
   // get context obj created in checkout page
-  const { billing, shipping, toggleObj } =
-    React.useContext(ErrorMessageContext);
+  const { billing, shipping, sameAddressInputRef, toggleObj } =
+    props.refObjForBilling;
   // check if data obj is set in local storage
   // assign ref to context obj created using React.createContext in checkout page
   billing.address = billingAddressRef;
@@ -41,6 +40,7 @@ function Billing({ children, ...props }) {
           onChange={billingShippingInputListener.bind({
             billing,
             shipping,
+            sameAddressInputRef,
             toggleObj,
             // linkInputToShipping,
           })}

@@ -1,9 +1,16 @@
 export function checkoutSubmitHandler(event) {}
 
 export function toggleBillingAndShippingAddress(event) {
+  // get data from local storage
+  const localData =
+    localStorage.getItem("someData") == null
+      ? initialCheckoutInputObjForLocalStorage
+      : JSON.parse(localStorage.getItem("someData"));
+
   const {
     // setBillingShipping,
-    toggleObj,
+    setShippingSame,
+    arrayOfText,
     yesInputRef,
     noInputRef,
     billingRef,
@@ -12,30 +19,108 @@ export function toggleBillingAndShippingAddress(event) {
   //   setBillingShipping(event.target);
   //   user clicked on yes radio input shipping address same as billing
   if (event.target == yesInputRef.current) {
-    console.log("hello this is yes radio input");
-    console.log("yes input", yesInputRef.current.checked);
-    console.log("no input", noInputRef.current.checked);
     /* different approach for a11y */
     // setBillingShipping(false);
+
+    localData.toggleSameAddressInfo.yesInputBtn = yesInputRef.current.checked;
+    localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
     /**
      * we want to check billing inputs validity when user click on yes input btns
      * which means user billing and shipping address are the same.
      * only copy billing input value to shipping input value when billing inputs
      * are valid.
      * **/
-    toggleObj.toggleLinkBetweenBillingAndShipping(true);
-    console.log("toggle", toggleObj);
+    const copiedArray = [].concat(arrayOfText);
+    /**
+     * since we only copy input from billing to shipping inputs when the billing inputs
+     * are valid. we will see shipping input parent data-shippinguserattention to "false"
+     * **/
+    // address
+    billingRef.address.current.value === ""
+      ? copiedArray.push("address")
+      : ((shippingRef.address.current.value = billingRef.address.current.value),
+        shippingRef.address.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "false"
+        ));
+    // city
+    billingRef.city.current.value === ""
+      ? copiedArray.push("city")
+      : ((shippingRef.city.current.value = billingRef.city.current.value),
+        shippingRef.city.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "false"
+        ));
+    // state
+    billingRef.state.current.value === ""
+      ? copiedArray.push("state")
+      : ((shippingRef.state.current.value = billingRef.state.current.value),
+        shippingRef.state.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "false"
+        ));
+    // zip code check for empty and valid format
+    billingRef.zipCode.current.value === ""
+      ? copiedArray.push("zip code")
+      : !billingRef.zipCode.current.validity.valid
+      ? copiedArray.push("zip code")
+      : ((shippingRef.zipCode.current.value = billingRef.zipCode.current.value),
+        shippingRef.zipCode.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "false"
+        ));
+    // country
+    billingRef.country.current.value === ""
+      ? copiedArray.push("country")
+      : ((shippingRef.country.current.value = billingRef.country.current.value),
+        shippingRef.country.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "false"
+        ));
+    // check if shipping inputs are valid
+    // address
+    // city
+    // state
+    // zip
+    // country
+    setShippingSame((prevValues) => {
+      return {
+        ...prevValues,
+        isShippingSame: true,
+        arrayOfText: copiedArray,
+      };
+    });
   }
   //   user clicked on no radio input shipping address is different than billing
   if (event.target == noInputRef.current) {
-    console.log("hello this is no radio input");
-    console.log("yes input", yesInputRef.current.checked);
-    console.log("no input", noInputRef.current.checked);
-    toggleObj.toggleLinkBetweenBillingAndShipping(false);
-    console.log("toggle", toggleObj);
-    /* different approach for a11y */
-    // setBillingShipping(true);
+    // setShippingSame(false);
+    arrayOfText.length > 0
+      ? setShippingSame((prevValues) => {
+          return {
+            ...prevValues,
+            isShippingSame: false,
+            arrayOfText: [],
+          };
+        })
+      : null;
+    // set shipping inputs to default when yesInput value in local storage is true
+    localData.toggleSameAddressInfo.yesInputBtn
+      ? Object.values(shippingRef).forEach(({ current }) => {
+          // input value to empty string
+          current.value = "";
+          // parent element "data-shippinguserattention", "true"
+          current.parentElement.setAttribute(
+            "data-shippinguserattention",
+            "true"
+          );
+        })
+      : null;
+
+    localData.toggleSameAddressInfo.yesInputBtn = yesInputRef.current.checked;
+    localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
   }
+  // save yesbtn and nobtn checkd values to local storage
+  localStorage.setItem("someData", JSON.stringify(localData));
 }
 
 export function personalInputListener(event) {
@@ -118,17 +203,16 @@ export function personalInputListener(event) {
 }
 
 export function billingShippingInputListener(event) {
-  const { billing, shipping, toggleLinkBetweenBillingAndShipping } = this;
-  console.log(this);
-  const methods = createObjOfMethods(
+  const { billing, shipping, sameAddressInputRef, toggleObj } = this;
+  // console.log(this);
+  const methods = createObjOfMethods({
     billing,
     shipping,
-    toggleLinkBetweenBillingAndShipping
-  );
+    sameAddressInputRef,
+  });
   if (event.target.closest("input")) {
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
-    // methods[inputIdAttr]();
     /**
      * this event listener callback is for both billing and shipping
      * **/
@@ -162,7 +246,8 @@ export function billingShippingInputListener(event) {
         const copiedZipInput = event.target.value.slice(0, 5);
         event.target.value = copiedZipInput;
       }
-      return;
+      console.log("zip");
+      // return;
     }
     /**
      * only allow letters and space for city, state, country
@@ -188,62 +273,87 @@ export function billingShippingInputListener(event) {
           "false"
         );
       }
+      console.log("city, state, country");
     }
-    if (event.target.value === "") {
+
+    if (inputIdAttr.includes("address")) {
       // if user is entering values in other inputs
-      event.target.parentElement.setAttribute(eitherBillingOrShipping, "true");
-    } else {
-      event.target.parentElement.setAttribute(eitherBillingOrShipping, "false");
+      if (event.target.value === "") {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "true"
+        );
+      } else {
+        event.target.parentElement.setAttribute(
+          eitherBillingOrShipping,
+          "false"
+        );
+      }
+      console.log("address");
     }
+
+    // methods[inputIdAttr]();
   }
 }
 
-function createObjOfMethods(...objs) {
+function createObjOfMethods({ billing, shipping, sameAddressInputRef }) {
   const objOfMethods = {
     // address
     "billing-address": () => {
       console.log("this is billing address");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     "shipping-address": () => {
       console.log("this is shipping address");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     // city
     "billing-city": () => {
       console.log("this is billing city");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     "shipping-city": () => {
       console.log("this is shipping city");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     // state
     "billing-state": () => {
       console.log("this is billing state");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     "shipping-state": () => {
       console.log("this is shipping state");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     // zip code
     "billing-zip": () => {
       console.log("this is billing zip");
-      console.log(objs);
+      shipping.zipCode.current.value = billing.zipCode.current.value;
+      billing.zipCode.current.parentElement.getAttribute(
+        "data-billinguserattention"
+      ) == "true"
+        ? shipping.zipCode.current.parentElement.setAttribute(
+            "data-shippinguserattention",
+            "true"
+          )
+        : shipping.zipCode.current.parentElement.setAttribute(
+            "data-shippinguserattention",
+            "false"
+          );
+      console.log(billing, shipping, sameAddressInputRef);
     },
     "shipping-zip": () => {
       console.log("this is shipping zip");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     // country
     "billing-country": () => {
       console.log("this is billing country");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
     "shipping-country": () => {
       console.log("this is shipping country");
-      console.log(objs);
+      console.log(billing, shipping, sameAddressInputRef);
     },
   };
   return objOfMethods;
@@ -268,6 +378,10 @@ export const initialCheckoutInputObjForLocalStorage = {
     state: "",
     zipCode: "",
     country: "",
+  },
+  toggleSameAddressInfo: {
+    yesInputBtn: false,
+    noInputBtn: false,
   },
   paymentInfo: {
     eMoneyMethod: "",

@@ -1,11 +1,9 @@
 import React from "react";
 import ShippingStyles from "../../styles/Checkout/Shipping.module.css";
-import { ErrorMessageContext } from "../../pages/checkout/index";
 import { arrayOfStates } from "../../src/storage";
 import { billingShippingInputListener } from "../../utils/checkoutHelpers";
 
 function Shipping({ children, ...props }) {
-  const [isShippingSame, setShippingSame] = React.useState(false);
   // const { inputsLinkedToBilling } = props;
   // declare ref variables
   const shippingAddressRef = React.useRef();
@@ -15,8 +13,8 @@ function Shipping({ children, ...props }) {
   const shippingCountryRef = React.useRef();
 
   // get context obj created in checkout page
-  const { billing, shipping, toggleObj } =
-    React.useContext(ErrorMessageContext);
+  const { billing, shipping, sameAddressInputRef, toggleObj } =
+    props.refObjForShipping;
   // check if data obj is set in local storage
   // assign ref to context obj created using React.createContext in checkout page
   shipping.address = shippingAddressRef;
@@ -24,8 +22,7 @@ function Shipping({ children, ...props }) {
   shipping.state = shippingStateRef;
   shipping.zipCode = shippingZipCodeRef;
   shipping.country = shippingCountryRef;
-  toggleObj.toggleLinkBetweenBillingAndShipping = setShippingSame;
-  toggleObj.billingAndShippingSame = isShippingSame;
+
   return (
     // check if cached data obj is in local storage
     // we want to call local storage getitem once in navlisthelper
@@ -44,7 +41,8 @@ function Shipping({ children, ...props }) {
           onChange={billingShippingInputListener.bind({
             billing,
             shipping,
-            isShippingSame,
+            sameAddressInputRef,
+            toggleObj,
             // inputsLinkedToBilling,
           })}
           className={ShippingStyles[`shipping-wrapper`]}

@@ -1,0 +1,28 @@
+.billing-shipping-radio-btns,
+.checking-same-address-validation {
+  font-size: var(--heading-reg-sm);
+  font-weight: 700;
+}
+
+.billing-shipping-radio-btns {
+  margin-block-start: 32px;
+}
+
+.question {
+  display: inline-block;
+  margin-block-end: 8px;
+}
+
+.radio-input {
+  display: flex;
+  align-items: center;
+}
+
+.radio-input input {
+  margin-inline-end: 8px;
+}
+
+.checking-same-address-validation {
+  margin-block-start: 20px;
+  margin-block-end: 28px;
+}

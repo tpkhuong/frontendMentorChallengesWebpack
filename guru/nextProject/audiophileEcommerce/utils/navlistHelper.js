@@ -11,7 +11,13 @@ export function cachedCheckoutInputs(event) {
 }
 
 function createObjForStorage(obj) {
-  const { personal, billing, shipping, paymentMethodSelection } = obj;
+  const {
+    personal,
+    billing,
+    shipping,
+    sameAddressInputRef,
+    paymentMethodSelection,
+  } = obj;
   const inputValuesObj = {
     personalInfo: {
       name: personal.name.current.value,
@@ -31,6 +37,10 @@ function createObjForStorage(obj) {
       state: shipping.state.current.value,
       zipCode: shipping.zipCode.current.value,
       country: shipping.country.current.value,
+    },
+    toggleSameAddressInfo: {
+      yesInputBtn: sameAddressInputRef.yesBtn.current.checked,
+      noInputBtn: sameAddressInputRef.noBtn.current.checked,
     },
     paymentInfo: {
       eMoneyMethod:
