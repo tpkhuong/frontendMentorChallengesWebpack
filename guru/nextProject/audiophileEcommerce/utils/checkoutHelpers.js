@@ -77,12 +77,20 @@ export function toggleBillingAndShippingAddress(event) {
           "data-shippinguserattention",
           "false"
         ));
-    // check if shipping inputs are valid
-    // address
-    // city
-    // state
-    // zip
-    // country
+    // loop through entries of billingRef obj we have access to both keys and values
+    // billingInfo and shippingInfo obj
+    Object.entries(billingRef).forEach(function saveValuesToStorage(element) {
+      // key will be either:address, city,state,zipCode, country
+      // value will be ref obj with current property of input
+      // coult destructure value to {current}
+      const [key, { current }] = element;
+      // access localData property billingInfo and shippingInfo obj using key
+      // billing
+      localData.billingInfo[key] = current.value;
+      // shipping
+      localData.shippingInfo[key] = current.value;
+    });
+
     setShippingSame((prevValues) => {
       return {
         ...prevValues,
@@ -103,9 +111,19 @@ export function toggleBillingAndShippingAddress(event) {
           };
         })
       : null;
+    /**
+     * having algorithm that push inputs values to local storage before removing
+     * data entered to shipping section inputs.
+     * the entered data to shipping section will be in local storage until user click
+     * on yes radio btn
+     * **/
+
     // set shipping inputs to default when yesInput value in local storage is true
     localData.toggleSameAddressInfo.yesInputBtn
-      ? Object.values(shippingRef).forEach(({ current }) => {
+      ? Object.entries(shippingRef).forEach(([key, { current }]) => {
+          // destrucutre array in function declaration
+          // key is the property string: address,city etc
+          // value is the obj ref which we destructure to get current property
           // input value to empty string
           current.value = "";
           // parent element "data-shippinguserattention", "true"
@@ -113,13 +131,19 @@ export function toggleBillingAndShippingAddress(event) {
             "data-shippinguserattention",
             "true"
           );
+          // assign empty "" to properties of shippingInfo obj in storage
+          localData.shippingInfo[key] = current.value;
         })
       : null;
-
+    // will save shipping inputs values to local storage
+    // since billing input values will not change when user click on no radio btn
+    // we can assign empty string to properties of shippingInfo obj in local storage
+    // since the value of each shipping inputs will be empty ""
+    // dont have to loop through shippingRef obj
     localData.toggleSameAddressInfo.yesInputBtn = yesInputRef.current.checked;
     localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
   }
-  // save yesbtn and nobtn checkd values to local storage
+  // save yesbtn and nobtn checked values to local storage
   localStorage.setItem("someData", JSON.stringify(localData));
 }
 
@@ -205,12 +229,13 @@ export function personalInputListener(event) {
 export function billingShippingInputListener(event) {
   const { billing, shipping, sameAddressInputRef, toggleObj } = this;
   // console.log(this);
-  const methods = createObjOfMethods({
-    billing,
-    shipping,
-    sameAddressInputRef,
-  });
+
   if (event.target.closest("input")) {
+    // get data from local storage
+    const dataFromLocalStorage =
+      localStorage.getItem("someData") == null
+        ? initialCheckoutInputObjForLocalStorage
+        : JSON.parse(localStorage.getItem("someData"));
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
     /**
@@ -219,6 +244,14 @@ export function billingShippingInputListener(event) {
     const eitherBillingOrShipping = inputIdAttr.includes("billing")
       ? "data-billinguserattention"
       : "data-shippinguserattention";
+    // reverse selecting input parent if yesBtn is checked == true
+    const selectingParentForLinkedInputs = sameAddressInputRef.yesBtn.current
+      .checked
+      ? inputIdAttr.includes("billing")
+        ? "data-shippinguserattention"
+        : "data-billinguserattention"
+      : null;
+
     // check if input is zip code check entered value is correct
     // due to pattern attr
     // console.log(inputIdAttr.includes("zip"));
@@ -246,7 +279,34 @@ export function billingShippingInputListener(event) {
         const copiedZipInput = event.target.value.slice(0, 5);
         event.target.value = copiedZipInput;
       }
-      console.log("zip");
+      // get billing or shipping element based on event.target id
+      // if its billing use shipping obj and vice versa
+      if (sameAddressInputRef.yesBtn.current.checked) {
+        // run code if sameAddressInputRef.yesBtn.current.checked is truthy
+        linkedInputHelper(
+          event,
+          inputIdAttr,
+          "zipCode",
+          eitherBillingOrShipping,
+          selectingParentForLinkedInputs,
+          shipping,
+          billing
+        );
+        // const linkedInputElement = inputIdAttr.includes("billing")
+        //   ? shipping["zipCode"]
+        //   : billing["zipCode"];
+        // linkedInputElement.current.value = event.target.value;
+        // event.target.parentElement.getAttribute(eitherBillingOrShipping) ==
+        // "false"
+        //   ? linkedInputElement.current.parentElement.setAttribute(
+        //       selectingParentForLinkedInputs,
+        //       "false"
+        //     )
+        //   : linkedInputElement.current.parentElement.setAttribute(
+        //       selectingParentForLinkedInputs,
+        //       "true"
+        //     );
+      }
       // return;
     }
     /**
@@ -273,7 +333,28 @@ export function billingShippingInputListener(event) {
           "false"
         );
       }
-      console.log("city, state, country");
+      /**
+       * we can cached input data when we check if yesBtn to qusetion
+       * shipping is same as billing address
+       * **/
+      if (sameAddressInputRef.yesBtn.current.checked) {
+        // find out if id is either city,state,country
+        const [, eitherCityStateOrCountryStr] = inputIdAttr.split("-");
+        linkedInputHelper(
+          event,
+          inputIdAttr,
+          eitherCityStateOrCountryStr,
+          eitherBillingOrShipping,
+          selectingParentForLinkedInputs,
+          shipping,
+          billing
+        );
+        // cached input values to both billing and shipping
+      } else {
+        // we want to find out which input the user currently has focused on
+        // billing or shipping and cached input values according to the billing/shipping
+        // input the user is currently on
+      }
     }
 
     if (inputIdAttr.includes("address")) {
@@ -289,74 +370,48 @@ export function billingShippingInputListener(event) {
           "false"
         );
       }
-      console.log("address");
-    }
 
-    // methods[inputIdAttr]();
+      if (sameAddressInputRef.yesBtn.current.checked) {
+        // find out if id is either city,state,country
+        const [, eitherCityStateOrCountryStr] = inputIdAttr.split("-");
+        linkedInputHelper(
+          event,
+          "address",
+          eitherCityStateOrCountryStr,
+          eitherBillingOrShipping,
+          selectingParentForLinkedInputs,
+          shipping,
+          billing
+        );
+      }
+    }
+    // save input data to local storage
+    localStorage.setItem("someData", JSON.stringify(dataFromLocalStorage));
   }
 }
 
-function createObjOfMethods({ billing, shipping, sameAddressInputRef }) {
-  const objOfMethods = {
-    // address
-    "billing-address": () => {
-      console.log("this is billing address");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    "shipping-address": () => {
-      console.log("this is shipping address");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    // city
-    "billing-city": () => {
-      console.log("this is billing city");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    "shipping-city": () => {
-      console.log("this is shipping city");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    // state
-    "billing-state": () => {
-      console.log("this is billing state");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    "shipping-state": () => {
-      console.log("this is shipping state");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    // zip code
-    "billing-zip": () => {
-      console.log("this is billing zip");
-      shipping.zipCode.current.value = billing.zipCode.current.value;
-      billing.zipCode.current.parentElement.getAttribute(
-        "data-billinguserattention"
-      ) == "true"
-        ? shipping.zipCode.current.parentElement.setAttribute(
-            "data-shippinguserattention",
-            "true"
-          )
-        : shipping.zipCode.current.parentElement.setAttribute(
-            "data-shippinguserattention",
-            "false"
-          );
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    "shipping-zip": () => {
-      console.log("this is shipping zip");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    // country
-    "billing-country": () => {
-      console.log("this is billing country");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-    "shipping-country": () => {
-      console.log("this is shipping country");
-      console.log(billing, shipping, sameAddressInputRef);
-    },
-  };
-  return objOfMethods;
+function linkedInputHelper(
+  eventInput,
+  idAttr,
+  idInputStr,
+  billingOrShipping,
+  parentLinkedInput,
+  shippingRef,
+  billingRef
+) {
+  const linkedInputElement = idAttr.includes("billing")
+    ? shippingRef[idInputStr]
+    : billingRef[idInputStr];
+  linkedInputElement.current.value = eventInput.target.value;
+  eventInput.target.parentElement.getAttribute(billingOrShipping) == "false"
+    ? linkedInputElement.current.parentElement.setAttribute(
+        parentLinkedInput,
+        "false"
+      )
+    : linkedInputElement.current.parentElement.setAttribute(
+        parentLinkedInput,
+        "true"
+      );
 }
 
 export const initialCheckoutInputObjForLocalStorage = {
@@ -423,3 +478,100 @@ export function shippingInputListener(event) {}
 //     );
 //   }
 // }
+
+// function createObjOfMethods({ billing, shipping, sameAddressInputRef }) {
+//   const objOfMethods = {
+//     // address
+//     "billing-address": () => {
+//       console.log("this is billing address");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     "shipping-address": () => {
+//       console.log("this is shipping address");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     // city
+//     "billing-city": () => {
+//       console.log("this is billing city");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     "shipping-city": () => {
+//       console.log("this is shipping city");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     // state
+//     "billing-state": () => {
+//       console.log("this is billing state");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     "shipping-state": () => {
+//       console.log("this is shipping state");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     // zip code
+//     "billing-zip": () => {
+//       console.log("this is billing zip");
+//       shipping.zipCode.current.value = billing.zipCode.current.value;
+//       billing.zipCode.current.parentElement.getAttribute(
+//         "data-billinguserattention"
+//       ) == "true"
+//         ? shipping.zipCode.current.parentElement.setAttribute(
+//             "data-shippinguserattention",
+//             "true"
+//           )
+//         : shipping.zipCode.current.parentElement.setAttribute(
+//             "data-shippinguserattention",
+//             "false"
+//           );
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     "shipping-zip": () => {
+//       console.log("this is shipping zip");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     // country
+//     "billing-country": () => {
+//       console.log("this is billing country");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//     "shipping-country": () => {
+//       console.log("this is shipping country");
+//       console.log(billing, shipping, sameAddressInputRef);
+//     },
+//   };
+//   return objOfMethods;
+// }
+
+function notes() {
+  // if we wanted to use one loop to save both billing and shipping input values to storage
+  // make obj with both billing and shipping ref to inputs
+  const testObj = {
+    address: {
+      billing: billingRef.address,
+      shipping: shippingRef.address,
+    },
+    city: {
+      billing: billingRef.city,
+      shipping: shippingRef.city,
+    },
+    state: {
+      billing: billingRef.state,
+      shipping: shippingRef.state,
+    },
+    zipCode: {
+      billing: billingRef.zipCode,
+      shipping: shippingRef.zipCode,
+    },
+    country: {
+      billing: billingRef.country,
+      shipping: shippingRef.country,
+    },
+  };
+  Object.entries(testObj).forEach((element) => {
+    // key is eiter address,city,state,zipCode country
+    // obj is destructure to be billing and shipping properties
+    const [key, { billing, shipping }] = element;
+    localData.billingInfo[key] = billing.current.value;
+    localData.shippingInfo[key] = shipping.current.value;
+  });
+}
