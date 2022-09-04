@@ -1,0 +1,16 @@
+.img-wrapper {
+  display: none;
+}
+
+.register-form-wrapper input {
+  background-color: var(--color-register-login-input);
+}
+
+@media screen and (min-width: 48rem) {
+  .img-wrapper {
+    display: revert;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+}

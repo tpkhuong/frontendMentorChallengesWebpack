@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import LoginStyles from "../../styles/Login/LoginPage.module.css";
 import Main from "../../Components/shared/Main";
 import { loginHandler } from "../../utils/authHelpers";
 

@@ -43,6 +43,23 @@
   .form-wrapper {
     min-width: 730px;
   }
+  .top-line {
+    display: block;
+    stroke: red;
+    stroke-linecap: round;
+    /* transform: translateX(5px); */
+  }
+  .middle-line {
+    display: block;
+    stroke-linecap: round;
+    stroke: blue;
+  }
+  .bottom-line {
+    display: block;
+    stroke-linecap: round;
+    stroke: red;
+    /* transform: translateX(-5px); */
+  }
 }
 
 /* desktop */

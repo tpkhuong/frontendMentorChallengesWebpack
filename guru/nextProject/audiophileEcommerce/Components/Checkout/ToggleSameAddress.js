@@ -51,13 +51,26 @@ export default function ToggleSameAddress({ children, ...props }) {
         <span className={ToggleAddressStyles[`question`]}>
           Is Shipping Address same as Billing Address?
         </span>
-        <p>Friendly Reminder:</p>
-        <p>
-          Selecting "YES" button, will copy current inputs of billing section to
-          inputs of shipping section.{" "}
+        <p className={ToggleAddressStyles[`reminder`]}>Friendly Reminder:</p>
+        <p
+          className={`${ToggleAddressStyles[`reminder`]} ${
+            ToggleAddressStyles[`margin-block-end`]
+          }`}
+        >
+          Selecting <span className={ToggleAddressStyles[`bold`]}>"YES"</span>{" "}
+          button, will copy current inputs of billing section to inputs of
+          shipping section.{" "}
         </p>
-        <p>
-          Selecting "NO" button after "YES" button was selected will REMOVE ALL
+        <p
+          className={`${ToggleAddressStyles[`reminder`]} ${
+            ToggleAddressStyles[`margin-block-end`]
+          }`}
+        >
+          Selecting <span className={ToggleAddressStyles[`bold`]}>"NO"</span>{" "}
+          button after{" "}
+          <span className={ToggleAddressStyles[`bold`]}>"YES"</span> button was
+          selected will{" "}
+          <span className={ToggleAddressStyles[`bold`]}>REMOVE ALL</span>{" "}
           information entered in shipping section.
         </p>
         <div className={[ToggleAddressStyles[`radio-input`]]}>

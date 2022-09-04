@@ -17,15 +17,17 @@ import {
 
 function CartModal({ children, ...props }) {
   // pass in state func to checkout btn
+  // working with mongodb
   // trigger a re-render to run React.useEffect()
   // inside useEffect run router.push("/checkout")
-  const [redirectValue, setRedirect] = React.useState(false);
-  const router = useRouter();
-  React.useEffect(() => {
-    if (redirectValue) {
-      router.push("/checkout");
-    }
-  }, [redirectValue]);
+  // const [redirectValue, setRedirect] = React.useState(false);
+  // const router = useRouter();
+  // React.useEffect(() => {
+  //   if (redirectValue) {
+  //     router.push("/checkout");
+  //   }
+  // }, [redirectValue]);
+  // working with mongodb
   const { refToOpenCartModal, stateOfCartFunc } = props;
   // get data from AddCart component
   const cartModalData = props.addCartDataFromLocalStorage;

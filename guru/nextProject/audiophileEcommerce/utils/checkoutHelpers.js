@@ -238,16 +238,20 @@ export function billingShippingInputListener(event) {
         : JSON.parse(localStorage.getItem("someData"));
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
+    const billingOrShippingStr = inputIdAttr.includes("billing")
+      ? "billing"
+      : "shipping";
     /**
      * this event listener callback is for both billing and shipping
      * **/
-    const eitherBillingOrShipping = inputIdAttr.includes("billing")
-      ? "data-billinguserattention"
-      : "data-shippinguserattention";
+    const eitherBillingOrShipping =
+      billingOrShippingStr == "billing"
+        ? "data-billinguserattention"
+        : "data-shippinguserattention";
     // reverse selecting input parent if yesBtn is checked == true
     const selectingParentForLinkedInputs = sameAddressInputRef.yesBtn.current
       .checked
-      ? inputIdAttr.includes("billing")
+      ? billingOrShippingStr == "billing"
         ? "data-shippinguserattention"
         : "data-billinguserattention"
       : null;
@@ -292,22 +296,17 @@ export function billingShippingInputListener(event) {
           shipping,
           billing
         );
-        // const linkedInputElement = inputIdAttr.includes("billing")
-        //   ? shipping["zipCode"]
-        //   : billing["zipCode"];
-        // linkedInputElement.current.value = event.target.value;
-        // event.target.parentElement.getAttribute(eitherBillingOrShipping) ==
-        // "false"
-        //   ? linkedInputElement.current.parentElement.setAttribute(
-        //       selectingParentForLinkedInputs,
-        //       "false"
-        //     )
-        //   : linkedInputElement.current.parentElement.setAttribute(
-        //       selectingParentForLinkedInputs,
-        //       "true"
-        //     );
+        // cached input values to both billing and shipping
+        dataFromLocalStorage.billingInfo.zipCode = event.target.value;
+        dataFromLocalStorage.shippingInfo.zipCode = event.target.value;
+      } else {
+        // we want to find out which input the user currently has focused on
+        // billing or shipping and cached input values according to the billing/shipping
+        // input the user is currently on
+        billingOrShippingStr == "billing"
+          ? (localStorage.billingInfo.zipCode = event.target.value)
+          : (localStorage.shippingInfo.zipCode = event.target.value);
       }
-      // return;
     }
     /**
      * only allow letters and space for city, state, country
@@ -319,6 +318,8 @@ export function billingShippingInputListener(event) {
     ) {
       const letterSpaceRegex = /[a-zA-Z\s]/g;
       const onlyLettersAndSpace = event.target.value.match(letterSpaceRegex);
+      // find out if id is either city,state,country
+      const [, eitherCityStateOrCountryStr] = inputIdAttr.split("-");
       event.target.value = !onlyLettersAndSpace
         ? ""
         : onlyLettersAndSpace.join("");
@@ -334,12 +335,10 @@ export function billingShippingInputListener(event) {
         );
       }
       /**
-       * we can cached input data when we check if yesBtn to qusetion
+       * we can cached input data when we check if yesBtn to question
        * shipping is same as billing address
        * **/
       if (sameAddressInputRef.yesBtn.current.checked) {
-        // find out if id is either city,state,country
-        const [, eitherCityStateOrCountryStr] = inputIdAttr.split("-");
         linkedInputHelper(
           event,
           inputIdAttr,
@@ -350,10 +349,19 @@ export function billingShippingInputListener(event) {
           billing
         );
         // cached input values to both billing and shipping
+        localStorage.billingInfo[eitherCityStateOrCountryStr] =
+          event.target.value;
+        localStorage.shippingInfo[eitherCityStateOrCountryStr] =
+          event.target.value;
       } else {
         // we want to find out which input the user currently has focused on
         // billing or shipping and cached input values according to the billing/shipping
         // input the user is currently on
+        billingOrShippingStr == "billing"
+          ? (localStorage.billingInfo[eitherCityStateOrCountryStr] =
+              event.target.value)
+          : (localStorage.shippingInfo[eitherCityStateOrCountryStr] =
+              event.target.value);
       }
     }
 
@@ -383,6 +391,16 @@ export function billingShippingInputListener(event) {
           shipping,
           billing
         );
+        // cached input values to both billing and shipping
+        dataFromLocalStorage.billingInfo.address = event.target.value;
+        dataFromLocalStorage.shippingInfo.address = event.target.value;
+      } else {
+        // we want to find out which input the user currently has focused on
+        // billing or shipping and cached input values according to the billing/shipping
+        // input the user is currently on
+        billingOrShippingStr == "billing"
+          ? (localStorage.billingInfo.address = event.target.value)
+          : (localStorage.shippingInfo.address = event.target.value);
       }
     }
     // save input data to local storage

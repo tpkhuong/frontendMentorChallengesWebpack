@@ -5,7 +5,7 @@ function Main({ children, ...props }) {
   return (
     <main
       data-checkoutpage={props.isDarkerBgTrue}
-      id="main-content"
+      id={props.isLoginOrRegister}
       role="main"
       className={MainStyles[`main`]}
     >

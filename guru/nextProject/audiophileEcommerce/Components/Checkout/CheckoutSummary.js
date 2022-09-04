@@ -69,14 +69,15 @@ function CheckoutSummary({ children, ...props }) {
       };
     });
   }, []);
-  const initialValuesForSummary = {
-    itemsArray: [],
-    taxShippingTotalArray: [],
-    grandTotalNum: 0,
-  };
-  const [initialSummaryObj, setSummaryValues] = React.useState(
-    initialValuesForSummary
-  );
+  const memoizedSummaryInfo = React.useMemo(() => {
+    return {
+      itemsArray: [],
+      taxShippingTotalArray: [],
+      grandTotalNum: 0,
+    };
+  }, []);
+  const [initialSummaryObj, setSummaryValues] =
+    React.useState(memoizedSummaryInfo);
   return (
     <article className={CheckoutSummaryStyles[`summary-wrapper`]}>
       {/* title */}
