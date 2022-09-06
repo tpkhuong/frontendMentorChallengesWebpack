@@ -12,6 +12,9 @@
 [id="register-form"].main {
   padding-block-end: 0px;
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .main {
