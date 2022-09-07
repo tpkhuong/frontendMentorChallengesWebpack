@@ -1,5 +1,12 @@
+import { initialCheckoutInputObjForLocalStorage } from "./checkoutHelpers";
+
 // emoney
 export function eMoneyClickHandler(event) {
+  // get data from local storage
+  const dataFromStorageMoney =
+    localStorage.getItem("someData") == null
+      ? initialCheckoutInputObjForLocalStorage
+      : JSON.parse(localStorage.getItem("someData"));
   // destructure this obj
   const { setPaymentMethod, activeDescendantRef, emoneyRef, cashDeliveryRef } =
     this;
@@ -25,10 +32,21 @@ export function eMoneyClickHandler(event) {
   cashDeliveryRef.current.setAttribute("aria-checked", "false");
   // assign value of "-1" to other radio btns tabindex
   cashDeliveryRef.current.setAttribute("tabindex", "-1");
+  // assign value "true" to emoney aria-checked
+  dataFromStorageMoney.paymentInfo.eMoneyMethod = "true";
+  // assign value "false" to cashdelivery aria-checked
+  dataFromStorageMoney.paymentInfo.cashDeliveryMethod = "false";
+  // save data to local storage
+  localStorage.setItem("someData", JSON.stringify(dataFromStorageMoney));
 }
 
 // cash on delivery
 export function cashOnDeliveryClickHandler(event) {
+  // get data from local storage
+  const dataFromStorageCash =
+    localStorage.getItem("someData") == null
+      ? initialCheckoutInputObjForLocalStorage
+      : JSON.parse(localStorage.getItem("someData"));
   // destructure this obj
   const { setPaymentMethod, activeDescendantRef, emoneyRef, cashDeliveryRef } =
     this;
@@ -53,6 +71,12 @@ export function cashOnDeliveryClickHandler(event) {
     emoneyRef.current.setAttribute("aria-checked", "false");
     // assign value of "-1" to other radio btns tabindex
     emoneyRef.current.setAttribute("tabindex", "-1");
+    // assign value "true" to cashdelivery aria-checked
+    dataFromStorageCash.paymentInfo.eMoneyMethod = "false";
+    // assign value "false" to emoney aria-checked
+    dataFromStorageCash.paymentInfo.cashDeliveryMethod = "true";
+    // save data to local storage
+    localStorage.setItem("someData", JSON.stringify(dataFromStorageCash));
   }
 }
 

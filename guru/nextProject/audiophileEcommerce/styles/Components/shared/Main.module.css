@@ -9,12 +9,14 @@
   padding-block-end: 97px;
 }
 
-[id="register-form"].main {
+[id="register-form"].main,
+[id="login-form"].main {
   padding-block-end: 0px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .main {

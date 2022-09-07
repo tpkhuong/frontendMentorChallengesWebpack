@@ -1,7 +1,10 @@
 import React from "react";
 import ShippingStyles from "../../styles/Checkout/Shipping.module.css";
 import { arrayOfStates } from "../../src/storage";
-import { billingShippingInputListener } from "../../utils/checkoutHelpers";
+import {
+  valuesForBillingShippingComponent,
+  billingShippingInputListener,
+} from "../../utils/checkoutHelpers";
 
 function Shipping({ children, ...props }) {
   // const { inputsLinkedToBilling } = props;
@@ -22,6 +25,29 @@ function Shipping({ children, ...props }) {
   shipping.state = shippingStateRef;
   shipping.zipCode = shippingZipCodeRef;
   shipping.country = shippingCountryRef;
+
+  React.useEffect(() => {
+    // get data from local storage
+    const shippingDataFromLocal =
+      localStorage.getItem("someData") == null
+        ? null
+        : JSON.parse(localStorage.getItem("someData"));
+    const shippingInfoDataFromStorage =
+      shippingDataFromLocal == null ? null : shippingDataFromLocal.shippingInfo;
+    const shippingRefObj = {
+      address: shippingAddressRef,
+      city: shippingCityRef,
+      state: shippingStateRef,
+      zipCode: shippingZipCodeRef,
+      country: shippingCountryRef,
+    };
+
+    valuesForBillingShippingComponent(
+      shippingRefObj,
+      shippingInfoDataFromStorage,
+      "data-shippinguserattention"
+    );
+  }, []);
 
   return (
     // check if cached data obj is in local storage

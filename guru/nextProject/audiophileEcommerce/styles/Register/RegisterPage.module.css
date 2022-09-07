@@ -1,5 +1,39 @@
-.margin-block {
+/* form validation */
+
+/* can't be empty */
+
+.form [data-isempty="true"] .error,
+.form [data-isvalid="false"] .invalid,
+.form [data-ismatchedpassword="false"] .not-matched-pw {
+  display: inline-block;
+}
+
+.email-wrapper,
+.password-wrapper,
+.confirm-password-wrapper {
+  position: relative;
+}
+
+.error,
+.invalid,
+.not-matched-pw {
+  color: var(--color-primary-error);
+  font-weight: 700;
+  font-size: var(--heading-reg-sm);
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+/* not a match */
+
+.password-wrapper {
   margin-block: 16px;
+}
+
+.padding-inline-start {
+  padding-inline-start: 10px;
 }
 
 .img-form-wrapper {
@@ -29,17 +63,21 @@
   text-transform: uppercase;
 }
 
-.input-wrapper input,
+.description {
+  margin-block-start: 10px;
+}
+
+.form input,
 .create-account-btn {
   border-radius: 8px;
 }
 
-.input-wrapper label {
+.form label {
   color: var(--color-primary-orange);
   font-weight: 700;
 }
 
-.input-wrapper input {
+.form input {
   margin-block-start: 4px;
   display: block;
   padding-block: 8px;
@@ -75,6 +113,7 @@
   .img-form-wrapper {
     display: flex;
     gap: 8px;
+    max-width: 950px;
   }
   .img-wrapper {
     display: revert;
@@ -90,21 +129,31 @@
   .description {
     font-size: var(--heading-reg);
   }
-  .input-wrapper {
+  /* .form label,
+  .form input {
     font-size: var(--heading-reg-sm);
-  }
+  } */
 
-  .input-wrapper input {
+  .form input {
     margin-block-start: 6px;
   }
 
-  .create-account-btn {
+  /* .create-account-btn {
     font-size: var(--heading-reg-x-sm);
   }
   .login-link {
     font-size: var(--heading-reg-x-sm);
-  }
+  } */
 }
 
 @media screen and (min-width: 90rem) {
+  .img-form-wrapper {
+    align-self: center;
+  }
+  .greetings {
+    margin-block-end: 16px;
+  }
+  .password-wrapper {
+    margin-block-start: 24px;
+  }
 }

@@ -304,8 +304,8 @@ export function billingShippingInputListener(event) {
         // billing or shipping and cached input values according to the billing/shipping
         // input the user is currently on
         billingOrShippingStr == "billing"
-          ? (localStorage.billingInfo.zipCode = event.target.value)
-          : (localStorage.shippingInfo.zipCode = event.target.value);
+          ? (dataFromLocalStorage.billingInfo.zipCode = event.target.value)
+          : (dataFromLocalStorage.shippingInfo.zipCode = event.target.value);
       }
     }
     /**
@@ -349,18 +349,18 @@ export function billingShippingInputListener(event) {
           billing
         );
         // cached input values to both billing and shipping
-        localStorage.billingInfo[eitherCityStateOrCountryStr] =
+        dataFromLocalStorage.billingInfo[eitherCityStateOrCountryStr] =
           event.target.value;
-        localStorage.shippingInfo[eitherCityStateOrCountryStr] =
+        dataFromLocalStorage.shippingInfo[eitherCityStateOrCountryStr] =
           event.target.value;
       } else {
         // we want to find out which input the user currently has focused on
         // billing or shipping and cached input values according to the billing/shipping
         // input the user is currently on
         billingOrShippingStr == "billing"
-          ? (localStorage.billingInfo[eitherCityStateOrCountryStr] =
+          ? (dataFromLocalStorage.billingInfo[eitherCityStateOrCountryStr] =
               event.target.value)
-          : (localStorage.shippingInfo[eitherCityStateOrCountryStr] =
+          : (dataFromLocalStorage.shippingInfo[eitherCityStateOrCountryStr] =
               event.target.value);
       }
     }
@@ -381,11 +381,11 @@ export function billingShippingInputListener(event) {
 
       if (sameAddressInputRef.yesBtn.current.checked) {
         // find out if id is either city,state,country
-        const [, eitherCityStateOrCountryStr] = inputIdAttr.split("-");
+
         linkedInputHelper(
           event,
+          inputIdAttr,
           "address",
-          eitherCityStateOrCountryStr,
           eitherBillingOrShipping,
           selectingParentForLinkedInputs,
           shipping,
@@ -399,8 +399,8 @@ export function billingShippingInputListener(event) {
         // billing or shipping and cached input values according to the billing/shipping
         // input the user is currently on
         billingOrShippingStr == "billing"
-          ? (localStorage.billingInfo.address = event.target.value)
-          : (localStorage.shippingInfo.address = event.target.value);
+          ? (dataFromLocalStorage.billingInfo.address = event.target.value)
+          : (dataFromLocalStorage.shippingInfo.address = event.target.value);
       }
     }
     // save input data to local storage
@@ -457,10 +457,60 @@ export const initialCheckoutInputObjForLocalStorage = {
     noInputBtn: false,
   },
   paymentInfo: {
-    eMoneyMethod: "",
-    cashDeliveryMethod: "",
+    eMoneyMethod: "true",
+    cashDeliveryMethod: "false",
   },
 };
+
+export function valuesForBillingShippingComponent(
+  objInputRef,
+  localDataObj,
+  parentAttr
+) {
+  // assign value
+  // address
+  objInputRef.address.current.value = !localDataObj ? "" : localDataObj.address;
+  // city
+  objInputRef.city.current.value = !localDataObj ? "" : localDataObj.city;
+  // state
+  objInputRef.state.current.value = !localDataObj ? "" : localDataObj.state;
+  // zip code
+  objInputRef.zipCode.current.value = !localDataObj ? "" : localDataObj.zipCode;
+  // country
+  objInputRef.country.current.value = !localDataObj ? "" : localDataObj.country;
+  // check for validation
+  // address
+  objInputRef.address.current.value === ""
+    ? objInputRef.address.current.parentElement.setAttribute(parentAttr, "true")
+    : objInputRef.address.current.parentElement.setAttribute(
+        parentAttr,
+        "false"
+      );
+  // city
+  objInputRef.city.current.value === ""
+    ? objInputRef.city.current.parentElement.setAttribute(parentAttr, "true")
+    : objInputRef.city.current.parentElement.setAttribute(parentAttr, "false");
+  // state
+  objInputRef.state.current.value === ""
+    ? objInputRef.state.current.parentElement.setAttribute(parentAttr, "true")
+    : objInputRef.state.current.parentElement.setAttribute(parentAttr, "false");
+  // zip code
+  objInputRef.zipCode.current.value === ""
+    ? objInputRef.zipCode.current.parentElement.setAttribute(parentAttr, "true")
+    : !objInputRef.zipCode.current.validity.valid
+    ? objInputRef.zipCode.current.parentElement.setAttribute(parentAttr, "true")
+    : objInputRef.zipCode.current.parentElement.setAttribute(
+        parentAttr,
+        "false"
+      );
+  // country
+  objInputRef.country.current.value === ""
+    ? objInputRef.country.current.parentElement.setAttribute(parentAttr, "true")
+    : objInputRef.country.current.parentElement.setAttribute(
+        parentAttr,
+        "false"
+      );
+}
 
 export function billingInputListener(event) {
   // const { billing, shipping } = this;

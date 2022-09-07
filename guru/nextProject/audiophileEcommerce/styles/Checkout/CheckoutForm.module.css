@@ -47,7 +47,7 @@
     display: block;
     stroke: red;
     stroke-linecap: round;
-    /* transform: translateX(5px); */
+    transform: translateX(5px);
   }
   .middle-line {
     display: block;
@@ -58,7 +58,7 @@
     display: block;
     stroke-linecap: round;
     stroke: red;
-    /* transform: translateX(-5px); */
+    transform: translateX(-5px);
   }
 }
 

@@ -1,7 +1,10 @@
 import React from "react";
 import BillingStyles from "../../styles/Checkout/Billing.module.css";
 import { arrayOfStates } from "../../src/storage";
-import { billingShippingInputListener } from "../../utils/checkoutHelpers";
+import {
+  valuesForBillingShippingComponent,
+  billingShippingInputListener,
+} from "../../utils/checkoutHelpers";
 
 function Billing({ children, ...props }) {
   // const { linkInputToShipping } = props;
@@ -22,6 +25,27 @@ function Billing({ children, ...props }) {
   billing.state = billingStateRef;
   billing.zipCode = billingZipCodeRef;
   billing.country = billingCountryRef;
+
+  React.useEffect(() => {
+    const billingDataFromLocal =
+      localStorage.getItem("someData") == null
+        ? null
+        : JSON.parse(localStorage.getItem("someData"));
+    const billingInfoDataFromStorage =
+      billingDataFromLocal == null ? null : billingDataFromLocal.billingInfo;
+    const billingRefObj = {
+      address: billingAddressRef,
+      city: billingCityRef,
+      state: billingStateRef,
+      zipCode: billingZipCodeRef,
+      country: billingCountryRef,
+    };
+    valuesForBillingShippingComponent(
+      billingRefObj,
+      billingInfoDataFromStorage,
+      "data-billinguserattention"
+    );
+  }, []);
   return (
     // check if cached data obj is in local storage
     // we want to call local storage getitem once in navlisthelper

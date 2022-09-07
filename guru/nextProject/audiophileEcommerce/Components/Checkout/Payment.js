@@ -30,6 +30,32 @@ function Payment({ children, ...props }) {
   inputMoney.number = moneyNumberRef;
   inputMoney.pin = pinRef;
   // console.log(paymentRefObj);
+  React.useEffect(() => {
+    const localStorageData =
+      localStorage.getItem("someData") == null
+        ? null
+        : JSON.parse(localStorage.getItem("someData"));
+
+    const paymentInfoValuesFromStorage =
+      localStorageData == null ? null : localStorageData.paymentInfo;
+
+    emoneyRef.current.setAttribute(
+      "aria-checked",
+      `${
+        paymentInfoValuesFromStorage == null
+          ? "true"
+          : paymentInfoValuesFromStorage.eMoneyMethod
+      }`
+    );
+    cashDeliveryRef.current.setAttribute(
+      "aria-checked",
+      `${
+        paymentInfoValuesFromStorage == null
+          ? "false"
+          : paymentInfoValuesFromStorage.cashDeliveryMethod
+      }`
+    );
+  }, []);
   return (
     <React.Fragment>
       {/* title */}

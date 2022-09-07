@@ -53,7 +53,14 @@ export default function Register({ children, ...props }) {
                 />
               </svg>
             </a>
+            <div className={RegisterStyles[`greetings`]}>
+              <h2 className={RegisterStyles[`title`]}>Hello, Friends</h2>
+              <p className={RegisterStyles[`description`]}>
+                Sign up an account with us to enjoy member only features.
+              </p>
+            </div>
             <form
+              className={RegisterStyles[`form`]}
               onSubmit={submitNewUserHandler.bind({
                 emailInputRef,
                 passwordInputRef,
@@ -61,13 +68,11 @@ export default function Register({ children, ...props }) {
                 setUser,
               })}
             >
-              <div className={RegisterStyles[`greetings`]}>
-                <h2 className={RegisterStyles[`title`]}>Hello, Friends</h2>
-                <p className={RegisterStyles[`description`]}>
-                  Sign up an account with us to enjoy member only features.
-                </p>
-              </div>
-              <div className={RegisterStyles[`input-wrapper`]}>
+              <div
+                data-isempty=""
+                data-isvalid=""
+                className={RegisterStyles[`email-wrapper`]}
+              >
                 {/* email */}
                 <label htmlFor="email">Email:</label>
                 <input
@@ -77,11 +82,14 @@ export default function Register({ children, ...props }) {
                   id="email"
                   placeholder="johndoe@email.com"
                 />
+                {/* error message */}
+                <span className={RegisterStyles[`error`]}>can't be empty</span>
+                <span className={RegisterStyles[`invalid`]}>not valid</span>
               </div>
               <div
-                className={`${RegisterStyles[`input-wrapper`]} ${
-                  RegisterStyles[`margin-block`]
-                }`}
+                data-isempty=""
+                data-ismatchedpassword=""
+                className={RegisterStyles[`password-wrapper`]}
               >
                 {/* password */}
                 <label htmlFor="password">Password:</label>
@@ -91,8 +99,16 @@ export default function Register({ children, ...props }) {
                   type="password"
                   id="password"
                 />
+                {/* error message */}
+                <span className={RegisterStyles[`error`]}>can't be empty</span>
+                <span className={RegisterStyles[`not-matched-pw`]}>
+                  not a match
+                </span>
               </div>
-              <div className={RegisterStyles[`input-wrapper`]}>
+              <div
+                data-ismatchedpassword=""
+                className={RegisterStyles[`confirm-password-wrapper`]}
+              >
                 {/* confirm password */}
                 <label htmlFor="confirm-password">Confirm Password:</label>
                 <input
@@ -101,6 +117,10 @@ export default function Register({ children, ...props }) {
                   type="password"
                   id="confirm-password"
                 />
+                {/* error message */}
+                <span className={RegisterStyles[`not-matched-pw`]}>
+                  not a match
+                </span>
               </div>
 
               {/* register button */}
@@ -111,7 +131,7 @@ export default function Register({ children, ...props }) {
             <div className={RegisterStyles[`login-link`]}>
               <span>Already have Account?</span>
               <Link href="/login">
-                <a>Log In</a>
+                <a className={RegisterStyles[`padding-inline-start`]}>Log In</a>
               </Link>
             </div>
           </div>

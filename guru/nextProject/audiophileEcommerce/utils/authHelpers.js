@@ -72,9 +72,12 @@ export async function submitNewUserHandler(event) {
   const { emailInputRef, passwordInputRef, confirmPasswordInputRef, setUser } =
     this;
 
+  // check if email or password inputs are empty
+
   if (
     passwordInputRef.current.value !== confirmPasswordInputRef.current.value
   ) {
+    // assign value "false" to parent element of passwordinputref and confirmpasswordref
     throw new Error("Make sure both password entered is a match.");
   }
 
