@@ -3,14 +3,12 @@ import Link from "next/link";
 import RegisterStyles from "../../styles/Register/RegisterPage.module.css";
 import Head from "next/head";
 import Main from "../../Components/shared/Main";
+import RegisterForm from "../../Components/Register/RegisterForm";
 import { useRouter } from "next/router";
-import { submitNewUserHandler } from "../../utils/authHelpers";
+
+const RegisterErrorMessageContext = React.createContext({});
 
 export default function Register({ children, ...props }) {
-  const emailInputRef = React.useRef();
-  const passwordInputRef = React.useRef();
-  const confirmPasswordInputRef = React.useRef();
-
   const router = useRouter();
   const [userCreated, setUser] = React.useState(false);
   // we call setUser in submitNewUserHandler func attached to onSumbit
@@ -20,6 +18,12 @@ export default function Register({ children, ...props }) {
       router.push("/login");
     }
   }, [userCreated]);
+
+  const memoizedRefs = React.useMemo(() => {
+    return {
+      refRegisterErrorMessage: null,
+    };
+  });
 
   return (
     <React.Fragment>
@@ -59,75 +63,14 @@ export default function Register({ children, ...props }) {
                 Sign up an account with us to enjoy member only features.
               </p>
             </div>
-            <form
-              className={RegisterStyles[`form`]}
-              onSubmit={submitNewUserHandler.bind({
-                emailInputRef,
-                passwordInputRef,
-                confirmPasswordInputRef,
-                setUser,
-              })}
-            >
-              <div
-                data-isempty=""
-                data-isvalid=""
-                className={RegisterStyles[`email-wrapper`]}
-              >
-                {/* email */}
-                <label htmlFor="email">Email:</label>
-                <input
-                  required
-                  ref={emailInputRef}
-                  type="email"
-                  id="email"
-                  placeholder="johndoe@email.com"
-                />
-                {/* error message */}
-                <span className={RegisterStyles[`error`]}>can't be empty</span>
-                <span className={RegisterStyles[`invalid`]}>not valid</span>
-              </div>
-              <div
-                data-isempty=""
-                data-ismatchedpassword=""
-                className={RegisterStyles[`password-wrapper`]}
-              >
-                {/* password */}
-                <label htmlFor="password">Password:</label>
-                <input
-                  required
-                  ref={passwordInputRef}
-                  type="password"
-                  id="password"
-                />
-                {/* error message */}
-                <span className={RegisterStyles[`error`]}>can't be empty</span>
-                <span className={RegisterStyles[`not-matched-pw`]}>
-                  not a match
-                </span>
-              </div>
-              <div
-                data-ismatchedpassword=""
-                className={RegisterStyles[`confirm-password-wrapper`]}
-              >
-                {/* confirm password */}
-                <label htmlFor="confirm-password">Confirm Password:</label>
-                <input
-                  required
-                  ref={confirmPasswordInputRef}
-                  type="password"
-                  id="confirm-password"
-                />
-                {/* error message */}
-                <span className={RegisterStyles[`not-matched-pw`]}>
-                  not a match
-                </span>
-              </div>
-
-              {/* register button */}
-              <button className={RegisterStyles[`create-account-btn`]}>
-                Create Account
-              </button>
-            </form>
+            <RegisterErrorMessageContext.Provider value={memoizedRefs}>
+              <RegisterForm
+                refFromRegisterComp={{
+                  setUser,
+                  RegisterErrorMessageContext,
+                }}
+              />
+            </RegisterErrorMessageContext.Provider>
             <div className={RegisterStyles[`login-link`]}>
               <span>Already have Account?</span>
               <Link href="/login">
@@ -144,4 +87,67 @@ export default function Register({ children, ...props }) {
 function fakeUsers() {
   // marvel@tkhuong.dev
   // marvel12345
+  <form
+    className={RegisterStyles[`form`]}
+    onSubmit={submitNewUserHandler.bind({
+      emailInputRef,
+      passwordInputRef,
+      confirmPasswordInputRef,
+      setUser,
+      refContext,
+    })}
+  >
+    {/* assistive text error component */}
+    {/* <AssistiveMessage errorContent={RegisterErrorMessageContext} /> */}
+    <div
+      data-isempty=""
+      data-isvalid=""
+      className={RegisterStyles[`email-wrapper`]}
+    >
+      {/* email */}
+      <label htmlFor="email">Email:</label>
+      <input
+        required
+        ref={emailInputRef}
+        type="email"
+        id="email"
+        placeholder="johndoe@email.com"
+      />
+      {/* error message */}
+      <span className={RegisterStyles[`error`]}>can't be empty</span>
+      <span className={RegisterStyles[`invalid`]}>not valid</span>
+    </div>
+    <div
+      data-isempty=""
+      data-ismatchedpassword=""
+      className={RegisterStyles[`password-wrapper`]}
+    >
+      {/* password */}
+      <label htmlFor="password">Password:</label>
+      <input required ref={passwordInputRef} type="password" id="password" />
+      {/* error message */}
+      <span className={RegisterStyles[`error`]}>can't be empty</span>
+      <span className={RegisterStyles[`not-matched-pw`]}>not a match</span>
+    </div>
+    <div
+      data-ismatchedpassword=""
+      className={RegisterStyles[`confirm-password-wrapper`]}
+    >
+      {/* confirm password */}
+      <label htmlFor="confirm-password">Confirm Password:</label>
+      <input
+        required
+        ref={confirmPasswordInputRef}
+        type="password"
+        id="confirm-password"
+      />
+      {/* error message */}
+      <span className={RegisterStyles[`not-matched-pw`]}>not a match</span>
+    </div>
+
+    {/* register button */}
+    <button className={RegisterStyles[`create-account-btn`]}>
+      Create Account
+    </button>
+  </form>;
 }

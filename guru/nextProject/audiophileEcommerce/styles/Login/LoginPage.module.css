@@ -38,46 +38,6 @@
 .description {
 }
 
-.email-wrapper label,
-.password-wrapper label {
-  color: var(--color-primary-orange);
-  font-weight: 700;
-}
-
-.email-wrapper input,
-.password-wrapper input {
-  margin-block-start: 4px;
-  display: block;
-  padding-block: 8px;
-  padding-inline-start: 10px;
-  width: 100%;
-  background-color: var(--color-register-login-input);
-}
-
-.email-wrapper input,
-.password-wrapper input,
-.login-btn {
-  border-radius: 8px;
-}
-
-.password-wrapper {
-  margin-block: 20px;
-}
-
-.login-btn {
-  padding: 0;
-  text-transform: uppercase;
-  font-weight: 700;
-  background-color: var(--color-primary-orange);
-  color: var(--color-neutral-white);
-  display: block;
-  padding-block: 10px;
-  /* margin-block: 16px;
-  margin-block-start: 30px; */
-  min-width: 100%;
-  margin-block-end: 20px;
-}
-
 .register-link-wrapper {
   text-align: center;
   font-size: var(--heading-reg);
@@ -99,12 +59,6 @@
     display: revert;
     flex-basis: 75%;
     align-self: center;
-  }
-  .form {
-    margin-block-start: 24px;
-  }
-  .password-wrapper {
-    margin-block-end: 32px;
   }
 }
 

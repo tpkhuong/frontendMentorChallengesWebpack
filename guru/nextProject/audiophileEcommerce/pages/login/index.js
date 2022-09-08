@@ -3,11 +3,17 @@ import Link from "next/link";
 import Head from "next/head";
 import LoginStyles from "../../styles/Login/LoginPage.module.css";
 import Main from "../../Components/shared/Main";
+import LoginForm from "../../Components/Login/LoginForm";
 import { loginHandler } from "../../utils/authHelpers";
 
+const LoginErrorContext = React.createContext({});
+
 export default function Login({ children, ...props }) {
-  const emailRef = React.useRef();
-  const passwordRef = React.useRef();
+  const memoizedLoginRefs = React.useMemo(() => {
+    return {
+      refToSetFuncForAssistiveText: null,
+    };
+  }, []);
 
   return (
     <React.Fragment>
@@ -47,7 +53,10 @@ export default function Login({ children, ...props }) {
                 Login with your email and password to enjoy member only perks.
               </p>
             </div>
-            <form
+            <LoginErrorContext.Provider value={memoizedLoginRefs}>
+              <LoginForm refFromLoginComponent={LoginErrorContext} />
+            </LoginErrorContext.Provider>
+            {/* <form
               className={LoginStyles[`form`]}
               onSubmit={loginHandler.bind({ emailRef, passwordRef })}
             >
@@ -55,6 +64,7 @@ export default function Login({ children, ...props }) {
                 <label htmlFor="">Email:</label>
                 <input
                   ref={emailRef}
+                  id="email"
                   required
                   type="email"
                   placeholder="johndoe@email.com"
@@ -62,16 +72,21 @@ export default function Login({ children, ...props }) {
               </div>
               <div className={LoginStyles[`password-wrapper`]}>
                 <label htmlFor="">Password:</label>
-                <input ref={passwordRef} required type="password" />
+                <input
+                  id="password"
+                  ref={passwordRef}
+                  required
+                  type="password"
+                />
               </div>
               <button className={LoginStyles[`login-btn`]}>Log In</button>
-              <div className={LoginStyles[`register-link-wrapper`]}>
-                <span>New User?</span>
-                <Link href="/register">
-                  <a>Register New Account</a>
-                </Link>
-              </div>
-            </form>
+            </form> */}
+            <div className={LoginStyles[`register-link-wrapper`]}>
+              <span>New User?</span>
+              <Link href="/register">
+                <a>Register New Account</a>
+              </Link>
+            </div>
           </div>
         </section>
       </Main>

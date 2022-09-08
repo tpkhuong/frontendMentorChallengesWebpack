@@ -1,37 +1,5 @@
 /* form validation */
 
-/* can't be empty */
-
-.form [data-isempty="true"] .error,
-.form [data-isvalid="false"] .invalid,
-.form [data-ismatchedpassword="false"] .not-matched-pw {
-  display: inline-block;
-}
-
-.email-wrapper,
-.password-wrapper,
-.confirm-password-wrapper {
-  position: relative;
-}
-
-.error,
-.invalid,
-.not-matched-pw {
-  color: var(--color-primary-error);
-  font-weight: 700;
-  font-size: var(--heading-reg-sm);
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
-}
-
-/* not a match */
-
-.password-wrapper {
-  margin-block: 16px;
-}
-
 .padding-inline-start {
   padding-inline-start: 10px;
 }
@@ -67,25 +35,6 @@
   margin-block-start: 10px;
 }
 
-.form input,
-.create-account-btn {
-  border-radius: 8px;
-}
-
-.form label {
-  color: var(--color-primary-orange);
-  font-weight: 700;
-}
-
-.form input {
-  margin-block-start: 4px;
-  display: block;
-  padding-block: 8px;
-  padding-inline-start: 10px;
-  width: 100%;
-  background-color: var(--color-register-login-input);
-}
-
 .register-logo {
   display: block;
   width: max-content;
@@ -94,19 +43,6 @@
 
 .register-logo path {
   fill: var(--color-primary-orange);
-}
-
-.create-account-btn {
-  padding: 0;
-  text-transform: uppercase;
-  font-weight: 700;
-  background-color: var(--color-primary-orange);
-  color: var(--color-neutral-white);
-  display: block;
-  padding-block: 10px;
-  margin-block: 16px;
-  margin-block-start: 30px;
-  min-width: 100%;
 }
 
 @media screen and (min-width: 48rem) {
@@ -134,10 +70,6 @@
     font-size: var(--heading-reg-sm);
   } */
 
-  .form input {
-    margin-block-start: 6px;
-  }
-
   /* .create-account-btn {
     font-size: var(--heading-reg-x-sm);
   }
@@ -152,8 +84,5 @@
   }
   .greetings {
     margin-block-end: 16px;
-  }
-  .password-wrapper {
-    margin-block-start: 24px;
   }
 }
