@@ -14,20 +14,24 @@ function CheckoutForm({ children, ...props }) {
       <h2 className={CheckoutFormStyles[`title`]}>Checkout</h2>
       {/* hamburger svg with custm lines element */}
       {/* <div className={CheckoutFormStyles[`img-wrapper`]}>
-        <svg x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50">
+        <svg width="50px" height="50px">
           <g>
             <line
               className={CheckoutFormStyles[`top-line`]}
-              x1="10"
-              x2="35"
+              x1="4.8"
+              y1="9.6"
+              x2="27.2"
+              y2="9.6"
               // y2="50"
               stroke="black"
               strokeWidth="5"
             />
             <line
               className={CheckoutFormStyles[`middle-line`]}
-              x1="10"
-              x2="35"
+              x1="27.2"
+              y1="22.4"
+              x2="4.8"
+              y2="22.4"
               // y1="30"
               // y2="30"
               stroke="black"

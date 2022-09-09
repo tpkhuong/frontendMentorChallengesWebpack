@@ -12,39 +12,55 @@ export default function LoginForm({ children, ...props }) {
   const loginFormContextObj = React.useContext(props.refFromLoginComponent);
   return (
     <React.Fragment>
-      <form
-        className={LoginFormStyles[`form`]}
-        onSubmit={loginHandler.bind({
-          emailRef,
-          passwordRef,
-          loginFormContextObj,
-        })}
-      >
+      <form className={LoginFormStyles[`form`]}>
         {/* assistive message */}
-        <AssistiveLinks
-          loginInputRefs={{ emailRef, passwordRef }}
-          loginContext={loginFormContextObj}
-        />
-        <div className={LoginFormStyles[`email-wrapper`]}>
+        <AssistiveLinks loginContext={loginFormContextObj} />
+        <div
+          data-isempty=""
+          data-isvalid=""
+          className={LoginFormStyles[`email-wrapper`]}
+        >
           <label htmlFor="">Email:</label>
+          <span className={LoginFormStyles[`required`]}>(required)</span>
           <input
+            aria-describedby=""
             ref={emailRef}
             id="login-email"
             required
             type="email"
             placeholder="johndoe@email.com"
           />
+          <span id="login-empty" className={LoginFormStyles[`error`]}>
+            can't be empty
+          </span>
+          <span id="login-invalid" className={LoginFormStyles[`invalid`]}>
+            not valid format
+          </span>
         </div>
-        <div className={LoginFormStyles[`password-wrapper`]}>
+        <div data-isempty="" className={LoginFormStyles[`password-wrapper`]}>
           <label htmlFor="">Password:</label>
+          <span className={LoginFormStyles[`required`]}>(required)</span>
           <input
+            aria-describedby=""
             id="login-password"
             ref={passwordRef}
             required
             type="password"
           />
+          <span id="login-password-empty" className={LoginFormStyles[`error`]}>
+            can't be empty
+          </span>
         </div>
-        <button className={LoginFormStyles[`login-btn`]}>Log In</button>
+        <button
+          onClick={loginHandler.bind({
+            emailRef,
+            passwordRef,
+            loginFormContextObj,
+          })}
+          className={LoginFormStyles[`login-btn`]}
+        >
+          Log In
+        </button>
       </form>
     </React.Fragment>
   );

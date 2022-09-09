@@ -10,6 +10,10 @@ export default async function registerUserHandler(req, res) {
   const { email, password } = body;
   // server console/cli in vs code
   // console.log(req.body);
+  /**
+   * dont have to check email or password is empty here.
+   * we handle it in authhelpers.js
+   * **/
   if (!email || !password) {
     res.status(422).json({
       message: "Please check if email or password was entered.",

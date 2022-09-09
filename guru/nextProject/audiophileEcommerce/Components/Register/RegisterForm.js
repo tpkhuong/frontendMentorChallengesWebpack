@@ -31,6 +31,7 @@ export default function RegisterForm({ children, ...props }) {
             type="email"
             id="email"
             placeholder="johndoe@email.com"
+            aria-describedby=""
           />
           {/* error message */}
           <div className={RegisterFormStyles[`style-wrapper`]}>
@@ -52,7 +53,53 @@ export default function RegisterForm({ children, ...props }) {
           <span className={RegisterFormStyles[`required-text`]}>
             (required)
           </span>
-          <input ref={passwordInputRef} type="password" id="password" />
+          <input
+            aria-describedby=""
+            ref={passwordInputRef}
+            type="password"
+            id="password"
+            onChange={(event) => {
+              // check if event.target.value === confirmPasswordInputRef
+              if (
+                event.target.value !== "" &&
+                confirmPasswordInputRef.current.value !== "" &&
+                event.target.value === confirmPasswordInputRef.current.value
+              ) {
+                event.target.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  "true"
+                );
+                event.target.setAttribute(
+                  "aria-describedby",
+                  "password-matched"
+                );
+                // show matched text for confirm password input
+                confirmPasswordInputRef.current.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  "true"
+                );
+                confirmPasswordInputRef.current.setAttribute(
+                  "aria-describedby",
+                  "confirm-matched"
+                );
+              } else {
+                event.target.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  ""
+                );
+                event.target.setAttribute("aria-describedby", "");
+                // confirm password
+                confirmPasswordInputRef.current.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  ""
+                );
+                confirmPasswordInputRef.current.setAttribute(
+                  "aria-describedby",
+                  ""
+                );
+              }
+            }}
+          />
           {/* error message */}
           <span id="password-empty" className={RegisterFormStyles[`error`]}>
             can't be empty
@@ -63,6 +110,12 @@ export default function RegisterForm({ children, ...props }) {
           >
             not a match
           </span>
+          <span
+            id="password-matched"
+            className={RegisterFormStyles[`matched-pw`]}
+          >
+            matched
+          </span>
         </div>
         <div
           data-ismatchedpassword=""
@@ -71,9 +124,48 @@ export default function RegisterForm({ children, ...props }) {
           {/* confirm password */}
           <label htmlFor="confirm-password">Confirm Password:</label>
           <input
+            aria-describedby=""
             ref={confirmPasswordInputRef}
             type="password"
             id="confirm-password"
+            onChange={(event) => {
+              // check if event.target.value === passwordInputRef
+              if (
+                event.target.value !== "" &&
+                passwordInputRef.current.value !== "" &&
+                event.target.value == passwordInputRef.current.value
+              ) {
+                event.target.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  "true"
+                );
+                event.target.setAttribute(
+                  "aria-describedby",
+                  "confirm-matched"
+                );
+                // show matched text for password input
+                passwordInputRef.current.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  "true"
+                );
+                passwordInputRef.current.setAttribute(
+                  "aria-describedby",
+                  "password-matched"
+                );
+              } else {
+                event.target.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  ""
+                );
+                event.target.setAttribute("aria-describedby", "");
+                // password ref input
+                passwordInputRef.current.parentElement.setAttribute(
+                  "data-ismatchedpassword",
+                  ""
+                );
+                passwordInputRef.current.setAttribute("aria-describedby", "");
+              }
+            }}
           />
           {/* error message */}
           <span
@@ -81,6 +173,12 @@ export default function RegisterForm({ children, ...props }) {
             className={RegisterFormStyles[`not-matched-pw`]}
           >
             not a match
+          </span>
+          <span
+            id="confirm-matched"
+            className={RegisterFormStyles[`matched-pw`]}
+          >
+            matched
           </span>
         </div>
 
