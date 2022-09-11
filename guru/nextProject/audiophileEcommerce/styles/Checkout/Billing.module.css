@@ -31,11 +31,12 @@
 /* or when format is invalid */
 
 /* outline color */
-
+.billing-wrapper [data-isempty="true"] label,
 .billing-wrapper [data-billinguserattention="true"] label {
   color: var(--color-primary-error);
 }
 
+.billing-wrapper [data-isempty="true"] input,
 .billing-wrapper [data-billinguserattention="true"] input {
   outline: 3px solid var(--color-primary-error);
 }
@@ -50,15 +51,18 @@
   position: relative;
 }
 
+.billing-wrapper [data-isempty="true"] .empty-text,
 .billing-wrapper [data-billinguserattention="true"] .error-text,
 .billing-wrapper [data-billinguserattention="false"] .correct-text {
   display: inline-block;
 }
 
+.empty-text,
 .error-text {
   color: var(--color-primary-error);
 }
 
+.empty-text,
 .error-text,
 .correct-text {
   position: absolute;
@@ -133,6 +137,8 @@
   .country {
     padding-inline-end: 0;
   }
+
+  .empty-text,
   .error-text,
   .correct-text {
     right: 0px;

@@ -47,44 +47,81 @@ function PersonalInfo({ children, ...props }) {
     // check if inputs are valid
     // name
     personalNameRef.current.value === ""
-      ? personalNameRef.current.parentElement.setAttribute(
+      ? (personalNameRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "true"
-        )
-      : personalNameRef.current.parentElement.setAttribute(
+        ),
+        personalNameRef.current.setAttribute(
+          "aria-describedby",
+          "name-notaccepted"
+        ))
+      : (personalNameRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "false"
-        );
+        ),
+        personalNameRef.current.setAttribute(
+          "aria-describedby",
+          "name-accepted"
+        ));
     // email
     personalEmailRef.current.value === ""
-      ? personalEmailRef.current.parentElement.setAttribute(
+      ? (personalEmailRef.current.parentElement.setAttribute(
+          "data-isempty",
+          "true"
+        ),
+        personalEmailRef.current.setAttribute(
+          "aria-describedby",
+          "email-isempty"
+        ))
+      : (!personalEmailRef.current.validity.valid,
+        personalEmailRef.current.parentElement.setAttribute("data-isempty", ""))
+      ? (personalEmailRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "true"
-        )
-      : !personalEmailRef.current.validity.valid
-      ? personalEmailRef.current.parentElement.setAttribute(
-          "data-needuserattention",
-          "true"
-        )
-      : personalEmailRef.current.parentElement.setAttribute(
+        ),
+        personalEmailRef.current.setAttribute(
+          "aria-describedby",
+          "email-notaccepted"
+        ))
+      : (personalEmailRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "false"
-        );
+        ),
+        personalEmailRef.current.setAttribute(
+          "aria-describedby",
+          "email-accepted"
+        ));
     // phone number
     personalPhoneNumRef.current.value === ""
-      ? personalPhoneNumRef.current.parentElement.setAttribute(
+      ? (personalPhoneNumRef.current.parentElement.setAttribute(
+          "data-isempty",
+          "true"
+        ),
+        personalPhoneNumRef.current.setAttribute(
+          "aria-describedby",
+          "phone-number-isempty"
+        ))
+      : (!personalPhoneNumRef.current.validity.valid,
+        personalPhoneNumRef.current.parentElement.setAttribute(
+          "data-isempty",
+          ""
+        ))
+      ? (personalPhoneNumRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "true"
-        )
-      : !personalPhoneNumRef.current.validity.valid
-      ? personalPhoneNumRef.current.parentElement.setAttribute(
-          "data-needuserattention",
-          "true"
-        )
-      : personalPhoneNumRef.current.parentElement.setAttribute(
+        ),
+        personalPhoneNumRef.current.setAttribute(
+          "aria-describedby",
+          "phone-notaccepted"
+        ))
+      : (personalPhoneNumRef.current.parentElement.setAttribute(
           "data-needuserattention",
           "false"
-        );
+        ),
+        personalPhoneNumRef.current.setAttribute(
+          "aria-describedby",
+          "phone-accepted"
+        ));
   }, []);
 
   return (
@@ -111,14 +148,24 @@ function PersonalInfo({ children, ...props }) {
               id="personal-name"
               placeholder="John Doe"
               required
+              aria-describedby="name-notaccepted"
             />
-            <span className={PersonalInfoStyles[`error-text`]}>
-              NOT ACCEPTED
+            <span
+              id="name-notaccepted"
+              className={PersonalInfoStyles[`error-text`]}
+            >
+              CAN'T BE EMPTY
             </span>
-            <span className={PersonalInfoStyles[`correct-text`]}>ACCEPTED</span>
+            <span
+              id="name-accepted"
+              className={PersonalInfoStyles[`correct-text`]}
+            >
+              NOT EMPTY
+            </span>
           </div>
           <div
-            data-needuserattention="true"
+            data-isempty="true"
+            data-needuserattention=""
             className={PersonalInfoStyles[`email`]}
           >
             <label
@@ -134,14 +181,30 @@ function PersonalInfo({ children, ...props }) {
               placeholder="johndoe@yahoo.com"
               required
               className={PersonalInfoStyles[`email-input`]}
+              aria-describedby="email-isempty"
             />
-            <span className={PersonalInfoStyles[`error-text`]}>
-              NOT ACCEPTED
+            <span
+              id="email-isempty"
+              className={PersonalInfoStyles[`empty-error`]}
+            >
+              CAN'T BE EMPTY
             </span>
-            <span className={PersonalInfoStyles[`correct-text`]}>ACCEPTED</span>
+            <span
+              id="email-notaccepted"
+              className={PersonalInfoStyles[`error-text`]}
+            >
+              WRONG FORMAT
+            </span>
+            <span
+              id="email-accepted"
+              className={PersonalInfoStyles[`correct-text`]}
+            >
+              ACCEPTED
+            </span>
           </div>
           <div
-            data-needuserattention="true"
+            data-isempty="true"
+            data-needuserattention=""
             className={PersonalInfoStyles[`phone-number`]}
           >
             <label htmlFor="personal-phone-number">Phone Number</label>
@@ -152,11 +215,26 @@ function PersonalInfo({ children, ...props }) {
               id="personal-phone-number"
               required
               placeholder="888-888-8888"
+              aria-describedby="phone-number-isempty"
             />
-            <span className={PersonalInfoStyles[`error-text`]}>
-              NOT ACCEPTED
+            <span
+              id="phone-number-isempty"
+              className={PersonalInfoStyles[`empty-error`]}
+            >
+              CAN'T BE EMPTY
             </span>
-            <span className={PersonalInfoStyles[`correct-text`]}>ACCEPTED</span>
+            <span
+              id="phone-notaccepted"
+              className={PersonalInfoStyles[`error-text`]}
+            >
+              WRONG FORMAT
+            </span>
+            <span
+              id="phone-accepted"
+              className={PersonalInfoStyles[`correct-text`]}
+            >
+              ACCEPTED
+            </span>
           </div>
         </article>
       </fieldset>

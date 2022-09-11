@@ -43,7 +43,8 @@ function Billing({ children, ...props }) {
     valuesForBillingShippingComponent(
       billingRefObj,
       billingInfoDataFromStorage,
-      "data-billinguserattention"
+      "data-billinguserattention",
+      "billing"
     );
   }, []);
   return (
@@ -83,11 +84,22 @@ function Billing({ children, ...props }) {
               required
               type="text"
               placeholder="888 Eighth St"
+              aria-describedby="billing-address-notaccepted"
             />
             {/* add error text */}
             {/* add correct text */}
-            <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-            <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
+            <span
+              id="billing-address-notaccepted"
+              className={BillingStyles[`error-text`]}
+            >
+              CAN'T BE EMPTY
+            </span>
+            <span
+              id="billing-address-accepted"
+              className={BillingStyles[`correct-text`]}
+            >
+              NOT EMPTY
+            </span>
           </div>
           {/* city, state, zip, country */}
           <div className={BillingStyles[`city-state-zip-country-wrapper`]}>
@@ -103,9 +115,20 @@ function Billing({ children, ...props }) {
                 required
                 type="text"
                 placeholder="Los Angeles"
+                aria-describedby="billing-city-notaccepted"
               />
-              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="billing-city-notaccepted"
+                className={BillingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="billing-city-accepted"
+                className={BillingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
             </div>
             {/* state */}
             <div
@@ -120,9 +143,20 @@ function Billing({ children, ...props }) {
                 type="text"
                 placeholder="California"
                 list="billing-list-of-states"
+                aria-describedby="billing-state-notaccepted"
               />
-              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="billing-state-notaccepted"
+                className={BillingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="billing-state-accepted"
+                className={BillingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
               <datalist id="billing-list-of-states">
                 {/* loop through arrayOfStates make option element */}
                 {arrayOfStates.map(function makeOptionElements(element, index) {
@@ -137,7 +171,8 @@ function Billing({ children, ...props }) {
             </div>
             {/* zip */}
             <div
-              data-billinguserattention="true"
+              data-isempty="true"
+              data-billinguserattention=""
               className={BillingStyles[`zip`]}
             >
               <label htmlFor="billing-zip">ZIP Code</label>
@@ -149,9 +184,26 @@ function Billing({ children, ...props }) {
                 maxLength="5"
                 pattern="[0-9]{5}"
                 placeholder="88888"
+                aria-describedby="billing-zip-isempty"
               />
-              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="billing-zip-isempty"
+                className={BillingStyles[`empty-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="billing-zip-notaccepted"
+                className={BillingStyles[`error-text`]}
+              >
+                WRONG FORMAT
+              </span>
+              <span
+                id="billing-zip-accepted"
+                className={BillingStyles[`correct-text`]}
+              >
+                ACCEPTED
+              </span>
             </div>
             {/* country */}
             <div
@@ -165,9 +217,20 @@ function Billing({ children, ...props }) {
                 required
                 type="text"
                 placeholder="United States"
+                aria-describedby="billing-country-notaccepted"
               />
-              <span className={BillingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={BillingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="billing-country-notaccepted"
+                className={BillingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="billing-country-accepted"
+                className={BillingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
             </div>
           </div>
         </article>

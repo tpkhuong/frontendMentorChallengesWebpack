@@ -156,7 +156,9 @@ export function personalInputListener(event) {
       localStorage.getItem("someData") == null
         ? initialCheckoutInputObjForLocalStorage
         : JSON.parse(localStorage.getItem("someData"));
+    // input id
 
+    const inputElementId = event.target.getAttribute("id");
     // check if input is email or phone number check entered value is correct
     // due to pattern attr
     if (
@@ -183,18 +185,56 @@ export function personalInputListener(event) {
         // save user personal info inputs: email
         dataFromLocalStorage.personalInfo.email = event.target.value;
       }
-      if (event.target.value === "" || !event.target.validity.valid) {
-        // emailErrorColor.current.setAttribute("data-needuserattention", "true");
-        event.target.parentElement.setAttribute(
-          "data-needuserattention",
-          "true"
-        );
+      // if (event.target.value === "" || !event.target.validity.valid) {
+      //   // emailErrorColor.current.setAttribute("data-needuserattention", "true");
+      //   event.target.parentElement.setAttribute(
+      //     "data-needuserattention",
+      //     "true"
+      //   );
+      // } else {
+      //   // emailErrorColor.current.setAttribute("data-needuserattention", "false");
+      //   event.target.parentElement.setAttribute(
+      //     "data-needuserattention",
+      //     "false"
+      //   );
+      // }
+      if (event.target.value === "") {
+        event.target.parentElement.setAttribute("data-isempty", "true");
+        event.target.parentElement.setAttribute("data-needuserattention", "");
+        // assign correct id to aria-describedby
+        inputElementId == "personal-email"
+          ? event.target.setAttribute("aria-describedby", "email-isempty")
+          : event.target.setAttribute(
+              "aria-describedby",
+              "phone-number-isempty"
+            );
       } else {
-        // emailErrorColor.current.setAttribute("data-needuserattention", "false");
-        event.target.parentElement.setAttribute(
-          "data-needuserattention",
-          "false"
-        );
+        // input is not empty we want to check for validity
+        event.target.parentElement.setAttribute("data-isempty", "");
+        if (!event.target.validity.valid) {
+          // input not valid
+          event.target.parentElement.setAttribute(
+            "data-needuserattention",
+            "true"
+          );
+          // assign correct id to aria-describedby
+          inputElementId == "personal-email"
+            ? event.target.setAttribute("aria-describedby", "email-notaccepted")
+            : event.target.setAttribute(
+                "aria-describedby",
+                "phone-notaccepted"
+              );
+        } else {
+          // input is valid
+          event.target.parentElement.setAttribute(
+            "data-needuserattention",
+            "false"
+          );
+          // assign correct id to aria-describedby
+          inputElementId == "personal-email"
+            ? event.target.setAttribute("aria-describedby", "email-accepted")
+            : event.target.setAttribute("aria-describedby", "phone-accepted");
+        }
       }
       // if phone number input is valid and value length is greater than 12
       // copy value inputs and assign that value to phone number input
@@ -267,16 +307,35 @@ export function billingShippingInputListener(event) {
       // we will check when user press down on letter key
       // as first values in zip code
       event.target.value = !onlyNumbers ? "" : onlyNumbers.join("");
-      if (event.target.value === "" || !event.target.validity.valid) {
-        event.target.parentElement.setAttribute(
-          eitherBillingOrShipping,
-          "true"
-        );
+      // if (event.target.value === "" || !event.target.validity.valid) {
+      //   event.target.parentElement.setAttribute(
+      //     eitherBillingOrShipping,
+      //     "true"
+      //   );
+      // } else {
+      //   event.target.parentElement.setAttribute(
+      //     eitherBillingOrShipping,
+      //     "false"
+      //   );
+      // }
+      // check for empty
+      if (event.target.value === "") {
+        event.target.parentElement.setAttribute("data-isempty", "true");
+        event.target.parentElement.setAttribute(eitherBillingOrShipping, "");
       } else {
-        event.target.parentElement.setAttribute(
-          eitherBillingOrShipping,
-          "false"
-        );
+        event.target.parentElement.setAttribute("data-isempty", "");
+        // check for validity
+        if (!event.target.validity.valid) {
+          event.target.parentElement.setAttribute(
+            eitherBillingOrShipping,
+            "true"
+          );
+        } else {
+          event.target.parentElement.setAttribute(
+            eitherBillingOrShipping,
+            "false"
+          );
+        }
       }
       // dont want user input for zip to go pass length of 5
       if (!event.target.validity.valid && event.target.value.length > 5) {
@@ -421,15 +480,49 @@ function linkedInputHelper(
     ? shippingRef[idInputStr]
     : billingRef[idInputStr];
   linkedInputElement.current.value = eventInput.target.value;
-  eventInput.target.parentElement.getAttribute(billingOrShipping) == "false"
-    ? linkedInputElement.current.parentElement.setAttribute(
-        parentLinkedInput,
-        "false"
-      )
-    : linkedInputElement.current.parentElement.setAttribute(
-        parentLinkedInput,
-        "true"
-      );
+  // we want to update the linked input error messages and aria-describedby
+  if (idInputStr == "zipCode") {
+    // we are typing in zipCode input
+    // get event target value for data-isempty and data-shippinguserattention/data-billinguserattention
+    const currentInputIsEmptyAttr =
+      eventInput.parentElement.getAttribute("data-isempty");
+    const currentInputAttentionAttr =
+      eventInput.parentElement.getAttribute(parentLinkedInput);
+    // assign that value to linkedInputELement parent element
+    linkedInputElement.current.parentElement.setAttribute(
+      "data-isempty",
+      currentInputIsEmptyAttr
+    );
+    linkedInputElement.current.parentElement.setAttribute(
+      parentLinkedInput,
+      currentInputAttentionAttr
+    );
+  } else {
+    // we get here we are typing in address,city,state, or country input
+    eventInput.target.parentElement.getAttribute(billingOrShipping) == "false"
+      ? linkedInputElement.current.parentElement.setAttribute(
+          parentLinkedInput,
+          "false"
+        )
+      : linkedInputElement.current.parentElement.setAttribute(
+          parentLinkedInput,
+          "true"
+        );
+  }
+  // get value of event.target aria-describedby
+  const [firstPartOfAttr, ...restOfAttr] = eventInput.target
+    .getAttribute("aria-describedby")
+    .split("-");
+  const linkedElementFirstPartOfStr =
+    firstPartOfAttr == "billing" ? "shipping" : "billing";
+  const strForAriaDescribedby = [
+    linkedElementFirstPartOfStr,
+    ...restOfAttr,
+  ].join("-");
+  linkedInputElement.current.setAttribute(
+    "aria-describedby",
+    strForAriaDescribedby
+  );
 }
 
 export const initialCheckoutInputObjForLocalStorage = {
@@ -465,8 +558,10 @@ export const initialCheckoutInputObjForLocalStorage = {
 export function valuesForBillingShippingComponent(
   objInputRef,
   localDataObj,
-  parentAttr
+  parentAttr,
+  ariaText
 ) {
+  console.log(objInputRef.address);
   // assign value
   // address
   objInputRef.address.current.value = !localDataObj ? "" : localDataObj.address;
@@ -479,37 +574,109 @@ export function valuesForBillingShippingComponent(
   // country
   objInputRef.country.current.value = !localDataObj ? "" : localDataObj.country;
   // check for validation
+  console.log(objInputRef.zipCode.current.validity.valid);
   // address
   objInputRef.address.current.value === ""
-    ? objInputRef.address.current.parentElement.setAttribute(parentAttr, "true")
-    : objInputRef.address.current.parentElement.setAttribute(
+    ? (objInputRef.address.current.parentElement.setAttribute(
+        parentAttr,
+        "true"
+      ),
+      objInputRef.address.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-address-notaccepted`
+      ))
+    : (objInputRef.address.current.parentElement.setAttribute(
         parentAttr,
         "false"
-      );
+      ),
+      objInputRef.address.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-address-accepted`
+      ));
   // city
   objInputRef.city.current.value === ""
-    ? objInputRef.city.current.parentElement.setAttribute(parentAttr, "true")
-    : objInputRef.city.current.parentElement.setAttribute(parentAttr, "false");
+    ? (objInputRef.city.current.parentElement.setAttribute(parentAttr, "true"),
+      objInputRef.city.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-city-notaccepted`
+      ))
+    : (objInputRef.city.current.parentElement.setAttribute(parentAttr, "false"),
+      objInputRef.city.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-city-accepted`
+      ));
   // state
   objInputRef.state.current.value === ""
-    ? objInputRef.state.current.parentElement.setAttribute(parentAttr, "true")
-    : objInputRef.state.current.parentElement.setAttribute(parentAttr, "false");
+    ? (objInputRef.state.current.parentElement.setAttribute(parentAttr, "true"),
+      objInputRef.state.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-state-notaccepted`
+      ))
+    : (objInputRef.state.current.parentElement.setAttribute(
+        parentAttr,
+        "false"
+      ),
+      objInputRef.state.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-state-accepted`
+      ));
   // zip code
-  objInputRef.zipCode.current.value === ""
-    ? objInputRef.zipCode.current.parentElement.setAttribute(parentAttr, "true")
-    : !objInputRef.zipCode.current.validity.valid
-    ? objInputRef.zipCode.current.parentElement.setAttribute(parentAttr, "true")
-    : objInputRef.zipCode.current.parentElement.setAttribute(
+  /**
+   * when we had equality operator and setting data-isempty to parentelement in our
+   * conditional statement of our ternary operator
+   * it made our algorithm enter else statement which assign "false"
+   * to parent element "data" billing or shipping"userattention" attr
+   * **/
+  if (objInputRef.zipCode.current.value === "") {
+    objInputRef.zipCode.current.parentElement.setAttribute(
+      "data-isempty",
+      "true"
+    );
+    objInputRef.zipCode.current.setAttribute(
+      "aria-describedby",
+      `${ariaText}-zip-isempty`
+    );
+  } else {
+    objInputRef.zipCode.current.parentElement.setAttribute("data-isempty", "");
+    if (!objInputRef.zipCode.current.validity.valid) {
+      objInputRef.zipCode.current.parentElement.setAttribute(
+        parentAttr,
+        "true"
+      );
+      objInputRef.zipCode.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-zip-notaccept`
+      );
+    } else {
+      objInputRef.zipCode.current.parentElement.setAttribute(
         parentAttr,
         "false"
       );
+      objInputRef.zipCode.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-zip-accepted`
+      );
+    }
+  }
+  // objInputRef.zipCode.current.setAttribute("data-isempty", "true");
   // country
   objInputRef.country.current.value === ""
-    ? objInputRef.country.current.parentElement.setAttribute(parentAttr, "true")
-    : objInputRef.country.current.parentElement.setAttribute(
+    ? (objInputRef.country.current.parentElement.setAttribute(
+        parentAttr,
+        "true"
+      ),
+      objInputRef.country.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-country-notaccepted`
+      ))
+    : (objInputRef.country.current.parentElement.setAttribute(
         parentAttr,
         "false"
-      );
+      ),
+      objInputRef.country.current.setAttribute(
+        "aria-describedby",
+        `${ariaText}-country-accepted`
+      ));
 }
 
 export function billingInputListener(event) {

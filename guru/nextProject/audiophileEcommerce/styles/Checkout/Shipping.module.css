@@ -23,10 +23,12 @@
 
 /* outline color */
 
+.shipping-wrapper [data-isempty="true"] label,
 .shipping-wrapper [data-shippinguserattention="true"] label {
   color: var(--color-primary-error);
 }
 
+.shipping-wrapper [data-isempty="true"] input,
 .shipping-wrapper [data-shippinguserattention="true"] input {
   outline: 3px solid var(--color-primary-error);
 }
@@ -41,15 +43,18 @@
   position: relative;
 }
 
+.shipping-wrapper [data-isempty="true"] .empty-text,
 .shipping-wrapper [data-shippinguserattention="true"] .error-text,
 .shipping-wrapper [data-shippinguserattention="false"] .correct-text {
   display: inline-block;
 }
 
+.empty-text,
 .error-text {
   color: var(--color-primary-error);
 }
 
+.empty-text,
 .error-text,
 .correct-text {
   position: absolute;
@@ -126,6 +131,7 @@
   .country {
     padding-inline-end: 0;
   }
+  .empty-text,
   .error-text,
   .correct-text {
     right: 0px;

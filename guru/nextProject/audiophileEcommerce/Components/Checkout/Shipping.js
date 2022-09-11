@@ -45,7 +45,8 @@ function Shipping({ children, ...props }) {
     valuesForBillingShippingComponent(
       shippingRefObj,
       shippingInfoDataFromStorage,
-      "data-shippinguserattention"
+      "data-shippinguserattention",
+      "shipping"
     );
   }, []);
 
@@ -85,9 +86,20 @@ function Shipping({ children, ...props }) {
               required
               type="text"
               placeholder="888 Eighth St"
+              aria-describedby="shipping-address-notaccepted"
             />
-            <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
-            <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
+            <span
+              id="shipping-address-notaccepted"
+              className={ShippingStyles[`error-text`]}
+            >
+              CAN'T BE EMPTY
+            </span>
+            <span
+              id="shipping-address-accepted"
+              className={ShippingStyles[`correct-text`]}
+            >
+              NOT EMPTY
+            </span>
           </div>
           {/* city, state, zip, country */}
           <div className={ShippingStyles[`city-state-zip-country-wrapper`]}>
@@ -103,9 +115,20 @@ function Shipping({ children, ...props }) {
                 required
                 type="text"
                 placeholder="Los Angeles"
+                aria-describedby="shipping-city-notaccepted"
               />
-              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="shipping-city-notaccepted"
+                className={ShippingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="shipping-city-accepted"
+                className={ShippingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
             </div>
             {/* state */}
             <div
@@ -120,9 +143,20 @@ function Shipping({ children, ...props }) {
                 type="text"
                 placeholder="California"
                 list="shipping-list-of-states"
+                aria-describedby="shipping-state-notaccepted"
               />
-              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="shipping-state-notaccepted"
+                className={ShippingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="shipping-state-accepted"
+                className={ShippingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
               <datalist id="shipping-list-of-states">
                 {/* loop through arrayOfStates make option element */}
                 {arrayOfStates.map(function makeStates(element, index) {
@@ -137,7 +171,8 @@ function Shipping({ children, ...props }) {
             </div>
             {/* zip */}
             <div
-              data-shippinguserattention="true"
+              data-isempty="true"
+              data-shippinguserattention=""
               className={ShippingStyles[`zip`]}
             >
               <label htmlFor="shipping-zip">ZIP Code</label>
@@ -149,9 +184,26 @@ function Shipping({ children, ...props }) {
                 maxLength="5"
                 pattern="[0-9]{5}"
                 placeholder="88888"
+                aria-describedby="shipping-zip-isempty"
               />
-              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="shipping-zip-isempty"
+                className={ShippingStyles[`empty-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="shipping-zip-notaccepted"
+                className={ShippingStyles[`error-text`]}
+              >
+                WRONG FORMAT
+              </span>
+              <span
+                id="shipping-zip-accepted"
+                className={ShippingStyles[`correct-text`]}
+              >
+                ACCEPTED
+              </span>
             </div>
             {/* country */}
             <div
@@ -165,9 +217,20 @@ function Shipping({ children, ...props }) {
                 required
                 type="text"
                 placeholder="United States"
+                aria-describedby="shipping-country-notaccepted"
               />
-              <span className={ShippingStyles[`error-text`]}>NOT ACCEPTED</span>
-              <span className={ShippingStyles[`correct-text`]}>ACCEPTED</span>
+              <span
+                id="shipping-country-notaccepted"
+                className={ShippingStyles[`error-text`]}
+              >
+                CAN'T BE EMPTY
+              </span>
+              <span
+                id="shipping-country-accepted"
+                className={ShippingStyles[`correct-text`]}
+              >
+                NOT EMPTY
+              </span>
             </div>
           </div>
         </article>

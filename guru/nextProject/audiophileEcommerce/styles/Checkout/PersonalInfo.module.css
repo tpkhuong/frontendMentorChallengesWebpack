@@ -24,11 +24,13 @@
 } */
 
 /* add similar declartion from here */
-.personal-wrapper [data-needUserAttention="true"] input {
+.personal-wrapper [data-needUserAttention="true"] input,
+.personal-wrapper [data-isempty="true"] input {
   outline: 3px solid var(--color-primary-error);
 }
 
-.personal-wrapper [data-needUserAttention="true"] label {
+.personal-wrapper [data-needUserAttention="true"] label,
+.personal-wrapper [data-isempty="true"] label {
   color: var(--color-primary-error);
 }
 
@@ -38,15 +40,18 @@
   position: relative;
 }
 
+.personal-wrapper [data-isempty="true"] .empty-error,
 .personal-wrapper [data-needUserAttention="true"] .error-text,
 .personal-wrapper [data-needUserAttention="false"] .correct-text {
   display: inline-block;
 }
 
-.error-text {
+.error-text,
+.empty-error {
   color: var(--color-primary-error);
 }
 
+.empty-error,
 .error-text,
 .correct-text {
   position: absolute;
@@ -125,7 +130,8 @@
     padding-inline-end: 0;
   }
   .error-text,
-  .correct-text {
+  .correct-text,
+  .empty-error {
     right: 0;
   }
   .personal-fieldset {

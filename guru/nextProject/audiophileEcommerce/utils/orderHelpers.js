@@ -122,6 +122,8 @@ function getTotalErrors(objOfRef) {
       // only push ref of input into array if current error is 1
       const currentSectionError =
         current.value === "" ? 1 : !current.validity.valid ? 1 : 0;
+      // assign correct id to aria-describedby here
+      // the input without patterns we dont have to check for validity
       buildingUp.array =
         currentSectionError > 0
           ? [...buildingUp.array, current]
