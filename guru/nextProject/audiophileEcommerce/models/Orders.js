@@ -1,4 +1,4 @@
-// customer
+// customerID
 // billing address
 // shipping address
 // summary details: subtotal, shipping cost, tax and grand total

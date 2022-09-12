@@ -252,11 +252,15 @@ export function personalInputListener(event) {
           "data-needuserattention",
           "true"
         );
+        // assign correct span id to aria-describedby
+        event.target.setAttribute("aria-describedby", "name-notaccepted");
       } else {
         event.target.parentElement.setAttribute(
           "data-needuserattention",
           "false"
         );
+        // assign correct span id to aria-describedby
+        event.target.setAttribute("aria-describedby", "name-accepted");
       }
       // save user personal info inputs: name
       dataFromLocalStorage.personalInfo.name = event.target.value;
@@ -322,6 +326,11 @@ export function billingShippingInputListener(event) {
       if (event.target.value === "") {
         event.target.parentElement.setAttribute("data-isempty", "true");
         event.target.parentElement.setAttribute(eitherBillingOrShipping, "");
+        // assign span id to aria-describedby
+        event.target.setAttribute(
+          "aria-describedby",
+          `${billingOrShippingStr}-zip-isempty`
+        );
       } else {
         event.target.parentElement.setAttribute("data-isempty", "");
         // check for validity
@@ -330,10 +339,20 @@ export function billingShippingInputListener(event) {
             eitherBillingOrShipping,
             "true"
           );
+          // assign span id to aria-describedby
+          event.target.setAttribute(
+            "aria-describedby",
+            `${billingOrShippingStr}-zip-notaccepted`
+          );
         } else {
           event.target.parentElement.setAttribute(
             eitherBillingOrShipping,
             "false"
+          );
+          // assign span id to aria-describedby
+          event.target.setAttribute(
+            "aria-describedby",
+            `${billingOrShippingStr}-zip-accepted`
           );
         }
       }
@@ -375,6 +394,8 @@ export function billingShippingInputListener(event) {
       inputIdAttr.includes("state") ||
       inputIdAttr.includes("country")
     ) {
+      // get city,state,country string from input ID field for aria-describedby algorithm
+      const [, cityStateCountryStr] = inputIdAttr.split("-");
       const letterSpaceRegex = /[a-zA-Z\s]/g;
       const onlyLettersAndSpace = event.target.value.match(letterSpaceRegex);
       // find out if id is either city,state,country
@@ -387,10 +408,20 @@ export function billingShippingInputListener(event) {
           eitherBillingOrShipping,
           "true"
         );
+        // assign span id to aria-describedby
+        event.target.setAttribute(
+          "aria-describedby",
+          `${billingOrShippingStr}-${cityStateCountryStr}-notaccepted`
+        );
       } else {
         event.target.parentElement.setAttribute(
           eitherBillingOrShipping,
           "false"
+        );
+        // assign span id to aria-describedby
+        event.target.setAttribute(
+          "aria-describedby",
+          `${billingOrShippingStr}-${cityStateCountryStr}-accepted`
         );
       }
       /**
@@ -431,10 +462,20 @@ export function billingShippingInputListener(event) {
           eitherBillingOrShipping,
           "true"
         );
+        // assign span id to aria-describedby
+        event.target.setAttribute(
+          "aria-describedby",
+          `${billingOrShippingStr}-address-notaccepted`
+        );
       } else {
         event.target.parentElement.setAttribute(
           eitherBillingOrShipping,
           "false"
+        );
+        // assign span id to aria-describedby
+        event.target.setAttribute(
+          "aria-describedby",
+          `${billingOrShippingStr}-address-accepted`
         );
       }
 
@@ -561,7 +602,6 @@ export function valuesForBillingShippingComponent(
   parentAttr,
   ariaText
 ) {
-  console.log(objInputRef.address);
   // assign value
   // address
   objInputRef.address.current.value = !localDataObj ? "" : localDataObj.address;
@@ -574,7 +614,6 @@ export function valuesForBillingShippingComponent(
   // country
   objInputRef.country.current.value = !localDataObj ? "" : localDataObj.country;
   // check for validation
-  console.log(objInputRef.zipCode.current.validity.valid);
   // address
   objInputRef.address.current.value === ""
     ? (objInputRef.address.current.parentElement.setAttribute(
@@ -645,7 +684,7 @@ export function valuesForBillingShippingComponent(
       );
       objInputRef.zipCode.current.setAttribute(
         "aria-describedby",
-        `${ariaText}-zip-notaccept`
+        `${ariaText}-zip-notaccepted`
       );
     } else {
       objInputRef.zipCode.current.parentElement.setAttribute(

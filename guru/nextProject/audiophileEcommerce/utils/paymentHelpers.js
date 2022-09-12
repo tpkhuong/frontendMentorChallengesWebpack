@@ -13,8 +13,8 @@ export function eMoneyClickHandler(event) {
   if (event.target.closest("[data-isemoney='true']")) {
     console.log("hello this is emoney");
   }
-  // pass value boolean false to setPaymentMethod
-  setPaymentMethod(false);
+  // pass value boolean true to setPaymentMethod
+  setPaymentMethod(true);
   // we focus on the radio btn clicked
   emoneyRef.current.focus();
   // assign value of "0" to tabindex of radio btn click
@@ -52,8 +52,8 @@ export function cashOnDeliveryClickHandler(event) {
     this;
   if (event.target.closest("[data-iscashdelivery='true']")) {
     console.log("hello this is cash delivery");
-    // pass value boolean true to setPaymentMethod
-    setPaymentMethod(true);
+    // pass value boolean false to setPaymentMethod
+    setPaymentMethod(false);
     // we focus on the radio btn clicked
     cashDeliveryRef.current.focus();
     // assign value of "0" to tabindex of radio btn click

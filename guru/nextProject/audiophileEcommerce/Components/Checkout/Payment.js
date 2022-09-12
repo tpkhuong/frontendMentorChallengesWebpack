@@ -9,9 +9,9 @@ import {
 
 function Payment({ children, ...props }) {
   // check if data obj is set in local storage
-  const [selectedPayment, setPaymentMethod] = React.useState(false);
-  // when selectedPayment is false we should emoney
-  // show cash delivery when selectedPayment is true
+  const [emoneyMethodSelected, setPaymentMethod] = React.useState(true);
+  // when emoneyMethodSelected is false we should emoney
+  // show cash delivery when emoneyMethodSelected is true
   // make reference to activedescendant eleemnt
   const activeDescendantRef = React.useRef();
   // emoney
@@ -55,6 +55,11 @@ function Payment({ children, ...props }) {
           : paymentInfoValuesFromStorage.cashDeliveryMethod
       }`
     );
+    // will call setPaymentMethod() passing boolean value true/false based
+    // on money method selected
+    emoneyRef.current.getAttribute("aria-checked") == "true"
+      ? setPaymentMethod(true)
+      : setPaymentMethod(false);
   }, []);
   return (
     <React.Fragment>
@@ -137,7 +142,7 @@ function Payment({ children, ...props }) {
           </div>
           {/* render based on radio btn selected */}
           <div className={PaymentStyles[`payment-wrapper`]}>
-            {!selectedPayment ? (
+            {emoneyMethodSelected ? (
               // /* e-money */
               <div
                 onChange={checkValidityEmoney}
