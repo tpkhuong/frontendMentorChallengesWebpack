@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home/Home.module.css";
+import { server } from "../config/index";
 import LogoNavContainer from "../Components/shared/LogoNavContainer";
 import MobileNav from "../Components/shared/MobileNav";
 import Footer from "../Components/shared/Footer";
@@ -10,6 +11,7 @@ import FeatureProducts from "../Components/Home/FeatureProducts";
 import Main from "../Components/shared/Main";
 import data from "../src/data.json";
 import { useMediaQuery } from "../utils/helpers";
+// import { getStaticProps } from "./checkout";
 
 function Home({ children, ...props }) {
   const isMobile = useMediaQuery("max", 768);
@@ -20,6 +22,7 @@ function Home({ children, ...props }) {
   // newProduct, product, category, description,
   // const { mobile, tablet, desktop, text } = image;
   // console.log(category, price, description, newProduct);
+
   return (
     <React.Fragment>
       <Head>
@@ -99,3 +102,22 @@ function Home({ children, ...props }) {
 }
 
 export default Home;
+
+export async function getStaticProps(context) {
+  const response = await fetch(`${server}/api/testcall`, {
+    method: "POST",
+    body: JSON.stringify({ message: "Hello" }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  console.log(
+    "response from index.js in pages dir, inside getStaticProps",
+    response
+  );
+  const data = await response.json();
+  console.log("data from index.js in pages dir, inside getStaticProps", data);
+  return {
+    props: { dataStr: "hello" },
+  };
+}

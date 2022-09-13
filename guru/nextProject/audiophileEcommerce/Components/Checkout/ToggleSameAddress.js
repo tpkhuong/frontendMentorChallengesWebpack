@@ -27,6 +27,26 @@ export default function ToggleSameAddress({ children, ...props }) {
   sameAddressInputRef.yesBtn = yesInputRef;
   sameAddressInputRef.noBtn = noInputRef;
 
+  React.useEffect(() => {
+    // get data from localStorage
+    const localDataFromStorage =
+      localStorage.getItem("someData") == null
+        ? null
+        : JSON.parse(localStorage.getItem("someData"));
+    const yesNoBtnSameAddressValues =
+      localDataFromStorage == null
+        ? null
+        : localDataFromStorage.toggleSameAddressInfo;
+    console.log(yesNoBtnSameAddressValues);
+    if (!yesNoBtnSameAddressValues) {
+      yesInputRef.current.checked = false;
+      noInputRef.current.checked = false;
+    } else {
+      yesInputRef.current.checked = yesNoBtnSameAddressValues.yesInputBtn;
+      noInputRef.current.checked = yesNoBtnSameAddressValues.noInputBtn;
+    }
+  }, []);
+
   toggleObj.toggleLinkBetweenBillingAndShipping = setShippingSame;
   toggleObj.billingAndShippingSame = isShippingSame;
   return (
@@ -113,7 +133,7 @@ export default function ToggleSameAddress({ children, ...props }) {
                 </a>
               );
             })}
-            <span>input is not empty or valid format.</span>
+            <span>input is not empty and check format is correct.</span>
           </React.Fragment>
         )}
       </div>

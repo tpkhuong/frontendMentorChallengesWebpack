@@ -18,3 +18,4 @@ const CartItemSchema = new mongoose.Schema({
 // use singular not plural form of our schema
 export default mongoose.models.CartItem ||
   mongoose.model("CartItem", CartItemSchema);
+// cart item and shopping session as temp data storage until order is confirmed.

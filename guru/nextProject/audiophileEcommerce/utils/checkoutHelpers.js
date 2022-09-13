@@ -509,7 +509,7 @@ export function billingShippingInputListener(event) {
 }
 
 function linkedInputHelper(
-  eventInput,
+  eventRef,
   idAttr,
   idInputStr,
   billingOrShipping,
@@ -520,15 +520,17 @@ function linkedInputHelper(
   const linkedInputElement = idAttr.includes("billing")
     ? shippingRef[idInputStr]
     : billingRef[idInputStr];
-  linkedInputElement.current.value = eventInput.target.value;
+  linkedInputElement.current.value = eventRef.target.value;
   // we want to update the linked input error messages and aria-describedby
   if (idInputStr == "zipCode") {
     // we are typing in zipCode input
-    // get event target value for data-isempty and data-shippinguserattention/data-billinguserattention
+    // get event target value for data-isempty and data-shippinguserattention/data-billinguserattention of parent element
     const currentInputIsEmptyAttr =
-      eventInput.parentElement.getAttribute("data-isempty");
+      eventRef.target.parentElement.getAttribute("data-isempty");
+
     const currentInputAttentionAttr =
-      eventInput.parentElement.getAttribute(parentLinkedInput);
+      eventRef.target.parentElement.getAttribute(billingOrShipping);
+
     // assign that value to linkedInputELement parent element
     linkedInputElement.current.parentElement.setAttribute(
       "data-isempty",
@@ -540,7 +542,7 @@ function linkedInputHelper(
     );
   } else {
     // we get here we are typing in address,city,state, or country input
-    eventInput.target.parentElement.getAttribute(billingOrShipping) == "false"
+    eventRef.target.parentElement.getAttribute(billingOrShipping) == "false"
       ? linkedInputElement.current.parentElement.setAttribute(
           parentLinkedInput,
           "false"
@@ -551,7 +553,7 @@ function linkedInputHelper(
         );
   }
   // get value of event.target aria-describedby
-  const [firstPartOfAttr, ...restOfAttr] = eventInput.target
+  const [firstPartOfAttr, ...restOfAttr] = eventRef.target
     .getAttribute("aria-describedby")
     .split("-");
   const linkedElementFirstPartOfStr =
