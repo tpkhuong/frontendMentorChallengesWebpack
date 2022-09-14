@@ -206,7 +206,7 @@ export async function submitNewUserHandler(event) {
       //   const result = await createUser(enteredEmail, enteredPassword);
       //   // result will be new user
       //   // browser console
-      //   // console.log("result from calling createUser helper", result);
+      //   console.log("result from calling createUser helper", result);
       //   const { user } = result;
       //   if (user) {
       //     // we want to re-render register page to run code in React.useEffect()

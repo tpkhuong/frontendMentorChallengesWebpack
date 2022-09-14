@@ -4,9 +4,9 @@ import { initialCheckoutInputObjForLocalStorage } from "./checkoutHelpers";
 export function eMoneyClickHandler(event) {
   // get data from local storage
   const dataFromStorageMoney =
-    localStorage.getItem("someData") == null
+    localStorage.getItem("cachedUserInputs") == null
       ? initialCheckoutInputObjForLocalStorage
-      : JSON.parse(localStorage.getItem("someData"));
+      : JSON.parse(localStorage.getItem("cachedUserInputs"));
   // destructure this obj
   const { setPaymentMethod, activeDescendantRef, emoneyRef, cashDeliveryRef } =
     this;
@@ -37,16 +37,19 @@ export function eMoneyClickHandler(event) {
   // assign value "false" to cashdelivery aria-checked
   dataFromStorageMoney.paymentInfo.cashDeliveryMethod = "false";
   // save data to local storage
-  localStorage.setItem("someData", JSON.stringify(dataFromStorageMoney));
+  localStorage.setItem(
+    "cachedUserInputs",
+    JSON.stringify(dataFromStorageMoney)
+  );
 }
 
 // cash on delivery
 export function cashOnDeliveryClickHandler(event) {
   // get data from local storage
   const dataFromStorageCash =
-    localStorage.getItem("someData") == null
+    localStorage.getItem("cachedUserInputs") == null
       ? initialCheckoutInputObjForLocalStorage
-      : JSON.parse(localStorage.getItem("someData"));
+      : JSON.parse(localStorage.getItem("cachedUserInputs"));
   // destructure this obj
   const { setPaymentMethod, activeDescendantRef, emoneyRef, cashDeliveryRef } =
     this;
@@ -76,7 +79,10 @@ export function cashOnDeliveryClickHandler(event) {
     // assign value "false" to emoney aria-checked
     dataFromStorageCash.paymentInfo.cashDeliveryMethod = "true";
     // save data to local storage
-    localStorage.setItem("someData", JSON.stringify(dataFromStorageCash));
+    localStorage.setItem(
+      "cachedUserInputs",
+      JSON.stringify(dataFromStorageCash)
+    );
   }
 }
 

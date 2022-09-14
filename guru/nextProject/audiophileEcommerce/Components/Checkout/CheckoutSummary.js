@@ -58,6 +58,15 @@ function CheckoutSummary({ children, ...props }) {
         totalPriceStrType: addCommasToPrice(grandTotal),
       },
     ];
+    /**
+     * values of total,shipping VAT and grand total price for order details schema
+     * **/
+    const objOfValuesForOrderDetailsSchema = {
+      totalPrice: total_price,
+      shippingCost,
+      tax: valueAddedTax,
+      grandTotal,
+    };
     // pass arrayOfTaxShippingTotalObj and items into
     // setSummaryValues
     setSummaryValues((previousValues) => {
@@ -66,6 +75,7 @@ function CheckoutSummary({ children, ...props }) {
         itemsArray: items,
         taxShippingTotalArray: arrayOfTaxShippingTotalObj,
         grandTotalNum: grandTotal,
+        orderDetailsValues: objOfValuesForOrderDetailsSchema,
       };
     });
   }, []);
@@ -74,6 +84,7 @@ function CheckoutSummary({ children, ...props }) {
       itemsArray: [],
       taxShippingTotalArray: [],
       grandTotalNum: 0,
+      orderDetailsValues: {},
     };
   }, []);
   const [initialSummaryObj, setSummaryValues] =
@@ -153,6 +164,7 @@ function CheckoutSummary({ children, ...props }) {
       </div>
       {/* continue and pay btn */}
       <OrderModalWrapper
+        valuesForOrderDetails={initialSummaryObj.orderDetailsValues}
         itemsInfo={initialSummaryObj.itemsArray}
         grandTotalValue={initialSummaryObj.grandTotalNum}
       />

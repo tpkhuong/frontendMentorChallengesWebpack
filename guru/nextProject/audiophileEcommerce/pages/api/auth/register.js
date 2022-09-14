@@ -1,5 +1,7 @@
 import { hashPassword } from "../../../utils/authHelpers";
 import dbConnect from "../../../config/mongooseMongoDatabase";
+import Customer from "../../../models/Customers";
+import User from "../../../models/Users";
 import TestUser from "../../../models/TestUsers";
 
 export default async function registerUserHandler(req, res) {
@@ -22,8 +24,12 @@ export default async function registerUserHandler(req, res) {
   }
   // connect to db
   await dbConnect();
-
-  const userExist = await TestUser.findOne({ email: email });
+  /**
+   * use email to find customer in collection if record exist get customer id
+   * **/
+  // const userExist = await TestUser.findOne({ email: email });
+  // user User models
+  const userExist = await User.findOne({ email: email });
 
   if (userExist) {
     res.status(422).json({ message: "User already exists!" });
@@ -34,11 +40,16 @@ export default async function registerUserHandler(req, res) {
 
   const hashedPassword = await hashPassword(password);
 
-  const newUser = await TestUser.create({
+  // const newUser = await TestUser.create({
+  //   email,
+  //   password: hashedPassword,
+  // });
+
+  // user User models: get customer id
+  const newUser = await User.create({
     email,
     password: hashedPassword,
   });
-
   if (newUser) {
     // if we are successful at creating new user
     // redirect to log in page

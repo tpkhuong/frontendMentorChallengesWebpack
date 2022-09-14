@@ -29,9 +29,9 @@ function Shipping({ children, ...props }) {
   React.useEffect(() => {
     // get data from local storage
     const shippingDataFromLocal =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? null
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     const shippingInfoDataFromStorage =
       shippingDataFromLocal == null ? null : shippingDataFromLocal.shippingInfo;
     const shippingRefObj = {

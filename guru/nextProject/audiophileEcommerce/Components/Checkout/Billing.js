@@ -28,9 +28,9 @@ function Billing({ children, ...props }) {
 
   React.useEffect(() => {
     const billingDataFromLocal =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? null
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     const billingInfoDataFromStorage =
       billingDataFromLocal == null ? null : billingDataFromLocal.billingInfo;
     const billingRefObj = {

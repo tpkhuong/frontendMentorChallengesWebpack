@@ -1,7 +1,7 @@
 /**
  * will be the checkout page
  * **/
-// customerID
+// customer from customer schema
 // billing address
 // shipping address
 // summary details: subtotal, shipping cost, tax and grand total
@@ -9,3 +9,31 @@
 // ordereditems look at cartIconBtnAlgorithm func in helpers.js
 
 import mongoose from "mongoose";
+
+const OrderDetailsSchema = new mongoose.Schema({
+  customer: {
+    // object will have properties customer email and customer id
+    type: Object,
+  },
+  billingAddress: {
+    type: Object,
+  },
+  shippingAddress: {
+    type: Object,
+  },
+  summaryPrice: {
+    type: Object,
+  },
+  orderNumber: {
+    type: Number,
+  },
+  orderedItems: {
+    type: Array,
+  },
+  payment: {
+    type: String,
+  },
+});
+
+export default mongoose.models.OrderDetail ||
+  mongoose.model("OrderDetail", OrderDetailsSchema);

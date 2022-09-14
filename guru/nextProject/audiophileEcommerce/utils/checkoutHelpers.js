@@ -3,9 +3,9 @@ export function checkoutSubmitHandler(event) {}
 export function toggleBillingAndShippingAddress(event) {
   // get data from local storage
   const localData =
-    localStorage.getItem("someData") == null
+    localStorage.getItem("cachedUserInputs") == null
       ? initialCheckoutInputObjForLocalStorage
-      : JSON.parse(localStorage.getItem("someData"));
+      : JSON.parse(localStorage.getItem("cachedUserInputs"));
 
   const {
     // setBillingShipping,
@@ -144,7 +144,7 @@ export function toggleBillingAndShippingAddress(event) {
     localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
   }
   // save yesbtn and nobtn checked values to local storage
-  localStorage.setItem("someData", JSON.stringify(localData));
+  localStorage.setItem("cachedUserInputs", JSON.stringify(localData));
 }
 
 export function personalInputListener(event) {
@@ -153,9 +153,9 @@ export function personalInputListener(event) {
      * get data from local storage
      * **/
     const dataFromLocalStorage =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? initialCheckoutInputObjForLocalStorage
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     // input id
 
     const inputElementId = event.target.getAttribute("id");
@@ -266,7 +266,10 @@ export function personalInputListener(event) {
       dataFromLocalStorage.personalInfo.name = event.target.value;
     }
     // save obj to local storage
-    localStorage.setItem("someData", JSON.stringify(dataFromLocalStorage));
+    localStorage.setItem(
+      "cachedUserInputs",
+      JSON.stringify(dataFromLocalStorage)
+    );
   }
 }
 
@@ -277,9 +280,9 @@ export function billingShippingInputListener(event) {
   if (event.target.closest("input")) {
     // get data from local storage
     const dataFromLocalStorage =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? initialCheckoutInputObjForLocalStorage
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     // get element id
     const inputIdAttr = event.target.getAttribute("id");
     const billingOrShippingStr = inputIdAttr.includes("billing")
@@ -504,7 +507,10 @@ export function billingShippingInputListener(event) {
       }
     }
     // save input data to local storage
-    localStorage.setItem("someData", JSON.stringify(dataFromLocalStorage));
+    localStorage.setItem(
+      "cachedUserInputs",
+      JSON.stringify(dataFromLocalStorage)
+    );
   }
 }
 

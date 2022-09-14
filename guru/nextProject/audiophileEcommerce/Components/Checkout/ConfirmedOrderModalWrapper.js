@@ -17,7 +17,12 @@ export default function OrderModalWrapper({ children, ...props }) {
       <button
         // aria-label="confirm order"
         className={OrderModalStyles[`place-order-btn`]}
-        onClick={showOrderModal.bind({ setOrderPlaced, refValues })}
+        onClick={showOrderModal.bind({
+          setOrderPlaced,
+          refValues,
+          objForOrderDetails: props.valuesForOrderDetails,
+          itemsArray: props.itemsInfo,
+        })}
       >
         contine & pay
       </button>

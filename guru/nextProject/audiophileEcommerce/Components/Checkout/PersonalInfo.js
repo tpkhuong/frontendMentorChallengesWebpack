@@ -27,9 +27,9 @@ function PersonalInfo({ children, ...props }) {
     // check if cached data obj is in local storage
     // we want to call local storage getitem once in navlisthelper
     const localStorageData =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? null
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     const personalValuesFromLocalStorage =
       localStorageData == null ? null : localStorageData.personalInfo;
     // dont need to call use state since we have a ref to the inputs

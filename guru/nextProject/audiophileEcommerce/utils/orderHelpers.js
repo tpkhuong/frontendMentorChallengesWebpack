@@ -1,5 +1,5 @@
 export function showOrderModal(event) {
-  const { setOrderPlaced, refValues } = this;
+  const { setOrderPlaced, refValues, objForOrderDetails, itemsArray } = this;
   const {
     personal,
     billing,
@@ -14,6 +14,7 @@ export function showOrderModal(event) {
   // personal email, phone num, billing and shipping zip code
   // check format and empty string
   // personal
+  console.log("objForOrderDetails,itemsArray", objForOrderDetails, itemsArray);
   const { personalArray, personalErrors } = personalInfoChecker(personal);
 
   // billing
@@ -64,6 +65,8 @@ export function showOrderModal(event) {
 
   // when total errors == 0 run code below
   totalErrors == 0 ? setOrderPlaced(true) : null;
+  // call func that will work with database here
+  // or make api calls here, passing data we need to the correct api
 }
 
 /**
@@ -153,4 +156,13 @@ export function showHideItems(event) {
     // which will render first item in array
     setShowMore(false);
   }
+}
+
+export function generateOrderNumer(name) {
+  const arrayOfStrings = name.split(" ");
+  const [first, last] = arrayOfStrings;
+  const beginning = Math.random() * new Date().getSeconds() + 1;
+  const middle = Math.random() * 1000 + 1;
+  const end = Math.random() * new Date().getMilliseconds() + 1;
+  return `${first[0].toLowerCase()}${beginning.toFixed()}-${middle.toFixed()}-${last[0].toLowerCase()}${end.toFixed()}`;
 }

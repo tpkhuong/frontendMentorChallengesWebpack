@@ -32,9 +32,9 @@ function Payment({ children, ...props }) {
   // console.log(paymentRefObj);
   React.useEffect(() => {
     const localStorageData =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? null
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
 
     const paymentInfoValuesFromStorage =
       localStorageData == null ? null : localStorageData.paymentInfo;
