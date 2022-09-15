@@ -1,3 +1,14 @@
+import axios from "axios";
+
+/**
+ * objfororderdetails will have these properties:
+ * totalPrice: total_price,
+ * shippingCost,
+ * tax: valueAddedTax,
+ * grandTotal,
+ * itemsarray will be cart items
+ * **/
+
 export function showOrderModal(event) {
   const { setOrderPlaced, refValues, objForOrderDetails, itemsArray } = this;
   const {
@@ -64,9 +75,17 @@ export function showOrderModal(event) {
   });
 
   // when total errors == 0 run code below
-  totalErrors == 0 ? setOrderPlaced(true) : null;
-  // call func that will work with database here
-  // or make api calls here, passing data we need to the correct api
+  if (totalErrors == 0) {
+    setOrderPlaced(true);
+
+    // call func that will work with database here
+    // or make api calls here, passing data to the correct api
+    try {
+      //
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 /**
@@ -166,3 +185,49 @@ export function generateOrderNumer(name) {
   const end = Math.random() * new Date().getMilliseconds() + 1;
   return `${first[0].toLowerCase()}${beginning.toFixed()}-${middle.toFixed()}-${last[0].toLowerCase()}${end.toFixed()}`;
 }
+
+function cachedFormInputsToStorage(inputRefObj) {
+  // get obj from local storage
+  const dataFromStorage = JSON.parse(localStorage.getItem("cachedUserInputs"));
+
+  const { personalInfo, billingInfo, shippingInfo, paymentInfo } =
+    dataFromStorage;
+
+  // destructure ref objs
+  const { personal, billing, shipping, paymentMethodSelection } = inputRefObj;
+  // personal data
+  personalInfo.name = personal.name;
+  personalInfo.phoneNumber = personal.phoneNum;
+  personalInfo.email = personal.email;
+  // billing data
+  billingInfo.address = billing.address;
+  billingInfo.city = billing.city;
+  billingInfo.state = billing.state;
+  billingInfo.zipCode = billing.zipCode;
+  billingInfo.country = billing.country;
+  // shipping data
+  shippingInfo.address = shipping.address;
+  shippingInfo.city = shipping.city;
+  shippingInfo.state = shipping.state;
+  shippingInfo.zipCode = shipping.zipCode;
+  shippingInfo.country = shipping.country;
+  // payment data
+  paymentInfo.eMoneyMethod = paymentMethodSelection.eMoney;
+  paymentInfo.cashDeliveryMethod = paymentMethodSelection.cachDelivery;
+  // save input value to local storage
+  localStorage.setItem(JSON.stringify(dataFromStorage));
+  const dataForApi = {
+    apiDataForPersonal: dataFromStorage.personalInfo,
+    apiDataForBilling: dataFromStorage.billingInfo,
+    apiDataForShipping: dataFromStorage.shippingInfo,
+    apitDataForPayment: dataFromStorage.paymentInfo,
+  };
+  // destructure the obj when we call this func
+  return dataForApi;
+}
+
+async function createCustomer() {}
+
+async function createOrders() {}
+
+async function createOrderedItems() {}

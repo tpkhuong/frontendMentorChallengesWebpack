@@ -30,6 +30,10 @@ const CustomerSchema = new mongoose.Schema({
   email: {
     type: String,
   },
+  // orders will be object with order id and order number properties
+  orders: {
+    type: Object,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
   },

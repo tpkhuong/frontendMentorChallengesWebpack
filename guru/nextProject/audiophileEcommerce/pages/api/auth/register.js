@@ -30,7 +30,7 @@ export default async function registerUserHandler(req, res) {
   // const userExist = await TestUser.findOne({ email: email });
   // user User models
   const userExist = await User.findOne({ email: email });
-
+  const customerExist = await Customer.findOne({ email: email });
   if (userExist) {
     res.status(422).json({ message: "User already exists!" });
     return;
@@ -50,7 +50,18 @@ export default async function registerUserHandler(req, res) {
     email,
     password: hashedPassword,
   });
+  /**
+   * check if there is a data entry in customer collection with the email the user entered
+   * in the register form/page
+   * **/
   if (newUser) {
+    if (customerExist) {
+      // update customer with user id
+      customerExist.user = userExist._id;
+      // update user with customer id
+      userExist.customer = customerExist._id;
+      await Promise.all([customerExist.save(), userExist.save()]);
+    }
     // if we are successful at creating new user
     // redirect to log in page
     // server console/cli in vs code

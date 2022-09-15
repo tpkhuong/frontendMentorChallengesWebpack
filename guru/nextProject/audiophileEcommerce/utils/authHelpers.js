@@ -187,37 +187,37 @@ export async function submitNewUserHandler(event) {
       return;
     } else {
       // run algorithm to create new user and remove "not match" text
-      // passwordInputRef.current.parentElement.setAttribute(
-      //   "data-ismatchedpassword",
-      //   ""
-      // );
-      // confirmPasswordInputRef.current.parentElement.setAttribute(
-      //   "data-ismatchedpassword",
-      //   ""
-      // );
-      // // assign empty string to input aria-describedby
-      // passwordInputRef.current.setAttribute("aria-describedby", "");
-      // confirmPasswordInputRef.current.setAttribute("aria-describedby", "");
-      // // run algorithm below when errors is 0
-      // const enteredEmail = emailInputRef.current.value;
-      // const enteredPassword = passwordInputRef.current.value;
-      // // create new user
-      // try {
-      //   const result = await createUser(enteredEmail, enteredPassword);
-      //   // result will be new user
-      //   // browser console
-      //   console.log("result from calling createUser helper", result);
-      //   const { user } = result;
-      //   if (user) {
-      //     // we want to re-render register page to run code in React.useEffect()
-      //     // then run router.push("login")
-      //     // if we are successful at creating new user
-      //     // redirect to log in page
-      //     setUser(true);
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      passwordInputRef.current.parentElement.setAttribute(
+        "data-ismatchedpassword",
+        ""
+      );
+      confirmPasswordInputRef.current.parentElement.setAttribute(
+        "data-ismatchedpassword",
+        ""
+      );
+      // assign empty string to input aria-describedby
+      passwordInputRef.current.setAttribute("aria-describedby", "");
+      confirmPasswordInputRef.current.setAttribute("aria-describedby", "");
+      // run algorithm below when errors is 0
+      const enteredEmail = emailInputRef.current.value;
+      const enteredPassword = passwordInputRef.current.value;
+      // create new user
+      try {
+        const result = await createUser(enteredEmail, enteredPassword);
+        // result will be new user
+        // browser console
+        console.log("result from calling createUser helper", result);
+        const { user } = result;
+        if (user) {
+          // we want to re-render register page to run code in React.useEffect()
+          // then run router.push("login")
+          // if we are successful at creating new user
+          // redirect to log in page
+          setUser(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

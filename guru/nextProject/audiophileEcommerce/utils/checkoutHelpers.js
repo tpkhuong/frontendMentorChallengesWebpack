@@ -21,7 +21,39 @@ export function toggleBillingAndShippingAddress(event) {
   if (event.target == yesInputRef.current) {
     /* different approach for a11y */
     // setBillingShipping(false);
-
+    /**
+     * when both yes and no input btn are false in local storage
+     * and user type values into shipping inputs.
+     * shippingInputsHasValue will be true
+     * **/
+    const shippingInputsHasValue = Object.values(shippingRef).some(
+      ({ current }) => {
+        return current.value !== "";
+      }
+    );
+    const billingInputsAreEmpty = Object.values(billingRef).every(
+      ({ current }) => {
+        return current === "";
+      }
+    );
+    if (
+      !localData.toggleSameAddressInfo.yesInputBtn &&
+      !localData.toggleSameAddressInfo.noInputBtn &&
+      shippingInputsHasValue &&
+      billingInputsAreEmpty
+    ) {
+      // we want to run this func when user did not enter any value to billing inputs
+      // if user did enter values to billing input, it means
+      // user want shipping input values to match billing input values
+      // we enter here when user is visiting site for first time
+      // and haven't type any data into checkout form inputs
+      // or user purchased form us before
+      copyShippingInputsValueToBilling(billingRef, shippingRef, localData);
+      localData.toggleSameAddressInfo.yesInputBtn = yesInputRef.current.checked;
+      localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
+      localStorage.setItem("cachedUserInputs", JSON.stringify(localData));
+      return;
+    }
     localData.toggleSameAddressInfo.yesInputBtn = yesInputRef.current.checked;
     localData.toggleSameAddressInfo.noInputBtn = noInputRef.current.checked;
     /**
@@ -31,58 +63,122 @@ export function toggleBillingAndShippingAddress(event) {
      * are valid.
      * **/
     const copiedArray = [].concat(arrayOfText);
+
     /**
      * since we only copy input from billing to shipping inputs when the billing inputs
      * are valid. we will see shipping input parent data-shippinguserattention to "false"
      * **/
     // address
     billingRef.address.current.value === ""
-      ? copiedArray.push("address")
+      ? (copiedArray.push("address"),
+        shippingRef.address.current.setAttribute(
+          "aria-describedby",
+          "shipping-address-notaccepted"
+        ))
       : ((shippingRef.address.current.value = billingRef.address.current.value),
         shippingRef.address.current.parentElement.setAttribute(
           "data-shippinguserattention",
           "false"
-        ));
+        )),
+      shippingRef.address.current.setAttribute(
+        "aria-describedby",
+        "shipping-address-accepted"
+      );
     // city
     billingRef.city.current.value === ""
-      ? copiedArray.push("city")
+      ? (copiedArray.push("city"),
+        shippingRef.city.current.setAttribute(
+          "aria-describedby",
+          "shipping-city-notaccepted"
+        ))
       : ((shippingRef.city.current.value = billingRef.city.current.value),
         shippingRef.city.current.parentElement.setAttribute(
           "data-shippinguserattention",
           "false"
+        ),
+        shippingRef.city.current.setAttribute(
+          "aria-describedby",
+          "shipping-city-accepted"
         ));
     // state
     billingRef.state.current.value === ""
-      ? copiedArray.push("state")
+      ? (copiedArray.push("state"),
+        shippingRef.state.current.setAttribute(
+          "aria-describedby",
+          "shipping-state-notaccepted"
+        ))
       : ((shippingRef.state.current.value = billingRef.state.current.value),
         shippingRef.state.current.parentElement.setAttribute(
           "data-shippinguserattention",
           "false"
+        ),
+        shippingRef.state.current.setAttribute(
+          "aria-describedby",
+          "shipping-state-accepted"
         ));
     // zip code check for empty and valid format
-    billingRef.zipCode.current.value === ""
-      ? copiedArray.push("zip code")
-      : !billingRef.zipCode.current.validity.valid
-      ? copiedArray.push("zip code")
-      : ((shippingRef.zipCode.current.value = billingRef.zipCode.current.value),
+    /**
+     * will use if statement instead of ternary operator
+     * **/
+    if (billingRef.zipCode.current.value === "") {
+      copiedArray.push("zip code");
+      shippingRef.zipCode.current.setAttribute(
+        "aria-describedby",
+        "shipping-zip-isempty"
+      );
+    } else {
+      if (!billingRef.zipCode.current.validity.valid) {
+        copiedArray.push("zip code");
+        shippingRef.zipCode.current.parentElement.setAttribute(
+          "data-shippinguserattention",
+          "true"
+        );
+        shippingRef.zipCode.current.parentElement.setAttribute(
+          "data-isempty",
+          ""
+        );
+        shippingRef.zipCode.current.setAttribute(
+          "aria-describedby",
+          "shipping-zip-notaccepted"
+        );
+      } else {
+        shippingRef.zipCode.current.value = billingRef.zipCode.current.value;
         shippingRef.zipCode.current.parentElement.setAttribute(
           "data-shippinguserattention",
           "false"
-        ));
+        );
+        shippingRef.zipCode.current.parentElement.setAttribute(
+          "data-isempty",
+          ""
+        );
+        shippingRef.zipCode.current.setAttribute(
+          "aria-describedby",
+          "shipping-zip-accepted"
+        );
+      }
+    }
     // country
     billingRef.country.current.value === ""
-      ? copiedArray.push("country")
+      ? (copiedArray.push("country"),
+        shippingRef.country.current.setAttribute(
+          "aria-describedby",
+          "shipping-country-notaccepted"
+        ))
       : ((shippingRef.country.current.value = billingRef.country.current.value),
         shippingRef.country.current.parentElement.setAttribute(
           "data-shippinguserattention",
           "false"
+        ),
+        shippingRef.country.current.setAttribute(
+          "aria-describedby",
+          "shipping-country-accepted"
         ));
     // loop through entries of billingRef obj we have access to both keys and values
     // billingInfo and shippingInfo obj
     Object.entries(billingRef).forEach(function saveValuesToStorage(element) {
       // key will be either:address, city,state,zipCode, country
       // value will be ref obj with current property of input
-      // coult destructure value to {current}
+      // could destructure value to {current}
       const [key, { current }] = element;
       // access localData property billingInfo and shippingInfo obj using key
       // billing
@@ -145,6 +241,107 @@ export function toggleBillingAndShippingAddress(event) {
   }
   // save yesbtn and nobtn checked values to local storage
   localStorage.setItem("cachedUserInputs", JSON.stringify(localData));
+}
+
+/**
+ * copy shipping input values to billing input
+ * **/
+
+function copyShippingInputsValueToBilling(
+  billing,
+  shipping,
+  dataFromLocalStorage
+) {
+  // address
+  shipping.address.current.value !== ""
+    ? ((billing.address.current.value = shipping.address.current.value),
+      billing.address.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "false"
+      ),
+      billing.address.current.setAttribute(
+        "aria-describedby",
+        "billing-address-accepted"
+      ))
+    : null;
+  // city
+  shipping.city.current.value !== ""
+    ? ((billing.city.current.value = shipping.city.current.value),
+      billing.city.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "false"
+      ),
+      billing.city.current.setAttribute(
+        "aria-describedby",
+        "billing-city-accepted"
+      ))
+    : null;
+  // state
+  shipping.state.current.value !== ""
+    ? ((billing.state.current.value = shipping.state.current.value),
+      billing.state.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "false"
+      ),
+      billing.state.current.setAttribute(
+        "aria-describedby",
+        "billing-state-accepted"
+      ))
+    : null;
+  // zip code check for empty and valid format
+  /**
+   * will use if statement instead of ternary operator
+   * **/
+  if (shipping.zipCode.current.value !== "") {
+    if (!shipping.zipCode.current.validity.valid) {
+      billing.zipCode.current.value = shipping.zipCode.current.value;
+      billing.zipCode.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "true"
+      );
+      billing.zipCode.current.parentElement.setAttribute("data-isempty", "");
+      billing.zipCode.current.setAttribute(
+        "aria-describedby",
+        "billing-state-notaccepted"
+      );
+    } else {
+      billing.zipCode.current.value = shipping.zipCode.current.value;
+      billing.zipCode.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "false"
+      );
+      billing.zipCode.current.parentElement.setAttribute("data-isempty", "");
+      billing.zipCode.current.setAttribute(
+        "aria-describedby",
+        "billing-state-accepted"
+      );
+    }
+  }
+  // country
+  shipping.country.current.value !== ""
+    ? ((billing.country.current.value = shipping.country.current.value),
+      billing.country.current.parentElement.setAttribute(
+        "data-billinguserattention",
+        "false"
+      ),
+      billing.country.current.setAttribute(
+        "aria-describedby",
+        "billing-country-accepted"
+      ))
+    : null;
+  // loop through entries of shippingRef obj we have access to both keys and values
+  // billingInfo and shippingInfo obj
+  Object.entries(shipping).forEach(function saveValuesToStorage(element) {
+    // key will be either:address, city,state,zipCode, country
+    // value will be ref obj with current property of input
+    // could destructure value to {current}
+    const [key, { current }] = element;
+    // access dataFromLocalStorage property billingInfo and shippingInfo obj using key
+    // billing
+    dataFromLocalStorage.billingInfo[key] = current.value;
+    // shipping
+    dataFromLocalStorage.shippingInfo[key] = current.value;
+  });
 }
 
 export function personalInputListener(event) {

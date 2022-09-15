@@ -4,6 +4,7 @@
 
 import Customer from "../../../models/Customers";
 import OrderDetails from "../../../models/OrderDetails";
+import { generateOrderNumer } from "../../../utils/orderHelpers";
 
 export default async function placedOrderHandler(req, res) {
   /**

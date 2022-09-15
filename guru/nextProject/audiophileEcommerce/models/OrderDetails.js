@@ -21,7 +21,7 @@ const OrderDetailsSchema = new mongoose.Schema({
   shippingAddress: {
     type: Object,
   },
-  summaryPrice: {
+  summaryPrices: {
     type: Object,
   },
   orderNumber: {

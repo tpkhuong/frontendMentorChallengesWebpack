@@ -30,9 +30,9 @@ export default function ToggleSameAddress({ children, ...props }) {
   React.useEffect(() => {
     // get data from localStorage
     const localDataFromStorage =
-      localStorage.getItem("someData") == null
+      localStorage.getItem("cachedUserInputs") == null
         ? null
-        : JSON.parse(localStorage.getItem("someData"));
+        : JSON.parse(localStorage.getItem("cachedUserInputs"));
     const yesNoBtnSameAddressValues =
       localDataFromStorage == null
         ? null
