@@ -31,7 +31,7 @@ const OrderItemSchema = new mongoose.Schema({
     type: String,
   },
   purchaser: {
-    // object will have properties customer email and customer id
+    // object will have properties customer name, customer email and customer id
     type: Object,
   },
 });

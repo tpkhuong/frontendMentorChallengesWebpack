@@ -9,7 +9,7 @@ import axios from "axios";
  * itemsarray will be cart items
  * **/
 
-export function showOrderModal(event) {
+export async function showOrderModal(event) {
   const { setOrderPlaced, refValues, objForOrderDetails, itemsArray } = this;
   const {
     personal,
@@ -57,31 +57,67 @@ export function showOrderModal(event) {
 
   // pass in func to renderFormAssistiveData
 
-  renderFormAssistiveData((prevValues) => {
-    return {
-      ...prevValues,
-      errors: {
-        total: totalErrors,
-        personal: personalErrors,
-        billing: billingErrors,
-        shipping: shippingErrors,
-        emoney: emoneyErrors,
-      },
-      personalInputArray: personalArray,
-      billingInputArray: billingArray,
-      shippingInputArray: shippingArray,
-      emoneyInputArray: emoneyArray,
-    };
-  });
-
+  if (totalErrors > 0) {
+    renderFormAssistiveData((prevValues) => {
+      return {
+        ...prevValues,
+        errors: {
+          total: totalErrors,
+          personal: personalErrors,
+          billing: billingErrors,
+          shipping: shippingErrors,
+          emoney: emoneyErrors,
+        },
+        personalInputArray: personalArray,
+        billingInputArray: billingArray,
+        shippingInputArray: shippingArray,
+        emoneyInputArray: emoneyArray,
+      };
+    });
+  }
   // when total errors == 0 run code below
   if (totalErrors == 0) {
-    setOrderPlaced(true);
-
+    renderFormAssistiveData((prevValues) => {
+      return {
+        ...prevValues,
+        errors: {
+          total: 0,
+        },
+      };
+    });
+    const {
+      apiDataForPersonal,
+      apiDataForBilling,
+      apiDataForShipping,
+      apitDataForPayment,
+    } = cachedFormInputsToStorage(refValues);
     // call func that will work with database here
     // or make api calls here, passing data to the correct api
     try {
-      //
+      // create customer
+      const customerResult = await createCustomer(
+        apiDataForPersonal,
+        apiDataForBilling,
+        apiDataForShipping
+      );
+      // create ordered items
+      // create placed orders
+      /**
+       * use Promise.all([customer,ordereditems,placedorders])
+       * **/
+      // pass customerResult, ordereditemsResulst, placedOrderResult to updateOrdersAndCustomer
+      // in createorders we will make api call to create placeorders and orderitems
+      // since we will always create a new order when customer places an order and createCustomer
+      // will return a customer collection obj either customer exist or new customer
+      // we want to check orderResult is truthy
+      // we want to update order schema with customer email and id. also want to update customer schema with order number and order id
+      // inside our if statement when we check if orderResult && customterResult are truthy
+      // we want to add new order to existing customer or new customer
+      // we want to add exist customer or new customer to new order
+      /**
+       * make axios put api call to updatecustomerandorder passing in customerResult and orderResult
+       * **/
+      // setOrderPlaced(true);
     } catch (error) {
       console.error(error);
     }
@@ -196,26 +232,28 @@ function cachedFormInputsToStorage(inputRefObj) {
   // destructure ref objs
   const { personal, billing, shipping, paymentMethodSelection } = inputRefObj;
   // personal data
-  personalInfo.name = personal.name;
-  personalInfo.phoneNumber = personal.phoneNum;
-  personalInfo.email = personal.email;
+  personalInfo.name = personal.name.current.value;
+  personalInfo.phoneNumber = personal.phoneNum.current.value;
+  personalInfo.email = personal.email.current.value;
   // billing data
-  billingInfo.address = billing.address;
-  billingInfo.city = billing.city;
-  billingInfo.state = billing.state;
-  billingInfo.zipCode = billing.zipCode;
-  billingInfo.country = billing.country;
+  billingInfo.address = billing.address.current.value;
+  billingInfo.city = billing.city.current.value;
+  billingInfo.state = billing.state.current.value;
+  billingInfo.zipCode = billing.zipCode.current.value;
+  billingInfo.country = billing.country.current.value;
   // shipping data
-  shippingInfo.address = shipping.address;
-  shippingInfo.city = shipping.city;
-  shippingInfo.state = shipping.state;
-  shippingInfo.zipCode = shipping.zipCode;
-  shippingInfo.country = shipping.country;
+  shippingInfo.address = shipping.address.current.value;
+  shippingInfo.city = shipping.city.current.value;
+  shippingInfo.state = shipping.state.current.value;
+  shippingInfo.zipCode = shipping.zipCode.current.value;
+  shippingInfo.country = shipping.country.current.value;
   // payment data
-  paymentInfo.eMoneyMethod = paymentMethodSelection.eMoney;
-  paymentInfo.cashDeliveryMethod = paymentMethodSelection.cachDelivery;
+  paymentInfo.eMoneyMethod =
+    paymentMethodSelection.eMoney.current.getAttribute("aria-checked");
+  paymentInfo.cashDeliveryMethod =
+    paymentMethodSelection.cashDelivery.current.getAttribute("aria-checked");
   // save input value to local storage
-  localStorage.setItem(JSON.stringify(dataFromStorage));
+  localStorage.setItem("cachedUserInputs", JSON.stringify(dataFromStorage));
   const dataForApi = {
     apiDataForPersonal: dataFromStorage.personalInfo,
     apiDataForBilling: dataFromStorage.billingInfo,
@@ -226,8 +264,26 @@ function cachedFormInputsToStorage(inputRefObj) {
   return dataForApi;
 }
 
-async function createCustomer() {}
+async function createCustomer(customerInfo, customerBilling, customerShipping) {
+  const { data } = await axios.post("/api/createcustomer", {
+    customerInfo,
+    customerBilling,
+    customerShipping,
+  });
+  console.log("createcustomer", data);
+  return data;
+}
 
 async function createOrders() {}
 
-async function createOrderedItems() {}
+async function createOrderItems(purchaser, items) {
+  // pass in customerResult as a value to this func call
+  const { data } = await axios.post("/api/createordereditems", {
+    purchaser,
+    items,
+  });
+  console.log("createorderitems", data);
+  return data;
+}
+
+async function updateOrdersAndCustomer() {}

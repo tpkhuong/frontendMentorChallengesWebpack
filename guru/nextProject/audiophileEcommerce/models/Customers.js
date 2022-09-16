@@ -48,7 +48,7 @@ const CustomerSchema = new mongoose.Schema({
     type: Array,
   },
 });
-
+// pass in personal obj, billing and shipping obj,
 // when we create customer data for DB we want to save create customer to localstorage
 
 export default mongoose.models.Customer ||

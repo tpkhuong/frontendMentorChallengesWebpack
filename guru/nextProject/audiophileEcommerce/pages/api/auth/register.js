@@ -16,12 +16,12 @@ export default async function registerUserHandler(req, res) {
    * dont have to check email or password is empty here.
    * we handle it in authhelpers.js
    * **/
-  if (!email || !password) {
-    res.status(422).json({
-      message: "Please check if email or password was entered.",
-    });
-    return;
-  }
+  // if (!email || !password) {
+  //   res.status(422).json({
+  //     message: "Please check if email or password was entered.",
+  //   });
+  //   return;
+  // }
   // connect to db
   await dbConnect();
   /**
