@@ -9,8 +9,8 @@
   display: inline-block;
 }
 
-.basis-btn:focus,
-.basis-btn:hover {
+.basic-btn:focus,
+.basic-btn:hover {
   --bg: var(--color-neutral-black);
   --fg: var(--color-neutral-white);
 }

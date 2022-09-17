@@ -52,6 +52,11 @@
   margin-block: 48px;
 }
 
+.social-links svg:hover path,
+.social-links svg:focus path {
+  fill: var(--color-primary-orange);
+}
+
 .social-links {
   display: flex;
   gap: 8px;

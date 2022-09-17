@@ -43,7 +43,7 @@ function FeatureProducts({ children, ...props }) {
             truly remarkable sound.
           </p>
           {/* see product */}
-          <ProductButton productPage="/" fgBgColor="black-white" />
+          <ProductButton productPage="/speakers/zx9" fgBgColor="black-white" />
         </div>
       </div>
       {/* middle: use background img */}
@@ -51,7 +51,7 @@ function FeatureProducts({ children, ...props }) {
         <div className={FeatureProductStyles[`single-title-button-wrapper`]}>
           <h2 className={FeatureProductStyles[`single-title`]}>ZX7 SPEAKER</h2>
           {/* see product */}
-          <ProductButton productPage="/" fgBgColor="basic-btn" />
+          <ProductButton productPage="/speakers/zx7" fgBgColor="basic-btn" />
         </div>
       </div>
       {/* two column */}
@@ -79,7 +79,10 @@ function FeatureProducts({ children, ...props }) {
             YX1 EARPHONES
           </h2>
           {/* see product */}
-          <ProductButton productPage="/" fgBgColor="basic-btn" />
+          <ProductButton
+            productPage="/earphones/yx1wireless"
+            fgBgColor="basic-btn"
+          />
         </div>
       </div>
     </article>

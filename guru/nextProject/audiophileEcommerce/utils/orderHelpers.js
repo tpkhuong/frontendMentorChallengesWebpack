@@ -56,7 +56,9 @@ export async function showOrderModal(event) {
   }, 0);
 
   // pass in func to renderFormAssistiveData
-
+  alert(
+    "start here. when user click on 'continue and pay' what do we want to do?"
+  );
   if (totalErrors > 0) {
     renderFormAssistiveData((prevValues) => {
       return {
@@ -95,17 +97,25 @@ export async function showOrderModal(event) {
     // or make api calls here, passing data to the correct api
     try {
       // create customer
-      const customerResult = await createCustomer(
-        apiDataForPersonal,
-        apiDataForBilling,
-        apiDataForShipping
-      );
-      // create ordered items
+      // const customerResult = await createCustomer(
+      //   apiDataForPersonal,
+      //   apiDataForBilling,
+      //   apiDataForShipping
+      // );
+      // // create ordered items
+      // const orderedItemsResult = await createOrderItems(
+      //   customerResult,
+      //   itemsArray
+      // );
       // create placed orders
-      /**
-       * use Promise.all([customer,ordereditems,placedorders])
-       * **/
-      // pass customerResult, ordereditemsResulst, placedOrderResult to updateOrdersAndCustomer
+      // const placedOrderResult = await createOrders(
+      //   customResult.name,
+      //   apiDataForBilling,
+      //   apiDataForShipping,
+      //   apitDataForPayment,
+      //   objForOrderDetails
+      // );
+      // pass customerResult, ordereditemsResulst, placedOrderResult to updateOrdersAndCustomer func
       // in createorders we will make api call to create placeorders and orderitems
       // since we will always create a new order when customer places an order and createCustomer
       // will return a customer collection obj either customer exist or new customer
@@ -116,6 +126,10 @@ export async function showOrderModal(event) {
       // we want to add exist customer or new customer to new order
       /**
        * make axios put api call to updatecustomerandorder passing in customerResult and orderResult
+       * **/
+      /**
+       * when user placed an order we want to empty the user shopping cart.
+       * we could remove these items "arrayOfObjs" "cartDataForCheckout" in localstorage
        * **/
       // setOrderPlaced(true);
     } catch (error) {
@@ -214,12 +228,14 @@ export function showHideItems(event) {
 }
 
 export function generateOrderNumer(name) {
-  const arrayOfStrings = name.split(" ");
-  const [first, last] = arrayOfStrings;
+  const arrOfNameStr = name.split(" ");
+  const [first, second] = arrOfNameStr;
+  const arrayOfStrings = new Date().toDateString().split(" ");
+  const [day, month] = arrayOfStrings;
   const beginning = Math.random() * new Date().getSeconds() + 1;
   const middle = Math.random() * 1000 + 1;
   const end = Math.random() * new Date().getMilliseconds() + 1;
-  return `${first[0].toLowerCase()}${beginning.toFixed()}-${middle.toFixed()}-${last[0].toLowerCase()}${end.toFixed()}`;
+  return `${day[0].toLowerCase()}${beginning.toFixed()}${first[0].toLowerCase()}-${middle.toFixed()}-${month[0].toLowerCase()}${end.toFixed()}${second[0].toLowerCase()}`;
 }
 
 function cachedFormInputsToStorage(inputRefObj) {
@@ -254,12 +270,14 @@ function cachedFormInputsToStorage(inputRefObj) {
     paymentMethodSelection.cashDelivery.current.getAttribute("aria-checked");
   // save input value to local storage
   localStorage.setItem("cachedUserInputs", JSON.stringify(dataFromStorage));
+
   const dataForApi = {
     apiDataForPersonal: dataFromStorage.personalInfo,
     apiDataForBilling: dataFromStorage.billingInfo,
     apiDataForShipping: dataFromStorage.shippingInfo,
     apitDataForPayment: dataFromStorage.paymentInfo,
   };
+
   // destructure the obj when we call this func
   return dataForApi;
 }
@@ -274,7 +292,17 @@ async function createCustomer(customerInfo, customerBilling, customerShipping) {
   return data;
 }
 
-async function createOrders() {}
+async function createOrders(customerName, billing, shipping, payment, summary) {
+  const { data } = await axios.post("/api/createplacedorder", {
+    customerName,
+    billing,
+    shipping,
+    payment,
+    summary,
+  });
+  console.log("createorders", data);
+  return data;
+}
 
 async function createOrderItems(purchaser, items) {
   // pass in customerResult as a value to this func call

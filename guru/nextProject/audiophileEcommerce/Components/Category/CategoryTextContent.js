@@ -23,10 +23,7 @@ function CategoryTextContent({ children, ...props }) {
         {props.content}
       </p>
       {/* product button */}
-      <ProductButton
-        productPage="http://localhost:3000/"
-        fgBgColor="orange-white"
-      />
+      <ProductButton productPage={props.productUrl} fgBgColor="orange-white" />
     </div>
   );
 }

@@ -118,3 +118,65 @@
     margin-block-start: 24px;
   }
 }
+
+/* 
+local storage
+personalInfo: {
+    name: "",
+    phoneNumber: "",
+    email: "",
+  },
+  billingInfo: {
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+  },
+  shippingInfo: {
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+  },
+  toggleSameAddressInfo: {
+    yesInputBtn: false,
+    noInputBtn: false,
+  },
+  paymentInfo: {
+    eMoneyMethod: "true",
+    cashDeliveryMethod: "false",
+  },
+*/
+
+/* 
+ref
+personal: {
+        name: null,
+        phoneNum: null,
+        email: null,
+      },
+      billing: {
+        address: null,
+        city: null,
+        state: null,
+        zipCode: null,
+        country: null,
+      },
+      shipping: {
+        address: null,
+        city: null,
+        state: null,
+        zipCode: null,
+        country: null,
+      },
+      paymentMethodSelection: {
+        eMoney: null,
+        cashDelivery: null,
+        inputMoney: {
+          number: null,
+          pin: null,
+        },
+
+*/

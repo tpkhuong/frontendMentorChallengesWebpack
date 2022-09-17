@@ -64,6 +64,7 @@
   display: inline-block;
   width: 24px;
   height: 26px;
+  transform: translateY(1px);
 }
 
 .register-btn path {

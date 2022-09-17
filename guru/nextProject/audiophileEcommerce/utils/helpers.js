@@ -325,6 +325,15 @@ export function addToCartAlgorithm(event) {
   // destructure this obj
   const { quantityInputRef, propsForCart } = this;
   const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
+  const cartMessageQuantityElementCartBtn =
+    document.getElementById("cart-item-quantity");
+  const cartMessageContainerCartBtn =
+    document.getElementById("cart-msg-container");
+  const cartMessageItemTextCartBtn = document.getElementById("cart-item-text");
+  // add 1 to cart quantity message;
+  const quantityValueInNumForm = arrayFromLocalStorage.length;
+  const addOneToQuantity = quantityValueInNumForm + 1;
+  cartMessageQuantityElementCartBtn.innerText = `${addOneToQuantity}`;
   // make obj
   // /cart/image-xx59-headphones.jpg
   /**
@@ -411,6 +420,8 @@ export function addToCartAlgorithm(event) {
      * **/
     if (indexOfObj == undefined) {
       arrayFromLocalStorage.push(objOfCartItemValues);
+      // update cart message text
+      cartMessageItemTextCartBtn.innerText = `items`;
     } else {
       // else update quantity and totalprice
       // obj at index in arrayFromLocalStorage
@@ -427,8 +438,13 @@ export function addToCartAlgorithm(event) {
      * array is empty
      * **/
     arrayFromLocalStorage.push(objOfCartItemValues);
+    // update cart message text
+    cartMessageItemTextCartBtn.innerText = `item`;
   }
-
+  // show cart message container element
+  cartMessageContainerCartBtn.getAttribute("data-iscartempty") == "true"
+    ? cartMessageContainerCartBtn.setAttribute("data-iscartempty", "false")
+    : null;
   console.log(arrayFromLocalStorage);
   localStorage.setItem("arrayOfObjs", JSON.stringify(arrayFromLocalStorage));
   // console.log(this.quantityInputRef.current.value);
@@ -496,7 +512,7 @@ export function cartIconBtnAlgorithm(event) {
   // have algorithm to show/hide cart modal here
   const { setCartState } = this;
   const arrayOfItems = JSON.parse(localStorage.getItem("arrayOfObjs"));
-
+  console.log(arrayOfItems);
   /**
    * when user click on cart icon in logo nav bar, we will render cart modal
    * when cartState changes. Which will be handled in this func, when setCartState func
@@ -507,6 +523,14 @@ export function cartIconBtnAlgorithm(event) {
   // cartModal will use length of arrayOfObjs
   // and total price in string type of all items in cart
   const itemsInCartLength = arrayOfItems ? arrayOfItems.length : null;
+  console.log(itemsInCartLength);
+  /**
+   * when arrayOfItems is null it means localStorage does not have arrayOfObjts property
+   * which means user did not add items to the cart.
+   * so algorithm below will not run and cart modal will not render.
+   * when user click on "contine and pay" btn in checkout summary component of checkout page
+   * we want to remove "arrayOfObjs" in localStorage
+   * **/
   if (itemsInCartLength) {
     /**
      * before we call setCartState with data from localStorage we want to calculate total of all items in cart and add/or not add commas to that total
@@ -703,11 +727,21 @@ export async function addCartInfoDatabaseAxios() {
  * **/
 
 export function sendCartModalDataToLocalStorage() {
+  /**
+   * in checkout summary component in React.useEffect() we are making
+   * localStorage.getItem() call to get data cartDataForCheckout
+   * **/
+  const urlsArray =
+    localStorage.getItem("previousLinks") == null
+      ? []
+      : JSON.parse(localStorage.getItem("previousLinks"));
+  urlsArray.push(document.URL);
   // we will bind cartInfoDatabase declared in cartIconBtnALgorithm to the this keyword
   // of this function to the onClick event of checkout btn in cart modal component
   const { cartInfoDatabase } = this;
   const copyCartInfoObj = Object.assign({}, cartInfoDatabase);
   // stringify our obj
+  localStorage.setItem("previousLinks", JSON.stringify(urlsArray));
   localStorage.setItem("cartDataForCheckout", JSON.stringify(copyCartInfoObj));
 }
 
@@ -945,14 +979,33 @@ function findMatchingCartItem(dataObj) {
  * **/
 
 export function removeAllBtnAlgorithm(event) {
+  // get cart message elements
+  const cartMsgQuantityElementRemoveBtn =
+    document.getElementById("cart-item-quantity");
+  const cartMsgContainerRemoveBtn =
+    document.getElementById("cart-msg-container");
+  const cartMsgItemTextElementRemoveBtn =
+    document.getElementById("cart-item-text");
   // use bind when we can attach this func to remove all btn
   // so we can use data that is passed to cart modal component
   // arrayOfItems, itemsInCartLength, totalPriceInCartStrType
   // when user hit remove all btn, we will update cart quanity, list of cart item and total
   // we will pass useCartModalState func, when we call useCartModalState
   // we will pass in a func useCartModalState((prevVales) => { return {} })
-  const { useCartModalState } = this;
+  const { useCartModalState, refToOpenCartModal, stateOfCartFunc } = this;
   if (event.target.closest("BUTTON")) {
+    // hide cart msg container
+    cartMsgContainerRemoveBtn.getAttribute("data-iscartempty") == "false"
+      ? cartMsgContainerRemoveBtn.setAttribute("data-iscartempty", "true")
+      : null;
+    // assign "0" to cart msg quantity
+    cartMsgQuantityElementRemoveBtn.innerText = "0";
+    // assign "" to cart item text element
+    cartMsgItemTextElementRemoveBtn.innerText = "";
+    // we do not want user to be able to click "checkout" btn
+    // we will refToOpenCartModal, stateOfCartFunc(which is setCartState in CartBtnModal it controls if cart modal will render or not)
+    // when boolean value false is pass into stateOfCartFunc(setCartState) as an argument cart modal will not render
+    localStorage.setItem("arrayOfObjs", JSON.stringify([]));
     useCartModalState((prevValues) => {
       return {
         ...prevValues,
@@ -960,6 +1013,8 @@ export function removeAllBtnAlgorithm(event) {
         cartTotalPrice: "0",
       };
     });
+    stateOfCartFunc(false);
+    refToOpenCartModal.current.focus();
   }
 
   /**

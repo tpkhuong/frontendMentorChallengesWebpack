@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import HomeStyles from "../styles/Home/Home.module.css";
 import { server } from "../config/index";
+import CategoryCardWrapper from "../Components/shared/CategoryCardWrapper";
 import LogoNavContainer from "../Components/shared/LogoNavContainer";
 import MobileNav from "../Components/shared/MobileNav";
 import Footer from "../Components/shared/Footer";
@@ -44,23 +45,72 @@ function Home({ children, ...props }) {
         <HeroContent />
       </header>
       <Main>
-        <div>
-          <img src="/shared/login-screen.png" alt="" />
-        </div>
-        {/* product features */}
-        {/* <ProductFeatures productText={product.features} /> */}
-        {/* <ProductTextPriceInfo /> */}
-        {/* <ProductIncludedItems includedItems={includes} /> */}
-        {/* <div className={HomeStyles[`grid-container`]}>
+        {/* category link container */}
+        <CategoryCardWrapper pageStyle="home" />
+        {/* featured products */}
+        <FeatureProducts />
+        {/* mission statement */}
+        <MissionStatement pageMargin="home" />
+      </Main>
+      <Footer />
+      {/* Mobile menu modal */}
+      {isMobile ? <MobileNav /> : null}
+    </React.Fragment>
+  );
+}
+
+export default Home;
+
+function note() {
+  async function getStaticProps(context) {
+    const response = await fetch(`${server}/api/testcall`, {
+      method: "POST",
+      body: JSON.stringify({ message: "Hello" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(
+      "response from index.js in pages dir, inside getStaticProps",
+      response
+    );
+    const data = await response.json();
+    console.log("data from index.js in pages dir, inside getStaticProps", data);
+    return {
+      props: { dataStr: "hello" },
+    };
+  }
+  <div>
+    <img src="/shared/login-screen.png" alt="" />
+  </div>;
+  {
+    /* product features */
+  }
+  {
+    /* <ProductFeatures productText={product.features} /> */
+  }
+  {
+    /* <ProductTextPriceInfo /> */
+  }
+  {
+    /* <ProductIncludedItems includedItems={includes} /> */
+  }
+  {
+    /* <div className={HomeStyles[`grid-container`]}>
           <ProductImageGrid galleryImgData={gallery} />
-        </div> */}
-        {/* <div className={HomeStyles[`recommend-section`]}>
+        </div> */
+  }
+  {
+    /* <div className={HomeStyles[`recommend-section`]}>
 
-        </div> */}
-        {/* <ProductRecommendations recommendations={others} /> */}
+        </div> */
+  }
+  {
+    /* <ProductRecommendations recommendations={others} /> */
+  }
 
-        <div className={HomeStyles[`test-container`]}>
-          {/* <ProductImgWrapper
+  <div className={HomeStyles[`test-container`]}>
+    {/* <ProductImgWrapper
             desktop={desktop}
             tablet={tablet}
             mobile={mobile}
@@ -72,9 +122,12 @@ function Home({ children, ...props }) {
             title={name}
             description={description}
           /> */}
-        </div>
-        {/* <AddCart /> */}
-        {/* <div className={HomeStyles[`test-container`]}>
+  </div>;
+  {
+    /* <AddCart /> */
+  }
+  {
+    /* <div className={HomeStyles[`test-container`]}>
           <CategoryImg
             desktopSize={item.imgSrc.desktop}
             tabletSize={item.imgSrc.tablet}
@@ -86,38 +139,6 @@ function Home({ children, ...props }) {
             title={item.textContent.name}
             content={item.textContent.description}
           />
-        </div> */}
-        {/* category link container */}
-        {/* <CategoryCardWrapper pageStyle="home" /> */}
-        {/* featured products */}
-        {/* <FeatureProducts /> */}
-        {/* mission statement */}
-        {/* <MissionStatement pageMargin="home" /> */}
-      </Main>
-      {/* <Footer /> */}
-      {/* Mobile menu modal */}
-      {isMobile ? <MobileNav /> : null}
-    </React.Fragment>
-  );
-}
-
-export default Home;
-
-export async function getStaticProps(context) {
-  const response = await fetch(`${server}/api/testcall`, {
-    method: "POST",
-    body: JSON.stringify({ message: "Hello" }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  console.log(
-    "response from index.js in pages dir, inside getStaticProps",
-    response
-  );
-  const data = await response.json();
-  console.log("data from index.js in pages dir, inside getStaticProps", data);
-  return {
-    props: { dataStr: "hello" },
-  };
+        </div> */
+  }
 }

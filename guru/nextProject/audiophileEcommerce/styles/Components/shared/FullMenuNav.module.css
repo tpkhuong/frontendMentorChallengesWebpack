@@ -5,6 +5,11 @@
   gap: 34px;
 }
 
+.navlink:hover,
+.navlink:focus {
+  color: var(--color-primary-orange);
+}
+
 .navlink {
   color: var(--color-neutral-white);
   font-size: var(--heading-reg-xx-sm);

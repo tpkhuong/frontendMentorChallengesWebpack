@@ -11,43 +11,46 @@
 
 import mongoose from "mongoose";
 
-const CustomerSchema = new mongoose.Schema({
-  // if user does not make a purchase we delete customer in our database
-  // name
-  // userID from UserSchema
-  // user:{type: mongoose.Schema.Types.ObjectId}
-  // phone number
-  // email
-  // regsiterUser:boolean
-  // billingAddress: array
-  // shippingAddress:array
-  name: {
-    type: String,
+const CustomerSchema = new mongoose.Schema(
+  {
+    // if user does not make a purchase we delete customer in our database
+    // name
+    // userID from UserSchema
+    // user:{type: mongoose.Schema.Types.ObjectId}
+    // phone number
+    // email
+    // regsiterUser:boolean
+    // billingAddress: array
+    // shippingAddress:array
+    name: {
+      type: String,
+    },
+    phoneNumber: {
+      type: Number,
+    },
+    email: {
+      type: String,
+    },
+    // orders will be object with order id and order number properties
+    orders: {
+      type: Object,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    // having address field as array we will enable user to delete address they dont use
+    physicalAddress: {
+      type: Array,
+    },
+    billingAddress: {
+      type: Array,
+    },
+    shippingAddress: {
+      type: Array,
+    },
   },
-  phoneNumber: {
-    type: Number,
-  },
-  email: {
-    type: String,
-  },
-  // orders will be object with order id and order number properties
-  orders: {
-    type: Object,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
-  // having address field as array we will enable user to delete address they dont use
-  physicalAddress: {
-    type: Array,
-  },
-  billingAddress: {
-    type: Array,
-  },
-  shippingAddress: {
-    type: Array,
-  },
-});
+  { timestamps: true }
+);
 // pass in personal obj, billing and shipping obj,
 // when we create customer data for DB we want to save create customer to localstorage
 

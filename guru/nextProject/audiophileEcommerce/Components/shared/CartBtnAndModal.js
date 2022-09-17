@@ -4,6 +4,30 @@ import CartModal from "./CartModal";
 import { cartIconBtnAlgorithm } from "../../utils/helpers";
 
 function CartBtnModal({ children, ...props }) {
+  const cartMessageContainerRef = React.useRef();
+  const cartMessageQuantityRef = React.useRef();
+  const cartMessageItemTextRef = React.useRef();
+  React.useEffect(() => {
+    const arrayOfItemsFromStorage =
+      localStorage.getItem("arrayOfObjs") == null
+        ? []
+        : JSON.parse(localStorage.getItem("arrayOfObjs"));
+    cartMessageQuantityRef.current.innerText =
+      arrayOfItemsFromStorage.length > 0
+        ? `${arrayOfItemsFromStorage.length}`
+        : "0";
+    cartMessageItemTextRef.current.innerText =
+      quanityValue.length > 1 ? "items" : "item";
+    quantityValue.length > 0
+      ? cartMessageContainerRef.current.setAttribute(
+          "data-iscartempty",
+          "false"
+        )
+      : cartMessageContainerRef.current.setAttribute(
+          "data-iscartempty",
+          "true"
+        );
+  }, []);
   // passing setCartState as prop stateOfCartFunc to Cart Modal component
   // which we will bind to onclick callback to close modal btn
   const [cartState, setCartState] = React.useState(false);
@@ -29,16 +53,23 @@ function CartBtnModal({ children, ...props }) {
           />
         </svg>
         <span
+          ref={cartMessageContainerRef}
+          id="cart-msg-container"
           data-iscartempty="true"
           className={CartBtnModalStyles[`quantity-textbox`]}
         >
           <span
+            ref={cartMessageQuantityRef}
             id="cart-item-quantity"
             className={CartBtnModalStyles[`quantity-number`]}
           >
-            5
+            0
           </span>
-          <span className={CartBtnModalStyles[`item-text`]}>items</span>
+          <span
+            ref={cartMessageItemTextRef}
+            id="cart-item-text"
+            className={CartBtnModalStyles[`item-text`]}
+          ></span>
         </span>
       </button>
       {/* cart modal */}

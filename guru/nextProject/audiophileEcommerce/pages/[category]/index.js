@@ -72,6 +72,7 @@ function CategoryPage({ children, ...props }) {
                   isNew={isNew}
                   title={name}
                   content={description}
+                  productUrl={props.arrayOfUrls[index]}
                 />
               </div>
             );
@@ -95,6 +96,7 @@ export async function getStaticPaths() {
   const paths = categoryPaths.map(function makePaths(element) {
     return { params: { category: element } };
   });
+
   return {
     paths,
     fallback: false,
@@ -117,11 +119,26 @@ export async function getStaticProps(context) {
 
   const response = await axios(`${server}/api/${context.params.category}`);
   const { data } = response;
+  const arrayOfProductNames = data.map(function getName(obj) {
+    return obj.textContent.name;
+  });
 
   const categoryStr = context.params.category;
 
+  const arrayOfUrls = arrayOfProductNames.map(function createUrl(productName) {
+    if (productName.includes("Mark")) {
+      const getRomanNumValue = productName.split(" ")[2];
+      const isOneOrTwo = getRomanNumValue == "I" ? "1" : "2";
+      return `/${categoryStr}/xx99mark${isOneOrTwo}`;
+    }
+    if (productName.includes("wireless")) {
+      return `/${categoryStr}/yx1wireless`;
+    }
+    return `/${categoryStr}/${productName.split(" ")[0].toLowerCase()}`;
+  });
+
   return {
-    props: { data, categoryStr },
+    props: { data, categoryStr, arrayOfUrls },
   };
 }
 

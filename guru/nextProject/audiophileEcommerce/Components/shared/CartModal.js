@@ -30,6 +30,7 @@ function CartModal({ children, ...props }) {
   // working with mongodb
   const { refToOpenCartModal, stateOfCartFunc } = props;
   // get data from AddCart component
+  // look at cartIconBtnAlgorithm func in helpers.js
   const cartModalData = props.addCartDataFromLocalStorage;
   const {
     arrayOfItems,
@@ -83,13 +84,18 @@ function CartModal({ children, ...props }) {
               refToRemoveAllBtn,
               refToCheckoutBtn,
             })}
-            onClick={removeAllBtnAlgorithm.bind({ useCartModalState })}
+            onClick={removeAllBtnAlgorithm.bind({
+              useCartModalState,
+              refToOpenCartModal,
+              stateOfCartFunc,
+            })}
             className={CartModalStyles[`remove-all-btn`]}
             ref={refToRemoveAllBtn}
           >
             Remove all
           </button>
           {/* close btn */}
+          {/* we set cartState value to false so when user click on cart btn cart modal will not render */}
           <button
             aria-label="close cart modal"
             className={CartModalStyles[`close-btn`]}
@@ -143,6 +149,11 @@ function CartModal({ children, ...props }) {
         </div>
         {/* checkout btn */}
         {/* make checkout into a link. passing an obj into href attr for <Link> component */}
+        {/* /**
+         * in checkout summary component in React.useEffect() we are making
+         * localStorage.getItem() call to get data cartDataForCheckout
+         * checkout btn just send user to /checkout page
+         * **/}
         <Link
           // href={{
           //   pathname: "/checkout",
