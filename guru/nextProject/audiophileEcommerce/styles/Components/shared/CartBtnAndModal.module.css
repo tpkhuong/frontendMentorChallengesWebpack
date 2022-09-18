@@ -7,9 +7,9 @@
   padding: 0;
 }
 
-[data-iscartempty="true"].quantity-textbox {
+/* [data-iscartempty="true"].quantity-textbox {
   display: none;
-}
+} */
 
 .quantity-textbox {
   position: absolute;

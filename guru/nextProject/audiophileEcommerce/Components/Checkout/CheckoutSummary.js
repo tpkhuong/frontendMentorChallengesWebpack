@@ -1,4 +1,5 @@
 import React from "react";
+// import { ErrorMessageContext } from "../../pages/checkout/index";
 import CheckoutSummaryStyles from "../../styles/Checkout/CheckoutSummary.module.css";
 import SummaryItem from "./SummaryItem";
 import OrderModalWrapper from "./ConfirmedOrderModalWrapper";
@@ -9,6 +10,14 @@ import {
 } from "../../utils/helpers";
 
 function CheckoutSummary({ children, ...props }) {
+  /**
+   * when we want to rerender checkout summary removing ordered items and prices
+   * rerenderCheckoutSummary in checkout page
+   * renderCheckoutSummary in cart modal
+   * **/
+  // const refObjFromCheckoutPage = React.useContext(ErrorMessageContext);
+  // const [isRender, setRenderSummary] = React.useState(false);
+  // refObjFromCheckoutPage.rerenderCheckoutSummary = setRenderSummary;
   React.useEffect(() => {
     // parse json from local storage
     const dataForSummary = JSON.parse(
@@ -17,7 +26,7 @@ function CheckoutSummary({ children, ...props }) {
     const { total_price, items } = dataForSummary;
     //   calculate tax and grand total before we assign them to values in our
     const valueAddedTax = taxCalculation(total_price);
-    const shippingCost = 50;
+    const shippingCost = items.length == 0 ? 0 : 50;
     // array of values to calculate grand total
     const arrayOfValuesForGrandTotal = [
       total_price,
@@ -109,7 +118,9 @@ function CheckoutSummary({ children, ...props }) {
         alt_text: altTextCartModalSummaryItem, */}
         {/* we will pass in name.display, price.display, item_quantity, image_src, alt_text  into SummaryItem */}
         {initialSummaryObj["itemsArray"].length < 1 ? (
-          <p>Loading...</p>
+          <p className={CheckoutSummaryStyles[`empty-cart-message`]}>
+            Please add items to cart before clicking "Checkout" button.
+          </p>
         ) : (
           initialSummaryObj["itemsArray"].map(function createItems(
             element,

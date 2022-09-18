@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { ErrorMessageContext } from "../../pages/checkout/index";
 import CartModalStyles from "../../styles/Components/shared/CartModal.module.css";
 import CartItem from "./CartItem";
 import {
@@ -16,6 +16,7 @@ import {
 // console.log(JSON.parse(localStorage.getItem("arrayOfObjs")));
 
 function CartModal({ children, ...props }) {
+  // const refValuesObj = React.useContext(ErrorMessageContext);
   // pass in state func to checkout btn
   // working with mongodb
   // trigger a re-render to run React.useEffect()
@@ -43,18 +44,19 @@ function CartModal({ children, ...props }) {
   const initialCartModalValues = {
     cartQuantity: itemsInCartLength,
     cartTotalPrice: totalPriceInCartStrType,
+    checkoutPageData: cartInfoDatabase,
   };
   // React.useState() to cause a render of this component with different data
   const [cartModalObj, useCartModalState] = React.useState(
     initialCartModalValues
   );
+
   // we will use React.useRef() on remove all btn and checkout btn for keyboard user
   const refToRemoveAllBtn = React.useRef();
   const refToCheckoutBtn = React.useRef();
   // save reference to total price, we want to update it when user click on
   // - or + or hit number key when cursor is on input
   const refToTotalPriceStr = React.useRef();
-
   return (
     <div
       aria-labelledby="cart-modal"
@@ -169,7 +171,9 @@ function CartModal({ children, ...props }) {
             ref={refToCheckoutBtn}
             className={CartModalStyles[`checkout-btn`]}
             onClick={sendCartModalDataToLocalStorage.bind({
-              cartInfoDatabase,
+              cartInfo: cartModalObj.checkoutPageData,
+              rerenderCartModal: useCartModalState,
+              // renderCheckoutSummary: refValuesObj.rerenderCheckoutSummary,
             })}
           >
             checkout

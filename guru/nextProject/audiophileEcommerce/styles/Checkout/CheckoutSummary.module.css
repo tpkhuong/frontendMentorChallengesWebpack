@@ -14,6 +14,11 @@
   text-transform: uppercase;
 }
 
+.empty-cart-message {
+  font-size: var(--heading-reg-sm);
+  font-weight: 700;
+}
+
 .summary-item-list {
   /* list-style: none; */
   padding-inline-start: 0;

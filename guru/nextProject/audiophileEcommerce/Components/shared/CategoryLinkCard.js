@@ -7,7 +7,7 @@ function CategoryLinkCard({ children, ...props }) {
     <div role={props.mobileRole} className={CategoryCardStyles[`card-wrapper`]}>
       <div className={CategoryCardStyles[`content-wrapper`]}>
         {/* img and title */}
-        <Link href={props.categoryName.toLowerCase()}>
+        <Link href={`/${props.categoryName.toLowerCase()}`}>
           <a className={CategoryCardStyles[`img-title-link`]}>
             <div className={CategoryCardStyles[`img-wrapper`]}>
               <img src={props.imageSrc} alt={props.imgText} />
@@ -18,7 +18,7 @@ function CategoryLinkCard({ children, ...props }) {
           </a>
         </Link>
         {/* shop link */}
-        <Link href={props.categoryName.toLowerCase()}>
+        <Link href={`/${props.categoryName.toLowerCase()}`}>
           <a id={props.lastItem} className={CategoryCardStyles[`shop-link`]}>
             <span className={CategoryCardStyles[`link-text`]}>SHOP</span>
             <svg

@@ -4,7 +4,7 @@ import CartModal from "./CartModal";
 import { cartIconBtnAlgorithm } from "../../utils/helpers";
 
 function CartBtnModal({ children, ...props }) {
-  const cartMessageContainerRef = React.useRef();
+  // const cartMessageContainerRef = React.useRef();
   const cartMessageQuantityRef = React.useRef();
   const cartMessageItemTextRef = React.useRef();
   React.useEffect(() => {
@@ -17,16 +17,16 @@ function CartBtnModal({ children, ...props }) {
         ? `${arrayOfItemsFromStorage.length}`
         : "0";
     cartMessageItemTextRef.current.innerText =
-      quanityValue.length > 1 ? "items" : "item";
-    quantityValue.length > 0
-      ? cartMessageContainerRef.current.setAttribute(
-          "data-iscartempty",
-          "false"
-        )
-      : cartMessageContainerRef.current.setAttribute(
-          "data-iscartempty",
-          "true"
-        );
+      arrayOfItemsFromStorage.length == 1 ? "item" : "items";
+    // arrayOfItemsFromStorage.length > 0
+    //   ? cartMessageContainerRef.current.setAttribute(
+    //       "data-iscartempty",
+    //       "false"
+    //     )
+    //   : cartMessageContainerRef.current.setAttribute(
+    //       "data-iscartempty",
+    //       "true"
+    //     );
   }, []);
   // passing setCartState as prop stateOfCartFunc to Cart Modal component
   // which we will bind to onclick callback to close modal btn
@@ -53,9 +53,9 @@ function CartBtnModal({ children, ...props }) {
           />
         </svg>
         <span
-          ref={cartMessageContainerRef}
+          // ref={cartMessageContainerRef}
           id="cart-msg-container"
-          data-iscartempty="true"
+          // data-iscartempty="true"
           className={CartBtnModalStyles[`quantity-textbox`]}
         >
           <span

@@ -327,8 +327,8 @@ export function addToCartAlgorithm(event) {
   const { nameForImgSrc, priceInStrForm, price, name } = propsForCart;
   const cartMessageQuantityElementCartBtn =
     document.getElementById("cart-item-quantity");
-  const cartMessageContainerCartBtn =
-    document.getElementById("cart-msg-container");
+  // const cartMessageContainerCartBtn =
+  //   document.getElementById("cart-msg-container");
   const cartMessageItemTextCartBtn = document.getElementById("cart-item-text");
   // add 1 to cart quantity message;
   const quantityValueInNumForm = arrayFromLocalStorage.length;
@@ -442,9 +442,9 @@ export function addToCartAlgorithm(event) {
     cartMessageItemTextCartBtn.innerText = `item`;
   }
   // show cart message container element
-  cartMessageContainerCartBtn.getAttribute("data-iscartempty") == "true"
-    ? cartMessageContainerCartBtn.setAttribute("data-iscartempty", "false")
-    : null;
+  // cartMessageContainerCartBtn.getAttribute("data-iscartempty") == "true"
+  //   ? cartMessageContainerCartBtn.setAttribute("data-iscartempty", "false")
+  //   : null;
   console.log(arrayFromLocalStorage);
   localStorage.setItem("arrayOfObjs", JSON.stringify(arrayFromLocalStorage));
   // console.log(this.quantityInputRef.current.value);
@@ -736,13 +736,39 @@ export function sendCartModalDataToLocalStorage() {
       ? []
       : JSON.parse(localStorage.getItem("previousLinks"));
   urlsArray.push(document.URL);
-  // we will bind cartInfoDatabase declared in cartIconBtnALgorithm to the this keyword
+  // we will bind cartInfo declared in cartIconBtnALgorithm to the this keyword
   // of this function to the onClick event of checkout btn in cart modal component
-  const { cartInfoDatabase } = this;
-  const copyCartInfoObj = Object.assign({}, cartInfoDatabase);
+  const { cartInfo, rerenderCartModal, renderCheckoutSummary } = this;
+  /** 
+   * when user click on removeallbtn, we cause a re-render of cart modal and we change the cartInfo obj bind to checkout btn
+   * stateOfCartFunc((prevValues) => {
+      return {
+        ...prevValues,
+        cartInfoDatabase: { items: [], total_price: 0 },
+      };
+    });
+   * **/
+  console.log(cartInfo);
+  const copyCartInfoObj = Object.assign({}, cartInfo);
   // stringify our obj
   localStorage.setItem("previousLinks", JSON.stringify(urlsArray));
   localStorage.setItem("cartDataForCheckout", JSON.stringify(copyCartInfoObj));
+  // if (copyCartInfoObj.items.length == 0 && document.URL.includes("checkout")) {
+  //   // we can reload checkout page which will render a summary with cart is empty message and 0 for prices
+  //   // window.location.reload(true);
+  //   /**
+  //    * when user is on /checkout page and cart modal is rendered then user click on remove all btn
+  //    * if user decide to click on "checkout" btn, the cart modal is still render and checkout summary has info
+  //    * of the items in the cart before user clicked on remove all btn
+  //    * **/
+  //   // rerenderCartModal((prevValues) => {
+  //   //   return {
+  //   //     ...prevValues,
+  //   //     checkoutPageData: { items: false, total_price: 0 },
+  //   //   };
+  //   // });
+  //   // renderCheckoutSummary(true);
+  // }
 }
 
 /**
@@ -980,10 +1006,10 @@ function findMatchingCartItem(dataObj) {
 
 export function removeAllBtnAlgorithm(event) {
   // get cart message elements
+  // const cartMsgContainerRemoveBtn =
+  //   document.getElementById("cart-msg-container");
   const cartMsgQuantityElementRemoveBtn =
     document.getElementById("cart-item-quantity");
-  const cartMsgContainerRemoveBtn =
-    document.getElementById("cart-msg-container");
   const cartMsgItemTextElementRemoveBtn =
     document.getElementById("cart-item-text");
   // use bind when we can attach this func to remove all btn
@@ -995,26 +1021,48 @@ export function removeAllBtnAlgorithm(event) {
   const { useCartModalState, refToOpenCartModal, stateOfCartFunc } = this;
   if (event.target.closest("BUTTON")) {
     // hide cart msg container
-    cartMsgContainerRemoveBtn.getAttribute("data-iscartempty") == "false"
-      ? cartMsgContainerRemoveBtn.setAttribute("data-iscartempty", "true")
-      : null;
+    // cartMsgContainerRemoveBtn.getAttribute("data-iscartempty") == "false"
+    //   ? cartMsgContainerRemoveBtn.setAttribute("data-iscartempty", "true")
+    //   : null;
     // assign "0" to cart msg quantity
     cartMsgQuantityElementRemoveBtn.innerText = "0";
     // assign "" to cart item text element
-    cartMsgItemTextElementRemoveBtn.innerText = "";
+    cartMsgItemTextElementRemoveBtn.innerText = "items";
+    /**
+     * stateOfCartFunc is prop pass to cart modal component from cart btn modal component, setCartState is assign to that prop
+     * setCartState is called in cartbtn func to change the value to an obj we want to use/pass along to cart modal
+     * **/
     // we do not want user to be able to click "checkout" btn
-    // we will refToOpenCartModal, stateOfCartFunc(which is setCartState in CartBtnModal it controls if cart modal will render or not)
+    // we will use refToOpenCartModal, stateOfCartFunc(which is setCartState in CartBtnModal it controls if cart modal will render or not)
     // when boolean value false is pass into stateOfCartFunc(setCartState) as an argument cart modal will not render
+    // stateOfCartFunc((prevValues) => {
+    //   return {
+    //     ...prevValues,
+    //     cartQuantity: "0",
+    //     cartTotalPrice: "0",
+    //   };
+    // });
     localStorage.setItem("arrayOfObjs", JSON.stringify([]));
+    /**
+     * useCartModalState is declared in cart modal component
+     * **/
+    // instead of not rendering cart modal when user click on remove all btn
+    // we can call useCartModalState which will re-render cart modal and we will pass in an obj with items and total_price properties
+    // when they hit "removeall" btn rerender cart modal to show no cart item and $0 as total and assign {items: [], total_price: 0}
+    // if user is on checkout page and they reload the input field they filled will be saved to local storage
+    // but the checkout summary will have prices $0 and message letting user know there is no item in their cart
+    // also when they are on checkout page they can still continue processing their order by clicking contine and pay
+    // if user is not on checkout page and they click "checkout" btn all clicking "removeall" btn, checkout page will load
+    // but with prices $0 and message letting user know there is no item in their cart
     useCartModalState((prevValues) => {
       return {
         ...prevValues,
         cartQuantity: "0",
         cartTotalPrice: "0",
+        checkoutPageData: { items: [], total_price: 0 },
       };
     });
-    stateOfCartFunc(false);
-    refToOpenCartModal.current.focus();
+    // refToOpenCartModal.current.focus();
   }
 
   /**

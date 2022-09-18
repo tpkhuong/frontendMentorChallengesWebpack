@@ -24,7 +24,7 @@ export default function OrderModalWrapper({ children, ...props }) {
           itemsArray: props.itemsInfo,
         })}
       >
-        contine & pay
+        continue & pay
       </button>
       {/* User order modal when user click on continue and pay */}
       {/* order modal needs items and grand total from summary component */}

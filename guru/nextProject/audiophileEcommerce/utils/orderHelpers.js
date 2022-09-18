@@ -56,9 +56,6 @@ export async function showOrderModal(event) {
   }, 0);
 
   // pass in func to renderFormAssistiveData
-  alert(
-    "start here. when user click on 'continue and pay' what do we want to do?"
-  );
   if (totalErrors > 0) {
     renderFormAssistiveData((prevValues) => {
       return {
@@ -131,6 +128,16 @@ export async function showOrderModal(event) {
        * when user placed an order we want to empty the user shopping cart.
        * we could remove these items "arrayOfObjs" "cartDataForCheckout" in localstorage
        * **/
+      // const cartMsgContainer = document.getElementById("cart-msg-container");
+      const cartMsgQuantity = document.getElementById("cart-item-quantity");
+      const cartMsgItemText = document.getElementById("cart-item-text");
+      // cartMsgContainer.setAttribute("data-iscartempty", "true");
+      cartMsgQuantity.innerText = "0";
+      cartMsgItemText.innerText = "";
+      // remove arrayOfObjs and cartDataForCheckout when user placed an order
+      // because we dont want our algorithm to render cart modal if user click on cart btn
+      localStorage.removeItem("arrayOfObjs");
+      localStorage.removeItem("cartDataForCheckout");
       // setOrderPlaced(true);
     } catch (error) {
       console.error(error);

@@ -71,6 +71,7 @@ function Checkout(props) {
         billingAndShippingSame: null,
       },
       renderFormAssistiveData: null,
+      // rerenderCheckoutSummary: null,
     };
   }, []);
 
