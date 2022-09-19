@@ -26,7 +26,7 @@ const OrderDetailsSchema = new mongoose.Schema(
       type: Object,
     },
     orderNumber: {
-      type: Number,
+      type: String,
     },
     orderedItems: {
       type: Array,

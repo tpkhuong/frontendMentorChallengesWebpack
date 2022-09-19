@@ -7,22 +7,30 @@ export default async function createOrderedItemHandler(req, res) {
 
   if (method != "POST") return;
   const { purchaser, items } = body;
-  const { _id, name, email } = purchaser;
+  const {
+    createdCustomer: { name, email, _id },
+  } = purchaser;
+
+  // purchaser is the return data from /apit/customer which is a json with message and createdCustomer properties
 
   await dbConnect();
 
   const itemsResult = await Promise.all(
     items.map(async function makeItems(item) {
+      // algorithm in here is asynchronous
+      // algorithm outside is synchronous
+      // purchaser.name or email or _id will be undefined
       const {
         item_quantity,
         image_src,
         price,
         name: { order_record },
       } = item;
+      const quantityNumType = Number(item_quantity);
       const createdOrderedItems = await OrderItem.create({
         name: order_record,
         price: price.order_record,
-        quantity: item_quantity,
+        quantity: quantityNumType,
         image: image_src,
         purchaser: {
           name,

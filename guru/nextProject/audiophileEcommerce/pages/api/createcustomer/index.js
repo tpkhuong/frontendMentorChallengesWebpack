@@ -18,12 +18,14 @@ export default async function customerHandler(req, res) {
   await dbConnect();
   // check if customer exist
   // check if user exist
-  // const customerExist = await Customer.fineOne({ email: email });
+  // const customerExist = await Customer.findOne({ email: email });
   // const userExist = await User.findOne({ email: email });
   const [customerExist, userExist] = await Promise.all([
-    Customer.fineOne({ email: email }),
+    Customer.findOne({ email: email }),
     User.findOne({ email: email }),
   ]);
+  console.log("customerExist", customerExist);
+  console.log("userExist", userExist);
   //if both customer and user exist
   if (customerExist) {
     /******** dont have to check if userExist is truthy ******
@@ -91,11 +93,12 @@ export default async function customerHandler(req, res) {
   if (newCustomer) {
     // check if user exist truthy
     if (userExist) {
+      console.log("userExist", userExist);
       // when user exist is truthy we want to update customer schema user property with user._id
       // update user schema customer property with customer._id
-      customerExist.user = userExist._id;
-      userExist.customer = customerExist._id;
-      await Promise.all([customerExist.save(), userExist.save()]);
+      newCustomer.user = userExist._id;
+      userExist.customer = newCustomer._id;
+      await Promise.all([newCustomer.save(), userExist.save()]);
     }
     res
       .status(200)

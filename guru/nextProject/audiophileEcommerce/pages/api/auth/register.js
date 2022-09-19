@@ -37,7 +37,8 @@ export default async function registerUserHandler(req, res) {
   }
   // create new user
   // hash password
-
+  console.log("userExist", userExist);
+  console.log("customerExist", customerExist);
   const hashedPassword = await hashPassword(password);
 
   // const newUser = await TestUser.create({
@@ -56,11 +57,12 @@ export default async function registerUserHandler(req, res) {
    * **/
   if (newUser) {
     if (customerExist) {
+      console.log("customerExist if statement");
       // update customer with user id
-      customerExist.user = userExist._id;
+      customerExist.user = newUser._id;
       // update user with customer id
-      userExist.customer = customerExist._id;
-      await Promise.all([customerExist.save(), userExist.save()]);
+      newUser.customer = customerExist._id;
+      await Promise.all([customerExist.save(), newUser.save()]);
     }
     // if we are successful at creating new user
     // redirect to log in page

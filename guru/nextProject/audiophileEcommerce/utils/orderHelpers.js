@@ -84,6 +84,20 @@ export async function showOrderModal(event) {
         },
       };
     });
+    /**
+     * when user placed an order we want to empty the user shopping cart.
+     * we could remove these items "arrayOfObjs" "cartDataForCheckout" in localstorage
+     * **/
+    // const cartMsgContainer = document.getElementById("cart-msg-container");
+    const cartMsgQuantity = document.getElementById("cart-item-quantity");
+    const cartMsgItemText = document.getElementById("cart-item-text");
+    // cartMsgContainer.setAttribute("data-iscartempty", "true");
+    cartMsgQuantity.innerText = "0";
+    cartMsgItemText.innerText = "items";
+    // remove arrayOfObjs and cartDataForCheckout when user placed an order
+    // because we dont want our algorithm to render cart modal if user click on cart btn
+    localStorage.removeItem("arrayOfObjs");
+    localStorage.removeItem("cartDataForCheckout");
     const {
       apiDataForPersonal,
       apiDataForBilling,
@@ -94,26 +108,38 @@ export async function showOrderModal(event) {
     // or make api calls here, passing data to the correct api
     try {
       // create customer
-      // const customerResult = await createCustomer(
-      //   apiDataForPersonal,
-      //   apiDataForBilling,
-      //   apiDataForShipping
-      // );
-      // // create ordered items
-      // const orderedItemsResult = await createOrderItems(
-      //   customerResult,
-      //   itemsArray
-      // );
-      // create placed orders
-      // const placedOrderResult = await createOrders(
-      //   customResult.name,
-      //   apiDataForBilling,
-      //   apiDataForShipping,
-      //   apitDataForPayment,
-      //   objForOrderDetails
-      // );
-      // pass customerResult, ordereditemsResulst, placedOrderResult to updateOrdersAndCustomer func
+      const customerResult = await createCustomer(
+        apiDataForPersonal,
+        apiDataForBilling,
+        apiDataForShipping
+      );
+      // create ordered items
+      const orderedItemsResult = await createOrderItems(
+        customerResult,
+        itemsArray
+      );
+      // // create placed orders
+      const placedOrderResult = await createOrders(
+        customerResult.createdCustomer.name,
+        apiDataForBilling,
+        apiDataForShipping,
+        apitDataForPayment,
+        objForOrderDetails
+      );
+      console.log("customerResult", customerResult);
+      console.log("orderedItemsResult", orderedItemsResult);
+      console.log("placedOrderResult", placedOrderResult);
+      // pass customerResult, ordereditemsResult, placedOrderResult to updateOrdersAndCustomer func
       // in createorders we will make api call to create placeorders and orderitems
+      const updateCustomerAndPlacedOrderResult = await updateOrdersAndCustomer(
+        customerResult.createdCustomer,
+        orderedItemsResult.items,
+        placedOrderResult.orderData
+      );
+      console.log(
+        "updateCustomerAndPlacedOrderResult",
+        updateCustomerAndPlacedOrderResult
+      );
       // since we will always create a new order when customer places an order and createCustomer
       // will return a customer collection obj either customer exist or new customer
       // we want to check orderResult is truthy
@@ -124,20 +150,6 @@ export async function showOrderModal(event) {
       /**
        * make axios put api call to updatecustomerandorder passing in customerResult and orderResult
        * **/
-      /**
-       * when user placed an order we want to empty the user shopping cart.
-       * we could remove these items "arrayOfObjs" "cartDataForCheckout" in localstorage
-       * **/
-      // const cartMsgContainer = document.getElementById("cart-msg-container");
-      const cartMsgQuantity = document.getElementById("cart-item-quantity");
-      const cartMsgItemText = document.getElementById("cart-item-text");
-      // cartMsgContainer.setAttribute("data-iscartempty", "true");
-      cartMsgQuantity.innerText = "0";
-      cartMsgItemText.innerText = "";
-      // remove arrayOfObjs and cartDataForCheckout when user placed an order
-      // because we dont want our algorithm to render cart modal if user click on cart btn
-      localStorage.removeItem("arrayOfObjs");
-      localStorage.removeItem("cartDataForCheckout");
       // setOrderPlaced(true);
     } catch (error) {
       console.error(error);
@@ -313,6 +325,7 @@ async function createOrders(customerName, billing, shipping, payment, summary) {
 
 async function createOrderItems(purchaser, items) {
   // pass in customerResult as a value to this func call
+  console.log("purchaser create order items func in order helpers", purchaser);
   const { data } = await axios.post("/api/createordereditems", {
     purchaser,
     items,
@@ -321,4 +334,13 @@ async function createOrderItems(purchaser, items) {
   return data;
 }
 
-async function updateOrdersAndCustomer() {}
+async function updateOrdersAndCustomer(customer, orderedItems, placedOrder) {
+  // updating we will send a "PUT" request
+  const { data } = await axios.put("/api/updatecustomerandorder", {
+    customer,
+    placedOrder,
+    orderedItems,
+  });
+  console.log("update customer and placed orders", data);
+  return data;
+}

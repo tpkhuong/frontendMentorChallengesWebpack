@@ -51,7 +51,8 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "../../../utils/authHelpers";
 import dbConnect from "../../../config/mongooseMongoDatabase";
-import TestUser from "../../../models/TestUsers";
+// import TestUser from "../../../models/TestUsers";
+import User from "../../../models/Users";
 
 export default NextAuth({
   session: {
@@ -66,7 +67,7 @@ export default NextAuth({
         // const usersCollection = client.db().collection("users");
         // find user
         console.log("credentials", credentials);
-        const foundUser = await TestUser.findOne({
+        const foundUser = await User.findOne({
           email: credentials.email,
         });
         // console.log("foundUser", foundUser);

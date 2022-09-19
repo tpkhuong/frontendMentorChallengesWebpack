@@ -101,9 +101,10 @@ export async function submitNewUserHandler(event) {
   // password error count
   const passwordErrorCount = passwordInputRef.current.value === "" ? 1 : 0;
   /**
-   * we want to render the assistive message component with inputRef assigned to variables in asistive message component
+   * we want to render the assistive message component with inputRef assigned to variables in assistive message component
    * we will call set func from useState before assign values to input parent to show error message.
    * **/
+  // we want to call algorithm below to remove assistive text after use correct their errors
   contextRefObj.refRegisterErrorMessage((prevValues) => {
     return {
       ...prevValues,
@@ -187,6 +188,7 @@ export async function submitNewUserHandler(event) {
       return;
     } else {
       // run algorithm to create new user and remove "not match" text
+      console.log("matched");
       passwordInputRef.current.parentElement.setAttribute(
         "data-ismatchedpassword",
         ""
@@ -256,7 +258,7 @@ export async function loginHandler(event) {
   /**
    * call func assign to refToSetFuncForAssistiveText here
    * **/
-
+  // we want to call algorithm below to remove assistive text after use correct their errors
   loginFormContextObj.refToSetFuncForAssistiveText((prevValues) => {
     return {
       ...prevValues,
@@ -314,17 +316,17 @@ export async function loginHandler(event) {
     );
   }
   // run algorithm below after validation. when email and password error count is 0
-  // if (emailErrors == 0 && passwordErrors == 0) {
-  //   const loginResult = await signIn("credentials", {
-  //     // signin method default behavior is user ends back on page they started
-  //     // after completing sign in
-  //     // redirect false to handle sign in response on same page
-  //     // redirect: false,
-  //     callbackUrl: "/",
-  //     email: userEnteredEmail,
-  //     password: userEnteredPassword,
-  //   });
-  // }
+  if (emailErrors == 0 && passwordErrors == 0) {
+    const loginResult = await signIn("credentials", {
+      // signin method default behavior is user ends back on page they started
+      // after completing sign in
+      // redirect false to handle sign in response on same page
+      // redirect: false,
+      callbackUrl: "/",
+      email: userEnteredEmail,
+      password: userEnteredPassword,
+    });
+  }
 }
 
 /**
