@@ -34,14 +34,12 @@ export default function RegisterForm({ children, ...props }) {
             aria-describedby=""
           />
           {/* error message */}
-          <div className={RegisterFormStyles[`style-wrapper`]}>
-            <span id="email-empty" className={RegisterFormStyles[`error`]}>
-              can't be empty
-            </span>
-            <span id="email-invalid" className={RegisterFormStyles[`invalid`]}>
-              not valid
-            </span>
-          </div>
+          <span id="email-empty" className={RegisterFormStyles[`error`]}>
+            can't be empty
+          </span>
+          <span id="email-invalid" className={RegisterFormStyles[`invalid`]}>
+            not valid
+          </span>
         </div>
         <div
           data-isempty=""

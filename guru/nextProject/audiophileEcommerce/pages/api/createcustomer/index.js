@@ -100,9 +100,12 @@ export default async function customerHandler(req, res) {
       userExist.customer = newCustomer._id;
       await Promise.all([newCustomer.save(), userExist.save()]);
     }
+    // returning customer instead of createdCustomer to match when customerExist is truthy
+    // if we returned createdCustomer when newCustomer is truthy then same customer submit another order
+    // the data obj returned from this api func will not match our algorithm in createordereditems
     res
       .status(200)
-      .json({ message: "Customer Created!", createdCustomer: newCustomer });
+      .json({ message: "Customer Created!", customer: newCustomer });
   } else {
     res.status(422).json({ message: "The Fun begins!!!" });
   }

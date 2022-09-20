@@ -12,13 +12,16 @@ export default async function updateCustomerAndOrderHandler(req, res) {
     OrderDetails.findById(placedOrder._id),
   ]);
 
-  //   update customer with obj that has orderId and orderNumber properties to order property of customer schema
-  foundCustomer.orders = {
-    orderedIt: placedOrder._id,
+  // update customer with obj that has orderId and orderNumber properties add obj to orders property of customer schema
+  // which is an array
+  // since we are adding order obj to array and createcustomer api func will return existing customer or new customer
+  // we are confident we dont have to check if customer passed in to this func is returncustomer or newcustomer
+  foundCustomer.orders.push({
+    orderedId: placedOrder._id,
     orderNumber: placedOrder.orderNumber,
-  };
+  });
   // update placed orders customer and orderedItems properties
-  // customer properties will be obj with customer email and customer id
+  //   customer properties will be obj with customer email and customer id
   foundPlacedOrder.customer = {
     email: customer.email,
     id: customer._id,

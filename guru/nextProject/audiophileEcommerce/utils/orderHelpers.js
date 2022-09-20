@@ -120,7 +120,7 @@ export async function showOrderModal(event) {
       );
       // // create placed orders
       const placedOrderResult = await createOrders(
-        customerResult.createdCustomer.name,
+        customerResult.customer.name,
         apiDataForBilling,
         apiDataForShipping,
         apitDataForPayment,
@@ -132,7 +132,7 @@ export async function showOrderModal(event) {
       // pass customerResult, ordereditemsResult, placedOrderResult to updateOrdersAndCustomer func
       // in createorders we will make api call to create placeorders and orderitems
       const updateCustomerAndPlacedOrderResult = await updateOrdersAndCustomer(
-        customerResult.createdCustomer,
+        customerResult.customer,
         orderedItemsResult.items,
         placedOrderResult.orderData
       );

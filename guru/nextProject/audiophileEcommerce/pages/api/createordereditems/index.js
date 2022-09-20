@@ -8,10 +8,10 @@ export default async function createOrderedItemHandler(req, res) {
   if (method != "POST") return;
   const { purchaser, items } = body;
   const {
-    createdCustomer: { name, email, _id },
+    customer: { name, email, _id },
   } = purchaser;
 
-  // purchaser is the return data from /apit/customer which is a json with message and createdCustomer properties
+  // purchaser is the return data from /apit/customer which is a json with message and customer properties
 
   await dbConnect();
 

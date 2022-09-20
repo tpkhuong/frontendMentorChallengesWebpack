@@ -1,0 +1,27 @@
+/* mobile */
+.interactive-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+/* top */
+.cards-container {
+  background-image: url("../../../public/bg-main-mobile.png");
+  flex-basis: 240px;
+  position: relative;
+}
+/* tablet */
+/* top */
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .interactive-card-wrapper {
+    flex-direction: row;
+  }
+  .cards-container {
+    background-image: url("../../../public/bg-main-desktop.png");
+    flex-basis: 483px;
+  }
+}
+
+/* top */

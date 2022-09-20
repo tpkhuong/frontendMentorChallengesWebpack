@@ -1,0 +1,25 @@
+/* mobile */
+
+.back-wrapper {
+  color: var(--color-neutral-white);
+  border-radius: 8px;
+  font-weight: 500;
+  background-image: url("../../../public/bg-card-back.png");
+  padding: 71.72px 26.23px 71.54px 28.79px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-width: 285px;
+  text-align: right;
+  position: absolute;
+  z-index: -1;
+}
+
+/* 73.64 37.02 72.36 230.98 */
+
+.cvc-code {
+  font-size: var(--font-size-9px);
+  margin-inline-end: 10px;
+  letter-spacing: 2px;
+}
+/* tablet */
+/* desktop */

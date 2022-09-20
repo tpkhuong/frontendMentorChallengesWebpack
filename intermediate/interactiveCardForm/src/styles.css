@@ -4,13 +4,14 @@
 :root {
   /* primary */
   --color-primary-orange: hsl(22, 65%, 57%);
-  --color-primary-black: hsl(0, 0%, 6%);
-  --color-primary-grey: hsl(0, 0%, 95%);
-  --color-primary-white: hsl(0, 0%, 98%);
-  --color-input-border: hsl(0, 0%, 81%);
-  --color-secondary-orange: hsl(21, 94%, 75%);
-  --color-nav-bar-line: hsl(0, 0%, 59%);
-  --color-text: hsl(0, 0%, 45%);
+  --color-primary-input-error: hsl(0, 100%, 66%);
+  --color-primary-gradient-from: hsl(249, 99%, 64%);
+  --color-primary-gradient-to: hsl(278, 94%, 30%);
+  --color-neutral-light-grayish-violet: hsl(0, 0%, 81%);
+  --color-neutral-dark-grayish-violet: hsl(21, 94%, 75%);
+  --color-neutral-vary-dark-violet: hsl(0, 0%, 59%);
+  --color-cvc-bg: hsl(213, 11%, 71%);
+  /* --color-text: hsl(0, 0%, 45%); */
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
@@ -128,6 +129,10 @@
   /* 18px */
   --font-size-body: 1.125rem;
   /* --heading-xxsm: 0.9375rem; */
+  --font-size-28px: 1.75rem;
+  --font-size-14px: 0.875rem;
+  --font-size-12px: 0.75rem;
+  --font-size-9px: 0.5625rem;
 
   --subheading1: 1.75rem;
   --subheading2: 0.875rem;
@@ -235,7 +240,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  font-family: var(--font-family-manrope);
+  font-family: var(--font-space-grotesk);
   /* color: var(--color-neutral-black); */
   font-size: var(--font-size-body);
 }
@@ -279,6 +284,10 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+#root {
+  height: 100%;
 }
 
 button {
@@ -363,8 +372,4 @@ button:hover {
 
 .leaflet-container {
   height: 150px;
-}
-
-body {
-  background-color: cadetblue;
 }

@@ -1,0 +1,33 @@
+/* mobile */
+.front-wrapper {
+  color: var(--color-neutral-white);
+  font-weight: 500;
+  background-image: url("../../../public/bg-card-front.png");
+  border-radius: 8px;
+  padding: 17.6px 27px 19.6px 19px;
+  min-width: 285px;
+  position: absolute;
+}
+
+.logo-img-container {
+  max-width: 54px;
+}
+
+.text-content {
+  margin-block-start: 35px;
+}
+
+.credit-card-number-display {
+  letter-spacing: 2px;
+}
+
+.name-expdate-wrapper {
+  font-size: var(--font-size-9px);
+  margin-block-start: 14px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 2px;
+}
+/* tablet */
+/* desktop */

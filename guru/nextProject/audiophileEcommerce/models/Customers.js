@@ -31,9 +31,13 @@ const CustomerSchema = new mongoose.Schema(
     email: {
       type: String,
     },
-    // orders will be object with order id and order number properties
+    // returnCustomer: {
+    //   type: Boolean,
+    // },
+    // orders will be an array of objects with order id and order number properties for each order
+    // a customer submit with our site.
     orders: {
-      type: Object,
+      type: Array,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
