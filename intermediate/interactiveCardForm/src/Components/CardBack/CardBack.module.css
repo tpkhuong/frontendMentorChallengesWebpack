@@ -11,7 +11,12 @@
   min-width: 285px;
   text-align: right;
   position: absolute;
-  z-index: -1;
+  top: 37px;
+  right: 16px;
+  /* if we want to use z-index -1 on card back we will declare isolation: isolate; on parent of card front and card back 
+  or else card back will appear behind parent element which has bg img declared on it
+  */
+  /* z-index: -1; */
 }
 
 /* 73.64 37.02 72.36 230.98 */

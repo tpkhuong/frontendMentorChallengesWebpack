@@ -1,3 +1,214 @@
+/* mobile */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+input:focus {
+  outline: none;
+  border-color: transparent;
+}
+
+span {
+  display: block;
+}
+
+label {
+  display: inline-block;
+}
+
+/* declaring spacing declaration around inputs */
+input {
+  border: 2px solid var(--color-input-border);
+  border-radius: 8px;
+  width: 100%;
+  padding-block: 8px;
+  padding-inline-start: 8px;
+  color: var(--color-input-placeholder);
+  cursor: pointer;
+}
+
+[data-needattention] {
+  position: relative;
+}
+
+[data-needattention="true"] input {
+  border-color: transparent;
+}
+
+label,
+.expdate-text {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: var(--font-size-12px);
+  margin-block-end: 8px;
+  font-weight: 500;
+}
+
 .form-confirm-container {
   flex-basis: 464px;
+  color: var(--color-neutral-vary-dark-violet);
+  padding: 91px 24px 45px;
 }
+
+/* [id="cardholder"] + [id="hello"] {
+  color: red;
+} */
+
+[data-needattention="false"] .error-msg {
+  display: none;
+}
+
+/* [data-needattention="false"] .accepted {
+  display: revert;
+} */
+
+.accepted {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5rem;
+  display: none;
+}
+
+.error-msg {
+  font-size: var(--font-size-12px);
+  color: red;
+  font-weight: 500;
+  position: absolute;
+  bottom: -21px;
+}
+
+/* card name */
+
+.custom-input-border-wrapper {
+  position: relative;
+}
+
+/* having span a sibling of inputs and both span and input as children of
+wrapper our algorithm will create a "border" around inputs
+due to position absolute, inset and z-index 
+*/
+
+.input-border {
+  border-radius: 8px;
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+}
+
+input:focus + .input-border,
+input:hover + .input-border {
+  background-image: linear-gradient(
+    var(--color-primary-gradient-from),
+    var(--color-primary-gradient-to)
+  );
+}
+
+[data-needattention="true"] span.input-border {
+  background-image: revert;
+  background-color: red;
+}
+
+/* card number */
+
+.card-number,
+.expdate-cvc-container {
+  margin-block-start: 20px;
+}
+
+/* .card-name-test::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  background-image: linear-gradient(
+    var(--color-primary-gradient-from),
+    var(--color-primary-gradient-to)
+  );
+  z-index: -1;
+  
+} */
+
+/* exp date */
+
+/* .expdate-text {
+  letter-spacing: 2px;
+  font-size: var(--font-size-12px);
+  text-transform: uppercase;
+} */
+
+.expdate-cvc-container,
+.style-wrapper {
+  display: flex;
+}
+
+.expdate-cvc-container {
+  align-items: flex-end;
+  gap: 11px;
+  margin-block-end: 28px;
+}
+
+.style-wrapper {
+  position: relative;
+  gap: 8px;
+}
+
+.expdate-month-year-container {
+  flex-basis: 152px;
+}
+
+/* exp month */
+/* exp year */
+
+.exp-month,
+.exp-year {
+  flex-basis: 72px;
+}
+
+[data-needattention="false"] .style-wrapper::before {
+  display: none;
+}
+
+.style-wrapper::before {
+  content: "Can't be blank";
+  position: absolute;
+  bottom: -21px;
+  font-size: var(--font-size-12px);
+  color: red;
+  font-weight: 500;
+}
+
+/* cvc */
+
+.cvc-input {
+  flex-basis: 164px;
+}
+
+/* confirm */
+
+.confirm-container {
+  display: none;
+}
+
+/* confirm and continue button */
+
+.call-to-action-btn {
+  color: var(--color-neutral-white);
+  background-color: var(--color-neutral-vary-dark-violet);
+  border-radius: 8px;
+  width: 100%;
+  padding-block: 15px;
+  text-align: center;
+}
+
+/* desktop */
+
+/* IoCloseCircleSharp */
+/* IoCheckmarkCircleSharp */

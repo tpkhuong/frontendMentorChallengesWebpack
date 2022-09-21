@@ -128,11 +128,11 @@ function PersonalInfo({ children, ...props }) {
     // declare max-width 730px and padding-inline 48px on parent elemnt of
     // personalinfo, billing/shipping and payment component
     <React.Fragment>
+      {/* use fieldset and legend */}
       <fieldset className={PersonalInfoStyles[`personal-fieldset`]}>
         <legend className={PersonalInfoStyles[`title`]}>
           Personal Contact
         </legend>
-        {/* use fieldset and legend */}
         <article
           onChange={personalInputListener}
           className={PersonalInfoStyles[`personal-wrapper`]}

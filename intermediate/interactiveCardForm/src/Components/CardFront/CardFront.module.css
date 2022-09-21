@@ -1,12 +1,18 @@
 /* mobile */
 .front-wrapper {
   color: var(--color-neutral-white);
+  /* color: var(--light-text, var(--dark-text)); */
   font-weight: 500;
   background-image: url("../../../public/bg-card-front.png");
   border-radius: 8px;
   padding: 17.6px 27px 19.6px 19px;
   min-width: 285px;
   position: absolute;
+  /* declare z-index 1 to have card front appear on top of card back */
+  z-index: 1;
+  left: 16px;
+  bottom: -43px;
+  /* box-shadow: var(--box-shadow); */
 }
 
 .logo-img-container {

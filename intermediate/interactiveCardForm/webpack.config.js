@@ -16,6 +16,10 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         type: "asset/resource",
       },
+      // {
+      //   test: /\.(png|svg|jpg|gif)$/,
+      //   use: { loader: "file-loader" },
+      // },
     ],
   },
   output: {

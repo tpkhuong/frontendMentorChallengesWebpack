@@ -7,10 +7,12 @@
   --color-primary-input-error: hsl(0, 100%, 66%);
   --color-primary-gradient-from: hsl(249, 99%, 64%);
   --color-primary-gradient-to: hsl(278, 94%, 30%);
-  --color-neutral-light-grayish-violet: hsl(0, 0%, 81%);
-  --color-neutral-dark-grayish-violet: hsl(21, 94%, 75%);
-  --color-neutral-vary-dark-violet: hsl(0, 0%, 59%);
+  --color-neutral-light-grayish-violet: hsl(270, 3%, 87%);
+  --color-neutral-dark-grayish-violet: hsl(279, 6%, 55%);
+  --color-neutral-vary-dark-violet: hsl(278, 68%, 11%);
   --color-cvc-bg: hsl(213, 11%, 71%);
+  --color-input-border: hsl(280, 8%, 75%);
+  --color-input-placeholder: hsl(280, 8%, 50%);
   /* --color-text: hsl(0, 0%, 45%); */
 
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
@@ -183,7 +185,11 @@
     0px 0.7px 1.7px rgba(0, 0, 0, 0.028), 0px 1.4px 3.3px rgba(0, 0, 0, 0.035),
     0px 2.5px 5.8px rgba(0, 0, 0, 0.042), 0px 4.6px 10.9px rgba(0, 0, 0, 0.05),
     0px 11px 26px rgba(0, 0, 0, 0.07); */
-
+  --shadow-elevation-high: 0.3px 0.5px 0.9px hsl(var(--shadow-color) / 0),
+    2.2px 4.3px 7.2px hsl(var(--shadow-color) / 0.1),
+    4.1px 8.2px 13.8px hsl(var(--shadow-color) / 0.21),
+    7.1px 14.3px 23.9px hsl(var(--shadow-color) / 0.31),
+    12.5px 25px 41.9px hsl(var(--shadow-color) / 0.42);
   /***** background *****/
   /* bg-img top and bg-color-bottom */
   /* todo input,todo listitem,items left/complete, views btns(mobile) */
