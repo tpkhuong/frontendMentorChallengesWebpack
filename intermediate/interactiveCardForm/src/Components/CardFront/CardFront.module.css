@@ -35,5 +35,42 @@
   justify-content: space-between;
   letter-spacing: 2px;
 }
+
+.expdate-display > span {
+  display: revert;
+}
+
 /* tablet */
 /* desktop */
+
+@media screen and (min-width: 90rem) {
+  .front-wrapper {
+    left: revert;
+    top: 188px;
+    right: -128px;
+    bottom: revert;
+    min-width: 447px;
+    padding: 28px 28.86px 28.5px 32px;
+    box-shadow: 12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+      100px 100px 80px rgba(0, 0, 0, 0.07);
+    /* right 128 top 188 */
+  }
+  /* logo */
+  .logo-img-container {
+    max-width: revert;
+  }
+  /* text content container */
+  .text-content {
+    margin-block-start: 64px;
+  }
+  /* credit card number */
+  .credit-card-number-display {
+    font-size: var(--font-size-28px);
+    letter-spacing: 4px;
+  }
+  /* name expdate wrapper */
+  .name-expdate-wrapper {
+    font-size: var(--font-size-14px);
+    letter-spacing: 4px;
+  }
+}

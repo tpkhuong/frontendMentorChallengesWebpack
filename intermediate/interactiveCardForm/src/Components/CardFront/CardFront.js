@@ -1,7 +1,24 @@
 import React from "react";
 import CardFrontStyles from "./CardFront.module.css";
+import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 
 export default function CardFront({ children, ...props }) {
+  /** 
+   * name
+number
+expMonth
+expYear
+   * **/
+  // create refs to front card display elements
+  const cardNumberRef = React.useRef();
+  const cardHolderRef = React.useRef();
+  const expMonthRef = React.useRef();
+  const expYearRef = React.useRef();
+  const cardFrontRef = React.useContext(LinkValuesToInputContext);
+  cardFrontRef.creditCard.name = cardHolderRef;
+  cardFrontRef.creditCard.number = cardNumberRef;
+  cardFrontRef.creditCard.expMonth = expMonthRef;
+  cardFrontRef.creditCard.expYear = expYearRef;
   return (
     <React.Fragment>
       <div className={CardFrontStyles[`front-wrapper`]}>
@@ -24,15 +41,35 @@ export default function CardFront({ children, ...props }) {
         </div>
         {/* text-content */}
         <div className={CardFrontStyles[`text-content`]}>
-          <span className={CardFrontStyles[`credit-card-number-display`]}>
+          <span
+            ref={cardNumberRef}
+            className={CardFrontStyles[`credit-card-number-display`]}
+          >
             0000 0000 0000 0000
           </span>
           {/* name and exp date */}
           <div className={CardFrontStyles[`name-expdate-wrapper`]}>
-            <span className={CardFrontStyles[`name-display`]}>
+            <span
+              ref={cardHolderRef}
+              className={CardFrontStyles[`name-display`]}
+            >
               jane appleseed
             </span>
-            <span className={CardFrontStyles[`expdate-display`]}>12/26</span>
+            <span className={CardFrontStyles[`expdate-display`]}>
+              <span
+                ref={expMonthRef}
+                className={CardFrontStyles[`exp-month-display`]}
+              >
+                12
+              </span>
+              <span>/</span>
+              <span
+                ref={expYearRef}
+                className={CardFrontStyles[`exp-year-display`]}
+              >
+                26
+              </span>
+            </span>
           </div>
         </div>
       </div>

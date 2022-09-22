@@ -1,14 +1,30 @@
 import React from "react";
+import {
+  cardHolderNameHelper,
+  creditCardNumberHelper,
+  expirationMonthHelper,
+  expirationYearHelper,
+  cvcDigitsHelper,
+} from "../../../utils/helpers.js";
+import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import { IoCloseCircleSharp, IoCheckmarkCircleSharp } from "react-icons/io5";
 import BottomStyle from "./BottomContainer.module.css";
 
 export default function BottomContainer({ children, ...props }) {
+  // get credit card front and back display ref from context
+  const creditCardDisplayRefObj = React.useContext(LinkValuesToInputContext);
+
   return (
     <React.Fragment>
       {/* control height of app at desktop layout */}
       <div className={BottomStyle[`form-confirm-container`]}>
         {/* form inputs */}
-        <form noValidate role="form" action="">
+        <form
+          className={BottomStyle[`creditcard-form`]}
+          noValidate
+          role="form"
+          action=""
+        >
           <fieldset className={BottomStyle[`credit-card-fieldset`]}>
             <legend
               className={`${BottomStyle[`title`]} ${
@@ -30,6 +46,9 @@ export default function BottomContainer({ children, ...props }) {
                     placeholder="e.g. Jane Appleseed"
                     id="cardholder"
                     type="text"
+                    onChange={cardHolderNameHelper.bind({
+                      creditCardHolder: creditCardDisplayRefObj.creditCard.name,
+                    })}
                   />
                   <span className={BottomStyle[`input-border`]}></span>
                   {/* <AcceptedMessage testName={`${BottomStyle[`accepted`]}`} /> */}
@@ -53,7 +72,14 @@ export default function BottomContainer({ children, ...props }) {
                   <input
                     placeholder="e.g. 1234 5678 9123 0000"
                     id="credit-card-number"
-                    type="text"
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="cc-number"
+                    pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
+                    maxLength="19"
+                    onChange={creditCardNumberHelper.bind({
+                      cardNumber: creditCardDisplayRefObj.creditCard.number,
+                    })}
                   />
                   <span className={BottomStyle[`input-border`]}></span>
 
@@ -93,7 +119,14 @@ export default function BottomContainer({ children, ...props }) {
                         <input
                           placeholder="MM"
                           id="expdate-month"
-                          type="text"
+                          type="tel"
+                          inputMode="numeric"
+                          autoComplete="cc-exp-month"
+                          maxLength="2"
+                          onChange={expirationMonthHelper.bind({
+                            monthRef:
+                              creditCardDisplayRefObj.creditCard.expMonth,
+                          })}
                         />
                         <span className={BottomStyle[`input-border`]}></span>
                       </div>
@@ -106,7 +139,17 @@ export default function BottomContainer({ children, ...props }) {
                       <div
                         className={BottomStyle[`custom-input-border-wrapper`]}
                       >
-                        <input placeholder="YY" id="expdate-year" type="text" />
+                        <input
+                          placeholder="YY"
+                          id="expdate-year"
+                          type="tel"
+                          inputMode="numeric"
+                          autoComplete="cc-exp-year"
+                          maxLength="2"
+                          onChange={expirationYearHelper.bind({
+                            yearRef: creditCardDisplayRefObj.creditCard.expYear,
+                          })}
+                        />
                         <span className={BottomStyle[`input-border`]}></span>
                       </div>
                     </div>
@@ -119,7 +162,17 @@ export default function BottomContainer({ children, ...props }) {
                 >
                   <label htmlFor="cvc">cvc</label>
                   <div className={BottomStyle[`custom-input-border-wrapper`]}>
-                    <input placeholder="e.g. 123" id="cvc" type="text" />
+                    <input
+                      placeholder="e.g. 123"
+                      id="cvc"
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="cc-csc"
+                      maxLength="3"
+                      onChange={cvcDigitsHelper.bind({
+                        cvcRef: creditCardDisplayRefObj.creditCard.cvc,
+                      })}
+                    />
                     <span className={BottomStyle[`input-border`]}></span>
                     <span className={BottomStyle[`error-msg`]}>
                       Can't be blank

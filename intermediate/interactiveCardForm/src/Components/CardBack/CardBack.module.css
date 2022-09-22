@@ -28,3 +28,23 @@
 }
 /* tablet */
 /* desktop */
+
+@media screen and (min-width: 90rem) {
+  .back-wrapper {
+    /* display: none; */
+    top: revert;
+    right: -222px;
+    bottom: 186px;
+    padding: 110px 54px 114.5px 339px;
+    min-width: 447px;
+    box-shadow: 12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+      100px 100px 80px rgba(0, 0, 0, 0.07);
+
+    /* right 222 186*/
+  }
+  /* cvc */
+  .cvc-code {
+    font-size: var(--font-size-14px);
+    margin-inline-end: 0;
+  }
+}

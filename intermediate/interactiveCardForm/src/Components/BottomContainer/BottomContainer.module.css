@@ -85,6 +85,9 @@ label,
   bottom: -21px;
 }
 
+.creditcard-form {
+}
+
 /* card name */
 
 .custom-input-border-wrapper {
@@ -194,10 +197,31 @@ input:hover + .input-border {
 /* confirm */
 
 .confirm-container {
-  display: none;
+  /* display: none; */
+  text-align: center;
 }
 
 /* confirm and continue button */
+
+.confirm-check-img {
+  width: max-content;
+  margin-inline: auto;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: var(--font-size-28px);
+  letter-spacing: 2px;
+  color: var(--color-neutral-vary-dark-violet);
+  margin-block-start: 35px;
+  margin-block-end: 16px;
+}
+
+.description {
+  color: var(--color-neutral-dark-grayish-violet);
+  margin-block-end: 48px;
+  font-weight: 500;
+}
 
 .call-to-action-btn {
   color: var(--color-neutral-white);
@@ -210,5 +234,47 @@ input:hover + .input-border {
 
 /* desktop */
 
-/* IoCloseCircleSharp */
-/* IoCheckmarkCircleSharp */
+@media screen and (min-width: 90rem) {
+  /* form confirm bottom container */
+  .form-confirm-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0;
+  }
+  /* form */
+  .creditcard-form {
+    max-width: 381px;
+  }
+  /* cardholder name */
+
+  /* credit card number */
+
+  .expdate-cvc-container {
+    gap: 20px;
+  }
+
+  .expdate-month-year-container {
+    flex-basis: 170px;
+  }
+
+  .style-wrapper {
+    gap: 10px;
+  }
+
+  /* exp date cvc */
+  .exp-month,
+  .exp-year {
+    flex-basis: 80px;
+  }
+
+  .cvc-input {
+    flex-basis: 191px;
+  }
+  /* call to action btn */
+  .confirm-container {
+    display: none;
+    text-align: center;
+  }
+}
