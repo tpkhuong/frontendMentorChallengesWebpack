@@ -29,6 +29,9 @@ export default function SectionWrapper({ children, ...props }) {
           <CardFront />
           {/* back */}
           <CardBack />
+          {/* <button className={SectionStyles[`effect`]}>
+            <div className={SectionStyles[`testing`]}></div>
+          </button> */}
         </div>
         {/* form inputs and confirm component wrapper*/}
         <BottomContainer />

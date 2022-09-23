@@ -44,27 +44,50 @@ export function creditCardNumberHelper(event) {
 // exp month
 export function expirationMonthHelper(event) {
   // destructure this obj
-  const { monthRef } = this;
-  console.log("monthRef", monthRef);
-
+  const { current } = this.monthRef;
+  const { value } = event.target;
   // call value helper
   eventInputValueHelper(event.target, "number");
+  if (value.length == 1 && Number(value) > 1) {
+    event.target.value = `0${value}`;
+  }
+  // call linked display to input
+  linkCreditCardInfoToInputs(event.target, current, "front");
+  // if (event.target.value === "") {
+  //   monthRef.current.innerText = "00";
+  // } else {
+  //   monthRef.current.innerText = `${event.target.value}`;
+  // }
 }
 // exp year
 export function expirationYearHelper(event) {
   // destructure this obj
-  const { yearRef } = this;
-  console.log("yearRef", yearRef);
-
+  const { current } = this.yearRef;
   // call value helper
   eventInputValueHelper(event.target, "number");
+  // call linked display to input
+  linkCreditCardInfoToInputs(event.target, current, "front");
+
+  // if (event.target.value === "") {
+  //   current.innerText = "00";
+  // } else {
+  //   current.innerText = `${event.target.value}`;
+  // }
 }
 // cvc
 export function cvcDigitsHelper(event) {
   // destructure this obj
-  const { cvcRef } = this;
-  console.log("cvcRef", cvcRef);
-
+  const { current } = this.cvcRef;
   // call value helper
   eventInputValueHelper(event.target, "number");
+  // call linked display to input
+  linkCreditCardInfoToInputs(event.target, current, "back");
+}
+
+function linkCreditCardInfoToInputs(target, displayElement, sideOfCard) {
+  if (target.value === "") {
+    displayElement.innerText = sideOfCard == "front" ? "00" : "000";
+  } else {
+    displayElement.innerText = `${target.value}`;
+  }
 }

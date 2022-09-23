@@ -60,14 +60,14 @@ expYear
                 ref={expMonthRef}
                 className={CardFrontStyles[`exp-month-display`]}
               >
-                12
+                00
               </span>
               <span>/</span>
               <span
                 ref={expYearRef}
                 className={CardFrontStyles[`exp-year-display`]}
               >
-                26
+                00
               </span>
             </span>
           </div>
