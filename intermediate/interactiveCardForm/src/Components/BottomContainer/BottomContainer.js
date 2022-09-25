@@ -18,55 +18,65 @@ export default function BottomContainer({ children, ...props }) {
     <React.Fragment>
       {/* control height of app at desktop layout */}
       <div className={BottomStyle[`form-confirm-container`]}>
-        <div className={BottomContainer[`flex`]}>
-          <svg
-            width="80"
-            height="80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="40" cy="40" r="40" fill="url(#a)" />
-            <path d="M28 39.92 36.08 48l16-16" stroke="#fff" strokeWidth="3" />
-            <defs>
-              <linearGradient
-                id="a"
-                x1="-23.014"
-                y1="11.507"
-                x2="0"
-                y2="91.507"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#6348FE" />
-                <stop offset="1" stopColor="#610595" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <span className={BottomContainer[`box`]}>
-            <span className={BottomContainer[`circle`]}></span>
-          </span>
-          <svg
-            width="80"
-            height="80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="40" cy="40" r="40" fill="url(#a)" />
-            <path d="M28 39.92 36.08 48l16-16" stroke="#fff" strokeWidth="3" />
-            <defs>
-              <linearGradient
-                id="a"
-                x1="-23.014"
-                y1="11.507"
-                x2="0"
-                y2="91.507"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#6348FE" />
-                <stop offset="1" stopColor="#610595" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        {/* <div className="flex-wrapper">
+          <div className={BottomContainer[`flex-display`]}>
+            <svg
+              width="80"
+              height="80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="40" cy="40" r="40" fill="url(#a)" />
+              <path
+                d="M28 39.92 36.08 48l16-16"
+                stroke="#fff"
+                strokeWidth="3"
+              />
+              <defs>
+                <linearGradient
+                  id="a"
+                  x1="-23.014"
+                  y1="11.507"
+                  x2="0"
+                  y2="91.507"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#6348FE" />
+                  <stop offset="1" stopColor="#610595" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span className={BottomContainer[`box`]}>
+              <span className={BottomContainer[`circle`]}></span>
+            </span>
+            <svg
+              width="80"
+              height="80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="40" cy="40" r="40" fill="url(#a)" />
+              <path
+                d="M28 39.92 36.08 48l16-16"
+                stroke="#fff"
+                strokeWidth="3"
+              />
+              <defs>
+                <linearGradient
+                  id="a"
+                  x1="-23.014"
+                  y1="11.507"
+                  x2="0"
+                  y2="91.507"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#6348FE" />
+                  <stop offset="1" stopColor="#610595" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div> */}
         {/* form inputs */}
         <form
           className={BottomStyle[`creditcard-form`]}
