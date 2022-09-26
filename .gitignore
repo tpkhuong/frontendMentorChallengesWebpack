@@ -5,6 +5,8 @@
 /intermediate/clockApp/node_modules/
 /intermediate/interactiveCardForms/node_modules/
 /intermediate/interactiveCardForms/starter-code/
+/intermediate/urlShorteningApiPage/node_modules/
+/intermediate/urlShorteningApiPage/.env/
 /advanced/multiPageSetup/node_modules/
 /advanced/rockPaperScissorsGame/node_modules/
 /advanced/webpackRockPaperGame/node_modules/
