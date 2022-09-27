@@ -5,10 +5,15 @@ export function makeApiCall(url) {
 }
 
 export function getTime(currentTime) {
+  console.log("currentTime", currentTime);
   const firstSplit = currentTime.split("T");
-  const secondSplit = firstSplit[1].split("+");
+  const signForSecondSplit = firstSplit[1].includes("+") ? "+" : "-";
+  const secondSplit = firstSplit[1].split(signForSecondSplit);
   const finalSplit = secondSplit[0].split(":");
   const [hour, minute, seconds] = finalSplit;
+  console.log("hour", hour);
+  console.log("minute", minute);
+  console.log("seconds", seconds);
   return {
     hour: Number(hour),
     minute: Number(minute),

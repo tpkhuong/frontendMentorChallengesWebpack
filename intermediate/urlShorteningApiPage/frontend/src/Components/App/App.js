@@ -4,7 +4,9 @@ import "../../styles.css";
 export default function App({ children, ...props }) {
   return (
     <React.Fragment>
-      <h1>Hello React!!!</h1>
+      <div>
+        <h1>Hello React!!</h1>
+      </div>
     </React.Fragment>
   );
 }

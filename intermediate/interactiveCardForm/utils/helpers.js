@@ -5,6 +5,7 @@ const regexForName = /[a-zA-Z\s]/g;
 
 const objOfRegularExpressions = {
   number: /[0-9\-]/gi,
+  spaceAndNumber: /[0-9\s-]/gi,
   name: /[a-zA-Z\s]/g,
 };
 
@@ -29,16 +30,17 @@ export function creditCardNumberHelper(event) {
   // destructure this obj
   const { cardNumber } = this;
   console.log("cardNumber", cardNumber);
+  eventInputValueHelper(event.target, "spaceAndNumber");
   // call value helper
   const { value } = event.target;
-  eventInputValueHelper(event.target, "number");
   // get credit card number input value
   const lengthOfValue = value.length;
   // without checking for lengthOfValue > 0 when user enter value to credit card number
   // then delete one input is an empty string "", we will enter if statement
-  // because 0 % 4 === 0 will be true
-  if (lengthOfValue > 0 && lengthOfValue % 4 === 0) {
+  // because 0 % 4 === 0 or 0 % 5 will be true
+  if (lengthOfValue > 0 && lengthOfValue % 5 === 0) {
     console.log("Hello there!");
+    console.log("value", value.slice(-4));
   }
 }
 // exp month
