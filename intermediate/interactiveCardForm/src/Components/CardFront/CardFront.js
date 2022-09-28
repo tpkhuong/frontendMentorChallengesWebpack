@@ -3,22 +3,24 @@ import CardFrontStyles from "./CardFront.module.css";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 
 export default function CardFront({ children, ...props }) {
-  /** 
-   * name
-number
-expMonth
-expYear
-   * **/
+  // set up state to re-render this component
+  const [frontCardNumValue, setFrontCardNumberState] = React.useState(false);
   // create refs to front card display elements
   const cardNumberRef = React.useRef();
   const cardHolderRef = React.useRef();
   const expMonthRef = React.useRef();
   const expYearRef = React.useRef();
+  // amex
+  const creditNumberAmex = React.useRef();
   const cardFrontRef = React.useContext(LinkValuesToInputContext);
   cardFrontRef.creditCard.name = cardHolderRef;
   cardFrontRef.creditCard.number = cardNumberRef;
   cardFrontRef.creditCard.expMonth = expMonthRef;
   cardFrontRef.creditCard.expYear = expYearRef;
+  // amex
+  cardFrontRef.amex.number = creditNumberAmex;
+  // assign setFrontCardNumberState to context obj
+  cardFrontRef.setStateFuncRef.front = setFrontCardNumberState;
   return (
     <React.Fragment>
       <div className={CardFrontStyles[`front-wrapper`]}>
@@ -41,12 +43,22 @@ expYear
         </div>
         {/* text-content */}
         <div className={CardFrontStyles[`text-content`]}>
-          <span
-            ref={cardNumberRef}
-            className={CardFrontStyles[`credit-card-number-display`]}
-          >
-            0000 0000 0000 0000
-          </span>
+          {!frontCardNumValue ? (
+            <span
+              ref={cardNumberRef}
+              className={CardFrontStyles[`credit-card-number-display`]}
+            >
+              0000 0000 0000 0000
+            </span>
+          ) : (
+            // amex
+            <span
+              ref={creditNumberAmex}
+              className={CardFrontStyles[`credit-card-number-display`]}
+            >
+              0000 000000 00000
+            </span>
+          )}
           {/* name and exp date */}
           <div className={CardFrontStyles[`name-expdate-wrapper`]}>
             <span

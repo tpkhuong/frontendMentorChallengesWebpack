@@ -25,6 +25,7 @@
 
 .credit-card-number-display {
   letter-spacing: 2px;
+  text-align: left;
 }
 
 .name-expdate-wrapper {

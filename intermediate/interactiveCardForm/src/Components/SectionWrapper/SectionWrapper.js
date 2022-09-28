@@ -16,6 +16,14 @@ export default function SectionWrapper({ children, ...props }) {
         expYear: null,
         cvc: null,
       },
+      amex: {
+        number: null,
+        cvc: null,
+      },
+      setStateFuncRef: {
+        front: null,
+        back: null,
+      },
     };
   });
 

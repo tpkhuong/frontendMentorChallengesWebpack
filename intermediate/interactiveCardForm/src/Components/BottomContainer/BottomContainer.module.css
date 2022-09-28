@@ -24,7 +24,7 @@ label {
 }
 
 /* declaring spacing declaration around inputs */
-input {
+input:not([type="radio"]) {
   border: 2px solid var(--color-input-border);
   border-radius: 8px;
   width: 100%;
