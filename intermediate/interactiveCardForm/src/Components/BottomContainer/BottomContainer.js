@@ -180,7 +180,7 @@ export default function BottomContainer({ children, ...props }) {
                       autoComplete="cc-number"
                       pattern="[0-9]{4} [0-9]{6} [0-9]{5}"
                       maxLength="17"
-                      onChange={amexCreditCardNumHelper.bind({
+                      onKeyUp={amexCreditCardNumHelper.bind({
                         amexCardNumber: creditCardDisplayRefObj.amex.number,
                       })}
                     />
