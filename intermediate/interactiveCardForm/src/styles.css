@@ -14,7 +14,10 @@
   --color-input-border: hsl(280, 8%, 75%);
   --color-input-placeholder: hsl(280, 8%, 50%);
   /* --color-text: hsl(0, 0%, 45%); */
-
+  --color-visa: hsl(230, 82%, 44%);
+  --color-mastercard: hsl(36, 93%, 54%);
+  --color-discover: hsl(240, 31%, 20%);
+  --color-amex: hsl(208, 99%, 41%);
   /* --color-primary-very-dark-gray: hsl(0, 0%, 17%); delete btn bg */
   /* --color-primary-light-grayish-blue: hsl(239, 57%, 85%); */
   /* --color-primary-pale-red: hsl(357, 100%, 86%); */

@@ -17,22 +17,19 @@ export default function CardBack({ children, ...props }) {
   creditCardBackRef.setStateFuncRef.back = setBackCardNumberState;
   return (
     <React.Fragment>
-      {!backCardNumValue ? (
-        <div className={CardBackStyles[`back-wrapper`]}>
-          {/* bg-img */}
+      <div className={CardBackStyles[`back-wrapper`]}>
+        {/* bg-img */}
+        {!backCardNumValue ? (
           <p ref={cvcRef} className={CardBackStyles[`cvc-code`]}>
             000
           </p>
-        </div>
-      ) : (
-        // amex
-        <div className={CardBackStyles[`back-wrapper`]}>
-          {/* bg-img */}
+        ) : (
+          // amex
           <p ref={amexCvcRef} className={CardBackStyles[`cvc-code`]}>
             0000
           </p>
-        </div>
-      )}
+        )}
+      </div>
     </React.Fragment>
   );
 }

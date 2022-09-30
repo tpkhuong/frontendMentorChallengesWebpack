@@ -127,6 +127,43 @@ input:hover + .input-border {
   margin-block-start: 20px;
 }
 
+.number-cards-style-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.card-btns-container {
+  display: inline-flex;
+  gap: 8px;
+  margin-block-start: -8px;
+  align-items: center;
+}
+
+.cc-button {
+  padding: 0;
+  background-color: transparent;
+}
+
+.major-credit-cards {
+  width: 24px;
+}
+
+[id="visa"] [data-selected="true"] {
+  color: var(--color-visa);
+}
+
+[id="mastercard"] [data-selected="true"] {
+  color: var(--color-mastercard);
+}
+
+[id="discover"] [data-selected="true"] {
+  color: var(--color-discover);
+}
+
+[id="amex"] [data-selected="true"] {
+  color: var(--color-amex);
+}
+
 /* .card-name-test::after {
   content: "";
   position: absolute;

@@ -32,15 +32,15 @@ export default function SectionWrapper({ children, ...props }) {
       <h1 className="visually-hidden">Interactive Card Form</h1>
       <LinkValuesToInputContext.Provider value={memoizedCreditCardContent}>
         <div className={SectionStyles[`cards-container`]}>
-          <button className={SectionStyles[`effect`]}>
+          {/* front and back */}
+          {/* front */}
+          <CardFront />
+          {/* back */}
+          <CardBack />
+          {/* <button className={SectionStyles[`effect`]}>
             <div className={SectionStyles[`testing`]}>
-              {/* front and back */}
-              {/* front */}
-              <CardFront />
-              {/* back */}
-              <CardBack />
             </div>
-          </button>
+          </button> */}
         </div>
         {/* form inputs and confirm component wrapper*/}
         <BottomContainer />

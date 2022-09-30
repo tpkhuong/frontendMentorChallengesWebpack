@@ -14,6 +14,12 @@ const objOfZerosForCardNumberDisplay = {
   amex: "0000 000000 00000",
 };
 
+const refToPrevClickCreditCardBtn = {
+  prevCardBtnClick: null,
+};
+
+// const changeOtherCardsAttr
+
 // const objOfActionsBasedOnLength = {};
 
 const amexObjOfActionsBasedOnLength = {
@@ -48,12 +54,9 @@ export function cardHolderNameHelper(event) {
 }
 // credit card number
 export function creditCardNumberHelper(event) {
-  // visa starts with 4
-  // mastercard starts with 5
-  // american express starts with 3
-  // discover starts with 6
+  console.log("refToPrevClickCreditCardBtn", refToPrevClickCreditCardBtn);
   // destructure this obj
-  const { cardNumber } = this;
+  const { cardNumber, setCreditCardState, creditCardDisplayRefObj } = this;
   // when user copy their credit card number into number input
   if (event.ctrlKey && event.code == "KeyV") {
     // add space to credit card number at length 5,10,15
@@ -75,6 +78,8 @@ export function creditCardNumberHelper(event) {
       []
     );
     event.target.value = creditCardNumberWithAddedSpace.join("");
+    // selected credit card icon based on first value
+    highlightSelectedCardBasedOnFirstDigit(event, refToPrevClickCreditCardBtn);
   }
   /**
    * we will have an input helper func to allow space but we will have algorithm to remove it
@@ -101,14 +106,45 @@ export function creditCardNumberHelper(event) {
         ? value.length - 1
         : value.length + 1
       : value.length;
-  console.log(objOfZerosForCardNumberDisplay["notAmex"].slice(newLength));
+  // assign copied of zeros string to credit card # display
+  // combine values user entered and copied string of zeros
+  const combinedValuesOfInputsAndStrOfZeros = [
+    ...event.target.value,
+    ...objOfZerosForCardNumberDisplay["notAmex"].slice(newLength),
+  ].join("");
+  cardNumber.current.innerText = combinedValuesOfInputsAndStrOfZeros;
+  // selected credit card icon based on first value
+  conditionalCheckerForFirstDigitHighlight(
+    event,
+    highlightSelectedCardBasedOnFirstDigit,
+    refToPrevClickCreditCardBtn,
+    { setCreditCardState, creditCardDisplayRefObj }
+  );
+  // if (event.target.value.length == 1 && event.code != "Backspace") {
+  //   highlightSelectedCardBasedOnFirstDigit(event, refToPrevClickCreditCardBtn);
+  // }
+  // if (event.target.value.length === 0 && event.code == "Backspace") {
+  //   // since we will assign btn with data-selected="true" to
+  //   // prevCardBtnClick we can selected element assigned to prevCardBtnClick
+  //   // instead of using document.querySelector()
+  //   refToPrevClickCreditCardBtn.prevCardBtnClick.getAttribute(
+  //     "data-selected"
+  //   ) == "true"
+  //     ? refToPrevClickCreditCardBtn.prevCardBtnClick.setAttribute(
+  //         "data-selected",
+  //         "false"
+  //       )
+  //     : null;
+  //   // assign null to refToPrevClickCreditCardBtn.prevCardBtnClick
+  //   refToPrevClickCreditCardBtn.prevCardBtnClick = null;
+  // }
 }
 
 // credit card number amex
 // 787878965423654
 export function amexCreditCardNumHelper(event) {
-  const { amexCardNumber } = this;
-  console.log(amexCardNumber);
+  console.log("refToPrevClickCreditCardBtn", refToPrevClickCreditCardBtn);
+  const { amexCardNumber, setCreditCardState, creditCardDisplayRefObj } = this;
   const { target } = event;
   // when user copy their credit card number into number input
   if (event.ctrlKey && event.code == "KeyV") {
@@ -134,6 +170,8 @@ export function amexCreditCardNumHelper(event) {
       []
     );
     event.target.value = arrOfCharsWithSpaceAdded.join("");
+    // selected credit card icon based on first value
+    highlightSelectedCardBasedOnFirstDigit(event, refToPrevClickCreditCardBtn);
   }
   /**
    * we will have an input helper func to allow space but we will have algorithm to remove it
@@ -154,8 +192,6 @@ export function amexCreditCardNumHelper(event) {
       addOrRemoveValueFromCardNumInput
     );
     console.log(event.target.value.length);
-    // work with input values first then card number display element
-    // copy display value based on input value length
     // const lengthToCopyStrForDisplay =
     //   event.code == "Backspace"
     //     ? target.value.length - 1
@@ -165,8 +201,20 @@ export function amexCreditCardNumHelper(event) {
     //   objOfZerosForCardNumberDisplay["amex"].slice(lengthToCopyStrForDisplay)
     // );
   }
-  console.log(
-    objOfZerosForCardNumberDisplay["amex"].slice(target.value.length)
+
+  // work with input values first then card number display element
+  // copy display value based on input value length
+  const combineInputValuesWithStrOfZeros = [
+    ...event.target.value,
+    ...objOfZerosForCardNumberDisplay["amex"].slice(target.value.length),
+  ].join("");
+  amexCardNumber.current.innerText = combineInputValuesWithStrOfZeros;
+  // selected credit card icon based on first value
+  conditionalCheckerForFirstDigitHighlight(
+    event,
+    highlightSelectedCardBasedOnFirstDigit,
+    refToPrevClickCreditCardBtn,
+    { setCreditCardState, creditCardDisplayRefObj }
   );
 }
 
@@ -198,22 +246,13 @@ function addRemoveValBasedOnKeyPressed(event, funcToAddOrRemoveNumFromInput) {
   // want code and target from event obj
   const { code, target } = event;
   if (code == "Backspace") {
-    console.log("hello this is backspace and length 5");
-    console.log(target.value);
     // call join on array returned from addOrRemoveValueFromCardNumInput
     // then assign string return from calling join() to event.targer.value
     target.value = funcToAddOrRemoveNumFromInput(target.value, "remove").join(
       ""
     );
   } else {
-    console.log("Hello this is key and length 5");
-    console.log(target.value);
-    // console.log("hello");
     target.value = funcToAddOrRemoveNumFromInput(target.value, "add").join("");
-    // const arr = [...target.value];
-    // const lastStr = arr.pop();
-    // console.log("arr", arr);
-    // console.log("lastStr", lastStr);
   }
 }
 
@@ -281,37 +320,226 @@ function linkCreditCardInfoToInputs(
   }
 }
 
-export function testRadioBtn(event) {
-  const { yesBtn, noBtn, setCreditCardState, creditCardDisplayRefObj } = this;
-  // yes btn clicked
-  console.log(yesBtn.current);
-  if (event.target == yesBtn.current) {
-    console.log("this is yes btn");
-    // pass true boolean to setCreditCardState,creditCardDisplayRefObj.setStateFuncRef.front
-    /**
-     * when our algorithm have different ref to element based on state
-     * we want to have a ref to the setState func React.useState()
-     * then call that setState func in our callback/func to cause a re-render of the component
-     * where we declared React.useState()
-     * **/
-    setCreditCardState(true);
-    creditCardDisplayRefObj.setStateFuncRef.front(true);
-    creditCardDisplayRefObj.setStateFuncRef.back(true);
+export function creditCardSelectorHelper(event) {
+  const { target } = event;
+  const { setCreditCardState, creditCardDisplayRefObj } = this;
+  if (
+    target.closest("button[id]") == refToPrevClickCreditCardBtn.prevCardBtnClick
+  )
+    return;
+  // if prevCardBtnClick is not null change the value of data-selected to "false" of child element
+  refToPrevClickCreditCardBtn.prevCardBtnClick &&
+  refToPrevClickCreditCardBtn.prevCardBtnClick.tagName == "BUTTON"
+    ? refToPrevClickCreditCardBtn.prevCardBtnClick.firstElementChild.getAttribute(
+        "data-selected"
+      ) == "true"
+      ? refToPrevClickCreditCardBtn.prevCardBtnClick.firstElementChild.setAttribute(
+          "data-selected",
+          "false"
+        )
+      : null
+    : null;
+  if (target.closest("button[id]")) {
+    // get button id
+    const buttonId = target.closest("button[id]").getAttribute("id");
+    if (buttonId != "amex") {
+      // pass false boolean to setCreditCardState,creditCardDisplayRefObj.setStateFuncRef.front
+      /**
+       * when our algorithm have different ref to element based on state
+       * we want to have a ref to the setState func React.useState()
+       * then call that setState func in our callback/func to cause a re-render of the component
+       * where we declared React.useState()
+       * **/
+      if (
+        refToPrevClickCreditCardBtn.prevCardBtnClick &&
+        refToPrevClickCreditCardBtn.prevCardBtnClick.getAttribute("id") ==
+          "amex"
+      ) {
+        setCreditCardState(false);
+        creditCardDisplayRefObj.setStateFuncRef.front(false);
+        creditCardDisplayRefObj.setStateFuncRef.back(false);
+      }
+    } else {
+      setCreditCardState(true);
+      creditCardDisplayRefObj.setStateFuncRef.front(true);
+      creditCardDisplayRefObj.setStateFuncRef.back(true);
+    }
+    // change value of data-selected to "true"
+    target
+      .closest("button[id]")
+      .firstElementChild.getAttribute("data-selected") == "false"
+      ? target
+          .closest("button[id]")
+          .firstElementChild.setAttribute("data-selected", "true")
+      : null;
+    // update refToPrevClickCreditCardBtn.prevCardBtnClick to clicked btn
+    // target will be btn clicked
+    refToPrevClickCreditCardBtn.prevCardBtnClick = target.closest("button[id]");
+    console.log(setCreditCardState);
     console.log(creditCardDisplayRefObj);
   }
-  // no btn clicked
-  if (event.target == noBtn.current) {
-    console.log("this is no btn");
-    // pass false boolean to setCreditCardState,creditCardDisplayRefObj.setStateFuncRef.front
-    /**
-     * when our algorithm have different ref to element based on state
-     * we want to have a ref to the setState func React.useState()
-     * then call that setState func in our callback/func to cause a re-render of the component
-     * where we declared React.useState()
-     * **/
-    setCreditCardState(false);
-    creditCardDisplayRefObj.setStateFuncRef.front(false);
-    creditCardDisplayRefObj.setStateFuncRef.back(false);
-    console.log(creditCardDisplayRefObj);
+  console.log(refToPrevClickCreditCardBtn);
+}
+
+function highlightSelectedCardBasedOnFirstDigit(event, cachedObj, objOfFuncs) {
+  console.log(event);
+  console.log(cachedObj);
+  const { value } = event.target;
+  // visa starts with 4
+  if (value.length == 1 && value === "4") {
+    console.log(document.getElementById("visa"));
+    highlightCardSelectFirstValHelper(
+      "visa",
+      document.getElementById("visa").firstElementChild,
+      cachedObj,
+      objOfFuncs
+    );
+    return;
+  }
+  // mastercard starts with 5
+  if (value.length == 1 && value === "5") {
+    console.log(document.getElementById("mastercard"));
+    return;
+  }
+  // american express starts with 3
+  if (value.length == 1 && value === "3") {
+    console.log(document.getElementById("discover"));
+    return;
+  }
+  // discover starts with 6
+  if (value.length == 1 && value === "6") {
+    console.log(document.getElementById("amex"));
+    return;
   }
 }
+
+function highlightCardSelectFirstValHelper(
+  typeofCard,
+  elementFirstChild,
+  prevBtnRef,
+  objOfStateFuncs
+) {
+  if (
+    !prevBtnRef.prevCardBtnClick &&
+    !document.querySelector("[data-selected='true']")
+  ) {
+    elementFirstChild.setAttribute("data-selected", "true");
+  } else {
+    // check if button firstchild data-selected value is false
+    // if it is assign "true" to data-selected else do nothing
+    elementFirstChild.getAttribute("data-selected") == "false"
+      ? (elementFirstChild.setAttribute("data-selected", "true"),
+        prevBtnRef.firstElementChild.setAttribute("data-selected", "false"))
+      : null;
+  }
+  if (typeofCard != "amex") {
+    // check if prevCardBtnClick id is "amex"
+    // if it is call state func to render amex display and input elements
+    // visa, mastercard of discover
+
+    if (prevBtnRef.getAttribute("id") == "amex") {
+      objOfStateFuncs.setCreditCardState(true);
+      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.front(true);
+      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.back(true);
+    }
+  }
+  if (typeofCard == "amex") {
+    // amex
+    if (prevBtnRef.getAttribute("id") == "amex") {
+      objOfStateFuncs.setCreditCardState(true);
+      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.front(true);
+      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.back(true);
+    }
+  }
+}
+
+function conditionalCheckerForFirstDigitHighlight(
+  event,
+  highlightSelectedFunc,
+  refToPrevObj,
+  objOfSetStateFuncs
+) {
+  // selected credit card icon based on first value
+  if (event.target.value.length == 1 && event.code != "Backspace") {
+    highlightSelectedFunc(event, refToPrevObj, objOfSetStateFuncs);
+  }
+
+  if (event.target.value.length === 0 && event.code == "Backspace") {
+    console.log("hello this is length == 0 and backspace");
+    // since we will assign btn with data-selected="true" to
+    // prevCardBtnClick we can selected element assigned to prevCardBtnClick
+    // instead of using document.querySelector()
+    console.log(refToPrevObj.prevCardBtnClick);
+    if (refToPrevObj.prevCardBtnClick) {
+      // data-selected is on firstChild of button
+      refToPrevObj.prevCardBtnClick.firstElementChild.getAttribute(
+        "data-selected"
+      ) == "true"
+        ? refToPrevObj.prevCardBtnClick.firstElementChild.setAttribute(
+            "data-selected",
+            "false"
+          )
+        : null;
+    }
+    // assign null to refToPrevObj.prevCardBtnClick
+    refToPrevObj.prevCardBtnClick = null;
+  }
+}
+
+// function closurePrevBtnClicked() {
+//   const obj = {
+//     prevBtn: null,
+//   };
+
+//   return function innerFunc(event) {
+//     const { target } = event;
+//     const { setCreditCardState, creditCardDisplayRefObj } = this;
+//     // if prevBtn is not null change the value of data-selected to "false" of child element
+//     obj.prevBtn && obj.prevBtn.tagName == "BUTTON"
+//       ? obj.prevBtn.firstElementChild.getAttribute("data-selected") == "true"
+//         ? obj.prevBtn.firstElementChild.setAttribute("data-selected", "false")
+//         : null
+//       : null;
+//     if (target.closest("button[id]")) {
+//       // get button id
+//       const buttonId = target.closest("button[id]").getAttribute("id");
+//       if (buttonId != "amex") {
+//         // pass false boolean to setCreditCardState,creditCardDisplayRefObj.setStateFuncRef.front
+//         /**
+//          * when our algorithm have different ref to element based on state
+//          * we want to have a ref to the setState func React.useState()
+//          * then call that setState func in our callback/func to cause a re-render of the component
+//          * where we declared React.useState()
+//          * **/
+//         setCreditCardState(false);
+//         creditCardDisplayRefObj.setStateFuncRef.front(false);
+//         creditCardDisplayRefObj.setStateFuncRef.back(false);
+//       } else {
+//         setCreditCardState(true);
+//         creditCardDisplayRefObj.setStateFuncRef.front(true);
+//         creditCardDisplayRefObj.setStateFuncRef.back(true);
+//       }
+//       // change value of data-selected to "true"
+//       target
+//         .closest("button[id]")
+//         .firstElementChild.getAttribute("data-selected") == "false"
+//         ? target
+//             .closest("button[id]")
+//             .firstElementChild.setAttribute("data-selected", "true")
+//         : null;
+//       // update obj.prevBtn to clicked btn
+//       // target will be btn clicked
+//       obj.prevBtn = target.closest("button[id]");
+//       console.log(setCreditCardState);
+//       console.log(creditCardDisplayRefObj);
+//     }
+//     console.log(obj);
+//   };
+// }
+
+// export const creditCardSelectorHelper = closurePrevBtnClicked();
+
+// export function creditCardSelectorHelper(event) {
+//   const { target } = event;
+//   console.log(target.closest("svg[id]"));
+// }

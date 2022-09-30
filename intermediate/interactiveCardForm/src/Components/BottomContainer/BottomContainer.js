@@ -5,9 +5,9 @@ import {
   expirationMonthHelper,
   expirationYearHelper,
   cvcDigitsHelper,
-  testRadioBtn,
   amexCreditCardNumHelper,
   cvcAmexDigitHelper,
+  creditCardSelectorHelper,
 } from "../../../utils/helpers.js";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import {
@@ -23,9 +23,7 @@ import BottomStyle from "./BottomContainer.module.css";
 // FaCcDiscover
 // FaCcMastercard
 export default function BottomContainer({ children, ...props }) {
-  // set ref to radio btn
-  const yesBtn = React.useRef();
-  const noBtn = React.useRef();
+  // console.log(creditCardSelectorHelper);
   // get credit card front and back display ref from context
   const creditCardDisplayRefObj = React.useContext(LinkValuesToInputContext);
   // create state for amex/other credit cards
@@ -98,7 +96,7 @@ export default function BottomContainer({ children, ...props }) {
           className={BottomStyle[`creditcard-form`]}
           noValidate
           role="form"
-          action=""
+          action="#"
         >
           <fieldset className={BottomStyle[`credit-card-fieldset`]}>
             <legend
@@ -138,13 +136,67 @@ export default function BottomContainer({ children, ...props }) {
                 />
               </div>
               {/* card number input */}
-              {!stateOfCreditCard ? (
-                <div
-                  data-needattention="false"
-                  className={BottomStyle[`card-number`]}
-                >
+              <div
+                data-needattention="false"
+                className={BottomStyle[`card-number`]}
+              >
+                <div className={BottomStyle[`number-cards-style-wrapper`]}>
                   <label htmlFor="credit-card-number">card number</label>
-                  <div className={BottomStyle[`custom-input-border-wrapper`]}>
+                  <div
+                    onClick={creditCardSelectorHelper.bind({
+                      setCreditCardState,
+                      creditCardDisplayRefObj,
+                    })}
+                    className={BottomStyle[`card-btns-container`]}
+                  >
+                    {/* visa */}
+                    <button
+                      aria-label="visa card"
+                      id="visa"
+                      className={BottomStyle[`cc-button`]}
+                    >
+                      <FaCcVisa
+                        data-selected="false"
+                        className={BottomStyle[`major-credit-cards`]}
+                      />
+                    </button>
+                    {/* mastercard */}
+                    <button
+                      aria-label="master card"
+                      id="mastercard"
+                      className={BottomStyle[`cc-button`]}
+                    >
+                      <FaCcMastercard
+                        data-selected="false"
+                        className={BottomStyle[`major-credit-cards`]}
+                      />
+                    </button>
+                    {/* discover */}
+                    <button
+                      aria-label="discover card"
+                      id="discover"
+                      className={BottomStyle[`cc-button`]}
+                    >
+                      <FaCcDiscover
+                        data-selected="false"
+                        className={BottomStyle[`major-credit-cards`]}
+                      />
+                    </button>
+                    {/* amex */}
+                    <button
+                      aria-label="american express card"
+                      id="amex"
+                      className={BottomStyle[`cc-button`]}
+                    >
+                      <FaCcAmex
+                        data-selected="false"
+                        className={BottomStyle[`major-credit-cards`]}
+                      />
+                    </button>
+                  </div>
+                </div>
+                <div className={BottomStyle[`custom-input-border-wrapper`]}>
+                  {!stateOfCreditCard ? (
                     <input
                       placeholder="e.g. 1234 5678 9123 0000"
                       id="credit-card-number"
@@ -155,23 +207,12 @@ export default function BottomContainer({ children, ...props }) {
                       maxLength="19"
                       onKeyUp={creditCardNumberHelper.bind({
                         cardNumber: creditCardDisplayRefObj.creditCard.number,
+                        setCreditCardState,
+                        creditCardDisplayRefObj,
                       })}
                     />
-                    <span className={BottomStyle[`input-border`]}></span>
-
-                    <span className={BottomStyle[`error-msg`]}>
-                      Wrong format, numbers only
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                // amex
-                <div
-                  data-needattention="false"
-                  className={BottomStyle[`card-number`]}
-                >
-                  <label htmlFor="credit-card-number">card number</label>
-                  <div className={BottomStyle[`custom-input-border-wrapper`]}>
+                  ) : (
+                    // amex
                     <input
                       placeholder="e.g. 1234 567891 23000"
                       id="credit-card-number"
@@ -182,16 +223,18 @@ export default function BottomContainer({ children, ...props }) {
                       maxLength="17"
                       onKeyUp={amexCreditCardNumHelper.bind({
                         amexCardNumber: creditCardDisplayRefObj.amex.number,
+                        setCreditCardState,
+                        creditCardDisplayRefObj,
                       })}
                     />
-                    <span className={BottomStyle[`input-border`]}></span>
+                  )}
+                  <span className={BottomStyle[`input-border`]}></span>
 
-                    <span className={BottomStyle[`error-msg`]}>
-                      Wrong format, numbers only
-                    </span>
-                  </div>
+                  <span className={BottomStyle[`error-msg`]}>
+                    Wrong format, numbers only
+                  </span>
                 </div>
-              )}
+              </div>
               {/* exp.date cvc container */}
               <div className={BottomStyle[`expdate-cvc-container`]}>
                 {/* flex */}
@@ -314,19 +357,21 @@ export default function BottomContainer({ children, ...props }) {
             </article>
           </fieldset>
           <button className={BottomStyle[`call-to-action-btn`]}>Confirm</button>
-          <div
-            onChange={testRadioBtn.bind({
-              yesBtn,
-              noBtn,
-              setCreditCardState,
-              creditCardDisplayRefObj,
-            })}
-            className="test-radio-btns"
-          >
+          <div className="test-radio-btns">
             <label htmlFor="yes-btn">yes</label>
-            <input ref={yesBtn} id="yes-btn" name="test" type="radio" />
+            <input
+              // ref={yesBtn}
+              id="yes-btn"
+              name="test"
+              type="radio"
+            />
             <label htmlFor="no-btn">no</label>
-            <input ref={noBtn} id="no-btn" name="test" type="radio" />
+            <input
+              // ref={noBtn}
+              id="no-btn"
+              name="test"
+              type="radio"
+            />
           </div>
         </form>
         {/* confirm */}
