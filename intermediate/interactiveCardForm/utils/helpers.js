@@ -18,6 +18,8 @@ const refToPrevClickCreditCardBtn = {
   prevCardBtnClick: null,
 };
 
+const currentDate = new Date();
+
 // const changeOtherCardsAttr
 
 // const objOfActionsBasedOnLength = {};
@@ -258,13 +260,28 @@ function addRemoveValBasedOnKeyPressed(event, funcToAddOrRemoveNumFromInput) {
 
 // exp month
 export function expirationMonthHelper(event) {
+  const currMonthPlusOne = currentDate.getMonth() + 1;
   // destructure this obj
   const { current } = this.monthRef;
   const { value } = event.target;
   // call value helper
   eventInputValueHelper(event.target, "number");
+  // when user press 1 and length is 1 we want to check
+  if (value.length == 2 && currMonthPlusOne >= 10) {
+    // if month is greater than equal to 10
+    Number(value) >= currMonthPlusOne
+      ? (event.target.value = value)
+      : (event.target.value = `1`);
+    // we want to do nothing when event.target.value is less than 10 ex: Number("00") will be 0
+  }
   if (value.length == 1 && Number(value) > 1) {
-    event.target.value = `0${value}`;
+    // if value is less than current month
+    // assign string "0" to input value
+    if (currMonthPlusOne <= 10) {
+      Number(value) < currMonthPlusOne
+        ? (event.target.value = `0${value}`)
+        : "0";
+    }
   }
   // call linked display to input
   linkCreditCardInfoToInputs(event.target, current, "number", "front");
@@ -276,10 +293,17 @@ export function expirationMonthHelper(event) {
 }
 // exp year
 export function expirationYearHelper(event) {
+  const currentYear = currentDate.toDateString().slice(-4).slice(-2);
+  const { value } = event.target;
   // destructure this obj
   const { current } = this.yearRef;
   // call value helper
   eventInputValueHelper(event.target, "number");
+  if (value.length == 2) {
+    Number(value) >= Number(currentYear)
+      ? (event.target.value = value)
+      : (event.target.value = `${currentYear.slice(0)}`);
+  }
   // call linked display to input
   linkCreditCardInfoToInputs(event.target, current, "number", "front");
 }
@@ -325,8 +349,15 @@ export function creditCardSelectorHelper(event) {
   const { setCreditCardState, creditCardDisplayRefObj } = this;
   if (
     target.closest("button[id]") == refToPrevClickCreditCardBtn.prevCardBtnClick
-  )
+  ) {
+    // if user click on selected card, deselect/remove highlight
+    // assign null to refToPrevClickCreditCardBtn.prevCardBtnClick
+    target
+      .closest("button[id]")
+      .firstElementChild.setAttribute("data-selected", "false");
+    refToPrevClickCreditCardBtn.prevCardBtnClick = null;
     return;
+  }
   // if prevCardBtnClick is not null change the value of data-selected to "false" of child element
   refToPrevClickCreditCardBtn.prevCardBtnClick &&
   refToPrevClickCreditCardBtn.prevCardBtnClick.tagName == "BUTTON"
@@ -355,11 +386,16 @@ export function creditCardSelectorHelper(event) {
         refToPrevClickCreditCardBtn.prevCardBtnClick.getAttribute("id") ==
           "amex"
       ) {
+        // to render visa,mastercard,discover card # display and input and cvc display and input
         setCreditCardState(false);
         creditCardDisplayRefObj.setStateFuncRef.front(false);
         creditCardDisplayRefObj.setStateFuncRef.back(false);
       }
     } else {
+      // to render amex card # display and input and cvc display and input
+      // do have to check prevCardBtnClick is truthy and prevCardBtnClick id is != "amex"
+      // at top of this func when will return/exit this func when the btn user click is the same btn ref
+      // assigned to prevCardBtnClick, amex is the card where we render a different # input and cvc
       setCreditCardState(true);
       creditCardDisplayRefObj.setStateFuncRef.front(true);
       creditCardDisplayRefObj.setStateFuncRef.back(true);
@@ -382,15 +418,12 @@ export function creditCardSelectorHelper(event) {
 }
 
 function highlightSelectedCardBasedOnFirstDigit(event, cachedObj, objOfFuncs) {
-  console.log(event);
-  console.log(cachedObj);
   const { value } = event.target;
   // visa starts with 4
   if (value.length == 1 && value === "4") {
-    console.log(document.getElementById("visa"));
     highlightCardSelectFirstValHelper(
       "visa",
-      document.getElementById("visa").firstElementChild,
+      document.getElementById("visa"),
       cachedObj,
       objOfFuncs
     );
@@ -398,58 +431,97 @@ function highlightSelectedCardBasedOnFirstDigit(event, cachedObj, objOfFuncs) {
   }
   // mastercard starts with 5
   if (value.length == 1 && value === "5") {
-    console.log(document.getElementById("mastercard"));
+    highlightCardSelectFirstValHelper(
+      "mastercard",
+      document.getElementById("mastercard"),
+      cachedObj,
+      objOfFuncs
+    );
     return;
   }
   // american express starts with 3
   if (value.length == 1 && value === "3") {
-    console.log(document.getElementById("discover"));
+    highlightCardSelectFirstValHelper(
+      "discover",
+      document.getElementById("discover"),
+      cachedObj,
+      objOfFuncs
+    );
+
     return;
   }
   // discover starts with 6
   if (value.length == 1 && value === "6") {
-    console.log(document.getElementById("amex"));
+    highlightCardSelectFirstValHelper(
+      "amex",
+      document.getElementById("amex"),
+      cachedObj,
+      objOfFuncs
+    );
     return;
   }
 }
 
 function highlightCardSelectFirstValHelper(
   typeofCard,
-  elementFirstChild,
-  prevBtnRef,
+  cardBtnSelectedKeyPress,
+  prevBtnRefObj,
   objOfStateFuncs
 ) {
+  const { setCreditCardState, creditCardDisplayRefObj } = objOfStateFuncs;
+  console.log(setCreditCardState, creditCardDisplayRefObj);
   if (
-    !prevBtnRef.prevCardBtnClick &&
+    !prevBtnRefObj.prevCardBtnClick &&
     !document.querySelector("[data-selected='true']")
   ) {
-    elementFirstChild.setAttribute("data-selected", "true");
+    cardBtnSelectedKeyPress.firstElementChild.setAttribute(
+      "data-selected",
+      "true"
+    );
+    // if typeofcard == amex render amex card # and cvc display and inputs
+    if (typeofCard == "amex") {
+      setCreditCardState(true);
+      creditCardDisplayRefObj.setStateFuncRef.front(true);
+      creditCardDisplayRefObj.setStateFuncRef.back(true);
+    }
+    prevBtnRefObj.prevCardBtnClick = cardBtnSelectedKeyPress;
   } else {
     // check if button firstchild data-selected value is false
     // if it is assign "true" to data-selected else do nothing
-    elementFirstChild.getAttribute("data-selected") == "false"
-      ? (elementFirstChild.setAttribute("data-selected", "true"),
-        prevBtnRef.firstElementChild.setAttribute("data-selected", "false"))
+    cardBtnSelectedKeyPress.firstElementChild.getAttribute("data-selected") ==
+    "false"
+      ? (cardBtnSelectedKeyPress.firstElementChild.setAttribute(
+          "data-selected",
+          "true"
+        ),
+        prevBtnRefObj.prevCardBtnClick.firstElementChild.setAttribute(
+          "data-selected",
+          "false"
+        ))
       : null;
-  }
-  if (typeofCard != "amex") {
-    // check if prevCardBtnClick id is "amex"
-    // if it is call state func to render amex display and input elements
-    // visa, mastercard of discover
 
-    if (prevBtnRef.getAttribute("id") == "amex") {
-      objOfStateFuncs.setCreditCardState(true);
-      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.front(true);
-      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.back(true);
+    if (typeofCard != "amex") {
+      // check if prevCardBtnClick id is "amex"
+      // if it is call state func to render amex display and input elements
+      // visa, mastercard of discover
+
+      if (prevBtnRefObj.prevCardBtnClick.getAttribute("id") == "amex") {
+        setCreditCardState(false);
+        creditCardDisplayRefObj.setStateFuncRef.front(false);
+        creditCardDisplayRefObj.setStateFuncRef.back(false);
+      }
     }
-  }
-  if (typeofCard == "amex") {
-    // amex
-    if (prevBtnRef.getAttribute("id") == "amex") {
-      objOfStateFuncs.setCreditCardState(true);
-      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.front(true);
-      objOfStateFuncs.creditCardDisplayRefObj.setStateFuncRef.back(true);
+    if (typeofCard == "amex") {
+      console.log("card amex");
+      console.log(prevBtnRefObj.prevCardBtnClick);
+      // amex
+      if (prevBtnRefObj.prevCardBtnClick.getAttribute("id") != "amex") {
+        setCreditCardState(true);
+        creditCardDisplayRefObj.setStateFuncRef.front(true);
+        creditCardDisplayRefObj.setStateFuncRef.back(true);
+      }
     }
+    prevBtnRefObj.prevCardBtnClick = cardBtnSelectedKeyPress;
   }
 }
 
@@ -471,6 +543,13 @@ function conditionalCheckerForFirstDigitHighlight(
     // instead of using document.querySelector()
     console.log(refToPrevObj.prevCardBtnClick);
     if (refToPrevObj.prevCardBtnClick) {
+      if (refToPrevObj.prevCardBtnClick.getAttribute("id") == "amex") {
+        const { setCreditCardState, creditCardDisplayRefObj } =
+          objOfSetStateFuncs;
+        setCreditCardState(false);
+        creditCardDisplayRefObj.setStateFuncRef.front(false);
+        creditCardDisplayRefObj.setStateFuncRef.back(false);
+      }
       // data-selected is on firstChild of button
       refToPrevObj.prevCardBtnClick.firstElementChild.getAttribute(
         "data-selected"
@@ -483,6 +562,38 @@ function conditionalCheckerForFirstDigitHighlight(
     }
     // assign null to refToPrevObj.prevCardBtnClick
     refToPrevObj.prevCardBtnClick = null;
+  }
+}
+
+export function confirmBtnHelper(event) {
+  // month
+  const currentMonth = currentDate.getMonth + 1;
+  // year
+  const currentYear = Number(currentDate.toDateString().slice(-4).slice(-2));
+  // holder name
+  const cardHolderName = document.getElementById("cardholder");
+  console.log(cardHolderName);
+  // card #
+  const cardNumberElement = document.getElementById("credit-card-number");
+  console.log(cardNumberElement);
+  // exp month
+  const expMonthElement = document.getElementById("expdate-month");
+  console.log(expMonthElement);
+  // exp year
+  const expYearElement = document.getElementById("expdate-year");
+  console.log(expYearElement);
+  // cvc
+  const cvcElement = document.getElementById("cvc");
+  console.log(cvcElement);
+  // let user know if the month/year they entered is earlier than current month/year
+  if (Number(expYearElement.value) < currentYear) {
+    // check year msg
+    return;
+  }
+  if (Number(expYearElement.value) == currentYear) {
+    // check if month is less than currentYear
+    // if it is show mongth error msg
+    return;
   }
 }
 

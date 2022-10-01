@@ -38,7 +38,9 @@ input:not([type="radio"]) {
   position: relative;
 }
 
-[data-needattention="true"] input {
+[data-needattention="true"] input,
+[data-yearneedsattn="true"] input,
+[data-monthneedsattn="true"] input {
   border-color: transparent;
 }
 
@@ -99,7 +101,9 @@ wrapper our algorithm will create a "border" around inputs
 due to position absolute, inset and z-index 
 */
 
-.input-border {
+.input-border,
+.year-input-border,
+.month-input-border {
   border-radius: 8px;
   content: "";
   position: absolute;
@@ -108,14 +112,20 @@ due to position absolute, inset and z-index
 }
 
 input:focus + .input-border,
-input:hover + .input-border {
+input:hover + .input-border,
+input:hover + .year-input-border,
+input:focus + .year-input-border,
+input:hover + .month-input-border,
+input:focus + .month-input-border {
   background-image: linear-gradient(
     var(--color-primary-gradient-from),
     var(--color-primary-gradient-to)
   );
 }
 
-[data-needattention="true"] span.input-border {
+[data-needattention="true"] span.input-border,
+[data-yearneedsattn="true"] span.year-input-border,
+[data-monthneedsattn="true"] span.month-input-border {
   background-image: revert;
   background-color: red;
 }
@@ -212,7 +222,7 @@ input:hover + .input-border {
   flex-basis: 72px;
 }
 
-[data-needattention="false"] .style-wrapper::before {
+[data-expneedsattn="false"] .style-wrapper::before {
   display: none;
 }
 

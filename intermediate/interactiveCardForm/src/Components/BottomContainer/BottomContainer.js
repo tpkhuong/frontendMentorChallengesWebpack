@@ -8,6 +8,7 @@ import {
   amexCreditCardNumHelper,
   cvcAmexDigitHelper,
   creditCardSelectorHelper,
+  confirmBtnHelper,
 } from "../../../utils/helpers.js";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import {
@@ -231,7 +232,7 @@ export default function BottomContainer({ children, ...props }) {
                   <span className={BottomStyle[`input-border`]}></span>
 
                   <span className={BottomStyle[`error-msg`]}>
-                    Wrong format, numbers only
+                    Wrong format, check first number of credit card.
                   </span>
                 </div>
               </div>
@@ -240,7 +241,7 @@ export default function BottomContainer({ children, ...props }) {
                 {/* flex */}
                 {/* month year input container */}
                 <div
-                  data-needattention="false"
+                  data-expneedsattn="false"
                   className={BottomStyle[`expdate-month-year-container`]}
                 >
                   <p
@@ -253,7 +254,10 @@ export default function BottomContainer({ children, ...props }) {
                   <div className={BottomStyle[`style-wrapper`]}>
                     {/* use pseudo-element for error msg for month and year inputs */}
                     {/* flex */}
-                    <div className={BottomStyle[`exp-month`]}>
+                    <div
+                      data-monthneedsattn="false"
+                      className={BottomStyle[`exp-month`]}
+                    >
                       <label
                         className="visually-hidden"
                         htmlFor="expdate-month"
@@ -275,11 +279,16 @@ export default function BottomContainer({ children, ...props }) {
                               creditCardDisplayRefObj.creditCard.expMonth,
                           })}
                         />
-                        <span className={BottomStyle[`input-border`]}></span>
+                        <span
+                          className={BottomStyle[`month-input-border`]}
+                        ></span>
                       </div>
                     </div>
                     {/* year input*/}
-                    <div className={BottomStyle[`exp-year`]}>
+                    <div
+                      data-yearneedsattn="false"
+                      className={BottomStyle[`exp-year`]}
+                    >
                       <label className="visually-hidden" htmlFor="expdate-year">
                         expiration year
                       </label>
@@ -297,7 +306,9 @@ export default function BottomContainer({ children, ...props }) {
                             yearRef: creditCardDisplayRefObj.creditCard.expYear,
                           })}
                         />
-                        <span className={BottomStyle[`input-border`]}></span>
+                        <span
+                          className={BottomStyle[`year-input-border`]}
+                        ></span>
                       </div>
                     </div>
                   </div>
@@ -356,7 +367,12 @@ export default function BottomContainer({ children, ...props }) {
               </div>
             </article>
           </fieldset>
-          <button className={BottomStyle[`call-to-action-btn`]}>Confirm</button>
+          <button
+            onClick={confirmBtnHelper}
+            className={BottomStyle[`call-to-action-btn`]}
+          >
+            Confirm
+          </button>
           <div className="test-radio-btns">
             <label htmlFor="yes-btn">yes</label>
             <input
@@ -406,7 +422,7 @@ export default function BottomContainer({ children, ...props }) {
           </div>
           <h2 className={BottomStyle[`title`]}>thank you!</h2>
           <p className={BottomStyle[`description`]}>
-            We've added your card details
+            We've added your card details.
           </p>
           <button className={BottomStyle[`call-to-action-btn`]}>
             Continue
