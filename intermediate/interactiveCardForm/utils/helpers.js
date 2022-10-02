@@ -261,28 +261,57 @@ function addRemoveValBasedOnKeyPressed(event, funcToAddOrRemoveNumFromInput) {
 // exp month
 export function expirationMonthHelper(event) {
   const currMonthPlusOne = currentDate.getMonth() + 1;
+  // const currMonthPlusOne = 10 + 1;
   // destructure this obj
   const { current } = this.monthRef;
   const { value } = event.target;
   // call value helper
   eventInputValueHelper(event.target, "number");
   // when user press 1 and length is 1 we want to check
-  if (value.length == 2 && currMonthPlusOne >= 10) {
-    // if month is greater than equal to 10
-    Number(value) >= currMonthPlusOne
+  if (currMonthPlusOne >= 10) {
+    // key 0 to 9 is not allowed
+    value.length == 1
+      ? (event.target.value = "1")
+      : Number(value) > 12
+      ? // if input value is greater than 13 assign "12"
+        (event.target.value = "12")
+      : Number(value) >= currMonthPlusOne
       ? (event.target.value = value)
-      : (event.target.value = `1`);
-    // we want to do nothing when event.target.value is less than 10 ex: Number("00") will be 0
-  }
-  if (value.length == 1 && Number(value) > 1) {
-    // if value is less than current month
-    // assign string "0" to input value
-    if (currMonthPlusOne <= 10) {
-      Number(value) < currMonthPlusOne
-        ? (event.target.value = `0${value}`)
-        : "0";
+      : (event.target.value = "1");
+  } else {
+    // check value instead of value.length
+    // we want to allow user to enter 1 as an input value
+    if (value.length == 1 && Number(value) == 1 && currMonthPlusOne == 1) {
+      event.target.value = "01";
+      return;
     }
+
+    value.length < 2
+      ? Number(value) <= 1
+        ? (event.target.value = value)
+        : // value is not 1
+        Number(value) >= currMonthPlusOne
+        ? (event.target.value = `0${value}`)
+        : (event.target.value = "0")
+      : // user gets here input value length is 2
+      Number(value) >= currMonthPlusOne
+      ? (event.target.value = value)
+      : // if user enter incorrect month help them by assigning current month to input
+        (event.target.value =
+          currMonthPlusOne > 9
+            ? `${currMonthPlusOne}`
+            : `0${currMonthPlusOne}`);
   }
+  // if (currMonthPlusOne < 10) {
+  //   // if value is greater than equal to current month
+  //   // concat "0" and Number(value) and assign to input
+  //   // Number(value) <= currMonthPlusOne
+  //   //   ? (event.target.value = `0${value}`)
+  //   //   : (event.target.value = "0");
+  //   Number(value) >= currMonthPlusOne
+  //     ? (event.target.value = `0${value}`)
+  //     : (event.target.value = "0");
+  // }
   // call linked display to input
   linkCreditCardInfoToInputs(event.target, current, "number", "front");
   // if (event.target.value === "") {
@@ -302,7 +331,7 @@ export function expirationYearHelper(event) {
   if (value.length == 2) {
     Number(value) >= Number(currentYear)
       ? (event.target.value = value)
-      : (event.target.value = `${currentYear.slice(0)}`);
+      : (event.target.value = `${currentYear.split("")[0]}`);
   }
   // call linked display to input
   linkCreditCardInfoToInputs(event.target, current, "number", "front");
@@ -567,34 +596,171 @@ function conditionalCheckerForFirstDigitHighlight(
 
 export function confirmBtnHelper(event) {
   // month
-  const currentMonth = currentDate.getMonth + 1;
+  const currentMonth = currentDate.getMonth() + 1;
   // year
   const currentYear = Number(currentDate.toDateString().slice(-4).slice(-2));
   // holder name
   const cardHolderName = document.getElementById("cardholder");
-  console.log(cardHolderName);
+  showEmptyMsgHelper(cardHolderName);
   // card #
   const cardNumberElement = document.getElementById("credit-card-number");
-  console.log(cardNumberElement);
+  showEmptyMsgHelper(cardNumberElement);
+  checkformatOfCardAndCvcNum(cardNumberElement);
+  // exp month year container
+  const expMonthYrContainer = document.getElementById("exp-date-msg-container");
   // exp month
   const expMonthElement = document.getElementById("expdate-month");
-  console.log(expMonthElement);
+  showMonthYearErrorBorder(expMonthElement);
   // exp year
   const expYearElement = document.getElementById("expdate-year");
-  console.log(expYearElement);
+  showMonthYearErrorBorder(expYearElement);
+
+  showMonthYearEmptyText(expMonthElement, expYearElement, expMonthYrContainer);
   // cvc
   const cvcElement = document.getElementById("cvc");
-  console.log(cvcElement);
+  showEmptyMsgHelper(cvcElement);
+  checkformatOfCardAndCvcNum(cvcElement);
   // let user know if the month/year they entered is earlier than current month/year
-  if (Number(expYearElement.value) < currentYear) {
-    // check year msg
-    return;
+  /**
+   * data-expisempty="false"
+data-showexpdatemsg="false"
+data-errormsgtext="hello"
+className={BottomStyle[`expdate-month-year-container`]}
+   * **/
+  if (
+    expMonthElement.value !== "" &&
+    expMonthElement.validity.valid &&
+    expYearElement.value !== "" &&
+    expYearElement.validity.valid
+  ) {
+    console.log("there");
+    if (Number(expYearElement.value) < currentYear) {
+      // check year msg
+      expYearElement.parentElement.parentElement.setAttribute(
+        "data-yearneedsattn",
+        "true"
+      );
+      expMonthYrContainer.setAttribute("data-showexpdatemsg", "true");
+      expYearElement.setAttribute("aria-describedby", "format-text");
+      expMonthYrContainer.lastElementChild.innerText = `Check year. Current year is ${currentYear}.`;
+      return;
+    } else {
+      expYearElement.parentElement.parentElement.setAttribute(
+        "data-yearneedsattn",
+        "false"
+      );
+      expMonthYrContainer.setAttribute("data-showexpdatemsg", "false");
+      expYearElement.setAttribute("aria-describedby", "");
+      expMonthYrContainer.lastElementChild.innerText = ``;
+    }
+
+    if (Number(expYearElement.value) == currentYear) {
+      console.log("hello exp year here");
+      console.log(currentMonth);
+      // check if month is less than currentYear month
+      // if it is show month error msg
+      if (Number(expMonthElement.value) < currentMonth) {
+        expMonthElement.parentElement.parentElement.setAttribute(
+          "data-monthneedsattn",
+          "true"
+        );
+
+        expMonthYrContainer.setAttribute("data-showexpdatemsg", "true");
+        expMonthElement.setAttribute("aria-describedby", "format-text");
+        expMonthYrContainer.lastElementChild.innerText = `Check month.`;
+        return;
+      } else {
+        expMonthElement.parentElement.parentElement.setAttribute(
+          "data-yearneedsattn",
+          "false"
+        );
+        expMonthYrContainer.setAttribute("data-showexpdatemsg", "false");
+        expMonthElement.setAttribute("aria-describedby", "");
+        expMonthYrContainer.lastElementChild.innerText = ``;
+      }
+    }
   }
-  if (Number(expYearElement.value) == currentYear) {
-    // check if month is less than currentYear
-    // if it is show mongth error msg
-    return;
-  }
+}
+
+function showEmptyMsgHelper(element, expDateContainer) {
+  // if expDateContainer is null element is not exp month or year
+  element.value === ""
+    ? (element.parentElement.parentElement.setAttribute(
+        "data-needattention",
+        "true"
+      ),
+      element.setAttribute("aria-describedby", "empty-text"))
+    : (element.parentElement.parentElement.setAttribute(
+        "data-needattention",
+        "false"
+      ),
+      element.setAttribute("aria-describedby", ""));
+  // !expDateContainer
+  //   ? element.value === ""
+  //     ? (element.parentElement.parentElement.setAttribute(
+  //         "data-needattention",
+  //         "true"
+  //       ),
+  //       element.setAttribute("aria-describedby", "empty-text"))
+  //     : (element.parentElement.parentElement.setAttribute(
+  //         "data-needattention",
+  //         "false"
+  //       ),
+  //       element.setAttribute("aria-describedby", ""))
+  //   : element.value === ""
+  //   ? (expDateContainer.setAttribute("data-expdateempty", "true"),
+  //     element.setAttribute("aria-describedby", "empty-text"))
+  //   : (expDateContainer.setAttribute("data-expdateempty", "false"),
+  //     element.setAttribute("aria-describedby", ""));
+}
+
+function checkformatOfCardAndCvcNum(element) {
+  // when credit card and cvc number does not match pattern
+  // assign "true" to data-formatchecking="true"
+  element.value !== ""
+    ? !element.validity.valid
+      ? (element.parentElement.parentElement.setAttribute(
+          "data-formatchecking",
+          "true"
+        ),
+        element.setAttribute("aria-describedby", "format-text"))
+      : (element.parentElement.parentElement.setAttribute(
+          "data-formatchecking",
+          "false"
+        ),
+        element.setAttribute("aria-describedby", ""))
+    : null;
+}
+
+function showMonthYearEmptyText(month, year, expDateContainer) {
+  month.value === "" || year.value === ""
+    ? expDateContainer.setAttribute("data-expdateempty", "true")
+    : expDateContainer.setAttribute("data-expdateempty", "false");
+  // aria-describedby
+
+  month.value === ""
+    ? month.setAttribute("aria-describedby", "empty-text")
+    : month.setAttribute("aria-describedby", "");
+
+  year.value === ""
+    ? year.setAttribute("aria-describedby", "empty-text")
+    : year.setAttribute("aria-describedby", "");
+}
+
+function showMonthYearErrorBorder(element) {
+  // check element id
+  const elementId = element.getAttribute("id").split("-")[1];
+  element.value === ""
+    ? (element.parentElement.parentElement.setAttribute(
+        `data-${elementId == "month" ? "month" : "year"}needsattn`,
+        "true"
+      ),
+      element.setAttribute("aria-describedby", "empty-text"))
+    : (element.parentElement.parentElement.setAttribute(
+        `data-${elementId == "month" ? "month" : "year"}needsattn`,
+        "false"
+      ),
+      element.setAttribute("aria-describedby", ""));
 }
 
 // function closurePrevBtnClicked() {

@@ -117,6 +117,7 @@ export default function BottomContainer({ children, ...props }) {
                 <label htmlFor="cardholder">cardholder name</label>
                 <div className={BottomStyle[`custom-input-border-wrapper`]}>
                   <input
+                    aria-describedby=""
                     placeholder="e.g. Jane Appleseed"
                     id="cardholder"
                     type="text"
@@ -126,19 +127,22 @@ export default function BottomContainer({ children, ...props }) {
                   />
                   <span className={BottomStyle[`input-border`]}></span>
                   {/* <AcceptedMessage testName={`${BottomStyle[`accepted`]}`} /> */}
-                  <span className={BottomStyle[`error-msg`]}>
-                    Can't be blank
+                  <span id="empty-text" className={BottomStyle[`error-msg`]}>
+                    Can't be blank.
                   </span>
                 </div>
                 {/* accept icon */}
                 <IoCheckmarkCircleSharp
                   className={`${BottomStyle[`accepted`]}`}
-                  id="hello"
+                />
+                <IoCloseCircleSharp
+                  className={`${BottomStyle[`not-accepted`]}`}
                 />
               </div>
               {/* card number input */}
               <div
                 data-needattention="false"
+                data-formatchecking="false"
                 className={BottomStyle[`card-number`]}
               >
                 <div className={BottomStyle[`number-cards-style-wrapper`]}>
@@ -200,6 +204,7 @@ export default function BottomContainer({ children, ...props }) {
                   {!stateOfCreditCard ? (
                     <input
                       placeholder="e.g. 1234 5678 9123 0000"
+                      aria-describedby=""
                       id="credit-card-number"
                       type="tel"
                       inputMode="numeric"
@@ -216,6 +221,7 @@ export default function BottomContainer({ children, ...props }) {
                     // amex
                     <input
                       placeholder="e.g. 1234 567891 23000"
+                      aria-describedby=""
                       id="credit-card-number"
                       type="tel"
                       inputMode="numeric"
@@ -230,18 +236,36 @@ export default function BottomContainer({ children, ...props }) {
                     />
                   )}
                   <span className={BottomStyle[`input-border`]}></span>
-
-                  <span className={BottomStyle[`error-msg`]}>
-                    Wrong format, check first number of credit card.
+                  <span id="empty-text" className={BottomStyle[`error-msg`]}>
+                    Can't be blank.
                   </span>
+                  <span
+                    id="format-text"
+                    className={BottomStyle[`wrong-format`]}
+                  >
+                    Check format of credit card number.
+                  </span>
+
+                  {/* <span className={BottomStyle[`error-msg`]}>
+                    Wrong format, check first number of credit card.
+                  </span> */}
                 </div>
+                <IoCheckmarkCircleSharp
+                  className={`${BottomStyle[`accepted`]}`}
+                />
+                <IoCloseCircleSharp
+                  className={`${BottomStyle[`not-accepted`]}`}
+                />
               </div>
               {/* exp.date cvc container */}
               <div className={BottomStyle[`expdate-cvc-container`]}>
                 {/* flex */}
                 {/* month year input container */}
                 <div
-                  data-expneedsattn="false"
+                  data-expdateempty="false"
+                  data-showexpdatemsg="false"
+                  id="exp-date-msg-container"
+                  // data-errormsgtext="hello"
                   className={BottomStyle[`expdate-month-year-container`]}
                 >
                   <p
@@ -272,9 +296,11 @@ export default function BottomContainer({ children, ...props }) {
                           id="expdate-month"
                           type="tel"
                           inputMode="numeric"
+                          aria-describedby=""
                           autoComplete="cc-exp-month"
+                          pattern="[0-9]{2}"
                           maxLength="2"
-                          onChange={expirationMonthHelper.bind({
+                          onClick={expirationMonthHelper.bind({
                             monthRef:
                               creditCardDisplayRefObj.creditCard.expMonth,
                           })}
@@ -300,9 +326,11 @@ export default function BottomContainer({ children, ...props }) {
                           id="expdate-year"
                           type="tel"
                           inputMode="numeric"
+                          aria-describedby=""
                           autoComplete="cc-exp-year"
+                          pattern="[0-9]{2}"
                           maxLength="2"
-                          onChange={expirationYearHelper.bind({
+                          onClick={expirationYearHelper.bind({
                             yearRef: creditCardDisplayRefObj.creditCard.expYear,
                           })}
                         />
@@ -312,36 +340,68 @@ export default function BottomContainer({ children, ...props }) {
                       </div>
                     </div>
                   </div>
+                  <IoCheckmarkCircleSharp
+                    className={`${BottomStyle[`accepted`]}`}
+                  />
+                  <IoCloseCircleSharp
+                    className={`${BottomStyle[`not-accepted`]}`}
+                  />
+                  <span id="empty-text" className={BottomStyle[`error-msg`]}>
+                    Can't be blank.
+                  </span>
+                  <span
+                    id="format-text"
+                    className={BottomStyle[`wrong-format`]}
+                  ></span>
                 </div>
                 {/* cvc input container */}
                 {!stateOfCreditCard ? (
                   <div
                     data-needattention="false"
+                    data-formatchecking="false"
                     className={BottomStyle[`cvc-input`]}
                   >
                     <label htmlFor="cvc">cvc</label>
                     <div className={BottomStyle[`custom-input-border-wrapper`]}>
                       <input
                         placeholder="e.g. 123"
+                        aria-describedby=""
                         id="cvc"
                         type="tel"
                         inputMode="numeric"
                         autoComplete="cc-csc"
+                        pattern="[0-9]{3}"
                         maxLength="3"
                         onChange={cvcDigitsHelper.bind({
                           cvcRef: creditCardDisplayRefObj.creditCard.cvc,
                         })}
                       />
                       <span className={BottomStyle[`input-border`]}></span>
-                      <span className={BottomStyle[`error-msg`]}>
-                        Can't be blank
+                      <span
+                        id="empty-text"
+                        className={BottomStyle[`error-msg`]}
+                      >
+                        Can't be blank.
+                      </span>
+                      <span
+                        id="format-text"
+                        className={BottomStyle[`wrong-format`]}
+                      >
+                        Check format of cvc number.
                       </span>
                     </div>
+                    <IoCheckmarkCircleSharp
+                      className={`${BottomStyle[`accepted`]}`}
+                    />
+                    <IoCloseCircleSharp
+                      className={`${BottomStyle[`not-accepted`]}`}
+                    />
                   </div>
                 ) : (
                   // amex
                   <div
                     data-needattention="false"
+                    data-formatchecking="false"
                     className={BottomStyle[`cvc-input`]}
                   >
                     <label htmlFor="cvc">cvc</label>
@@ -349,19 +409,36 @@ export default function BottomContainer({ children, ...props }) {
                       <input
                         placeholder="e.g. 2687"
                         id="cvc"
+                        aria-describedby=""
                         type="tel"
                         inputMode="numeric"
                         autoComplete="cc-csc"
+                        pattern="[0-9]{4}"
                         maxLength="4"
                         onChange={cvcAmexDigitHelper.bind({
                           amexCvcRef: creditCardDisplayRefObj.amex.cvc,
                         })}
                       />
                       <span className={BottomStyle[`input-border`]}></span>
-                      <span className={BottomStyle[`error-msg`]}>
-                        Can't be blank
+                      <span
+                        id="empty-text"
+                        className={BottomStyle[`error-msg`]}
+                      >
+                        Can't be blank.
+                      </span>
+                      <span
+                        id="format-text"
+                        className={BottomStyle[`wrong-format`]}
+                      >
+                        Check format of cvc number.
                       </span>
                     </div>
+                    <IoCheckmarkCircleSharp
+                      className={`${BottomStyle[`accepted`]}`}
+                    />
+                    <IoCloseCircleSharp
+                      className={`${BottomStyle[`not-accepted`]}`}
+                    />
                   </div>
                 )}
               </div>

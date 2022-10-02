@@ -40,7 +40,8 @@ input:not([type="radio"]) {
 
 [data-needattention="true"] input,
 [data-yearneedsattn="true"] input,
-[data-monthneedsattn="true"] input {
+[data-monthneedsattn="true"] input,
+[data-formatchecking="true"] input {
   border-color: transparent;
 }
 
@@ -63,7 +64,10 @@ label,
   color: red;
 } */
 
-[data-needattention="false"] .error-msg {
+[data-needattention="false"] .error-msg,
+[data-expdateempty="false"] .error-msg,
+[data-formatchecking="false"] .wrong-format,
+[data-showexpdatemsg="false"] .wrong-format {
   display: none;
 }
 
@@ -71,7 +75,8 @@ label,
   display: revert;
 } */
 
-.accepted {
+.accepted,
+.not-accepted {
   position: absolute;
   top: 0;
   right: 0;
@@ -79,7 +84,32 @@ label,
   display: none;
 }
 
-.error-msg {
+.accepted {
+  color: green;
+}
+
+.not-accepted {
+  color: red;
+}
+
+/* checked and "x" icon placement */
+
+/* card holder */
+/* card number */
+/* exp month and year */
+.expdate-month-year-container .accepted,
+.expdate-month-year-container .not-accepted {
+  top: -3px;
+  right: -3px;
+}
+/* cvc */
+.cvc-input .accepted,
+.cvc-input .not-accepted {
+  top: 3px;
+}
+
+.error-msg,
+.wrong-format {
   font-size: var(--font-size-12px);
   color: red;
   font-weight: 500;
@@ -92,7 +122,9 @@ label,
 
 /* card name */
 
-.custom-input-border-wrapper {
+.custom-input-border-wrapper,
+.expdate-month-year-container,
+.cvc-input {
   position: relative;
 }
 
@@ -124,6 +156,7 @@ input:focus + .month-input-border {
 }
 
 [data-needattention="true"] span.input-border,
+[data-formatchecking="true"] span.input-border,
 [data-yearneedsattn="true"] span.year-input-border,
 [data-monthneedsattn="true"] span.month-input-border {
   background-image: revert;
@@ -203,6 +236,7 @@ input:focus + .month-input-border {
   align-items: flex-end;
   gap: 11px;
   margin-block-end: 28px;
+  position: relative;
 }
 
 .style-wrapper {
@@ -211,7 +245,10 @@ input:focus + .month-input-border {
 }
 
 .expdate-month-year-container {
-  flex-basis: 152px;
+  /* flex-basis: 152px; */
+  /* change month and year container size for svg icon */
+  flex: 1;
+  /* our declaration at min-widthL 90rem will override flex-basis: 0 due to flex: 1 */
 }
 
 /* exp month */
@@ -222,23 +259,37 @@ input:focus + .month-input-border {
   flex-basis: 72px;
 }
 
-[data-expneedsattn="false"] .style-wrapper::before {
+/* [data-expisempty="false"] .style-wrapper::before,
+[data-showexpdatemsg="false"].expdate-month-year-container::after {
   display: none;
-}
+} */
 
-.style-wrapper::before {
-  content: "Can't be blank";
+/* .style-wrapper::before,
+.expdate-month-year-container::after {
   position: absolute;
   bottom: -21px;
   font-size: var(--font-size-12px);
   color: red;
   font-weight: 500;
-}
+} */
+
+/* .style-wrapper::before {
+  content: "Can't be blank";
+} */
+
+/* use pseudo element ::after for month/year entered is earlier than current data */
+
+/* .expdate-month-year-container::after {
+  content: attr(data-errormsgtext);
+} */
 
 /* cvc */
 
 .cvc-input {
-  flex-basis: 164px;
+  /* flex-basis: 164px; */
+  /* change month and year container size for svg icon */
+  flex: 1;
+  /* our declaration at min-widthL 90rem will override flex-basis: 0 due to flex: 1 */
 }
 
 /* confirm */
