@@ -715,19 +715,14 @@ function showEmptyMsgHelper(element, expDateContainer) {
 }
 
 function checkformatOfCardAndCvcNum(element) {
+  const targetElement = element.parentElement.parentElement;
   // when credit card and cvc number does not match pattern
   // assign "true" to data-formatchecking="true"
   element.value !== ""
     ? !element.validity.valid
-      ? (element.parentElement.parentElement.setAttribute(
-          "data-formatchecking",
-          "true"
-        ),
+      ? (targetElement.setAttribute("data-formatchecking", "true"),
         element.setAttribute("aria-describedby", "format-text"))
-      : (element.parentElement.parentElement.setAttribute(
-          "data-formatchecking",
-          "false"
-        ),
+      : (targetElement.setAttribute("data-formatchecking", "false"),
         element.setAttribute("aria-describedby", ""))
     : null;
 }
@@ -736,6 +731,8 @@ function showMonthYearEmptyText(month, year, expDateContainer) {
   month.value === "" || year.value === ""
     ? expDateContainer.setAttribute("data-expdateempty", "true")
     : expDateContainer.setAttribute("data-expdateempty", "false");
+  // show or hide accepted/not-accepted icons
+
   // aria-describedby
 
   month.value === ""
@@ -748,19 +745,34 @@ function showMonthYearEmptyText(month, year, expDateContainer) {
 }
 
 function showMonthYearErrorBorder(element) {
+  const targetElement = element.parentElement.parentElement;
   // check element id
   const elementId = element.getAttribute("id").split("-")[1];
   element.value === ""
-    ? (element.parentElement.parentElement.setAttribute(
+    ? (targetElement.setAttribute(
         `data-${elementId == "month" ? "month" : "year"}needsattn`,
         "true"
       ),
       element.setAttribute("aria-describedby", "empty-text"))
-    : (element.parentElement.parentElement.setAttribute(
+    : (targetElement.setAttribute(
         `data-${elementId == "month" ? "month" : "year"}needsattn`,
         "false"
       ),
       element.setAttribute("aria-describedby", ""));
+}
+
+export function showHideValidationIcons() {
+  const element = document.querySelector(
+    "#cardholder-container [data-accepted-icon]"
+  );
+  element.setAttribute("data-showicon", "");
+}
+
+export function hideValidationIcons() {
+  const element = document.querySelector(
+    "#cardholder-container [data-accepted-icon]"
+  );
+  element.removeAttribute("data-showicon");
 }
 
 // function closurePrevBtnClicked() {

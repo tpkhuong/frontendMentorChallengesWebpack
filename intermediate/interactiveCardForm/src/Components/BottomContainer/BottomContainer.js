@@ -9,6 +9,8 @@ import {
   cvcAmexDigitHelper,
   creditCardSelectorHelper,
   confirmBtnHelper,
+  showHideValidationIcons,
+  hideValidationIcons,
 } from "../../../utils/helpers.js";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import {
@@ -112,6 +114,7 @@ export default function BottomContainer({ children, ...props }) {
               {/* name input */}
               <div
                 data-needattention="false"
+                id="cardholder-container"
                 className={BottomStyle[`cardholder-name`]}
               >
                 <label htmlFor="cardholder">cardholder name</label>
@@ -133,9 +136,11 @@ export default function BottomContainer({ children, ...props }) {
                 </div>
                 {/* accept icon */}
                 <IoCheckmarkCircleSharp
+                  data-accepted-icon
                   className={`${BottomStyle[`accepted`]}`}
                 />
                 <IoCloseCircleSharp
+                  data-notaccepted-icon
                   className={`${BottomStyle[`not-accepted`]}`}
                 />
               </div>
@@ -251,9 +256,11 @@ export default function BottomContainer({ children, ...props }) {
                   </span> */}
                 </div>
                 <IoCheckmarkCircleSharp
+                  data-accepted-icon
                   className={`${BottomStyle[`accepted`]}`}
                 />
                 <IoCloseCircleSharp
+                  data-notaccepted-icon
                   className={`${BottomStyle[`not-accepted`]}`}
                 />
               </div>
@@ -341,9 +348,11 @@ export default function BottomContainer({ children, ...props }) {
                     </div>
                   </div>
                   <IoCheckmarkCircleSharp
+                    data-accepted-icon
                     className={`${BottomStyle[`accepted`]}`}
                   />
                   <IoCloseCircleSharp
+                    data-notaccepted-icon
                     className={`${BottomStyle[`not-accepted`]}`}
                   />
                   <span id="empty-text" className={BottomStyle[`error-msg`]}>
@@ -391,9 +400,11 @@ export default function BottomContainer({ children, ...props }) {
                       </span>
                     </div>
                     <IoCheckmarkCircleSharp
+                      data-accepted-icon
                       className={`${BottomStyle[`accepted`]}`}
                     />
                     <IoCloseCircleSharp
+                      data-notaccepted-icon
                       className={`${BottomStyle[`not-accepted`]}`}
                     />
                   </div>
@@ -434,9 +445,11 @@ export default function BottomContainer({ children, ...props }) {
                       </span>
                     </div>
                     <IoCheckmarkCircleSharp
+                      data-accepted-icon
                       className={`${BottomStyle[`accepted`]}`}
                     />
                     <IoCloseCircleSharp
+                      data-notaccepted-icon
                       className={`${BottomStyle[`not-accepted`]}`}
                     />
                   </div>
@@ -453,6 +466,7 @@ export default function BottomContainer({ children, ...props }) {
           <div className="test-radio-btns">
             <label htmlFor="yes-btn">yes</label>
             <input
+              onClick={showHideValidationIcons}
               // ref={yesBtn}
               id="yes-btn"
               name="test"
@@ -461,6 +475,7 @@ export default function BottomContainer({ children, ...props }) {
             <label htmlFor="no-btn">no</label>
             <input
               // ref={noBtn}
+              onClick={hideValidationIcons}
               id="no-btn"
               name="test"
               type="radio"

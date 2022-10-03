@@ -75,6 +75,16 @@ label,
   display: revert;
 } */
 
+/* show or hide accepted/not-accepted icons */
+
+/* show accepted icon */
+
+[data-showicon].accepted,
+[data-showicon].notaccepted {
+  display: revert;
+}
+
+/* show not accepted icon */
 .accepted,
 .not-accepted {
   position: absolute;
@@ -95,7 +105,19 @@ label,
 /* checked and "x" icon placement */
 
 /* card holder */
+
+.cardholder-name .accepted,
+.cardholder-name .not-accepted {
+  top: 3px;
+}
+
 /* card number */
+
+.card-number .accepted,
+.card-number .not-accepted {
+  top: -2px;
+}
+
 /* exp month and year */
 .expdate-month-year-container .accepted,
 .expdate-month-year-container .not-accepted {
