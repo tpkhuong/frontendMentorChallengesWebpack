@@ -80,7 +80,7 @@ label,
 /* show accepted icon */
 
 [data-showicon].accepted,
-[data-showicon].notaccepted {
+[data-showicon].not-accepted {
   display: revert;
 }
 

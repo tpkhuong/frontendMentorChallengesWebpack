@@ -62,27 +62,21 @@ export function creditCardNumberHelper(event) {
   // when user copy their credit card number into number input
   if (event.ctrlKey && event.code == "KeyV") {
     // add space to credit card number at length 5,10,15
-    const arrOfCharacters = [...event.target.value];
-    const creditCardNumberWithAddedSpace = arrOfCharacters.reduce(
-      function addSpaceEachFourDigits(buildingUp, currentValue, index) {
-        // index will starts at 0 we want to work with length so we add 1
-        const addOneToIndex = index + 1;
-        if (addOneToIndex == 16) {
-          return [...buildingUp, currentValue];
-        }
-        // every fourth digit add space
-        if (addOneToIndex % 4 === 0) {
-          return [...buildingUp, currentValue, " "];
-        }
-        // append value to array
-        return [...buildingUp, currentValue];
-      },
-      []
-    );
-    event.target.value = creditCardNumberWithAddedSpace.join("");
+    cardnumberInputBasedOnCreditCard(event.target, "notamex");
     // selected credit card icon based on first value
     highlightSelectedCardBasedOnFirstDigit(event, refToPrevClickCreditCardBtn);
+    // display values entered into number input to card number display element
+    // event.target is the number input
+    const concatInputValueWithCopiedStrOfZeros = [
+      ...event.target.value,
+      ...objOfZerosForCardNumberDisplay["notAmex"].slice(
+        event.target.value.length
+      ),
+    ].join("");
+    cardNumber.current.innerText = concatInputValueWithCopiedStrOfZeros;
+    // matchDisplayAndCreditCardInput(cardNumber.current, "notAmex", event.target);
   }
+  console.log("hello", event);
   /**
    * we will have an input helper func to allow space but we will have algorithm to remove it
    * as user hit space not when we add empty string to input
@@ -150,31 +144,19 @@ export function amexCreditCardNumHelper(event) {
   const { target } = event;
   // when user copy their credit card number into number input
   if (event.ctrlKey && event.code == "KeyV") {
-    const arrOfStrChars = [...event.target.value];
-    const arrOfCharsWithSpaceAdded = arrOfStrChars.reduce(
-      function addSpaceToNumInput(buildingUp, currentValue, index) {
-        const addOneToIndex = index + 1;
-        // index will starts at 0 we want to work with length so we add 1
-        if (addOneToIndex == 17) {
-          // return [...buildingUp, currentValue];
-          buildingUp.push(currentValue);
-          return buildingUp;
-        }
-        // add space to credit card number at length 4,10
-        if (addOneToIndex == 4 || addOneToIndex == 10) {
-          // return [...buildingUp, currentValue, " "];
-          buildingUp.push.apply(buildingUp, [currentValue, " "]);
-          return buildingUp;
-        }
-        buildingUp.push(currentValue);
-        return buildingUp;
-      },
-      []
-    );
-    event.target.value = arrOfCharsWithSpaceAdded.join("");
+    // add space to credit card number at length 5 and 11
+    cardnumberInputBasedOnCreditCard(event.target, "amex");
     // selected credit card icon based on first value
     highlightSelectedCardBasedOnFirstDigit(event, refToPrevClickCreditCardBtn);
+    // display values entered into number input to card number display element
+    // event.target is the number input
+    // matchDisplayAndCreditCardInput(
+    //   amexCardNumber.current,
+    //   "amex",
+    //   event.target
+    // );
   }
+  console.log("hello");
   /**
    * we will have an input helper func to allow space but we will have algorithm to remove it
    * as user hit space not when we add empty string to input
@@ -210,6 +192,10 @@ export function amexCreditCardNumHelper(event) {
     ...event.target.value,
     ...objOfZerosForCardNumberDisplay["amex"].slice(target.value.length),
   ].join("");
+  console.log(
+    "combineInputValuesWithStrOfZeros",
+    combineInputValuesWithStrOfZeros
+  );
   amexCardNumber.current.innerText = combineInputValuesWithStrOfZeros;
   // selected credit card icon based on first value
   conditionalCheckerForFirstDigitHighlight(
@@ -419,6 +405,22 @@ export function creditCardSelectorHelper(event) {
         setCreditCardState(false);
         creditCardDisplayRefObj.setStateFuncRef.front(false);
         creditCardDisplayRefObj.setStateFuncRef.back(false);
+        // check if number input is !== "" (empty string)
+        // if user entered value to number input and display number in visa, mastercard and discover
+        // format 0000 0000 0000 0000
+        cardnumberInputBasedOnCreditCard(
+          document.getElementById("credit-card-number"),
+          "notamex"
+        );
+
+        // display values entered into number input to card number display element
+        // document.getElementById("credit-card-number").value === ""
+        //   ? null
+        //   : matchDisplayAndCreditCardInput(
+        //       document.getElementById("front-number-display"),
+        //       "notAmex",
+        //       document.getElementById("credit-card-number")
+        //     );
       }
     } else {
       // to render amex card # display and input and cvc display and input
@@ -428,6 +430,21 @@ export function creditCardSelectorHelper(event) {
       setCreditCardState(true);
       creditCardDisplayRefObj.setStateFuncRef.front(true);
       creditCardDisplayRefObj.setStateFuncRef.back(true);
+      // check if number input is !== "" (empty string)
+      // if user entered value to number input and display number in amex
+      // format 0000 000000 00000
+      cardnumberInputBasedOnCreditCard(
+        document.getElementById("credit-card-number"),
+        "amex"
+      );
+      // display values entered into number input to card number display element
+      // document.getElementById("credit-card-number").value === ""
+      //   ? null
+      //   : matchDisplayAndCreditCardInput(
+      //       document.getElementById("front-number-display"),
+      //       "amex",
+      //       document.getElementById("credit-card-number")
+      //     );
     }
     // change value of data-selected to "true"
     target
@@ -498,7 +515,7 @@ function highlightCardSelectFirstValHelper(
   objOfStateFuncs
 ) {
   const { setCreditCardState, creditCardDisplayRefObj } = objOfStateFuncs;
-  console.log(setCreditCardState, creditCardDisplayRefObj);
+  // console.log(setCreditCardState, creditCardDisplayRefObj);
   if (
     !prevBtnRefObj.prevCardBtnClick &&
     !document.querySelector("[data-selected='true']")
@@ -541,8 +558,8 @@ function highlightCardSelectFirstValHelper(
       }
     }
     if (typeofCard == "amex") {
-      console.log("card amex");
-      console.log(prevBtnRefObj.prevCardBtnClick);
+      // console.log("card amex");
+      // console.log(prevBtnRefObj.prevCardBtnClick);
       // amex
       if (prevBtnRefObj.prevCardBtnClick.getAttribute("id") != "amex") {
         setCreditCardState(true);
@@ -566,11 +583,11 @@ function conditionalCheckerForFirstDigitHighlight(
   }
 
   if (event.target.value.length === 0 && event.code == "Backspace") {
-    console.log("hello this is length == 0 and backspace");
+    // console.log("hello this is length == 0 and backspace");
+    // console.log(refToPrevObj.prevCardBtnClick);
     // since we will assign btn with data-selected="true" to
     // prevCardBtnClick we can selected element assigned to prevCardBtnClick
     // instead of using document.querySelector()
-    console.log(refToPrevObj.prevCardBtnClick);
     if (refToPrevObj.prevCardBtnClick) {
       if (refToPrevObj.prevCardBtnClick.getAttribute("id") == "amex") {
         const { setCreditCardState, creditCardDisplayRefObj } =
@@ -594,6 +611,73 @@ function conditionalCheckerForFirstDigitHighlight(
   }
 }
 
+function cardnumberInputBasedOnCreditCard(target, cardType) {
+  // add space to credit card number at length 5,10,15
+  // removing spaces in number input for situation
+  // when user select non amex cards and entered values to input then
+  // click on "amex" icon to change number format. there will be spaces
+  const arrOfCharacters = [...target.value].filter(function removeSpaces(str) {
+    // return values not equal to " " we want the values user entered to input
+    return str !== " ";
+  });
+  console.log(arrOfCharacters);
+  const arrOfCharsWithSpaceAdded =
+    cardType == "amex"
+      ? arrOfCharacters.reduce(function addSpaceToNumInput(
+          buildingUp,
+          currentValue,
+          index
+        ) {
+          const addOneToIndex = index + 1;
+          // index will starts at 0 we want to work with length so we add 1
+          if (addOneToIndex == 17) {
+            // return [...buildingUp, currentValue];
+            buildingUp.push(currentValue);
+            return buildingUp;
+          }
+          // add space to credit card number at length 4,10
+          if (addOneToIndex == 4 || addOneToIndex == 10) {
+            // return [...buildingUp, currentValue, " "];
+            buildingUp.push.apply(buildingUp, [currentValue, " "]);
+            return buildingUp;
+          }
+          buildingUp.push(currentValue);
+          return buildingUp;
+        },
+        [])
+      : arrOfCharacters.reduce(function addSpaceEachFourDigits(
+          buildingUp,
+          currentValue,
+          index
+        ) {
+          // index will starts at 0 we want to work with length so we add 1
+          const addOneToIndex = index + 1;
+          if (addOneToIndex == 16) {
+            return [...buildingUp, currentValue];
+          }
+          // every fourth digit add space
+          if (addOneToIndex % 4 === 0) {
+            return [...buildingUp, currentValue, " "];
+          }
+          // append value to array
+          return [...buildingUp, currentValue];
+        },
+        []);
+  target.value =
+    cardType == "amex"
+      ? arrOfCharsWithSpaceAdded.slice(0, 17).join("")
+      : arrOfCharsWithSpaceAdded.join("");
+}
+
+function matchDisplayAndCreditCardInput(element, card, target) {
+  console.log("matchDisplayAndCreditCardInput", target.value);
+  // display values entered into number input to card number display element
+  element.innerText = [
+    ...target.value,
+    ...objOfZerosForCardNumberDisplay[card].slice(target.value.length),
+  ].join("");
+}
+
 export function confirmBtnHelper(event) {
   // month
   const currentMonth = currentDate.getMonth() + 1;
@@ -602,10 +686,16 @@ export function confirmBtnHelper(event) {
   // holder name
   const cardHolderName = document.getElementById("cardholder");
   showEmptyMsgHelper(cardHolderName);
+  showHideValidationIcons("cardholder-container", "data-needattention");
   // card #
   const cardNumberElement = document.getElementById("credit-card-number");
   showEmptyMsgHelper(cardNumberElement);
   checkformatOfCardAndCvcNum(cardNumberElement);
+  showHideValidationIcons(
+    "cardnumber-container",
+    "data-needattention",
+    "data-formatchecking"
+  );
   // exp month year container
   const expMonthYrContainer = document.getElementById("exp-date-msg-container");
   // exp month
@@ -616,10 +706,16 @@ export function confirmBtnHelper(event) {
   showMonthYearErrorBorder(expYearElement);
 
   showMonthYearEmptyText(expMonthElement, expYearElement, expMonthYrContainer);
+
   // cvc
   const cvcElement = document.getElementById("cvc");
   showEmptyMsgHelper(cvcElement);
   checkformatOfCardAndCvcNum(cvcElement);
+  showHideValidationIcons(
+    "cvcnumber-container",
+    "data-needattention",
+    "data-formatchecking"
+  );
   // let user know if the month/year they entered is earlier than current month/year
   /**
    * data-expisempty="false"
@@ -642,8 +738,7 @@ className={BottomStyle[`expdate-month-year-container`]}
       );
       expMonthYrContainer.setAttribute("data-showexpdatemsg", "true");
       expYearElement.setAttribute("aria-describedby", "format-text");
-      expMonthYrContainer.lastElementChild.innerText = `Check year. Current year is ${currentYear}.`;
-      return;
+      expMonthYrContainer.lastElementChild.innerText = `Check year. 20${expYearElement.value} < 20${currentYear}.`;
     } else {
       expYearElement.parentElement.parentElement.setAttribute(
         "data-yearneedsattn",
@@ -655,8 +750,6 @@ className={BottomStyle[`expdate-month-year-container`]}
     }
 
     if (Number(expYearElement.value) == currentYear) {
-      console.log("hello exp year here");
-      console.log(currentMonth);
       // check if month is less than currentYear month
       // if it is show month error msg
       if (Number(expMonthElement.value) < currentMonth) {
@@ -668,7 +761,6 @@ className={BottomStyle[`expdate-month-year-container`]}
         expMonthYrContainer.setAttribute("data-showexpdatemsg", "true");
         expMonthElement.setAttribute("aria-describedby", "format-text");
         expMonthYrContainer.lastElementChild.innerText = `Check month.`;
-        return;
       } else {
         expMonthElement.parentElement.parentElement.setAttribute(
           "data-yearneedsattn",
@@ -680,6 +772,11 @@ className={BottomStyle[`expdate-month-year-container`]}
       }
     }
   }
+  showHideValidationIcons(
+    "exp-date-msg-container",
+    "data-expdateempty",
+    "data-showexpdatemsg"
+  );
 }
 
 function showEmptyMsgHelper(element, expDateContainer) {
@@ -761,18 +858,35 @@ function showMonthYearErrorBorder(element) {
       element.setAttribute("aria-describedby", ""));
 }
 
-export function showHideValidationIcons() {
-  const element = document.querySelector(
-    "#cardholder-container [data-accepted-icon]"
+function showHideValidationIcons(elementId, ...attribute) {
+  console.log(elementId);
+  const element = document.getElementById(elementId);
+  const acceptedIcon = document.querySelector(
+    `#${elementId} [data-accepted-icon]`
   );
-  element.setAttribute("data-showicon", "");
-}
-
-export function hideValidationIcons() {
-  const element = document.querySelector(
-    "#cardholder-container [data-accepted-icon]"
+  const notacceptedIcon = document.querySelector(
+    `#${elementId} [data-notaccepted-icon]`
   );
-  element.removeAttribute("data-showicon");
+  // loop through array of attrs and call element.getAttribute
+  // to get value of that attr on that element
+  // save values to array
+  const valuesOfAttrs = attribute.map(function getValues(attribute) {
+    return element.getAttribute(`${attribute}`);
+  });
+  console.log(valuesOfAttrs);
+  if (valuesOfAttrs.includes("true")) {
+    // if values of attrs contain "true" we want to render notaccepted icon
+    notacceptedIcon.setAttribute("data-showicon", "");
+    acceptedIcon.removeAttribute("data-showicon");
+  } else {
+    // if values of attrs only contains "false" want to render accepted icon
+    acceptedIcon.setAttribute("data-showicon", "");
+    notacceptedIcon.removeAttribute("data-showicon");
+  }
+  // const element = document.querySelector(
+  //   "#cardholder-container [data-accepted-icon]"
+  // );
+  // element.setAttribute("data-showicon", "");
 }
 
 // function closurePrevBtnClicked() {

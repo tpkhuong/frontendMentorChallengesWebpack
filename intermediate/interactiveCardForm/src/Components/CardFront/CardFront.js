@@ -46,6 +46,7 @@ export default function CardFront({ children, ...props }) {
           {!frontCardNumValue ? (
             <span
               ref={cardNumberRef}
+              id="front-number-display"
               className={CardFrontStyles[`credit-card-number-display`]}
             >
               0000 0000 0000 0000
@@ -54,6 +55,7 @@ export default function CardFront({ children, ...props }) {
             // amex
             <span
               ref={creditNumberAmex}
+              id="front-number-display"
               className={CardFrontStyles[`credit-card-number-display`]}
             >
               0000 000000 00000

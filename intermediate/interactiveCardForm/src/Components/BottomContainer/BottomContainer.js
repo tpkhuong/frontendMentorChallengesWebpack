@@ -10,7 +10,6 @@ import {
   creditCardSelectorHelper,
   confirmBtnHelper,
   showHideValidationIcons,
-  hideValidationIcons,
 } from "../../../utils/helpers.js";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import {
@@ -148,6 +147,7 @@ export default function BottomContainer({ children, ...props }) {
               <div
                 data-needattention="false"
                 data-formatchecking="false"
+                id="cardnumber-container"
                 className={BottomStyle[`card-number`]}
               >
                 <div className={BottomStyle[`number-cards-style-wrapper`]}>
@@ -368,6 +368,7 @@ export default function BottomContainer({ children, ...props }) {
                   <div
                     data-needattention="false"
                     data-formatchecking="false"
+                    id="cvcnumber-container"
                     className={BottomStyle[`cvc-input`]}
                   >
                     <label htmlFor="cvc">cvc</label>
@@ -413,6 +414,7 @@ export default function BottomContainer({ children, ...props }) {
                   <div
                     data-needattention="false"
                     data-formatchecking="false"
+                    id="cvcnumber-container"
                     className={BottomStyle[`cvc-input`]}
                   >
                     <label htmlFor="cvc">cvc</label>
@@ -466,7 +468,7 @@ export default function BottomContainer({ children, ...props }) {
           <div className="test-radio-btns">
             <label htmlFor="yes-btn">yes</label>
             <input
-              onClick={showHideValidationIcons}
+              // onClick={showHideValidationIcons}
               // ref={yesBtn}
               id="yes-btn"
               name="test"
@@ -475,7 +477,7 @@ export default function BottomContainer({ children, ...props }) {
             <label htmlFor="no-btn">no</label>
             <input
               // ref={noBtn}
-              onClick={hideValidationIcons}
+              // onClick={hideValidationIcons}
               id="no-btn"
               name="test"
               type="radio"
