@@ -10,6 +10,7 @@ import {
   creditCardSelectorHelper,
   confirmBtnHelper,
   showHideValidationIcons,
+  funcsForClickAndKeyUp,
 } from "../../../utils/helpers.js";
 import { LinkValuesToInputContext } from "../SectionWrapper/SectionWrapper";
 import {
@@ -25,6 +26,7 @@ import BottomStyle from "./BottomContainer.module.css";
 // FaCcDiscover
 // FaCcMastercard
 export default function BottomContainer({ children, ...props }) {
+  // console.log(funcsForClickAndKeyUp.amexCreditCardNumHelper);
   // console.log(creditCardSelectorHelper);
   // get credit card front and back display ref from context
   const creditCardDisplayRefObj = React.useContext(LinkValuesToInputContext);
@@ -153,10 +155,12 @@ export default function BottomContainer({ children, ...props }) {
                 <div className={BottomStyle[`number-cards-style-wrapper`]}>
                   <label htmlFor="credit-card-number">card number</label>
                   <div
-                    onClick={creditCardSelectorHelper.bind({
-                      setCreditCardState,
-                      creditCardDisplayRefObj,
-                    })}
+                    onClick={funcsForClickAndKeyUp.creditCardSelectorHelper.bind(
+                      {
+                        setCreditCardState,
+                        creditCardDisplayRefObj,
+                      }
+                    )}
                     className={BottomStyle[`card-btns-container`]}
                   >
                     {/* visa */}
@@ -216,11 +220,13 @@ export default function BottomContainer({ children, ...props }) {
                       autoComplete="cc-number"
                       pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
                       maxLength="19"
-                      onKeyUp={creditCardNumberHelper.bind({
-                        cardNumber: creditCardDisplayRefObj.creditCard.number,
-                        setCreditCardState,
-                        creditCardDisplayRefObj,
-                      })}
+                      onKeyUp={funcsForClickAndKeyUp.creditCardNumberHelper.bind(
+                        {
+                          cardNumber: creditCardDisplayRefObj.creditCard.number,
+                          setCreditCardState,
+                          creditCardDisplayRefObj,
+                        }
+                      )}
                     />
                   ) : (
                     // amex
@@ -233,11 +239,13 @@ export default function BottomContainer({ children, ...props }) {
                       autoComplete="cc-number"
                       pattern="[0-9]{4} [0-9]{6} [0-9]{5}"
                       maxLength="17"
-                      onKeyUp={amexCreditCardNumHelper.bind({
-                        amexCardNumber: creditCardDisplayRefObj.amex.number,
-                        setCreditCardState,
-                        creditCardDisplayRefObj,
-                      })}
+                      onKeyUp={funcsForClickAndKeyUp.amexCreditCardNumHelper.bind(
+                        {
+                          amexCardNumber: creditCardDisplayRefObj.amex.number,
+                          setCreditCardState,
+                          creditCardDisplayRefObj,
+                        }
+                      )}
                     />
                   )}
                   <span className={BottomStyle[`input-border`]}></span>
@@ -468,7 +476,11 @@ export default function BottomContainer({ children, ...props }) {
           <div className="test-radio-btns">
             <label htmlFor="yes-btn">yes</label>
             <input
-              // onClick={showHideValidationIcons}
+              // onClick={funcsForClickAndKeyUp.creditCardSelectorHelper.bind({
+              //   setCreditCardState,
+              //   creditCardDisplayRefObj,
+              // })}
+              // onClick={funcsObj.first.bind({ setCreditCardState })}
               // ref={yesBtn}
               id="yes-btn"
               name="test"
@@ -476,8 +488,11 @@ export default function BottomContainer({ children, ...props }) {
             />
             <label htmlFor="no-btn">no</label>
             <input
+              // onClick={funcsForClickAndKeyUp.keyUpAmexNumHelper.bind({
+              //   setCreditCardState,
+              // })}
               // ref={noBtn}
-              // onClick={hideValidationIcons}
+              // onClick={funcsObj.second.bind({ setCreditCardState })}
               id="no-btn"
               name="test"
               type="radio"
