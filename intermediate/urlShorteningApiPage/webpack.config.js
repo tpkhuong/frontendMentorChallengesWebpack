@@ -1,12 +1,13 @@
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const webpack = require("webpack");
+// const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
   mode: isDevelopment ? "development" : "production",
-  entry: "./frontend/src/main.js",
+  entry: { app: "./frontend/src/main.js" },
   module: {
     rules: [
       { test: /\.html$/, use: { loader: "html-loader" } },
@@ -14,9 +15,9 @@ module.exports = {
         test: /\.(js|jsx)$/,
         use: {
           loader: "babel-loader",
-          options: {
-            plugins: ["react-refresh/babel"],
-          },
+          // options: {
+          //   plugins: ["react-refresh/babel"],
+          // },
         },
       },
       {
@@ -29,15 +30,20 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    hot: true,
+    static: "./dist",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new htmlWebpackPlugin({
       template: "./frontend/src/index.html",
     }),
     new Dotenv(),
-    new ReactRefreshWebpackPlugin(),
+    // new ReactRefreshWebpackPlugin(),
   ],
 };

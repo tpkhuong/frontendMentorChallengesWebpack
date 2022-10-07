@@ -344,3 +344,5 @@ async function updateOrdersAndCustomer(customer, orderedItems, placedOrder) {
   console.log("update customer and placed orders", data);
   return data;
 }
+
+export function orderFinalized() {}

@@ -15,9 +15,9 @@ rootElement.render(<App />);
 //   );
 // }
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 // if (module.hot) {
 //   module.hot.dispose(() => {

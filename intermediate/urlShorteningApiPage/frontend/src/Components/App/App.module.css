@@ -1,0 +1,235 @@
+/* line(1) transform: translateY(14px) rotate(-43deg); */
+/* line(3) transform: rotate(45deg); */
+/* option 1 */
+/* .mobile-menu-icon {
+  background-color: transparent;
+  margin-inline: auto;
+  display: block;
+  margin-block-start: 80px;
+  height: 26px;
+}
+
+.line {
+  transition: transform 500ms linear, opacity 250ms ease-out;
+  background-color: var(--color-neutral-black);
+  width: 30px;
+  height: 5px;
+  display: block;
+  border-radius: 100vw;
+}
+
+[data-clicked="true"] .line:nth-of-type(1) {
+  transform: translateY(7px) rotate(-45deg);
+}
+
+.line:nth-of-type(2) {
+  background-color: red;
+  margin-block: 2px;
+}
+
+[data-clicked="true"] .line:nth-of-type(2) {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+[data-clicked="true"] .line:nth-of-type(3) {
+  transform: translateY(-7px) rotate(45deg);
+} */
+/* option 1 */
+
+/* option 2 */
+
+.mobile-menu-icon {
+  background-color: transparent;
+  margin-inline: auto;
+  display: block;
+  margin-block-start: 80px;
+  height: 26px;
+  /* transform: rotate(45deg); */
+}
+
+[data-clicked="true"].mobile-menu-icon {
+  /* animation: spinner 1s linear forwards;
+  animation-delay: 1050ms; */
+}
+
+.line {
+  /* transition: transform 1000ms linear, opacity 500ms ease-out; */
+  background-color: var(--color-neutral-black);
+  width: 30px;
+  height: 5px;
+  display: block;
+  border-radius: 100vw;
+}
+
+.line:nth-of-type(2) {
+  background-color: red;
+  margin-block: 2px;
+}
+
+.line:nth-of-type(1) {
+  transform: translateX(10px);
+}
+
+[data-clicked="true"] .line:nth-of-type(1) {
+  /* transform: translateX(0px) translateY(7px) rotate(-45deg); */
+  animation: topLineLeft 1s 1 ease-out forwards;
+}
+
+[data-clicked="false"] .line:nth-of-type(1) {
+  /* animation: reverse; */
+  /* transform: translateX(10px); */
+  animation: topLineRight 1500ms 1 ease-in-out forwards;
+}
+
+.line:nth-of-type(2) {
+  background-color: red;
+  margin-block: 2px;
+}
+
+[data-clicked="true"] .line:nth-of-type(2) {
+  /* transform: translateX(-30px);
+  opacity: 0; */
+  animation: middleLineLeft 700ms linear forwards;
+}
+
+[data-clicked="false"] .line:nth-of-type(2) {
+  /* transform: translateX(-30px);
+  opacity: 0; */
+  animation: middleLineRight 400ms linear forwards;
+}
+
+.line:nth-of-type(3) {
+  transform: translateX(-10px);
+}
+
+[data-clicked="true"] .line:nth-of-type(3) {
+  animation: bottomLineLeft 1s forwards linear;
+  /* transform: translateX(0px) translateY(-7px) rotate(45deg); */
+}
+
+[data-clicked="false"] .line:nth-of-type(3) {
+  /* transform: translateX(-10px); */
+  animation: bottomLineRight 1500ms forwards linear;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(45deg);
+  }
+
+  50% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes topLineLeft {
+  /* start 10px to the right */
+  0% {
+    transform: translateX(10px);
+  }
+
+  /* move left */
+  35% {
+    transform: translateX(0px);
+  }
+
+  /* then down */
+  75% {
+    transform: translateY(7px);
+  }
+  /* then rotate */
+  100% {
+    /* css will rotate the element at the start position */
+    /* which is why our algorithm doesn't make an "X */
+    /* transform: rotate(-45deg); */
+    transform: translateX(0px) translateY(7px) rotate(-45deg);
+  }
+}
+
+@keyframes middleLineLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes bottomLineLeft {
+  /* start 10px to the left */
+  0% {
+    transform: translateX(-10px);
+  }
+  /* move right */
+  35% {
+    transform: translateX(0px);
+  }
+  /* then up */
+  75% {
+    transform: translateY(-7px);
+  }
+  /* then rotate */
+  100% {
+    transform: translateX(0px) translateY(-7px) rotate(45deg);
+  }
+}
+
+/* going reverse */
+
+@keyframes topLineRight {
+  /* starting position */
+  0% {
+    transform: translateX(0px) translateY(7px) rotate(-45deg);
+  }
+  /* rotate back to flat line */
+  45% {
+    transform: translateX(0px) translateY(7px) rotate(0deg);
+  }
+  /* then up */
+  75% {
+    transform: translateY(0px);
+  }
+  /* then right */
+  100% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes middleLineRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes bottomLineRight {
+  /* starting position */
+  0% {
+    transform: translateX(0px) translateY(-7px) rotate(45deg);
+  }
+  /* rotate back to flat line */
+  45% {
+    transform: translateX(0px) translateY(-7px) rotate(0deg);
+  }
+  /* then up */
+  75% {
+    transform: translateY(0px);
+  }
+  /* then right */
+  100% {
+    transform: translateX(-10px);
+  }
+}
+
+/* option 2 */
