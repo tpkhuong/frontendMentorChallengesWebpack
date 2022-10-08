@@ -34,6 +34,24 @@ export default function App({ children, ...props }) {
         <span className={TestStyles[`line`]}></span>
       </button>
       {/* option 1 */}
+      {/* button */}
+      <button className={TestStyles[`save-btn`]}>Save Changes</button>
+      <div className={TestStyles[`wrapper`]}>
+        <div className={TestStyles[`container`]}>
+          <div className={TestStyles[`one`]}></div>
+          <div className={TestStyles[`two`]}></div>
+          <div className={TestStyles[`three`]}></div>
+          <div className={TestStyles[`four`]}></div>
+          <div className={TestStyles[`five`]}></div>
+        </div>
+        <div className={TestStyles[`container`]}>
+          <div className={TestStyles[`one`]}></div>
+          <div className={TestStyles[`two`]}></div>
+          <div className={TestStyles[`three`]}></div>
+          <div className={TestStyles[`four`]}></div>
+          <div className={TestStyles[`five`]}></div>
+        </div>
+      </div>
     </React.Fragment>
   );
 }
