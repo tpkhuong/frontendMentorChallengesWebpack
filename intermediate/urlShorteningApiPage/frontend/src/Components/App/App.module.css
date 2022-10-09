@@ -698,14 +698,20 @@ body {
   margin-inline: auto;
   margin-block-start: 16px;
   font-weight: 700;
-  padding: 16px;
-  padding-block: 10px;
+  /* padding: 16px;
+  padding-block: 10px; */
   text-transform: uppercase;
   color: hsl(243, 100%, 82%);
   border: 2px solid hsl(242, 48%, 58%);
   border-radius: 100vw;
   /* transform: skew(0deg); */
   box-shadow: 0px 0px 1px 0px;
+}
+
+.inner-btn {
+  padding: 16px;
+  padding-block: 10px;
+  display: inline-block;
 }
 
 /* .save-btn:active {
@@ -753,14 +759,32 @@ body {
   background-color: rgba(106, 138, 241, 0.301);
 }
 
+.container:nth-child(1),
+.container:nth-child(2) {
+  transform-style: preserve-3d;
+}
+
+.container:nth-child(1) {
+  transform: rotateY(35deg);
+}
+
+.container:nth-child(2) {
+  transform: rotateY(42deg);
+}
+
 .container:nth-child(2) div:nth-child(odd) {
   box-shadow: 0px 0px 10px 10px var(--color-neutral-white);
-  transform: translateY(23px);
+  transform: translateY(23px) translateZ(-45px);
+}
+
+.container:nth-child(1) div:nth-child(even):hover {
+  transform: translateY(-23px) translateZ(0px);
 }
 
 .container:nth-child(1) div:nth-child(even) {
   box-shadow: 0px 0px 10px 10px var(--color-neutral-white);
-  transform: translateY(-23px);
+  transform: translateY(-23px) translateZ(45px);
+  transition: transform 500ms linear;
 }
 
 .container:nth-child(1) div:nth-child(even),
@@ -769,4 +793,115 @@ body {
 
 .container div:nth-child(odd) {
   background-color: rgba(202, 96, 206, 0.479);
+}
+
+/* triangle */
+
+.triangle {
+  display: block;
+  width: 10px;
+  border: 5px solid red;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+/* dark/light theme menu btn */
+
+button[data-theme] {
+  margin-block-start: 50px;
+  display: block;
+  margin-inline: auto;
+  width: 30px;
+  background-color: transparent;
+}
+
+[data-theme="light"] .lines-container {
+  transform: rotateX(180deg);
+}
+
+[data-theme="dark"] .lines-container {
+  transform: rotateX(0deg);
+}
+
+/* top */
+/* middle */
+/* bottom */
+
+[data-theme="light"] .lines-container:nth-child(1) {
+  /* no delay */
+  transition-delay: 0s;
+}
+
+[data-theme="dark"] .lines-container:nth-child(1) {
+  transition-delay: 1000ms;
+  /* delay */
+}
+
+[data-theme="light"] .lines-container:nth-child(2) {
+  /* delay */
+  transition-delay: 500ms;
+}
+
+[data-theme="dark"] .lines-container:nth-child(2) {
+  transition-delay: 500ms;
+  /* delay */
+}
+
+[data-theme="light"] .lines-container:nth-child(3) {
+  /* delay */
+  transition-delay: 1000ms;
+}
+
+[data-theme="dark"] .lines-container:nth-child(3) {
+  /* no delay */
+  transition-delay: 0ms;
+}
+
+.lines-container:nth-child(2) {
+  margin-block: 3px;
+}
+
+.lines-container {
+  height: 5px;
+  transition: transform 500ms linear;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.lines-container span {
+  display: block;
+  border-radius: 100vw;
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  background-color: black;
+}
+
+.back {
+  background-color: red;
+  transform: rotateX(180deg);
+}
+
+/* veritcal lines */
+/* button display:flex */
+/* div childrens: height 30px width: 5px */
+/* middle div margin-inline instead of margin-block */
+
+button[data-theme] {
+  display: flex;
+  width: revert;
+}
+
+.lines-container {
+  height: 30px;
+  width: 5px;
+}
+
+.lines-container:nth-child(2) {
+  margin-inline: 3px;
+  margin-block: 0px;
 }

@@ -6,6 +6,14 @@ import TestStyles from "./App.module.css";
 export default function App({ children, ...props }) {
   return (
     <React.Fragment>
+      <TestApp />
+    </React.Fragment>
+  );
+}
+
+function TestApp({ children, ...props }) {
+  return (
+    <React.Fragment>
       {/* option 1 */}
       {/* rotate the parent for fun =) */}
       <button
@@ -35,7 +43,9 @@ export default function App({ children, ...props }) {
       </button>
       {/* option 1 */}
       {/* button */}
-      <button className={TestStyles[`save-btn`]}>Save Changes</button>
+      <button className={TestStyles[`save-btn`]}>
+        <span className={TestStyles[`inner-btn`]}>Save Changes</span>
+      </button>
       <div className={TestStyles[`wrapper`]}>
         <div className={TestStyles[`container`]}>
           <div className={TestStyles[`one`]}></div>
@@ -52,6 +62,35 @@ export default function App({ children, ...props }) {
           <div className={TestStyles[`five`]}></div>
         </div>
       </div>
+      <span className={TestStyles[`triangle`]}></span>
+      <span>
+        <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
+          <path stroke="#635FC7" strokeWidth="2" fill="none" d="M9 6 5 2 1 6" />
+        </svg>
+      </span>
+      {/* dark/light menu btn */}
+      <button
+        onClick={(event) => {
+          event.target.closest("BUTTON").getAttribute("data-theme") === "" ||
+          event.target.closest("BUTTON").getAttribute("data-theme") == "dark"
+            ? event.target.closest("BUTTON").setAttribute("data-theme", "light")
+            : event.target.closest("BUTTON").setAttribute("data-theme", "dark");
+        }}
+        data-theme=""
+      >
+        <div className={TestStyles[`lines-container`]}>
+          <span className={TestStyles[`front`]}></span>
+          <span className={TestStyles[`back`]}></span>
+        </div>
+        <div className={TestStyles[`lines-container`]}>
+          <span className={TestStyles[`front`]}></span>
+          <span className={TestStyles[`back`]}></span>
+        </div>
+        <div className={TestStyles[`lines-container`]}>
+          <span className={TestStyles[`front`]}></span>
+          <span className={TestStyles[`back`]}></span>
+        </div>
+      </button>
     </React.Fragment>
   );
 }
