@@ -91,6 +91,7 @@ function TestApp({ children, ...props }) {
           <span className={TestStyles[`back`]}></span>
         </div>
       </button>
+      <span className={TestStyles[`blinking`]}>_hello</span>
     </React.Fragment>
   );
 }

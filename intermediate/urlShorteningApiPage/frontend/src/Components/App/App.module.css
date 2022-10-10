@@ -691,9 +691,46 @@ body {
 
 /* save button */
 
+/* attempt 1 */
+
 .save-btn {
-  transition: box-shadow 250ms ease-in;
+  /* padding: 16px;
+  padding-block: 10px; */
+  /* transform: skew(0deg); */
+  /* transition: box-shadow 250ms ease-in;
   background-color: transparent;
+  display: block;
+  margin-inline: auto;
+  margin-block-start: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: hsl(243, 100%, 82%);
+  border: 2px solid hsl(242, 48%, 58%);
+  border-radius: 100vw;
+  box-shadow: 0px 0px 1px 0px; */
+}
+
+.inner-btn {
+  /* padding: 16px;
+  padding-block: 10px;
+  display: inline-block; */
+}
+
+/* .save-btn:active {
+  box-shadow: 0px 0px 1px 0px;
+} */
+.save-btn:hover {
+  /* box-shadow: 10px 10px 1px 0px; */
+}
+
+/* attempt 1 */
+
+/* another way to animate btn */
+/* attempt 2 */
+
+.save-btn {
+  /* transition: box-shadow 250ms ease-in; */
+  background-color: hsl(243, 100%, 82%);
   display: block;
   margin-inline: auto;
   margin-block-start: 16px;
@@ -701,25 +738,34 @@ body {
   /* padding: 16px;
   padding-block: 10px; */
   text-transform: uppercase;
-  color: hsl(243, 100%, 82%);
-  border: 2px solid hsl(242, 48%, 58%);
+  /* color: hsl(243, 100%, 82%); */
+  /* border: 2px solid hsl(242, 48%, 58%); */
   border-radius: 100vw;
   /* transform: skew(0deg); */
-  box-shadow: 0px 0px 1px 0px;
+  /* box-shadow: 0px 0px 1px 0px; */
 }
 
 .inner-btn {
+  transition: transform 250ms ease-in, box-shadow 250ms ease-in;
   padding: 16px;
+  color: hsl(243, 100%, 82%);
   padding-block: 10px;
+  border-radius: 100vw;
+  border: 2px solid hsl(242, 48%, 58%);
   display: inline-block;
+  background-color: white;
 }
 
-/* .save-btn:active {
-  box-shadow: 0px 0px 1px 0px;
-} */
-.save-btn:hover {
-  box-shadow: 10px 10px 1px 0px;
+.save-btn:hover .inner-btn {
+  transform: translateX(-9px) translateY(-9px);
+  box-shadow: 9px 10px 1px 0px hsl(243, 100%, 82%);
 }
+
+.save-btn:active .inner-btn {
+  transform: translateX(0px) translateY(0px);
+  box-shadow: 0px 0px 1px 0px;
+}
+/* attempt 2 */
 
 /* play around with body background color */
 
@@ -904,4 +950,36 @@ button[data-theme] {
 .lines-container:nth-child(2) {
   margin-inline: 3px;
   margin-block: 0px;
+}
+
+/* blinking */
+
+.blinking {
+  font-weight: 500;
+  position: relative;
+  width: max-content;
+  display: block;
+  margin-block-start: 48px;
+  margin-inline: auto;
+}
+
+.blinking::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8px;
+  background-color: currentColor;
+  height: 3px;
+  bottom: 7px;
+  left: -8px;
+  animation: blink 750ms ease-out infinite alternate;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
