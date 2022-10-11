@@ -1,0 +1,49 @@
+.wrapper {
+  justify-content: center;
+  display: flex;
+  max-height: 100vh;
+  background-color: blanchedalmond;
+  gap: 10px;
+}
+
+.text-content {
+  width: 500px;
+  height: 350px;
+  background-color: hsl(207, 95%, 8%);
+  align-self: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+}
+
+.snap-item {
+  --size: 300px;
+  width: calc(var(--size) * 2.5);
+  height: calc(var(--size) + 100px);
+  flex-shrink: 0;
+  /* flex-basis: 450px; */
+  /* snap to the snap container */
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.snap-item:nth-child(1) {
+  background-color: black;
+}
+.snap-item:nth-child(2) {
+  background-color: red;
+}
+.snap-item:nth-child(3) {
+  background-color: cadetblue;
+}
+.snap-item:nth-child(4) {
+  background-color: steelblue;
+}
+.snap-item:nth-child(5) {
+  background-color: palegoldenrod;
+}
