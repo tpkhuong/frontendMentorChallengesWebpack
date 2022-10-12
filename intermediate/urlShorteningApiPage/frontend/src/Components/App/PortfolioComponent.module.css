@@ -19,6 +19,7 @@
   gap: 16px;
   scroll-snap-type: y mandatory;
   overflow-y: auto;
+  position: relative;
 }
 
 .snap-item {
@@ -46,4 +47,16 @@
 }
 .snap-item:nth-child(5) {
   background-color: palegoldenrod;
+}
+.snap-item:nth-child(6) {
+  background-color: rgb(170, 238, 238);
+}
+.snap-item:nth-child(7) {
+  background-color: rgb(138, 32, 59);
+}
+.snap-item:nth-child(8) {
+  background-color: rgb(47, 32, 182);
+}
+.snap-item:nth-child(9) {
+  background-color: rgb(95, 70, 67);
 }
