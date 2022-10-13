@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  position: relative;
+}
+
+.snap-item {
+  --size: 300px;
+  width: calc(var(--size) * 2.5);
+  height: calc(var(--size) + 100px);
+  flex-shrink: 0;
+  /* flex-basis: 450px; */
+  /* snap to the snap container */
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: relative; */
+}
+
+.snap-item > * {
+  font-size: 7rem;
+  color: var(--color-neutral-white);
+  /* position: absolute;
+  inset: 0;
+  display: block;
+  width: min-content;
+  height: max-content;
+  margin: auto; */
+}
+
+.snap-item:nth-child(1) {
+  background-color: black;
+}
+.snap-item:nth-child(2) {
+  background-color: red;
+}
+.snap-item:nth-child(3) {
+  background-color: cadetblue;
+}
+.snap-item:nth-child(4) {
+  background-color: steelblue;
+}
+.snap-item:nth-child(5) {
+  background-color: palegoldenrod;
+}
+.snap-item:nth-child(6) {
+  background-color: rgb(170, 238, 238);
+}
+.snap-item:nth-child(7) {
+  background-color: rgb(138, 32, 59);
+}
+.snap-item:nth-child(8) {
+  background-color: rgb(47, 32, 182);
+}
+.snap-item:nth-child(9) {
+  background-color: rgb(95, 70, 67);
+}
