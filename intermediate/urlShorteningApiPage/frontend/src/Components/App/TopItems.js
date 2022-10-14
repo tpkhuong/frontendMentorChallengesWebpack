@@ -14,7 +14,14 @@ export default function TopItems({ children, ...props }) {
           tabIndex="-1"
           className={TopStyles[`snap-item`]}
         >
-          <span>1</span>
+          {/* <button className={TopStyles[`select-sibling`]}>Click me</button>
+          <span className={TopStyles[`test-color`]}>1</span>
+          <span className={TopStyles[`test-color`]}>1</span>
+          <span id="first" className={TopStyles[`test-color`]}>
+            1
+          </span>
+          <span className={TopStyles[`test-color`]}>1</span> */}
+          <span className={TopStyles[`test-color`]}>1</span>
         </div>
       ) : (
         <div

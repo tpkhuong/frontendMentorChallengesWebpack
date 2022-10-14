@@ -15,6 +15,7 @@ export default function TestContainer({ children, ...props }) {
   const [initialValuesObj, setInitialValues] = React.useState(
     memoizedInitialValues
   );
+
   //   const memoizedStateFuncs = React.useMemo(() => {
   //     return {
   //       topItemFunc: null,
@@ -26,9 +27,141 @@ export default function TestContainer({ children, ...props }) {
    * which will give us 2896
    * **/
   const objOfMethods = {
+    Home: (event, element, setFunc) => {
+      event.preventDefault();
+      // when element pos index is not "1" focus element with pos index "1"
+      // when the vertically centered and focused element is not pos index "1"
+      // the ordered element will be the original list of snap items
+      /**
+       * when the element pos index is "9"
+       * take bottom last two element(will be element with pos index "9" and "1")
+       * move them to the top of the list
+       * **/
+      if (element.getAttribute("data-pos-index") != "1") {
+        // when user is at bottom of scroll container
+        if (element.getAttribute("data-pos-index") == "9") {
+          // get last two items at bottom of list, move to top of list
+          const copiedOfSnapItems = [...element.parentElement.children];
+          const lastToItems = copiedOfSnapItems.slice(-2);
+          const beforeLastItems = copiedOfSnapItems.slice(0, -2);
+          const reorderItems = [...lastToItems, ...beforeLastItems].map(
+            function makeObj(element, index) {
+              const obj = {
+                classText: "snap-item",
+                posIndex: element.getAttribute("data-pos-index"),
+                spanText: element.firstElementChild.innerText,
+                tabindex: index == 1 ? "0" : "-1",
+              };
+              return obj;
+            }
+          );
+          console.log(reorderItems);
+          setFunc((prevs) => {
+            return {
+              ...prevs,
+              upArrowArray: reorderItems,
+              downArrowArray: null,
+            };
+          });
+          return;
+        }
+        // copy last item to top of list and focus second item of reordered list which will be element with pos index "1"
+        const copiedListItems = [...element.parentElement.children];
+        const lastItem = copiedListItems.pop();
+        const reorderedListItems = [lastItem, ...copiedListItems].map(
+          function makeObj(element, index) {
+            const obj = {
+              classText: "snap-item",
+              posIndex: element.getAttribute("data-pos-index"),
+              spanText: element.firstElementChild.innerText,
+              tabindex: index == 1 ? "0" : "-1",
+            };
+            return obj;
+          }
+        );
+        setFunc((prevValues) => {
+          return {
+            ...prevValues,
+            upArrowArray: reorderedListItems,
+            downArrowArray: null,
+          };
+        });
+      }
+    },
+    End: (event, element, setFunc) => {
+      event.preventDefault();
+      // when element pos index is not "9" focus element with pos index "9"
+      // when the vertically centered and focused element is not pos index "9"
+      // the ordered element will be the original list of snap items
+      /**
+       * when the element pos index is "1"
+       * take the top two element(will be element with pos index "9" and "1")
+       * move them to the bottom of the list
+       * **/
+      if (element.getAttribute("data-pos-index") != "9") {
+        // when user is at top of scroll container
+        if (element.getAttribute("data-pos-index") == "1") {
+          // get first two items and move them to bottom of list
+          const copyScrollContainerChildren = [];
+          copyScrollContainerChildren.push.apply(
+            copyScrollContainerChildren,
+            element.parentElement.childNodes
+          );
+          const [firstItem, secondItem, ...restOfItems] =
+            copyScrollContainerChildren;
+          const reorderArrayOfItems = [
+            ...restOfItems,
+            firstItem,
+            secondItem,
+          ].map(function makeObj(element, index) {
+            const objOfValues = {
+              classText: "snap-item",
+              posIndex: element.getAttribute("data-pos-index"),
+              spanText: element.firstElementChild.innerText,
+              tabindex: index == 7 ? "0" : "-1",
+            };
+            return objOfValues;
+          });
+          setFunc((values) => {
+            return {
+              ...values,
+              upArrowArray: null,
+              downArrowArray: reorderArrayOfItems,
+            };
+          });
+          return;
+        }
+        // copy first item, move to bottom of list and focus second to last item of list
+        const currentOrderOfItems = [];
+        currentOrderOfItems.push.apply(
+          currentOrderOfItems,
+          element.parentElement.childNodes
+        );
+        const [firstElement, ...restOfList] = currentOrderOfItems;
+        const newOrderOfItems = [...restOfList, firstElement].map(
+          function makeObj(element, index) {
+            const objOfValues = {
+              classText: "snap-item",
+              posIndex: element.getAttribute("data-pos-index"),
+              spanText: element.firstElementChild.innerText,
+              tabindex: index == 7 ? "0" : "-1",
+            };
+            return objOfValues;
+          }
+        );
+        setFunc((values) => {
+          return {
+            ...values,
+            upArrowArray: null,
+            downArrowArray: newOrderOfItems,
+          };
+        });
+      }
+    },
     ArrowDown: (event, element, setFunc) => {
       event.preventDefault();
-
+      // copy scroll container children. two different object(function,array,object) will have
+      // different reference
       // next element tabIndex 0
       // prev element tabIndex -1
 
@@ -45,6 +178,30 @@ export default function TestContainer({ children, ...props }) {
       if (!element.nextElementSibling.nextElementSibling) {
         console.log("bottom, its empty");
         workingAtEnd(element, setFunc);
+        return;
+      }
+      // if user at element with pos index "2" work with original order of scroll container children
+      if (element.getAttribute("data-pos-index") == "1") {
+        const childrenOfScrollElement = [...element.parentElement.children];
+        const [firstElement, ...restOfChildren] = childrenOfScrollElement;
+        const reorderedChildren = [...restOfChildren, firstElement].map(
+          function makeObj(element, index) {
+            const valuesObj = {
+              classText: "snap-item",
+              posIndex: element.getAttribute("data-pos-index"),
+              spanText: element.firstElementChild.innerText,
+              tabindex: index == 1 ? "0" : "-1",
+            };
+            return valuesObj;
+          }
+        );
+        setFunc((prevs) => {
+          return {
+            ...prevs,
+            upArrowArray: reorderedChildren,
+            downArrowArray: null,
+          };
+        });
         return;
       }
       element.nextElementSibling.setAttribute("tabindex", "0");
@@ -70,6 +227,8 @@ export default function TestContainer({ children, ...props }) {
     },
     ArrowUp: (event, element, setFunc) => {
       event.preventDefault();
+      // copy scroll container children. two different object(function,array,object) will have
+      // different reference
       if (!element.previousElementSibling) {
         // prev element tabIndex 0
         // next element tabIndex -1
@@ -88,10 +247,33 @@ export default function TestContainer({ children, ...props }) {
       if (!element.previousElementSibling.previousElementSibling) {
         console.log("top, its empty");
         workingAtBeginning(element, setFunc);
-
         return;
       }
-      console.log("this should not be here");
+      // if user at element with pos index "9" work with original order of scroll container children
+      if (element.getAttribute("data-pos-index") == "9") {
+        const snapItems = [...element.parentElement.children];
+        const lastItem = snapItems.pop();
+        const newOrderedArray = [lastItem, ...snapItems].map(function makeObj(
+          element,
+          index
+        ) {
+          const objOfValues = {
+            classText: "snap-item",
+            posIndex: element.getAttribute("data-pos-index"),
+            spanText: element.firstElementChild.innerText,
+            tabindex: index == 7 ? "0" : "-1",
+          };
+          return objOfValues;
+        });
+        setFunc((prevValues) => {
+          return {
+            ...prevValues,
+            upArrowArray: null,
+            downArrowArray: newOrderedArray,
+          };
+        });
+        return;
+      }
       element.previousElementSibling.setAttribute("tabindex", "0");
       element.previousElementSibling.focus();
       // keep reference of current focused element so we can target
@@ -623,5 +805,28 @@ function workingAtEnd(item, callFuncToRender) {
 
   if (posIndex === "9") {
     //   containerChildren
+    const secondToLast = containerChildren[containerChildren.length - 2];
+    secondToLast.setAttribute("tabindex", "-1");
+    const lastTwoItems = containerChildren.slice(-2);
+    const itemsBeforeLastTwoItems = containerChildren.slice(0, -2);
+    const newReorderedArray = [...lastTwoItems, ...itemsBeforeLastTwoItems].map(
+      function arrayOfObjs(element, index) {
+        const obj = {
+          classText: "snap-item",
+          posIndex: element.getAttribute("data-pos-index"),
+          spanText: element.firstElementChild.innerText,
+          tabindex: index == 7 ? "0" : "-1",
+        };
+        return obj;
+      }
+    );
+
+    callFuncToRender((prevVals) => {
+      return {
+        ...prevVals,
+        upArrowArray: newReorderedArray,
+        downArrowArray: null,
+      };
+    });
   }
 }
