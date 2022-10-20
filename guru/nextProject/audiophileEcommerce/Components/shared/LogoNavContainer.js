@@ -16,7 +16,7 @@ function LogoNavContainer({ children, ...props }) {
   const [hasMounted, setHasMounted] = React.useState(false);
   const { data: session, loading } = useSession();
 
-  const isDesktop = useMediaQuery("min", 1440);
+  // const isDesktop = useMediaQuery("min", 1440);
 
   React.useEffect(() => {
     setHasMounted(true);
@@ -70,7 +70,7 @@ function LogoNavContainer({ children, ...props }) {
         </a>
       </Link>
       {/* full menu */}
-      {isDesktop ? <FullMenuNav headerNav="true" navLabel="primary" /> : null}
+      <FullMenuNav headerNav="true" navLabel="primary" />
       {/* login,register buttons */}
       <div className={LogoNavStyles[`register-login-container`]}>
         {hasMounted ? (

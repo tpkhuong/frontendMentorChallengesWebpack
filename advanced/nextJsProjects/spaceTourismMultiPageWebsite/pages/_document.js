@@ -7,7 +7,6 @@ export default function Document() {
         {/* <meta charSet="utf-8" /> */}
         <meta name="author" content="KhuongCorp" />
         <meta name="description" content="Building App" />
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

@@ -13,11 +13,15 @@ function FullMenuNav({ children, ...props }) {
   // }, []);
   // console.log("hello");
   return (
-    <nav role="navigation" aria-label={props.navLabel}>
+    <nav
+      className={FullNavStyles[`desktop-nav`]}
+      role="navigation"
+      aria-label={props.navLabel}
+      data-isfooternav={props.footerNav}
+      data-isheadernav={props.headerNav}
+    >
       <ul
         role="menubar"
-        data-isfooternav={props.footerNav}
-        data-isheadernav={props.headerNav}
         className={FullNavStyles[`navlist`]}
         onClick={cachedCheckoutInputs.bind({ refObj })}
       >

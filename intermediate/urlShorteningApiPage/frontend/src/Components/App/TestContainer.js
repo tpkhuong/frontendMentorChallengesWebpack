@@ -407,7 +407,16 @@ export default function TestContainer({ children, ...props }) {
 
         {!initialValuesObj.upArrowArray && !initialValuesObj.downArrowArray ? (
           <React.Fragment>
-            <div
+            <Card classText="snap-item" posIndex="1" tab="-1" spanContent="1" />
+            <Card classText="snap-item" posIndex="2" tab="0" spanContent="2" />
+            <Card classText="snap-item" posIndex="3" tab="-1" spanContent="3" />
+            <Card classText="snap-item" posIndex="4" tab="-1" spanContent="4" />
+            <Card classText="snap-item" posIndex="5" tab="-1" spanContent="5" />
+            <Card classText="snap-item" posIndex="6" tab="-1" spanContent="6" />
+            <Card classText="snap-item" posIndex="7" tab="-1" spanContent="7" />
+            <Card classText="snap-item" posIndex="8" tab="-1" spanContent="8" />
+            <Card classText="snap-item" posIndex="9" tab="-1" spanContent="9" />
+            {/* <div
               data-pos-index="1"
               tabIndex="-1"
               className={ContainerStyles[`snap-item`]}
@@ -469,7 +478,7 @@ export default function TestContainer({ children, ...props }) {
               className={ContainerStyles[`snap-item`]}
             >
               <span>9</span>
-            </div>
+            </div> */}
           </React.Fragment>
         ) : initialValuesObj.upArrowArray ? (
           initialValuesObj.upArrowArray.map(function renderItems(
@@ -478,14 +487,22 @@ export default function TestContainer({ children, ...props }) {
           ) {
             const { classText, posIndex, spanText, tabindex } = element;
             return (
-              <div
-                className={`${ContainerStyles[`${classText}`]}`}
-                tabIndex={tabindex}
-                data-pos-index={posIndex}
-                key={Math.random() * index}
-              >
-                <span>{spanText}</span>
-              </div>
+              <Card
+                forKey={index}
+                classText={classText}
+                posIndex={posIndex}
+                tab={tabindex}
+                spanContent={spanText}
+              />
+
+              // <div
+              //   className={`${ContainerStyles[`${classText}`]}`}
+              //   tabIndex={tabindex}
+              //   data-pos-index={posIndex}
+              //   key={Math.random() * index}
+              // >
+              //   <span>{spanText}</span>
+              // </div>
             );
           })
         ) : (
@@ -494,15 +511,23 @@ export default function TestContainer({ children, ...props }) {
             index
           ) {
             const { classText, posIndex, spanText, tabindex } = element;
+            // classText, tab, posIndex, spanContent
             return (
-              <div
-                className={`${ContainerStyles[`${classText}`]}`}
-                tabIndex={tabindex}
-                data-pos-index={posIndex}
-                key={Math.random() * index}
-              >
-                <span>{spanText}</span>
-              </div>
+              <Card
+                forKey={index}
+                classText={classText}
+                posIndex={posIndex}
+                tab={tabindex}
+                spanContent={spanText}
+              />
+              // <div
+              //   className={`${ContainerStyles[`${classText}`]}`}
+              //   tabIndex={tabindex}
+              //   data-pos-index={posIndex}
+              //   key={Math.random() * index}
+              // >
+              //   <span>{spanText}</span>
+              // </div>
             );
           })
         )}
@@ -571,6 +596,19 @@ export default function TestContainer({ children, ...props }) {
         </div> */}
       </div>
     </React.Fragment>
+  );
+}
+
+function Card({ classText, tab, posIndex, spanContent, forKey }) {
+  return (
+    <div
+      className={`${ContainerStyles[`${classText}`]}`}
+      tabIndex={tab}
+      data-pos-index={posIndex}
+      key={Math.random() * forKey}
+    >
+      <span>{spanContent}</span>
+    </div>
   );
 }
 

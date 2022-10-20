@@ -5,6 +5,13 @@
   scroll-snap-type: y mandatory;
   overflow-y: auto;
   position: relative;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .snap-item {

@@ -11,11 +11,11 @@ import HeroContent from "../Components/Home/HeroContent";
 import FeatureProducts from "../Components/Home/FeatureProducts";
 import Main from "../Components/shared/Main";
 import data from "../src/data.json";
-import { useMediaQuery } from "../utils/helpers";
+// import { useMediaQuery } from "../utils/helpers";
 // import { getStaticProps } from "./checkout";
 
 function Home({ children, ...props }) {
-  const isMobile = useMediaQuery("max", 768);
+  // const isMobile = useMediaQuery("max", 768);
   // const item = data.category.headphones[0];
   const product = data.details["xx59"];
   // const { image, category, price, description, newProduct, name } = product;
@@ -54,7 +54,8 @@ function Home({ children, ...props }) {
       </Main>
       <Footer />
       {/* Mobile menu modal */}
-      {isMobile ? <MobileNav /> : null}
+      <MobileNav />
+      {/* {isMobile ? <MobileNav /> : null} */}
     </React.Fragment>
   );
 }

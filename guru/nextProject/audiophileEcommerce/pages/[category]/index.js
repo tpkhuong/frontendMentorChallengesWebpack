@@ -11,7 +11,7 @@ import CategoryTextContent from "../../Components/Category/CategoryTextContent";
 import MissionStatement from "../../Components/shared/MissionStatement";
 import Footer from "../../Components/shared/Footer";
 import { server } from "../../config/index";
-import { useMediaQuery } from "../../utils/helpers";
+// import { useMediaQuery } from "../../utils/helpers";
 import axios from "axios";
 
 function CategoryPage({ children, ...props }) {
@@ -20,7 +20,7 @@ function CategoryPage({ children, ...props }) {
   const pageTitle = [firstLetter, ...restOfLetters].join("");
   // console.log("category data", props.data);
   // console.log("category string", props.categoryStr);
-  const isTablet = useMediaQuery("max", 768);
+  // const isTablet = useMediaQuery("max", 768);
   return (
     <React.Fragment>
       {/* category items container: will be container of our div. The div */}
@@ -82,7 +82,8 @@ function CategoryPage({ children, ...props }) {
         <MissionStatement pageMargin="category" />
       </Main>
       <Footer />
-      {isTablet ? <MobileNav /> : null}
+      <MobileNav />
+      {/* {isTablet ? <MobileNav /> : null} */}
     </React.Fragment>
   );
 }

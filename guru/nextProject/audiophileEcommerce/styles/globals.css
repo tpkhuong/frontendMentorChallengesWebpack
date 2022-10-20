@@ -328,7 +328,7 @@ a {
 [href="#main-content"] {
   position: absolute;
   top: 0;
-  left: 100%; /* move of the screen */
+  left: -100%; /* move of the screen */
 }
 
 [href="#main-content"]:focus {

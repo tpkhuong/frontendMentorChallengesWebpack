@@ -15,13 +15,13 @@ import ProductIncludedItems from "../../../Components/Product/ProductIncludedIte
 import ProductImageGrid from "../../../Components/Product/ProductImageGrid";
 import ProductRecommendations from "../../../Components/Product/ProductRecommendations";
 import GoBackButton from "../../../Components/shared/GoBackButton";
-import { useMediaQuery } from "../../../utils/helpers";
+// import { useMediaQuery } from "../../../utils/helpers";
 import { server } from "../../../config/index";
 
 function ProductPage({ children, ...props }) {
   // console.log("product data", props.data);
   // console.log("category url", props.categoryUrl);
-  const isTablet = useMediaQuery("max", 768);
+  // const isTablet = useMediaQuery("max", 768);
   const {
     slug,
     name,
@@ -93,7 +93,8 @@ function ProductPage({ children, ...props }) {
         <MissionStatement pageMargin="product" />
       </Main>
       <Footer />
-      {isTablet ? <MobileNav /> : null};
+      <MobileNav />
+      {/* {isTablet ? <MobileNav /> : null}; */}
     </React.Fragment>
   );
 }
