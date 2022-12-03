@@ -467,8 +467,13 @@ button {
   transition: transform 500ms ease-out;
 }
 
+[data-daynight="morning"] .quote-wrapper {
+  color: hsl(0, 49%, 24%);
+}
+
 .quote-wrapper {
   font-size: 0.9rem;
+  position: relative;
 }
 
 .quote {
@@ -482,6 +487,10 @@ button {
   min-width: 18px;
   background-color: transparent;
   padding: 0;
+}
+
+.refresh-icon-btn svg path {
+  fill: currentColor;
 }
 
 /* bottom: clock-expand-container */
@@ -570,7 +579,7 @@ button {
 }
 
 [data-daynight="morning"] .more-less-btn {
-  box-shadow: 0 0 0 100vmax hsl(0, 0%, 0%, 0.2);
+  box-shadow: 0 0 0 128vmax hsl(0, 0%, 0%, 0.2);
 }
 
 /* [data-more-clicked="false"] .more-less-btn {
@@ -806,6 +815,10 @@ button {
     padding-inline: var(--desktop-match-padding);
     /* need 98px margin-block-end for data-more-click= false algorithm or else more button will touch bottom of screen */
     padding-block-end: 98px;
+  }
+
+  [data-daynight="morning"] .quote-wrapper {
+    color: var(--color-neutral-white);
   }
 
   /* bottom: clock-expand-container */

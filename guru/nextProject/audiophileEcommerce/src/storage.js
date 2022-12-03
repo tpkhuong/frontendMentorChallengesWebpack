@@ -1,6 +1,19 @@
 /**
  * All data obj/variable goes here.
  * **/
+// import dbConnect from "../config/mongooseMongoDatabase";
+
+// async function getData() {
+//   await dbConnect();
+
+//   const foundUser = await User.findOne({
+//     email: "codeiscool@awesome.io",
+//   });
+
+//   console.log(foundUser);
+// }
+
+// getData();
 
 export const arrayOfLinkText = ["home", "headphones", "speakers", "earphones"];
 

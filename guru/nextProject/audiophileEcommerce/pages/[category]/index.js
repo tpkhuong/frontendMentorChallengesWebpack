@@ -120,6 +120,7 @@ export async function getStaticProps(context) {
 
   const response = await axios(`${server}/api/${context.params.category}`);
   const { data } = response;
+  console.log(data, "data");
   const arrayOfProductNames = data.map(function getName(obj) {
     return obj.textContent.name;
   });

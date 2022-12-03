@@ -39,6 +39,43 @@ body {
 [data-clicked="true"] .line:nth-of-type(3) {
   transform: translateY(-7px) rotate(45deg);
 } */
+
+.tag {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.opening span:nth-of-type(2) {
+  color: red;
+  margin-inline: 3px;
+}
+
+.closing span:nth-of-type(2) {
+  color: red;
+  margin-inline: 1.6px;
+}
+
+.closing span:nth-of-type(3) {
+  color: blue;
+  margin-inline-end: 3px;
+}
+
+.spacer-inline {
+  margin-inline: 8px;
+}
+
+.spacer-end {
+  margin-inline-end: 8px;
+}
+
+.exp-container p:nth-child(n + 2):nth-child(-n + 12) {
+  padding-inline-start: 8px;
+}
+
+.exp-container p:nth-child(n + 8):nth-child(-n + 11) {
+  padding-inline-start: 16px;
+}
+
 /* option 1 */
 
 /* option 2 */
