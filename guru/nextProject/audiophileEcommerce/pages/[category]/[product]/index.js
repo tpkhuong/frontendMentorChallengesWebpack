@@ -72,6 +72,7 @@ function ProductPage({ children, ...props }) {
           />
         </article>
         {/* product-features-includes */}
+        
         <article className={ProductPageStyles[`product-features-includes`]}>
           {/* pass in features string to ProductFeatures as productText prop */}
           <ProductFeatures productText={features} />
@@ -91,6 +92,7 @@ function ProductPage({ children, ...props }) {
         <CategoryCardWrapper pageStyle="product" />
         {/* Mission Statement */}
         <MissionStatement pageMargin="product" />
+        
       </Main>
       <Footer />
       <MobileNav />
@@ -119,7 +121,7 @@ export async function getStaticPaths() {
       params: { category, product },
     };
   });
-  //   console.log(paths);
+  console.log(paths);
   return {
     paths,
     fallback: false,
