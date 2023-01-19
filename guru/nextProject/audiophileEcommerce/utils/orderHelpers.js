@@ -150,7 +150,9 @@ export async function showOrderModal(event) {
       /**
        * make axios put api call to updatecustomerandorder passing in customerResult and orderResult
        * **/
-      // setOrderPlaced(true);
+      /** uncomment to see thank you message modal of order **/
+      setOrderPlaced(true);
+      /** uncomment to see thank you message modal of order **/
     } catch (error) {
       console.error(error);
     }

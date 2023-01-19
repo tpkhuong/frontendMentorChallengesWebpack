@@ -9,6 +9,7 @@ import { generateOrderNumer } from "../../../utils/orderHelpers";
 
 export default async function placedOrderHandler(req, res) {
   const { method, body } = req;
+  console.log("body", body);
   if (method != "POST") return;
   const { customerName, billing, shipping, payment, summary } = body;
   // generate order number

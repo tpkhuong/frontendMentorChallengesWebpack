@@ -48,7 +48,17 @@ export default function OrderModal({ children, ...props }) {
           />
           <div></div>
           {/* back home btn */}
-          <a href="/" className={OrderModalStyles[`back-to-home-btn`]}>
+          <a
+            onClick={(event) => {
+              // cachedUserInputs previousLinks
+              // remove data user entered for checkout forms
+              localStorage.removeItem("cachedUserInputs");
+              // go back button links
+              localStorage.removeItem("previousLinks");
+            }}
+            href="/"
+            className={OrderModalStyles[`back-to-home-btn`]}
+          >
             back to home
           </a>
         </div>
