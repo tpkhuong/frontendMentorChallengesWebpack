@@ -12,35 +12,35 @@ export function eMoneyClickHandler(event) {
     this;
   if (event.target.closest("[data-isemoney='true']")) {
     console.log("hello this is emoney");
+    // pass value boolean true to setPaymentMethod
+    setPaymentMethod(true);
+    // we focus on the radio btn clicked
+    emoneyRef.current.focus();
+    // assign value of "0" to tabindex of radio btn click
+    emoneyRef.current.setAttribute("tabindex", "0");
+    // get value of id attr of the radio btn clicked
+    const idOfEmoneyBtn = emoneyRef.current.getAttribute("id");
+    // assign that value to aria-activedescendant
+    activeDescendantRef.current.setAttribute(
+      "aria-activedescendant",
+      `${idOfEmoneyBtn}`
+    );
+    // assign "true" to aria-checked
+    emoneyRef.current.setAttribute("aria-checked", "true");
+    // assign "false" to aria-checked to other radio btn
+    cashDeliveryRef.current.setAttribute("aria-checked", "false");
+    // assign value of "-1" to other radio btns tabindex
+    cashDeliveryRef.current.setAttribute("tabindex", "-1");
+    // assign value "true" to emoney aria-checked
+    dataFromStorageMoney.paymentInfo.eMoneyMethod = "true";
+    // assign value "false" to cashdelivery aria-checked
+    dataFromStorageMoney.paymentInfo.cashDeliveryMethod = "false";
+    // save data to local storage
+    localStorage.setItem(
+      "cachedUserInputs",
+      JSON.stringify(dataFromStorageMoney)
+    );
   }
-  // pass value boolean true to setPaymentMethod
-  setPaymentMethod(true);
-  // we focus on the radio btn clicked
-  emoneyRef.current.focus();
-  // assign value of "0" to tabindex of radio btn click
-  emoneyRef.current.setAttribute("tabindex", "0");
-  // get value of id attr of the radio btn clicked
-  const idOfEmoneyBtn = emoneyRef.current.getAttribute("id");
-  // assign that value to aria-activedescendant
-  activeDescendantRef.current.setAttribute(
-    "aria-activedescendant",
-    `${idOfEmoneyBtn}`
-  );
-  // assign "true" to aria-checked
-  emoneyRef.current.setAttribute("aria-checked", "true");
-  // assign "false" to aria-checked to other radio btn
-  cashDeliveryRef.current.setAttribute("aria-checked", "false");
-  // assign value of "-1" to other radio btns tabindex
-  cashDeliveryRef.current.setAttribute("tabindex", "-1");
-  // assign value "true" to emoney aria-checked
-  dataFromStorageMoney.paymentInfo.eMoneyMethod = "true";
-  // assign value "false" to cashdelivery aria-checked
-  dataFromStorageMoney.paymentInfo.cashDeliveryMethod = "false";
-  // save data to local storage
-  localStorage.setItem(
-    "cachedUserInputs",
-    JSON.stringify(dataFromStorageMoney)
-  );
 }
 
 // cash on delivery

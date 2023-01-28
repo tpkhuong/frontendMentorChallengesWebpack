@@ -18,6 +18,7 @@ export default function LoginForm({ children, ...props }) {
         <div
           data-isempty=""
           data-isvalid=""
+          data-isaccepted=""
           className={LoginFormStyles[`email-wrapper`]}
         >
           <label htmlFor="">Email:</label>
@@ -29,12 +30,67 @@ export default function LoginForm({ children, ...props }) {
             required
             type="email"
             placeholder="johndoe@email.com"
+            onChange={(event) => {
+              // if email input is not empty and valid we show accepted
+              if (event.target.value !== "") {
+                event.target.parentElement.getAttribute("data-isempty") ==
+                "true"
+                  ? event.target.parentElement.setAttribute(
+                      "data-isempty",
+                      "false"
+                    )
+                  : null;
+                if (event.target.validity.valid) {
+                  event.target.parentElement.getAttribute("data-isaccepted") ==
+                    "false" ||
+                  event.target.parentElement.getAttribute("data-isaccepted") ===
+                    ""
+                    ? (event.target.parentElement.setAttribute(
+                        "data-isaccepted",
+                        "true"
+                      ),
+                      event.target.parentElement.setAttribute(
+                        "data-isvalid",
+                        "true"
+                      ))
+                    : null;
+                } else {
+                  event.target.parentElement.getAttribute("data-isaccepted") ==
+                  "true"
+                    ? (event.target.parentElement.setAttribute(
+                        "data-isaccepted",
+                        "false"
+                      ),
+                      event.target.parentElement.setAttribute(
+                        "data-isvalid",
+                        "false"
+                      ))
+                    : null;
+                }
+              } else {
+                event.target.parentElement.getAttribute("data-isempty") ==
+                "false"
+                  ? event.target.parentElement.setAttribute(
+                      "data-isempty",
+                      "true"
+                    )
+                  : null;
+
+                event.target.parentElement.getAttribute("data-isvalid") ==
+                "false"
+                  ? event.target.parentElement.setAttribute("data-isvalid", "")
+                  : null;
+              }
+            }}
           />
           <span id="login-empty" className={LoginFormStyles[`error`]}>
             can't be empty
           </span>
           <span id="login-invalid" className={LoginFormStyles[`invalid`]}>
             not valid format
+          </span>
+          <span id="login-accepted" className={LoginFormStyles[`accepted`]}>
+            Accepted
           </span>
         </div>
         <div data-isempty="" className={LoginFormStyles[`password-wrapper`]}>

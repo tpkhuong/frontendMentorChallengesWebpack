@@ -70,7 +70,7 @@ function LogoNavContainer({ children, ...props }) {
         </a>
       </Link>
       {/* full menu */}
-      <FullMenuNav headerNav="true" navLabel="primary" />
+      <FullMenuNav current={props.page} headerNav="true" navLabel="primary" />
       {/* login,register buttons */}
       <div className={LogoNavStyles[`register-login-container`]}>
         {hasMounted ? (

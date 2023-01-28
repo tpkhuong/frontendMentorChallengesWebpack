@@ -44,6 +44,9 @@ declarations for footer nav for Footer component
 /* desktop */
 
 @media screen and (min-width: 90rem) {
+  [data-isheaderNav="true"] .navlink[data-currentpage="true"] {
+    color: var(--color-primary-orange);
+  }
   .desktop-nav[data-isheaderNav="true"] {
     display: revert;
   }
@@ -61,3 +64,5 @@ declarations for footer nav for Footer component
     display: flex;
   }
 }
+
+/* "home", "headphones", "speakers", "earphones" */

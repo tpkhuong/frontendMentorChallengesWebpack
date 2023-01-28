@@ -19,6 +19,7 @@
 
 .form [data-isempty="true"] .error,
 .form [data-isvalid="false"] .invalid,
+.form [data-isaccepted="true"] .accepted,
 .form [data-ismatchedpassword="false"] .not-matched-pw {
   display: inline-block;
 }
@@ -42,7 +43,8 @@
 .error,
 .invalid,
 .not-matched-pw,
-.matched-pw {
+.matched-pw,
+.accepted {
   font-weight: 700;
   font-size: var(--heading-reg-sm);
   position: absolute;

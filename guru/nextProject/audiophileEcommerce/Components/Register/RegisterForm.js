@@ -19,6 +19,7 @@ export default function RegisterForm({ children, ...props }) {
         <div
           data-isempty=""
           data-isvalid=""
+          data-isaccepted=""
           className={RegisterFormStyles[`email-wrapper`]}
         >
           {/* email */}
@@ -32,6 +33,58 @@ export default function RegisterForm({ children, ...props }) {
             id="email"
             placeholder="johndoe@email.com"
             aria-describedby=""
+            onChange={(event) => {
+              // if email input is not empty and valid we show accepted
+              if (event.target.value !== "") {
+                event.target.parentElement.getAttribute("data-isempty") ==
+                "true"
+                  ? event.target.parentElement.setAttribute(
+                      "data-isempty",
+                      "false"
+                    )
+                  : null;
+                if (event.target.validity.valid) {
+                  event.target.parentElement.getAttribute("data-isaccepted") ==
+                    "false" ||
+                  event.target.parentElement.getAttribute("data-isaccepted") ===
+                    ""
+                    ? (event.target.parentElement.setAttribute(
+                        "data-isaccepted",
+                        "true"
+                      ),
+                      event.target.parentElement.setAttribute(
+                        "data-isvalid",
+                        "true"
+                      ))
+                    : null;
+                } else {
+                  event.target.parentElement.getAttribute("data-isaccepted") ==
+                  "true"
+                    ? (event.target.parentElement.setAttribute(
+                        "data-isaccepted",
+                        "false"
+                      ),
+                      event.target.parentElement.setAttribute(
+                        "data-isvalid",
+                        "false"
+                      ))
+                    : null;
+                }
+              } else {
+                event.target.parentElement.getAttribute("data-isempty") ==
+                "false"
+                  ? event.target.parentElement.setAttribute(
+                      "data-isempty",
+                      "true"
+                    )
+                  : null;
+
+                event.target.parentElement.getAttribute("data-isvalid") ==
+                "false"
+                  ? event.target.parentElement.setAttribute("data-isvalid", "")
+                  : null;
+              }
+            }}
           />
           {/* error message */}
           <span id="email-empty" className={RegisterFormStyles[`error`]}>
@@ -39,6 +92,9 @@ export default function RegisterForm({ children, ...props }) {
           </span>
           <span id="email-invalid" className={RegisterFormStyles[`invalid`]}>
             not valid
+          </span>
+          <span id="email-accepted" className={RegisterFormStyles[`accepted`]}>
+            Accepted
           </span>
         </div>
         <div

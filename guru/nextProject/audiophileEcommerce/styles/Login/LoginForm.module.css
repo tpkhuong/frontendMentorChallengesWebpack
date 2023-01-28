@@ -13,7 +13,8 @@
 }
 
 .form [data-isempty="true"] .error,
-.form [data-isvalid="false"] .invalid {
+.form [data-isvalid="false"] .invalid,
+.form [data-isaccepted="true"] .accepted {
   display: inline-block;
 }
 
@@ -25,6 +26,11 @@
 .error,
 .invalid {
   color: var(--color-primary-error);
+}
+
+.error,
+.invalid,
+.accepted {
   font-weight: 700;
   font-size: var(--heading-reg-sm);
   position: absolute;
