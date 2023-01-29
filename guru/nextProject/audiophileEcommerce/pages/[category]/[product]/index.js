@@ -15,6 +15,7 @@ import ProductIncludedItems from "../../../Components/Product/ProductIncludedIte
 import ProductImageGrid from "../../../Components/Product/ProductImageGrid";
 import ProductRecommendations from "../../../Components/Product/ProductRecommendations";
 import GoBackButton from "../../../Components/shared/GoBackButton";
+import dataFile from "../../../src/data.json";
 // import { useMediaQuery } from "../../../utils/helpers";
 import { server } from "../../../config/index";
 
@@ -72,7 +73,7 @@ function ProductPage({ children, ...props }) {
           />
         </article>
         {/* product-features-includes */}
-        
+
         <article className={ProductPageStyles[`product-features-includes`]}>
           {/* pass in features string to ProductFeatures as productText prop */}
           <ProductFeatures productText={features} />
@@ -92,7 +93,6 @@ function ProductPage({ children, ...props }) {
         <CategoryCardWrapper pageStyle="product" />
         {/* Mission Statement */}
         <MissionStatement pageMargin="product" />
-        
       </Main>
       <Footer />
       <MobileNav />
@@ -138,19 +138,30 @@ export async function getStaticProps(context) {
   // const response = await fetch(
   //   `${server}/api/${context.params.category}/${context.params.product}`
   // );
+
+  // const categoryUrl = context.params.category;
+
   // const data = response.json();
 
   /**
    * using axios
    * **/
-  const response = await axios(
-    `${server}/api/${context.params.category}/${context.params.product}`
-  );
+  // const response = await axios(
+  //   `${server}/api/${context.params.category}/${context.params.product}`
+  // );
 
+  // const categoryUrl = context.params.category;
+
+  // const data = response.data;
+  //   console.log(data);
+
+  /**
+   * without making api call
+   * **/
+
+  const data = dataFile.details[`${context.params.product}`];
   const categoryUrl = context.params.category;
 
-  const data = response.data;
-  //   console.log(data);
   return {
     props: { data, categoryUrl },
   };

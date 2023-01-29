@@ -11,10 +11,13 @@ import CategoryTextContent from "../../Components/Category/CategoryTextContent";
 import MissionStatement from "../../Components/shared/MissionStatement";
 import Footer from "../../Components/shared/Footer";
 import { server } from "../../config/index";
+import dataFile from "../../src/data.json";
 // import { useMediaQuery } from "../../utils/helpers";
 import axios from "axios";
 
 function CategoryPage({ children, ...props }) {
+  // console.log(data, "data");
+  // console.log(typeof data, "data");
   const firstLetter = props.categoryStr[0].toUpperCase();
   const restOfLetters = props.categoryStr.slice(1);
   const pageTitle = [firstLetter, ...restOfLetters].join("");
@@ -118,9 +121,16 @@ export async function getStaticProps(context) {
    * using axios
    * **/
 
-  const response = await axios(`${server}/api/${context.params.category}`);
-  const { data } = response;
-  console.log(data, "data");
+  // const response = await axios(`${server}/api/${context.params.category}`);
+  // const { data } = response;
+
+  /**
+   * without making api call
+   * **/
+
+  console.log(dataFile, "dataFile");
+  const data = dataFile.category[`${context.params.category}`];
+
   const arrayOfProductNames = data.map(function getName(obj) {
     return obj.textContent.name;
   });
