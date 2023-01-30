@@ -129,7 +129,7 @@ export async function getStaticProps(context) {
    * **/
 
   console.log(dataFile, "dataFile");
-  const data = dataFile.category[`${context.params.category}`];
+  const data = dataFile.category[context.params.category];
 
   const arrayOfProductNames = data.map(function getName(obj) {
     return obj.textContent.name;

@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import axios from "axios";
 import LogoNavContainer from "../../../Components/shared/LogoNavContainer";
 import MobileNav from "../../../Components/shared/MobileNav";
 import Main from "../../../Components/shared/Main";
@@ -16,6 +15,7 @@ import ProductImageGrid from "../../../Components/Product/ProductImageGrid";
 import ProductRecommendations from "../../../Components/Product/ProductRecommendations";
 import GoBackButton from "../../../Components/shared/GoBackButton";
 import dataFile from "../../../src/data.json";
+import axios from "axios";
 // import { useMediaQuery } from "../../../utils/helpers";
 import { server } from "../../../config/index";
 
@@ -159,7 +159,7 @@ export async function getStaticProps(context) {
    * without making api call
    * **/
 
-  const data = dataFile.details[`${context.params.product}`];
+  const data = dataFile.details[context.params.product];
   const categoryUrl = context.params.category;
 
   return {
@@ -174,3 +174,9 @@ export async function getStaticProps(context) {
 /**
  * in our api we will serve our data
  * **/
+
+// module.exports = {
+// time in seconds of no pages generating during static
+// generation before timing out
+//   staticPageGenerationTimeout: 1000,
+// };
