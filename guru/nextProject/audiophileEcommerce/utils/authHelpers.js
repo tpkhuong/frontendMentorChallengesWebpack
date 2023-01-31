@@ -50,10 +50,13 @@ export async function verifyPassword(loginPassword, hashedPassword) {
 // using axios
 
 export async function createUser(email, password) {
-  const { data } = await axios.post("/api/auth/register", {
-    email,
-    password,
-  });
+  const { data } = await axios.post(
+    `${process.env.NEXTAUTH_URL}/api/auth/register`,
+    {
+      email,
+      password,
+    }
+  );
 
   console.log(data);
 
