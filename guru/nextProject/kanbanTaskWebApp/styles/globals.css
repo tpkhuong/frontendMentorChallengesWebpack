@@ -1,0 +1,381 @@
+/* main-purple: hsl(242, 48%,58%) */
+/* main-purple-hover: hsl(243, 100%,82%) */
+/* black: hsl(237, 100%,4%) */
+/* dark-bg: hsl(235, 16%,15%) */
+/* dark-grey: hsl(235, 12%,19%) */
+/* dark-lines: hsl(236, 11%,27%) */
+/* mediem-grey: hsl(216, 15%,57%) */
+/* light-lines: hsl(221, 69%,94%) */
+/* light-bg: hsl(220, 69%,97%) */
+/* red: hsl(0, 78%,63%) */
+/* red-hover: hsl(0, 100%,80%) */
+
+/* box shadow */
+/* 0px 0px 35px rgb(0 0 0 / 18%) */
+
+:root {
+  /* primary */
+  --color-purple: hsl(242, 48%, 58%);
+  --color-purple-secondary: hsl(243, 100%, 82%);
+  --color-black: hsl(237, 100%, 4%);
+  --color-dark-bg: hsl(235, 16%, 15%);
+  --color-dark-grey: hsl(235, 12%, 19%);
+  --color-dark-lines: hsl(236, 11%, 27%);
+  --color-mediem-grey: hsl(216, 15%, 57%);
+  --color-light-lines: hsl(221, 69%, 94%);
+  --color-light-bg: hsl(220, 69%, 97%);
+  --color-red: hsl(0, 78%, 63%);
+  --color-red-hover: hsl(0, 100%, 80%);
+
+  --color-new-column-light: hsl(219, 64%, 96%);
+  --color-new-column-dark: hsl(235, 15%, 16%);
+
+  --color-neutral-black: hsl(0, 0%, 0%);
+  --color-neutral-white: hsl(0, 0%, 100%);
+
+  --color-secondary-text-color: var(--color-mediem-grey);
+  --modals-description-both: var(--color-mediem-grey);
+  --color-completed-task: hsl(231, 5%, 50%);
+  --toggle-icon: var(--color-mediem-grey);
+
+  /* 250px */
+  --heading-extra-lrg: 15.625rem;
+  /* 56px */
+  --heading-lrg: 3.5rem;
+  /* 40px */
+  --heading-med: 2.5rem;
+  /* 32px */
+  --heading-sm: 2rem;
+  /* 28px */
+  --heading-sm-two: 1.75rem;
+  /* 24px */
+  --heading-sm-three: 1.5rem;
+  /* 18px */
+  --heading-sm-four: 1.125rem;
+  /* 16px */
+  --heading-reg: 1rem;
+  /* 15px */
+  --heading-reg-sm: 0.9375rem;
+  /* 14px */
+  --heading-reg-x-sm: 0.875rem;
+  /* 13px */
+  --heading-reg-xx-sm: 0.8125rem;
+  /* 12px */
+  --heading-reg-xxx-sm: 0.75rem;
+  /* 18px */
+  --font-size-body: 1.125rem;
+  /* --heading-xxsm: 0.9375rem; */
+  --font-size-28px: 1.75rem;
+  --font-size-24px: 1.5rem;
+  --font-size-18px: 1.125rem;
+  --font-size-15px: 0.9375rem;
+  --font-size-14px: 0.875rem;
+  --font-size-13px: 0.8125rem;
+  --font-size-12px: 0.75rem;
+  --font-size-9px: 0.5625rem;
+
+  --subheading1: 1.75rem;
+  --subheading2: 0.875rem;
+
+  --small-text-space: 2.35px;
+  --medium-text-space: 2.7px;
+  --large-text-space: 4.75px;
+
+  /* focus/hover outline */
+
+  --mobile-focus: 8px;
+
+  --brdr-radius: 16px;
+  /* padding */
+  --padding-small: 8px;
+  --padding-medium: 16px;
+  --padding-large: 24px;
+  --padding-extra-large: 32px;
+  /* margin */
+  --margin-small: 8px;
+  --margin-medium: 16px;
+  --margin-large: 24px;
+  --margin-extra-large: 32px;
+
+  /* timezone-wrapper children padding */
+
+  --mobile-match-padding: 25px;
+  --tablet-match-padding: 64px;
+  --desktop-match-padding: 165px;
+
+  --mobile-padding-margin-match: 16px;
+  --tablet-padding-margin-match: 64px;
+  --tablet-padding-margin-match: 166px;
+  --desktop-padding-margin-match-start: 165px;
+  --desktop-padding-margin-match-end: 431px;
+
+  /* translate x and y match */
+
+  --translate-match: -200%;
+
+  /* --color-hsl-black: 0, 0%, 0%; */
+
+  --box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.02),
+    0px 0px 5.3px rgba(0, 0, 0, 0.028), 0px 0px 10px rgba(0, 0, 0, 0.035),
+    0px 0px 17.9px rgba(0, 0, 0, 0.042), 0px 0px 33.4px rgba(0, 0, 0, 0.05),
+    0px 0px 80px rgba(0, 0, 0, 0.07);
+  /* --box-shadow: 0px 0.3px 0.7px rgba(0, 0, 0, 0.02),
+    0px 0.7px 1.7px rgba(0, 0, 0, 0.028), 0px 1.4px 3.3px rgba(0, 0, 0, 0.035),
+    0px 2.5px 5.8px rgba(0, 0, 0, 0.042), 0px 4.6px 10.9px rgba(0, 0, 0, 0.05),
+    0px 11px 26px rgba(0, 0, 0, 0.07); */
+  --shadow-elevation-high: 0.3px 0.5px 0.9px hsl(var(--shadow-color) / 0),
+    2.2px 4.3px 7.2px hsl(var(--shadow-color) / 0.1),
+    4.1px 8.2px 13.8px hsl(var(--shadow-color) / 0.21),
+    7.1px 14.3px 23.9px hsl(var(--shadow-color) / 0.31),
+    12.5px 25px 41.9px hsl(var(--shadow-color) / 0.42);
+  /***** background *****/
+  /* bg-img top and bg-color-bottom */
+  /* todo input,todo listitem,items left/complete, views btns(mobile) */
+  /***** foreground *****/
+  /***** example for foreground: *****/
+  /* --todo-input-foreground: var(--color-lighttheme-todo-listitem, var(--color-darktheme-todo-text-typing-btn-hover) */
+  /* input placeholder, input typing, todo list text, items left, views btns(mobile)  
+  todo list crossed-out, todo list hover, views btns and clear btn hover, text below todo list
+  */
+
+  /* --secondary-font: var(--font-family-bellefair);
+  --description-font: var(--font-family-barlow); */
+
+  /* headings */
+  /* --font-family-poppins: "Poppins", sans-serif; */
+  /* body, call-to-actions */
+  --font-space-grotesk: "Space Grotesk", sans-serif;
+  /* --font-family-barlow-condensed: "Barlow Condensed", sans-serif;
+  --font-family-bellefair: "Bellefair", serif; */
+  /* section bg img */
+}
+
+/* reset */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+  /* color: var(--color-primary); */
+}
+
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-space-grotesk);
+  /* color: var(--color-neutral-black); */
+  font-size: var(--font-size-body);
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: 0;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+#root {
+  height: 100%;
+}
+
+button {
+  border: none;
+}
+
+ul[role],
+li[role],
+li[class] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* utilities */
+
+.max-width {
+  /* or the width we want our container/parent element to be */
+  max-width: 1375px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  /* padding-inline-start: 16px;
+  padding-inline-end: 16px; */
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+[href="#main-content"] {
+  position: absolute;
+  top: 0;
+  left: 100%; /* move of the screen */
+}
+
+[href="#main-content"]:focus {
+  left: 62px;
+}
+
+.skip-link {
+  display: none;
+  font-weight: 700;
+  border: 1px solid red;
+  padding-block: 16px;
+  padding-inline: 32px;
+  z-index: 3;
+}
+
+/* #__next {
+   height: 100%; 
+   min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+} */
+
+fieldset {
+  padding: 0;
+  border: none;
+}
+
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 70rem) {
+  .skip-link {
+    display: inline-block;
+  }
+}
+
+/* .leaflet-container {
+  height: 150px;
+} */
+
+.light {
+  /* text and logo */
+  --color-text-logo-light: var(--color-neutral-black);
+
+  /* btns */
+
+  --selectedboard-sidebar-light: var(--color-purple);
+
+  --addcreate-taskboard-save-btn-light: var(--color-purple);
+
+  --addsubtask-addcolumn-cancel-btn-light-bg: hsl(240, 45%, 96%);
+  --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%);
+  --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%);
+
+  --addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple);
+  --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
+  --hover-hide-sidebar-light-fg: var(--color-purple);
+
+  --input-placeholder-light: hsl(240, 4%, 76%);
+  --input-placeholder-dark: hsl(233, 4%, 39%);
+
+  /* modals */
+
+  --modals-label-light: var(--color-mediem-grey);
+  --modal-subtasks-title-light: var(--color-mediem-grey);
+
+  /* toggle */
+
+  --toggle-icon-container-bg-light: var(--color-light-bg);
+  --toggle-bg-light: var(--color-purple);
+  --createboard--hover-new-column-taskbtn-light: var(--color-purple);
+  --subtasks-hover-light: hsl(242, 48%, 89%);
+}
+
+.dark {
+  /* text and logo */
+
+  --color-text-logo-dark: var(--color-neutral-white);
+
+  /* btns */
+
+  --selectedboard-sidebar-dark: var(--color-purple-secondary);
+  --addcreate-taskboard-save-btn-dark: var(--color-purple-secondary);
+
+  --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary);
+  --notselectedboard-sidebar-dark-bg: var(--color-purple-secondary);
+  --hover-hide-sidebar-dark-bg: var(--color-purple-secondary);
+
+  --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white);
+  --notselectedboard-sidebar-dark-fg: var(--color-neutral-white);
+  --hover-hide-sidebar-dark-fg: var(--color-neutral-white);
+
+  /* modals */
+
+  /* toggle */
+
+  --subtasks-hover-dark: hsl(240, 23%, 29%);
+  --createboard--hover-new-column-taskbtn-dark: var(--color-purple-secondary);
+  --toggle-bg-dark: var(--color-purple-secondary);
+  --toggle-icon-container-bg-dark: var(--color-dark-bg);
+}

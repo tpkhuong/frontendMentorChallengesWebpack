@@ -22,12 +22,8 @@
 /guru/nextProject/audiophileEcommerce/.next
 /guru/nextProject/audiophileEcommerce/.env.local
 /guru/nextProject/audiophileEcommerce/starter-code
-/guru/kanbanTaskManagementWebApp/project-folder
-/guru/kanbanTaskManagementWebApp/node_modules
-/guru/kanbanTaskManagementWebApp/preview.jpg
-/guru/kanbanTaskManagementWebApp/README-template.md
-/guru/kanbanTaskManagementWebApp/README.md
-/guru/kanbanTaskManagementWebApp/.env
+/guru/nextProject/kanbanTaskWebApp/node_modules
+/guru/nextProject/kanbanTaskWebApp/.env.local
 /testing
 /testingNext
 /guru/testingFolder/node_modules
