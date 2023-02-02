@@ -24,16 +24,21 @@ export async function verifyPassword(loginPassword, hashedPassword) {
  * create new user
  * **/
 
-// using fetch
+/**
+ * using fetch
+ * **/
 
 // export async function createUser(email, password) {
-//   const response = await fetch("/api/auth/register", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ email, password }),
-//   });
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/register`,
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ email, password }),
+//     }
+//   );
 //   // browser console
 //   console.log("response", response);
 
@@ -47,11 +52,13 @@ export async function verifyPassword(loginPassword, hashedPassword) {
 //   return data;
 // }
 
-// using axios
+/**
+ * using axios
+ * **/
 
 export async function createUser(email, password) {
   const { data } = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/auth/register`,
+    `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/register`,
     {
       email,
       password,
