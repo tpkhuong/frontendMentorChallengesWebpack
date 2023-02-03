@@ -50,7 +50,7 @@ function ProductPage({ children, ...props }) {
         Skip to Main Content
       </a>
       <h1 className="visually-hidden">{titleForPage}</h1>
-      <LogoNavContainer />
+      <LogoNavContainer page={props.categoryUrl} />
       <Main>
         {/* product-img-textcontent */}
         {/* go back button component */}

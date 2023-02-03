@@ -49,6 +49,7 @@ declarations for footer nav for Footer component
   }
   .desktop-nav[data-isheaderNav="true"] {
     display: revert;
+    margin-inline: 215px;
   }
   [data-isfooternav="true"] .navlist {
     margin-block: 0;
