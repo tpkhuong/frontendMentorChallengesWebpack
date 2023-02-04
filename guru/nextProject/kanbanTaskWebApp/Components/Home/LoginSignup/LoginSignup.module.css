@@ -1,0 +1,98 @@
+/* mobile */
+.form-container {
+  background-color: var(--color-neutral-white);
+  padding: 16px;
+  text-align: center;
+  padding-block: 45px;
+}
+
+.logo {
+  display: block;
+  width: max-content;
+  margin-inline: auto;
+}
+
+.logo path {
+  fill: var(--color-logo-dark, var(--color-neutral-black));
+}
+
+.title-wrapper {
+  margin-block: 28px;
+}
+
+.title-wrapper h2 {
+  font-size: 2rem;
+  /* margin-block-start: 8px; */
+  margin-block-end: -8px;
+  color: var(--color-purple);
+}
+
+.title-wrapper span {
+  font-size: 1.5rem;
+  color: hsl(242.9, 42.4%, 61.2%);
+}
+
+.email-container {
+  background-color: var(--color-input-dark-bg, transparent);
+  border: 1px solid hsl(80, 3%, 79%);
+  display: flex;
+  align-items: center;
+  border-radius: 100vw;
+  padding-inline-start: 10px;
+  /* margin-block: 28px; */
+  margin-block-end: 16px;
+}
+
+.atemail-icon path:nth-child(2) {
+  fill: hsl(80, 1%, 54%);
+}
+
+.email-container input {
+  padding: 7px;
+  padding-block-end: 9px;
+}
+
+.sign-in-btn {
+  padding: 8px;
+  padding-inline: 72px;
+  border-radius: 100vw;
+  color: var(--color-neutral-white);
+  background-color: var(--color-purple);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.random-text {
+  color: hsl(243, 39.4%, 50.8%);
+  display: inline-block;
+  margin-block: 24px;
+}
+
+/* social login btns */
+
+.login-btns-container {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.social-login-btn {
+  background-color: transparent;
+  box-shadow: 0px 0px 10px 3px hsla(243 100% 82% / 0.5);
+  border-radius: 50%;
+  padding: 12px;
+}
+
+.social-login-btn svg {
+  width: 43px;
+}
+
+.icon[data-social-login="linkedin"] path {
+  fill: var(--color-linkedin);
+}
+
+.icon[data-social-login="github"] path {
+  fill: var(--color-github-dark, var(--color-neutral-black));
+}
+/* tablet */
+/* desktop */

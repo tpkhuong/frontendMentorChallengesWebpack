@@ -1,0 +1,33 @@
+/* mobile */
+
+.login-bg[data-theme="dark"] {
+  /* github */
+  --color-github-dark: var(--color-neutral-white);
+  --color-logo-dark: var(--color-neutral-white);
+  --color-input-dark-bg: var(--color-neutral-white);
+}
+.login-bg {
+  height: 100vh;
+  padding: 18px;
+  padding-block-start: 54px;
+  /* position: relative; */
+  background-image: url("/assets/blob-bg-vertical.svg");
+}
+
+.img-form-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px 10px hsla(0 0% 0% / 0.2);
+}
+
+/* .img-container {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+} */
+
+/* .img-container img {
+  height: 812px;
+} */
+/* tablet */
+/* desktop */
