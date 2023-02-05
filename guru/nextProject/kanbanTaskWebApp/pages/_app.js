@@ -8,9 +8,9 @@ export default function App({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div className="light">
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
+      {/* <div id="theme-wrapper" className="light">
+      </div> */}
     </React.Fragment>
   );
 }

@@ -5,16 +5,26 @@
   --color-github-dark: var(--color-neutral-white);
   --color-logo-dark: var(--color-neutral-white);
   --color-input-dark-bg: var(--color-neutral-white);
+  --color-signin-btns-dark: var(--color-neutral-white);
+  --color-signin-btns-shadow-dark: lightcoral;
+  --color-form-container-dark: var(--color-neutral-black);
+  --bg-dark-vertical: url("/assets/blob-vertical-dark.svg");
+  --bg-dark-desktop: url("/assets/blob-desktop-dark.svg");
 }
+
 .login-bg {
   height: 100vh;
   padding: 18px;
-  padding-block-start: 54px;
+  padding-block-start: 43px;
   /* position: relative; */
-  background-image: url("/assets/blob-bg-vertical.svg");
+  background-image: var(
+    --bg-dark-vertical,
+    url("/assets/blob-bg-vertical.svg")
+  );
 }
 
 .img-form-container {
+  max-width: 1000px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0px 0px 10px 10px hsla(0 0% 0% / 0.2);
@@ -31,3 +41,28 @@
 } */
 /* tablet */
 /* desktop */
+
+@media screen and (min-width: 90rem) {
+  .login-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/assets/blob-bg-desktop.svg");
+    background-image: var(
+      --bg-dark-desktop,
+      url("/assets/blob-bg-desktop.svg")
+    );
+  }
+
+  @supports (display: grid) {
+    .login-bg {
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  .img-form-container {
+    display: flex;
+    box-shadow: 0px 0px 10px 10px hsla(0 0% 0% / 0.1);
+  }
+}

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import HomeStyles from "../styles/Home.module.css";
-import ThemeImg from "../Components/Home/ThemeImg";
+import { ThemeImg } from "../Components/Home/ThemeImg";
 import LoginSignup from "../Components/Home/LoginSignup";
 
 export default function Home({ children, ...props }) {
@@ -16,7 +16,11 @@ export default function Home({ children, ...props }) {
         />
       </Head>
       <h1 className="visually-hidden">Kantan Task Management App</h1>
-      <section data-theme="light" className={HomeStyles[`login-bg`]}>
+      <section
+        data-theme="light"
+        id="login-theme-wrapper"
+        className={HomeStyles[`login-bg`]}
+      >
         {/* <div className={HomeStyles[`img-container`]}>
           <img aria-hidden="true" src="/assets/blob-scene.svg" alt="" />
         </div> */}
