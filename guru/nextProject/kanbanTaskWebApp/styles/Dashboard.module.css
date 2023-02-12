@@ -1,0 +1,7 @@
+/* set CSS custom properties here for light/dark theme */
+
+.dashboard[data-apptheme="light"] {
+}
+
+.dashboard[data-apptheme="dark"] {
+}

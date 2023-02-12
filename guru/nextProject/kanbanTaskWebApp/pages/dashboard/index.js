@@ -1,11 +1,45 @@
 import React from "react";
+import { BoardTaskRenderContext } from "../../Components/dashboard/Context";
+import DashboardStyles from "../../styles/Dashboard.module.css";
+import LogoTitleBar from "../../Components/dashboard/LogoTitleBar";
+
 // set context here
-const styleObj = {
-  display: "flex",
-  gap: "10px",
-};
 
 export default function Dashboard({ children }) {
+  const memoizedStateValueAndFunc = React.useMemo(() => {
+    return {
+      // boards
+      boards: {
+        name: "hello",
+      },
+      // tasks
+      tasks: {
+        name: "world",
+      },
+      theme: "light",
+    };
+  }, []);
+  return (
+    <section
+      id="color-theme"
+      data-apptheme="light"
+      className={DashboardStyles[`dashboard`]}
+    >
+      <BoardTaskRenderContext.Provider value={memoizedStateValueAndFunc}>
+        {/* logotitlebar */}
+        <LogoTitleBar />
+        {/* sidebarcolumns */}
+      </BoardTaskRenderContext.Provider>
+    </section>
+  );
+}
+
+function notes() {
+  const styleObj = {
+    display: "flex",
+    gap: "10px",
+  };
+
   const obj = {
     showTodo: false,
     showDoing: false,
@@ -14,9 +48,7 @@ export default function Dashboard({ children }) {
   const [stateValueObj, stateFunc] = React.useState(obj);
 
   return (
-    <section>
-      {/* logotitlebar */}
-      {/* sidebarcolumns */}
+    <React.Fragment>
       <div>
         <div>
           <h2>kanban</h2>
@@ -45,6 +77,6 @@ export default function Dashboard({ children }) {
         {stateValueObj.showDoing ? <span>this is doing</span> : null}
         {stateValueObj.showDone ? <span>this is done</span> : null}
       </div>
-    </section>
+    </React.Fragment>
   );
 }
