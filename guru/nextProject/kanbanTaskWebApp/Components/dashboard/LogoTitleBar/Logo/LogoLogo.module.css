@@ -1,0 +1,14 @@
+/* mobile */
+
+.spacer[data-showsidebar="false"] {
+  width: 0px;
+}
+
+.spacer {
+  display: inline-block;
+  width: 90px;
+  transition: width 1s linear;
+}
+
+/* tablet */
+/* desktop */
