@@ -82,6 +82,10 @@
   --medium-text-space: 2.7px;
   --large-text-space: 4.75px;
 
+  /* border lines */
+
+  --border-lines: 2px solid var(--color-light-lines);
+
   /* focus/hover outline */
 
   --mobile-focus: 8px;

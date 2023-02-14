@@ -2,6 +2,7 @@ import React from "react";
 import { BoardTaskRenderContext } from "../../Components/dashboard/Context";
 import DashboardStyles from "../../styles/Dashboard.module.css";
 import LogoTitleBar from "../../Components/dashboard/LogoTitleBar";
+import SidebarColumns from "../../Components/dashboard/SidebarColumns";
 
 // set context here
 
@@ -29,6 +30,7 @@ export default function Dashboard({ children }) {
         {/* logotitlebar */}
         <LogoTitleBar />
         {/* sidebarcolumns */}
+        <SidebarColumns />
       </BoardTaskRenderContext.Provider>
     </section>
   );

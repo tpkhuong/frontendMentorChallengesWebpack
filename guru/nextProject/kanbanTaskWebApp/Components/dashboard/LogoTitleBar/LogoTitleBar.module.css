@@ -1,0 +1,27 @@
+/* mobile */
+
+.logo-title-container,
+.title-btns-container {
+  display: flex;
+  gap: 16px;
+}
+
+.logo-title-container {
+  padding: 16px;
+  align-items: center;
+  background-color: var(--top-sidebar-modals-bg, --color-neutral-white);
+  border-bottom: var(--border-lines);
+}
+
+.title-btns-container {
+  flex-grow: 1;
+}
+
+@media screen and (min-width: 48rem) {
+  .logo-title-container {
+    border-bottom: revert;
+  }
+}
+
+/* tablet */
+/* desktop */

@@ -1,0 +1,34 @@
+/* mobile: modal size: 56.25 */
+
+.open-edit-delete-board-btn {
+  background-color: transparent;
+}
+
+.edit-delete-board-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: absolute;
+  right: 20px;
+  top: 70px;
+  font-size: var(--heading-reg-sm);
+  background-color: var(--edit-delete-modals-bg, --color-neutral-white);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.edit-board-btn,
+.delete-board-btn {
+  background-color: transparent;
+}
+
+.edit-board-btn {
+  color: var(--color-mediem-grey);
+}
+
+.delete-board-btn {
+  color: var(--color-red);
+}
+/* tablet: modal size: 115.2 */
+/* desktop: modal size: 192 */

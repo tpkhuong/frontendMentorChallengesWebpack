@@ -15,7 +15,11 @@ export default function Logo({ children }) {
     <React.Fragment>
       {isScreenLargerThanMobile ? (
         themeValue == "light" ? (
-          <div className={LogoStyles[`logo-spacer-container`]}>
+          <div
+            id="logo-spacer"
+            data-showsidebar="true"
+            className={LogoStyles[`logo-spacer-container`]}
+          >
             <svg width="153" height="26" xmlns="http://www.w3.org/2000/svg">
               <g fill="none" fillRule="evenodd">
                 <path
@@ -30,14 +34,14 @@ export default function Logo({ children }) {
                 </g>
               </g>
             </svg>
-            <span
-              id="logo-spacer"
-              data-showsidebar="true"
-              className={LogoStyles[`spacer`]}
-            ></span>
+            <span className={LogoStyles[`spacer`]}></span>
           </div>
         ) : (
-          <div className={LogoStyles[`logo-spacer-container`]}>
+          <div
+            id="logo-spacer"
+            data-showsidebar="true"
+            className={LogoStyles[`logo-spacer-container`]}
+          >
             <svg width="153" height="26" xmlns="http://www.w3.org/2000/svg">
               <g fill="none" fillRule="evenodd">
                 <path
@@ -52,11 +56,7 @@ export default function Logo({ children }) {
                 </g>
               </g>
             </svg>
-            <span
-              id="logo-spacer"
-              data-showsidebar="true"
-              className={LogoStyles[`spacer`]}
-            ></span>
+            <span className={LogoStyles[`spacer`]}></span>
           </div>
         )
       ) : (

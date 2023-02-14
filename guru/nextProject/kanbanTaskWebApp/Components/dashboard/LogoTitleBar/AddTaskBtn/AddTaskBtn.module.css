@@ -1,0 +1,25 @@
+/* mobile */
+
+.display-block {
+}
+
+.mobile-btn,
+.tablet-desktop-btn {
+  background-color: var(--color-purple);
+  opacity: 0.25;
+}
+
+.mobile-btn {
+  display: inline-block;
+  padding: 18px;
+  padding-block: 10px;
+  border-radius: 100vw;
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+}
+/* desktop */
+@media screen and (min-width: 90rem) {
+}

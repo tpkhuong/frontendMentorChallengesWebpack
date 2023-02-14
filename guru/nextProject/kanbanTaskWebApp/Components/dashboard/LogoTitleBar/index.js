@@ -3,6 +3,7 @@ import LogoTitleStyles from "./LogoTitleBar.module.css";
 import Logo from "./Logo/Logoindex";
 import BoardTitle from "./BoardTitle";
 import AddTaskBtn from "./AddTaskBtn";
+import EditDeleteBoardBtn from "./EditDeleteBoardBtn";
 
 export default function LogoTitleBar({ children }) {
   return (
@@ -11,6 +12,7 @@ export default function LogoTitleBar({ children }) {
       <div className={LogoTitleStyles[`title-btns-container`]}>
         <BoardTitle />
         <AddTaskBtn />
+        <EditDeleteBoardBtn />
       </div>
     </div>
   );

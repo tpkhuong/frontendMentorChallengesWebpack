@@ -1,0 +1,37 @@
+/* mobile: font size: 18px */
+
+/* animate down arrow */
+
+.mobile-menu-btn[data-showboardmenu="true"] .chevron-down {
+  transform: rotate(-0.5turn);
+}
+
+.mobile-menu-btn {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-end: auto;
+}
+
+.title {
+  font-size: var(--heading-sm-four);
+  color: var(--fg, --color-neutral-black);
+}
+
+.chevron-down {
+  transition: transform 1s linear;
+}
+/* tablet: font size: 20px */
+
+@media screen and (min-width: 48rem) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+/* desktop: font size: 24px */
+@media screen and (min-width: 90rem) {
+  .title {
+    font-size: var(--heading-sm-three);
+  }
+}
