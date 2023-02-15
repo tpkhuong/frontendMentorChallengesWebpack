@@ -1,13 +1,13 @@
 import React from "react";
 import { BoardTaskRenderContext } from "../../Context";
-import LogoStyles from "./LogoLogo.module.css";
+import LogoStyles from "./Logo.module.css";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 
 export default function Logo({ children }) {
   const renderContextForLogo = React.useContext(BoardTaskRenderContext);
   const [themeValue, setTheme] = React.useState("light");
 
-  renderContextForLogo.funcRef = setTheme;
+  renderContextForLogo.logoTheme = setTheme;
 
   const isScreenLargerThanMobile = useMediaQuery("min", 768);
 

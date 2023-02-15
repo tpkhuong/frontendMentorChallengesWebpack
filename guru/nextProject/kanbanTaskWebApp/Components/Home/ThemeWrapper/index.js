@@ -15,7 +15,7 @@ function ThemeComponent() {
       "Three dark shade birds flying over a red orange ocean towards the rising sun rise between two dark purple mountains with light gray top peaks. One purple palm tree on each side",
   };
 
-  if (themeComponentData.hour >= 9 && themeComponentData.hour < 20) {
+  if (themeComponentData.hour >= 8 && themeComponentData.hour < 20) {
     themeComponentData.imgSrc = "/login-create-account/morning-sunrise.png";
     themeComponentData.imgAltText =
       "Three dark shade birds flying over a red orange ocean towards the rising sun rise between two dark purple mountains with light gray top peaks. One purple palm tree on each side";

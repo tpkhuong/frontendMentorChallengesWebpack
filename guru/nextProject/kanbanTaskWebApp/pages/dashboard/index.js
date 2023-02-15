@@ -20,6 +20,10 @@ export default function Dashboard({ children }) {
       theme: "light",
     };
   }, []);
+
+  React.useEffect(() => {
+    saveDateToLocalStorage();
+  }, []);
   return (
     <section
       id="color-theme"
@@ -81,4 +85,48 @@ function notes() {
       </div>
     </React.Fragment>
   );
+}
+
+function saveDateToLocalStorage() {
+  const data = {
+    boards: [
+      {
+        title: "Platform Launch",
+        user: "coolperson@gmail.com",
+        columns: {
+          todo: [],
+          doing: [],
+          done: [],
+        },
+        index: 0,
+        selected: true,
+      },
+      {
+        title: "Marketing Plan",
+        user: "coolperson@gmail.com",
+        columns: {
+          todo: [],
+          doing: [],
+          done: [],
+        },
+        index: 1,
+        selected: false,
+      },
+      {
+        title: "Roadmap",
+        user: "coolperson@gmail.com",
+        columns: {
+          todo: [],
+          doing: [],
+          done: [],
+        },
+        index: 2,
+        selected: false,
+      },
+    ],
+  };
+
+  !localStorage.getItem("currentUser")
+    ? localStorage.setItem("currentUser", JSON.stringify(data))
+    : null;
 }

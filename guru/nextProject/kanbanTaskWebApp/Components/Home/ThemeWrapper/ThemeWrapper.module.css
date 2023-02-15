@@ -9,6 +9,7 @@
   --color-signin-btns-shadow-dark: lightcoral;
   --color-form-container-dark: var(--color-neutral-black);
   --bg-dark-vertical: url("/assets/blob-vertical-dark.svg");
+  --bg-dark-tablet: url("/assets/blob-tablet-dark.svg");
   --bg-dark-desktop: url("/assets/blob-desktop-dark.svg");
 }
 
@@ -33,13 +34,30 @@
 }
 
 /* tablet */
+
+@media screen and (min-width: 48rem) {
+  .login-bg {
+    display: flex;
+    padding: 42px;
+    padding-block-start: 28px;
+    padding-block-start: revert;
+    justify-content: center;
+    align-items: center;
+    /* background-image: url("/assets/blob-bg-desktop.svg"); */
+    background-image: var(
+      --bg-dark-tablet,
+      url("/assets/blob-tablet-light.svg")
+    );
+  }
+}
+
 /* desktop */
 @media screen and (min-width: 90rem) {
   .login-bg {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("/assets/blob-bg-desktop.svg");
+    /* background-image: url("/assets/blob-bg-desktop.svg"); */
     background-image: var(
       --bg-dark-desktop,
       url("/assets/blob-bg-desktop.svg")

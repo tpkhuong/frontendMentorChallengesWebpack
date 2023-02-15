@@ -19,7 +19,17 @@
 /* tablet */
 
 @media screen and (min-width: 48rem) {
+  .tablet-desktop-btn {
+    color: var(--color-neutral-white);
+    font-size: var(--heading-reg-sm);
+    font-weight: 600;
+
+    padding: 25px;
+    padding-block: 14px;
+    border-radius: 100vw;
+  }
 }
+
 /* desktop */
 @media screen and (min-width: 90rem) {
 }

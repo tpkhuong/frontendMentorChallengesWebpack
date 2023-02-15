@@ -1,0 +1,5 @@
+/* mobile */
+
+.boards-toggle-container {
+  background-color: var(--top-sidebar-modals-bg, var(--color-neutral-white));
+}

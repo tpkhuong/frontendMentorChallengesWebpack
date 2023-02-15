@@ -1,6 +1,6 @@
 import React from "react";
 import LogoTitleStyles from "./LogoTitleBar.module.css";
-import Logo from "./Logo/Logoindex";
+import Logo from "./Logo/index";
 import BoardTitle from "./BoardTitle";
 import AddTaskBtn from "./AddTaskBtn";
 import EditDeleteBoardBtn from "./EditDeleteBoardBtn";

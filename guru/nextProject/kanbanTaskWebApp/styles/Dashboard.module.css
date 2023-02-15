@@ -37,6 +37,7 @@
 
 .dashboard[data-apptheme="dark"] {
   --fg: var(--color-neutral-white);
+  --dark-theme-lines: var(--color-dark-lines);
   /* text and logo */
   /* using state to render light or dark icon */
   /* --color-text-logo-dark: var(--color-neutral-white); */
@@ -54,9 +55,13 @@
   --notselectedboard-sidebar-dark-fg: var(--color-neutral-white);
   --hover-hide-sidebar-dark-fg: var(--color-neutral-white);
 
+  --logout-fg-dark: var(--color-purple);
+  --logout-bg-dark: var(--color-neutral-white);
+
   /* modals */
   --top-sidebar-modals-bg: var(--color-dark-grey);
   --edit-delete-modals-bg: var(--color-dark-grey);
+  --edit-delete-modals-box-shadow-dark: 0px 0px 10px 3px hsla(0 100% 100% / 0.4);
   /* toggle */
 
   --subtasks-hover-dark: hsl(240, 23%, 29%);

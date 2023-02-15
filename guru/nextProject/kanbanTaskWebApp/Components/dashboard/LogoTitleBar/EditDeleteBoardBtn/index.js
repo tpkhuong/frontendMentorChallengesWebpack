@@ -1,5 +1,6 @@
 import React from "react";
 import EditDeleteBoardStyles from "./EditDeleteBoardBtn.module.css";
+import LogoutBtn from "./LogoutBtn";
 
 export default function EditDeleteBoardBtn({ children }) {
   const [showEditDeleteModal, setEditDeleteModal] = React.useState(false);
@@ -9,7 +10,7 @@ export default function EditDeleteBoardBtn({ children }) {
       {/* btn */}
       <button
         className={EditDeleteBoardStyles[`open-edit-delete-board-btn`]}
-        aria-label="open edit delete board modal"
+        aria-label="open edit or delete board and log out buttons modal"
         onClick={(event) => {
           // if showEditDeleteModal is falsey when user click on btn show modal
           if (!showEditDeleteModal) {
@@ -33,6 +34,7 @@ export default function EditDeleteBoardBtn({ children }) {
       </button>
       {/* modal */}
       {showEditDeleteModal ? (
+        // have logout button here, it will be the same for mobile,tablet and desktop
         <div
           role="dialog"
           aria-modal="true"
@@ -44,6 +46,8 @@ export default function EditDeleteBoardBtn({ children }) {
           <button className={EditDeleteBoardStyles[`delete-board-btn`]}>
             Delete Board
           </button>
+          <span className={EditDeleteBoardStyles[`modal-spacer`]}></span>
+          <LogoutBtn />
         </div>
       ) : null}
     </React.Fragment>

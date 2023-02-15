@@ -32,7 +32,7 @@ export default function LoginSignup({ children, ...props }) {
         <h2>Welcome!!!</h2>
         <span>Sign in to your account</span>
       </div>
-      <form>
+      <form className={LoginSignupStyles[`form`]}>
         {/* email inputs */}
         <div className={LoginSignupStyles[`email-container`]}>
           <MdAlternateEmail className={LoginSignupStyles[`atemail-icon`]} />

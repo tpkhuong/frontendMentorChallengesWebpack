@@ -10,18 +10,37 @@
   padding: 16px;
   align-items: center;
   background-color: var(--top-sidebar-modals-bg, --color-neutral-white);
-  border-bottom: var(--border-lines);
 }
 
 .title-btns-container {
   flex-grow: 1;
 }
 
+/* tablet */
+
 @media screen and (min-width: 48rem) {
   .logo-title-container {
     border-bottom: revert;
+    padding: revert;
+    gap: revert;
+  }
+
+  .title-btns-container {
+    --border: 1px solid var(--dark-theme-lines, var(--color-light-lines));
+    border-inline-start: var(--border);
+    border-block-end: var(--border);
+    align-items: center;
+    padding: 16px;
+    padding-inline: 24px;
+    gap: 24px;
   }
 }
 
-/* tablet */
 /* desktop */
+@media screen and (min-width: 90rem) {
+  .title-btns-container {
+    padding-block: 20px;
+    padding-block-end: 28px;
+    padding-inline-end: 32px;
+  }
+}

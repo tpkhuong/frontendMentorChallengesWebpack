@@ -16,6 +16,10 @@
   background-color: var(--edit-delete-modals-bg, --color-neutral-white);
   padding: 16px;
   border-radius: 8px;
+  box-shadow: var(
+    --edit-delete-modals-box-shadow-dark,
+    0px 0px 10px 3px hsla(0 0% 0% / 0.2)
+  );
 }
 
 .edit-board-btn,
@@ -30,5 +34,19 @@
 .delete-board-btn {
   color: var(--color-red);
 }
+
+.modal-spacer {
+  display: inline-block;
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-light-lines);
+}
 /* tablet: modal size: 115.2 */
+
+@media screen and (min-width: 48rem) {
+  .edit-delete-board-modal-wrapper {
+    right: 30px;
+    top: 100px;
+  }
+}
 /* desktop: modal size: 192 */

@@ -1,0 +1,26 @@
+/* mobile */
+
+.logout-btn {
+  width: 100%;
+  text-align: center;
+  color: var(--logout-fg-dark, var(--color-neutral-white));
+  background: var(--logout-bg-dark, var(--color-purple));
+  border-radius: 4px;
+  /* padding-block: 6px;
+  padding-block-end: 8px; */
+  padding-block: 11px;
+  padding-block-end: 12px;
+  padding-inline: 45px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+/* tablet */
+
+/* @media screen and (min-width: 48rem) {
+  .logout-btn {
+    padding-block: 11px;
+    padding-block-end: 12px;
+    padding-inline: 45px;
+  }
+} */

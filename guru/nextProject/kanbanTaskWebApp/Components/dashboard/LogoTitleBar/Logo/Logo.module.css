@@ -1,0 +1,35 @@
+/* mobile */
+
+.logo-spacer-container[data-showsidebar="false"] .spacer {
+  width: 0px;
+}
+
+.logo-spacer-container[data-showsidebar="false"] {
+  border-bottom-color: var(--color-light-lines);
+}
+/* tablet */
+@media screen and (min-width: 48rem) {
+  .logo-spacer-container {
+    display: flex;
+    padding-inline: 26px;
+    padding-block: 28.4px;
+    border-bottom: 1px solid;
+    border-bottom-color: transparent;
+  }
+  .spacer {
+    display: inline-block;
+    width: 56px;
+    transition: width 1s linear;
+  }
+}
+/* desktop */
+@media screen and (min-width: 90rem) {
+  .logo-spacer-container {
+    padding-inline-start: 24px;
+    padding-inline-start: 34px;
+    padding-block: 36.4px;
+  }
+  .spacer {
+    width: 87px;
+  }
+}

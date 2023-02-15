@@ -1,0 +1,20 @@
+/* --color-mediem-grey */
+.hide-sidebar-btn {
+  color: var(--color-mediem-grey);
+  background-color: transparent;
+  font-size: var(--heading-reg-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hide-icon path {
+  fill: var(--color-mediem-grey);
+}
+
+@media screen and (min-width: 90rem) {
+  .hide-sidebar-btn {
+    gap: 16px;
+  }
+}
