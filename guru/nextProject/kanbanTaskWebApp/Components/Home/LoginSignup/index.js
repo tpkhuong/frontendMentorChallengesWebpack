@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import LoginSignupStyles from "./LoginSignup.module.css";
+import { preventDefaultSpaceBar } from "../../../utils/sharedHelpers";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
@@ -39,7 +40,17 @@ export default function LoginSignup({ children, ...props }) {
           <label className="visually-hidden" htmlFor="email">
             Email
           </label>
-          <input type="email" id="email" placeholder="Email address" />
+          <input
+            onKeyDown={(event) => {
+              // if (event.code == "Space") {
+              //   event.preventDefault();
+              // }
+              preventDefaultSpaceBar(event);
+            }}
+            type="email"
+            id="email"
+            placeholder="Email address"
+          />
         </div>
         {/* button */}
         <button type="button" className={LoginSignupStyles[`sign-in-btn`]}>

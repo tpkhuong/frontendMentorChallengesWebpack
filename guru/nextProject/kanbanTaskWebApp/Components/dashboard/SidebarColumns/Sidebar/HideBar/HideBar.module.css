@@ -1,6 +1,6 @@
-/* --color-mediem-grey */
+/* --color-medium-grey */
 .hide-sidebar-btn {
-  color: var(--color-mediem-grey);
+  color: var(--color-medium-grey);
   background-color: transparent;
   font-size: var(--heading-reg-sm);
   font-weight: 600;
@@ -10,7 +10,7 @@
 }
 
 .hide-icon path {
-  fill: var(--color-mediem-grey);
+  fill: var(--color-medium-grey);
 }
 
 @media screen and (min-width: 90rem) {

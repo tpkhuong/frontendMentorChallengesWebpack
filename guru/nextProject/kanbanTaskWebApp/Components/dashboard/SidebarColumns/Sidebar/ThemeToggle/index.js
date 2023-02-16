@@ -23,7 +23,9 @@ export default function ThemeToggle({ children }) {
         "toggle light dark theme currently dark theme"
       );
       // call setState to render dark theme logo
-      renderContextForToggleBtn.logoTheme("dark");
+      renderContextForToggleBtn.setStateFuncs.logoTheme("dark");
+      // test
+      renderContextForToggleBtn.setStateFuncs.addTaskBtn(true);
     },
     dark: function darkTheme(toggleButton, dashboard) {
       //   set theme to light
@@ -41,7 +43,9 @@ export default function ThemeToggle({ children }) {
         "toggle light dark theme currently light theme"
       );
       // call setState to render light theme logo
-      renderContextForToggleBtn.logoTheme("light");
+      renderContextForToggleBtn.setStateFuncs.logoTheme("light");
+      // test
+      renderContextForToggleBtn.setStateFuncs.addTaskBtn(false);
     },
   };
   return (

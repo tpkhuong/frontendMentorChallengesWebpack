@@ -27,3 +27,9 @@ export function useMediaQuery(minMax, width) {
 
   return targetReached;
 }
+
+export function preventDefaultSpaceBar(event) {
+  if (event.target.value.length === 0 && event.code == "Space") {
+    event.preventDefault();
+  }
+}

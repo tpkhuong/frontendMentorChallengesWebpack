@@ -9,6 +9,10 @@
   opacity: 0.25;
 }
 
+.active-btn {
+  opacity: 1;
+}
+
 .mobile-btn {
   display: inline-block;
   padding: 18px;
@@ -28,8 +32,15 @@
     padding-block: 14px;
     border-radius: 100vw;
   }
+  .tablet-desktop-btn span:first-child {
+    margin-inline-end: 8px;
+  }
 }
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+}
+
+.active-btn {
+  opacity: 1;
 }

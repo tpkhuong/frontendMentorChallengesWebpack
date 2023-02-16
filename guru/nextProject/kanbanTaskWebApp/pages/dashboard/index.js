@@ -9,6 +9,8 @@ import SidebarColumns from "../../Components/dashboard/SidebarColumns";
 export default function Dashboard({ children }) {
   const memoizedStateValueAndFunc = React.useMemo(() => {
     return {
+      // setStateFuncs
+      setStateFuncs: {},
       // boards
       boards: {
         name: "hello",

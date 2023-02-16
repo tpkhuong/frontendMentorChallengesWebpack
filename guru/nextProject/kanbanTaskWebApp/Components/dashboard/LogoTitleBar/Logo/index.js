@@ -7,7 +7,7 @@ export default function Logo({ children }) {
   const renderContextForLogo = React.useContext(BoardTaskRenderContext);
   const [themeValue, setTheme] = React.useState("light");
 
-  renderContextForLogo.logoTheme = setTheme;
+  renderContextForLogo.setStateFuncs.logoTheme = setTheme;
 
   const isScreenLargerThanMobile = useMediaQuery("min", 768);
 

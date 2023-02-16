@@ -19,14 +19,15 @@
   --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
   --hover-hide-sidebar-light-fg: var(--color-purple);
 
-  --input-placeholder-light: hsl(240, 4%, 76%);
-  --input-placeholder-dark: hsl(233, 4%, 39%);
+  --modal-input-placeholder-light: hsl(240, 4%, 76%);
 
   /* modals */
 
-  --modals-label-light: var(--color-mediem-grey);
-  --modal-subtasks-title-light: var(--color-mediem-grey);
-
+  --modals-label-light: var(--color-medium-grey);
+  --modal-subtasks-title-light: var(--color-medium-grey);
+  --modal-inputs-border-light: hsl(218, 15%, 89%);
+  --modal-placeholder-fg-light: hsl(240, 4%, 76%);
+  --modal-labels-light: var(--color-medium-grey);
   /* toggle */
 
   --toggle-icon-container-bg-light: var(--color-light-bg);
@@ -62,6 +63,13 @@
   --top-sidebar-modals-bg: var(--color-dark-grey);
   --edit-delete-modals-bg: var(--color-dark-grey);
   --edit-delete-modals-box-shadow-dark: 0px 0px 10px 3px hsla(0 100% 100% / 0.4);
+  --modal-inputs-border-dark: hsl(226, 12%, 29%);
+  --modal-labels-dark: var(--color-neutral-white);
+  --close-modal-btn-dark: var(--color-neutral-white);
+  --modal-placeholder-fg-dark: hsl(233, 4%, 39%);
+  --modal-input-placeholder-dark: hsl(233, 4%, 39%);
+  --modal-input-dark: var(--color-neutral-white);
+
   /* toggle */
 
   --subtasks-hover-dark: hsl(240, 23%, 29%);

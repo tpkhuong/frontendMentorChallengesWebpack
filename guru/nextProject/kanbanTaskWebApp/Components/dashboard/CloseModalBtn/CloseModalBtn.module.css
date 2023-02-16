@@ -1,0 +1,7 @@
+.close-btn {
+  background-color: transparent;
+}
+
+.close-btn-icon path {
+  fill: var(--close-modal-btn-dark, var(--color-neutral-black));
+}

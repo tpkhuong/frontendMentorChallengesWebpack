@@ -4,7 +4,7 @@
 /* dark-bg: hsl(235, 16%,15%) */
 /* dark-grey: hsl(235, 12%,19%) */
 /* dark-lines: hsl(236, 11%,27%) */
-/* mediem-grey: hsl(216, 15%,57%) */
+/* medium-grey: hsl(216, 15%,57%) */
 /* light-lines: hsl(221, 69%,94%) */
 /* light-bg: hsl(220, 69%,97%) */
 /* red: hsl(0, 78%,63%) */
@@ -21,7 +21,7 @@
   --color-dark-bg: hsl(235, 16%, 15%);
   --color-dark-grey: hsl(235, 12%, 19%);
   --color-dark-lines: hsl(236, 11%, 27%);
-  --color-mediem-grey: hsl(216, 15%, 57%);
+  --color-medium-grey: hsl(216, 15%, 57%);
   --color-light-lines: hsl(221, 69%, 94%);
   --color-light-bg: hsl(220, 69%, 97%);
   --color-red: hsl(0, 78%, 63%);
@@ -33,10 +33,10 @@
   --color-neutral-black: hsl(0, 0%, 0%);
   --color-neutral-white: hsl(0, 0%, 100%);
 
-  --color-secondary-text-color: var(--color-mediem-grey);
-  --modals-description-both: var(--color-mediem-grey);
+  --color-secondary-text-color: var(--color-medium-grey);
+  --modals-description-both: var(--color-medium-grey);
   --color-completed-task: hsl(231, 5%, 50%);
-  --toggle-icon: var(--color-mediem-grey);
+  --toggle-icon: var(--color-medium-grey);
 
   --color-linkedin: hsl(210, 90%, 40%);
   /* 250px */
@@ -342,8 +342,8 @@ button:hover {
 
   /* modals */
 
-  --modals-label-light: var(--color-mediem-grey);
-  --modal-subtasks-title-light: var(--color-mediem-grey);
+  --modals-label-light: var(--color-medium-grey);
+  --modal-subtasks-title-light: var(--color-medium-grey);
 
   /* toggle */
 

@@ -1,0 +1,54 @@
+/* mobile */
+/* --heading-reg-xx-sm add subtask create task*/
+/* --modal-inputs-border-dark */
+.modal-bg {
+  position: absolute;
+  inset: 0;
+  background-color: hsla(0 0% 0% / 0.4);
+}
+
+.add-task-fieldset {
+  --inline-space: 16px;
+  background-color: var(--top-sidebar-modals-bg, var(--color-neutral-white));
+  position: absolute;
+  inset: 0;
+  height: min-content;
+  padding: 24px;
+  max-width: 480px;
+  margin: auto;
+  left: var(--inline-space);
+  right: var(--inline-space);
+}
+
+.modal-bg label,
+.add-task-title span {
+  font-weight: 600;
+}
+
+.add-task-modal label {
+  font-size: var(--heading-reg-xxx-sm);
+  color: var(--modal-labels-light, var(--modal-labels-dark));
+}
+
+.add-task-modal input {
+  border: 2px solid;
+  background-color: transparent;
+  border-color: var(
+    --modal-inputs-border-light,
+    var(--modal-inputs-border-dark)
+  );
+  color: var(--modal-input-dark);
+}
+
+.add-task-modal input::placeholder {
+  color: var(
+    --modal-input-placeholder-light,
+    var(--modal-input-placeholder-dark)
+  );
+}
+/* tablet */
+@media screen and (min-width: 48rem) {
+}
+/* desktop */
+@media screen and (min-width: 90rem) {
+}
