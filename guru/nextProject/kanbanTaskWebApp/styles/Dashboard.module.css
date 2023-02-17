@@ -34,6 +34,8 @@
   --toggle-bg-light: var(--color-purple);
   --createboard--hover-new-column-taskbtn-light: var(--color-purple);
   --subtasks-hover-light: hsl(242, 48%, 89%);
+
+  --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2);
 }
 
 .dashboard[data-apptheme="dark"] {
@@ -48,13 +50,13 @@
   --selectedboard-sidebar-dark: var(--color-purple-secondary);
   --addcreate-taskboard-save-btn-dark: var(--color-purple-secondary);
 
-  --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary);
-  --notselectedboard-sidebar-dark-bg: var(--color-purple-secondary);
-  --hover-hide-sidebar-dark-bg: var(--color-purple-secondary);
+  --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-neutral-white);
+  --notselectedboard-sidebar-dark-bg: var(--color-neutral-white);
+  --hover-hide-sidebar-dark-bg: var(--color-neutral-white);
 
-  --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white);
-  --notselectedboard-sidebar-dark-fg: var(--color-neutral-white);
-  --hover-hide-sidebar-dark-fg: var(--color-neutral-white);
+  --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-purple);
+  --notselectedboard-sidebar-dark-fg: var(--color-purple);
+  --hover-hide-sidebar-dark-fg: var(--color-purple);
 
   --logout-fg-dark: var(--color-purple);
   --logout-bg-dark: var(--color-neutral-white);
@@ -69,6 +71,8 @@
   --modal-placeholder-fg-dark: hsl(233, 4%, 39%);
   --modal-input-placeholder-dark: hsl(233, 4%, 39%);
   --modal-input-dark: var(--color-neutral-white);
+  --status-value-dark: var(--color-neutral-white);
+  --status-drop-down-menu-bg-dark: var(--color-dark-bg);
 
   /* toggle */
 

@@ -244,6 +244,7 @@ button {
 }
 
 ul[role],
+ul[class],
 li[role],
 li[class] {
   list-style: none;

@@ -3,6 +3,8 @@ import AddTaskModalStyles from "./AddTaskModal.module.css";
 import CloseModalBtn from "../../../CloseModalBtn";
 import StatusMenu from "../../../StatusMenu";
 
+const Subtasks = TaskComponent();
+
 export default function AddTaskModal({ children }) {
   return (
     <div className={AddTaskModalStyles[`modal-bg`]}>
@@ -16,7 +18,7 @@ export default function AddTaskModal({ children }) {
             <legend className={AddTaskModalStyles[`add-task-title`]}>
               <span>Add New Task</span>
             </legend>
-            <CloseModalBtn />
+            <CloseModalBtn>Close add new task modal</CloseModalBtn>
           </div>
           {/* title */}
           <div
@@ -38,9 +40,11 @@ export default function AddTaskModal({ children }) {
             className={AddTaskModalStyles[`description-input-container`]}
           >
             <label htmlFor="add-task-description">Description</label>
-            <input
-              type="text"
+            <textarea
+              name="task-description"
               id="add-task-description"
+              cols="10"
+              rows="4"
               placeholder="e.g. It’s always good to take a break. This 15 minute break will 
 recharge the batteries a little."
             />
@@ -48,8 +52,16 @@ recharge the batteries a little."
             <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
           </div>
           {/* subtasks */}
+          <Subtasks />
           {/* status */}
+          <StatusMenu>Status</StatusMenu>
           {/* create task btn */}
+          <button
+            className={AddTaskModalStyles[`create-task-btn`]}
+            type="button"
+          >
+            Create Task
+          </button>
           {/* create task btn: algorithm will select all inputs of li with attr data-isempty */}
           {/* loop through that array of inputs assign correct value to data-isempty based on value of inputs */}
         </fieldset>
@@ -61,29 +73,142 @@ recharge the batteries a little."
 // use high order component, we have access to a list of placeholder values
 
 function TaskComponent() {
-  const arrayOfStrings = [
-    "Make Coffee",
-    "Drink coffee & smile",
-    "Go for bike ride",
-    "Take dog for walk",
-    "Give cat a bath",
-    "Read a good book",
-    "Build an App",
-    "Learn React",
-  ];
-  const arrayOfObjForSubtasks = [
-    { placeholder: `${arrayOfStrings[0]}`, text: "" },
-    { placeholder: `${arrayOfStrings[1]}`, text: "" },
-  ];
+  const objForComponent = {
+    arrayOfStrings: [
+      "Make Coffee",
+      "Drink coffee & smile",
+      "Go for bike ride",
+      "Take dog for walk",
+      "Give cat a bath",
+      "Read a good book",
+      "Build an App",
+      "Learn React",
+    ],
+    arrayOfObjForSubtasks: [
+      { placeholder: "Make Coffee", text: "" },
+      { placeholder: "Drink coffee & smile", text: "" },
+    ],
+  };
+  // const arrayOfStrings = [
+  //   "Make Coffee",
+  //   "Drink coffee & smile",
+  //   "Go for bike ride",
+  //   "Take dog for walk",
+  //   "Give cat a bath",
+  //   "Read a good book",
+  //   "Build an App",
+  //   "Learn React",
+  // ];
+
+  // const arrayOfObjForSubtasks = [
+  //   { placeholder: `${arrayOfStrings[0]}`, text: "" },
+  //   { placeholder: `${arrayOfStrings[1]}`, text: "" },
+  // ];
+
+  const methodObjs = {
+    add: function addSubtask(event, setStateFunc) {
+      // only allow 8 subtasks
+      // when length of arrayOfObjForSubtasks is less than 8 add subtasks
+      if (objForComponent.arrayOfObjForSubtasks.length < 8) {
+        // length of arrayOfObjForSubtasks
+        const indexForSubtaskStr = objForComponent.arrayOfObjForSubtasks.length;
+
+        objForComponent.arrayOfObjForSubtasks.push({
+          placeholder: `${objForComponent.arrayOfStrings[indexForSubtaskStr]}`,
+          text: "",
+        });
+
+        console.log(objForComponent.arrayOfObjForSubtasks, "add");
+
+        setStateFunc((prevValues) => {
+          return {
+            ...prevValues,
+            lengthOfArray: objForComponent.arrayOfObjForSubtasks.length,
+            arrayOfObjForSubtasks: [...objForComponent.arrayOfObjForSubtasks],
+          };
+        });
+
+        return;
+      }
+    },
+    remove: function removeSubtask(event, setStateFunc, removeBtn) {
+      // check length of arrayOfObjForSubtasks
+      // only remove subtasks if length is > 1
+      if (objForComponent.arrayOfObjForSubtasks.length > 1) {
+        // filter out obj that matches Number(removeBtn.getAttribute("data-subtaskclosebtnindex"))
+        const arrayWithRemovedObj =
+          objForComponent.arrayOfObjForSubtasks.filter(function removeItem(
+            obj,
+            index
+          ) {
+            return (
+              index !==
+              Number(removeBtn.getAttribute("data-subtaskclosebtnindex"))
+            );
+          });
+        // update arrayOfObjForSubtasks
+        objForComponent.arrayOfObjForSubtasks = [...arrayWithRemovedObj];
+        // render subtasks with removed item using new length of arrayOfObjForSubtasks
+        console.log(objForComponent.arrayOfObjForSubtasks, "remove");
+        setStateFunc((prevValues) => {
+          return {
+            ...prevValues,
+            lengthOfArray: arrayWithRemovedObj.length,
+            arrayOfObjForSubtasks: [...objForComponent.arrayOfObjForSubtasks],
+          };
+        });
+      }
+    },
+  };
 
   return function innerComponent({ children }) {
-    const [subtasksArray, setSubtasks] = React.useState(arrayOfObjForSubtasks);
-
+    const [subtasksArray, setSubtasks] = React.useState({
+      initialLoad: true,
+      lengthOfArray: objForComponent.arrayOfObjForSubtasks.length,
+      arrayOfObjForSubtasks: objForComponent.arrayOfObjForSubtasks,
+    });
+    // one solution is calling React.useEffect then assign value to inputs(subtasks)
     return (
-      <div className={AddTaskModalStyles[`subtask-inputs-container`]}>
-        <span>Subtasks</span>
-        <ul>
-          {subtasksArray.map(function makeSubtasks(taskObj, index) {
+      <div
+        data-showemptytext=""
+        className={AddTaskModalStyles[`subtask-inputs-container`]}
+        onClick={(event) => {
+          const clickedBtn = event.target.closest("BUTTON");
+
+          if (
+            clickedBtn &&
+            methodObjs[clickedBtn.getAttribute("data-typeofbtn")]
+          ) {
+            methodObjs[clickedBtn.getAttribute("data-typeofbtn")](
+              event,
+              setSubtasks,
+              clickedBtn
+            );
+            return;
+          }
+        }}
+      >
+        <span className={AddTaskModalStyles[`label`]}>Subtasks</span>
+        <ul
+          onChange={(event) => {
+            // want to update the text property of obj in arrayOfObjForSubtasks that
+            // matches subtask-1 after taking number of subtask-1 and minus 1 from it
+            const indexNumber =
+              event.target.getAttribute("id").split("-")[1] - 1;
+
+            // get obj in arrayOfObjForSubtasks
+            const objInArrayOfObjForSubtasks =
+              objForComponent.arrayOfObjForSubtasks[indexNumber];
+            // update text property. when our subtask component re-render the value of text property in obj
+            // will be assign to value of input
+            objInArrayOfObjForSubtasks.text = event.target.value;
+          }}
+          className={AddTaskModalStyles[`subtasks-container`]}
+        >
+          {subtasksArray.arrayOfObjForSubtasks.map(function makeSubtasks(
+            taskObj,
+            index
+          ) {
             return (
               <li data-isempty="" key={Math.random() * index}>
                 <div
@@ -99,16 +224,12 @@ function TaskComponent() {
                     id={`subtask-${index + 1}`}
                     type="text"
                     defaultValue={`${taskObj.text}`}
-                    placeholder={`${taskObj.placeholder}`}
+                    placeholder={`e.g. ${taskObj.placeholder}`}
                   />
-                  <span className={AddTaskModalStyles[`empty`]}>
-                    Can't be empty
-                  </span>
-                  <span className={AddTaskModalStyles[`accepted`]}>
-                    Accepted
-                  </span>
                 </div>
                 <button
+                  data-typeofbtn="remove"
+                  type="button"
                   data-subtaskclosebtnindex={`${index}`}
                   className={AddTaskModalStyles[`remove-subtask-btn`]}
                 >
@@ -128,16 +249,15 @@ function TaskComponent() {
             );
           })}
         </ul>
+        <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
+        <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
         {/* add subtask */}
-        <button className={AddTaskModalStyles[`add-subtask-btn`]}>
-          <span aria-hidden="true">
-            <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill="#FFF"
-                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
-              />
-            </svg>
-          </span>
+        <button
+          data-typeofbtn="add"
+          type="button"
+          className={AddTaskModalStyles[`add-subtask-btn`]}
+        >
+          <span aria-hidden="true">+</span>
           <span>Add New Subtask</span>
         </button>
       </div>

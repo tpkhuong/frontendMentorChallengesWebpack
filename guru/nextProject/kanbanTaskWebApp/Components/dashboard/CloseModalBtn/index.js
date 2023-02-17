@@ -3,7 +3,11 @@ import CloseModalStyles from "./CloseModalBtn.module.css";
 
 export default function CloseModalBtn({ children }) {
   return (
-    <button className={CloseModalStyles[`close-btn`]} aria-label={children}>
+    <button
+      type="button"
+      className={CloseModalStyles[`close-btn`]}
+      aria-label={children}
+    >
       <svg
         className={CloseModalStyles[`close-btn-icon`]}
         width="15"

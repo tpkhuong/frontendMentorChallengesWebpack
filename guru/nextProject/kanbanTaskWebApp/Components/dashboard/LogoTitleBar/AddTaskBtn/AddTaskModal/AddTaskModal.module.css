@@ -7,7 +7,8 @@
   background-color: hsla(0 0% 0% / 0.4);
 }
 
-.add-task-fieldset {
+.add-task-modal {
+  border-radius: 4px;
   --inline-space: 16px;
   background-color: var(--top-sidebar-modals-bg, var(--color-neutral-white));
   position: absolute;
@@ -20,32 +21,166 @@
   right: var(--inline-space);
 }
 
+.add-task-fieldset > * + * {
+  margin-block-start: 24px;
+}
+
+.title-close-btn-container,
+.title-input-container,
+.description-input-container {
+  display: flex;
+}
+
+.title-close-btn-container {
+  justify-content: space-between;
+}
+
+.title-input-container,
+.description-input-container {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+}
+
 .modal-bg label,
-.add-task-title span {
+.add-task-title span,
+.label,
+.add-subtask-btn {
   font-weight: 600;
 }
 
-.add-task-modal label {
+.add-task-modal label,
+.label {
   font-size: var(--heading-reg-xxx-sm);
   color: var(--modal-labels-light, var(--modal-labels-dark));
 }
 
-.add-task-modal input {
+.add-task-modal input:hover,
+.add-task-modal textarea:hover {
+  border-color: var(--color-purple);
+}
+
+.add-task-modal input,
+.add-task-modal textarea {
   border: 2px solid;
+  border-radius: 4px;
   background-color: transparent;
   border-color: var(
     --modal-inputs-border-light,
     var(--modal-inputs-border-dark)
   );
   color: var(--modal-input-dark);
+  width: 100%;
+  padding-block: 8px;
+  padding-inline-start: 16px;
 }
 
-.add-task-modal input::placeholder {
+.add-task-modal input::placeholder,
+.add-task-modal textarea::placeholder {
   color: var(
     --modal-input-placeholder-light,
     var(--modal-input-placeholder-dark)
   );
 }
+
+.title-input-container[data-isempty="true"] input,
+.description-input-container[data-isempty="true"] textarea,
+.subtasks-container [data-isempty="true"] input {
+  border-color: var(--color-red);
+}
+
+/* show can't be empty, show accepted */
+
+[data-isempty="true"] .empty,
+[data-showemptytext="true"] .empty,
+[data-isempty="false"] .accepted,
+[data-showemptytext="false"] .accepted {
+  display: revert;
+}
+
+.empty {
+  color: var(--color-red);
+}
+
+.empty,
+.accepted {
+  font-size: 1rem;
+  display: none;
+  font-weight: 600;
+  position: absolute;
+  right: 2px;
+  top: -2px;
+}
+
+/* subtasks */
+
+.subtask-inputs-container {
+  position: relative;
+}
+
+[data-showemptytext="true"] .empty,
+[data-showemptytext="false"] .accepted {
+  right: 40px;
+  top: 4px;
+  display: revert;
+}
+
+.subtasks-container {
+  margin-block-start: 8px;
+}
+
+.subtasks-container li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subtasks-container > * + * {
+  margin-block-start: 12px;
+}
+
+.subtasks-container [data-isempty="true"] path {
+  fill: var(--color-red);
+}
+
+.remove-subtask-btn {
+  background-color: transparent;
+}
+/* --addsubtask-addcolumn-cancel-btn-light-bg: hsl(240, 45%, 96%);
+--addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple);
+--addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary);
+--addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white); */
+
+.add-subtask-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 100vw;
+  font-size: var(--heading-reg-sm);
+  padding-block: 11px;
+  gap: 8px;
+  align-items: center;
+  background-color: var(
+    --addsubtask-addcolumn-cancel-btn-dark-bg,
+    var(--addsubtask-addcolumn-cancel-btn-light-bg)
+  );
+  color: var(--color-purple);
+  margin-block-start: 12px;
+}
+
+/* subtasks */
+
+.create-task-btn {
+  width: 100%;
+  background-color: var(--color-purple);
+  color: var(--color-neutral-white);
+  padding-block: 11px;
+  font-size: var(--heading-reg-xx-sm);
+  font-weight: 600;
+  border-radius: 100vw;
+}
+
 /* tablet */
 @media screen and (min-width: 48rem) {
 }
