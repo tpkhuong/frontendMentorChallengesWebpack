@@ -29,17 +29,25 @@ export default function AddTaskBtn({ children }) {
           ) : (
             <React.Fragment>
               <button
+                id="add-task-btn"
                 className={`${AddTaskBtnStyles[`tablet-desktop-btn`]} ${
                   AddTaskBtnStyles[`active-btn`]
                 }`}
                 onClick={(event) => {
+                  // focus first input of ask task modal
+                  setTimeout(() => {
+                    document.getElementById("add-task-title").focus();
+                  }, 80);
+
                   showAddTaskModal(renderAddTaskModal, setTaskModal);
                 }}
               >
                 <span aria-hidden="true">+</span>
                 <span>Add New Task</span>
               </button>
-              {renderAddTaskModal ? <AddTaskModal /> : null}
+              {renderAddTaskModal ? (
+                <AddTaskModal renderAddTaskModalFunc={setTaskModal} />
+              ) : null}
             </React.Fragment>
           )
         ) : // <span
@@ -64,10 +72,16 @@ export default function AddTaskBtn({ children }) {
         ) : (
           <React.Fragment>
             <button
+              id="add-task-btn"
               className={`${AddTaskBtnStyles[`mobile-btn`]} ${
                 AddTaskBtnStyles[`active-btn`]
               }`}
               onClick={(event) => {
+                // focus first input of ask task modal
+                setTimeout(() => {
+                  document.getElementById("add-task-title").focus();
+                }, 80);
+
                 showAddTaskModal(renderAddTaskModal, setTaskModal);
               }}
             >
@@ -78,7 +92,9 @@ export default function AddTaskBtn({ children }) {
                 />
               </svg>
             </button>
-            {renderAddTaskModal ? <AddTaskModal /> : null}
+            {renderAddTaskModal ? (
+              <AddTaskModal renderAddTaskModalFunc={setTaskModal} />
+            ) : null}
           </React.Fragment>
         )
         // <span

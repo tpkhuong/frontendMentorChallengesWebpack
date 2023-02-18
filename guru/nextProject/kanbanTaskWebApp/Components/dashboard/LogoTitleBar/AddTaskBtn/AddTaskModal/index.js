@@ -5,7 +5,7 @@ import StatusMenu from "../../../StatusMenu";
 
 const Subtasks = TaskComponent();
 
-export default function AddTaskModal({ children }) {
+export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
   return (
     <div className={AddTaskModalStyles[`modal-bg`]}>
       <form
@@ -18,7 +18,9 @@ export default function AddTaskModal({ children }) {
             <legend className={AddTaskModalStyles[`add-task-title`]}>
               <span>Add New Task</span>
             </legend>
-            <CloseModalBtn>Close add new task modal</CloseModalBtn>
+            <CloseModalBtn hideAddTaskModalFunc={renderAddTaskModalFunc}>
+              Close add new task modal
+            </CloseModalBtn>
           </div>
           {/* title */}
           <div
@@ -30,6 +32,9 @@ export default function AddTaskModal({ children }) {
               type="text"
               id="add-task-title"
               placeholder="e.g. Take coffee break"
+              onChange={(event) => {
+                console.log(renderAddTaskModalFunc);
+              }}
             />
             <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
             <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
@@ -70,6 +75,13 @@ recharge the batteries a little."
   );
 }
 
+/**
+ * idea for keyboard tabbing when one of the modal is opened.
+ * have attr data-firstitem on close modal btn
+ * have attr data-lastitem on btn of the specific modal
+ * run algorithm based on first or last item
+ * **/
+
 // use high order component, we have access to a list of placeholder values
 
 function TaskComponent() {
@@ -85,8 +97,8 @@ function TaskComponent() {
       "Learn React",
     ],
     arrayOfObjForSubtasks: [
-      { placeholder: "Make Coffee", text: "" },
-      { placeholder: "Drink coffee & smile", text: "" },
+      { placeholder: "", text: "" },
+      { placeholder: "", text: "" },
     ],
   };
   // const arrayOfStrings = [
@@ -163,11 +175,19 @@ function TaskComponent() {
 
   return function innerComponent({ children }) {
     const [subtasksArray, setSubtasks] = React.useState({
-      initialLoad: true,
       lengthOfArray: objForComponent.arrayOfObjForSubtasks.length,
       arrayOfObjForSubtasks: objForComponent.arrayOfObjForSubtasks,
     });
-    // one solution is calling React.useEffect then assign value to inputs(subtasks)
+
+    React.useEffect(() => {
+      subtasksArray.arrayOfObjForSubtasks.forEach(function updateSubtasksValue(
+        obj,
+        index
+      ) {
+        document.getElementById(`subtask-${index + 1}`).value = obj.text;
+      });
+    }, [subtasksArray.lengthOfArray]);
+
     return (
       <div
         data-showemptytext=""
@@ -223,8 +243,7 @@ function TaskComponent() {
                   <input
                     id={`subtask-${index + 1}`}
                     type="text"
-                    defaultValue={`${taskObj.text}`}
-                    placeholder={`e.g. ${taskObj.placeholder}`}
+                    placeholder={`e.g. ${objForComponent.arrayOfStrings[index]}`}
                   />
                 </div>
                 <button
@@ -252,6 +271,7 @@ function TaskComponent() {
         <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
         <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
         {/* add subtask */}
+        {/* check if inputs are empty or not for add task modal */}
         <button
           data-typeofbtn="add"
           type="button"

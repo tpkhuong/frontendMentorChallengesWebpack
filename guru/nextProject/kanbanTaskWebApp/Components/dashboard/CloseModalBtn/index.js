@@ -1,12 +1,18 @@
 import React from "react";
 import CloseModalStyles from "./CloseModalBtn.module.css";
 
-export default function CloseModalBtn({ children }) {
+export default function CloseModalBtn({ children, hideAddTaskModalFunc }) {
   return (
     <button
       type="button"
       className={CloseModalStyles[`close-btn`]}
       aria-label={children}
+      onClick={(event) => {
+        // focus add task btn
+        document.getElementById("add-task-btn").focus();
+
+        hideAddTaskModalFunc(false);
+      }}
     >
       <svg
         className={CloseModalStyles[`close-btn-icon`]}

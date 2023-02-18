@@ -11,6 +11,7 @@ export default function Dashboard({ children }) {
     return {
       // setStateFuncs
       setStateFuncs: {},
+      stateFuncsForModals: {},
       // boards
       boards: {
         name: "hello",
