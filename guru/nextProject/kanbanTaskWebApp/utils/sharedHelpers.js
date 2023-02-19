@@ -33,3 +33,29 @@ export function preventDefaultSpaceBar(event) {
     event.preventDefault();
   }
 }
+
+export function keyboardModalTabbingAndSpaceKey(event) {
+  if (event.shiftKey && event.code == "Tab") {
+    event.target.getAttribute("data-firstitem") == "true"
+      ? (document.querySelector("[data-lastitem='true']").focus(),
+        event.preventDefault())
+      : null;
+    return;
+  }
+
+  if (
+    event.code == "Tab" &&
+    event.target.getAttribute("data-lastitem") == "true"
+  ) {
+    document.querySelector("[data-firstitem]").focus();
+    event.preventDefault();
+    return;
+  }
+
+  if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA") {
+    if (event.target.value.length === 0 && event.code == "Space") {
+      event.preventDefault();
+      return;
+    }
+  }
+}

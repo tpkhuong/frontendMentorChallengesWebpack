@@ -5,6 +5,7 @@ export default function CloseModalBtn({ children, hideAddTaskModalFunc }) {
   return (
     <button
       type="button"
+      data-firstitem="true"
       className={CloseModalStyles[`close-btn`]}
       aria-label={children}
       onClick={(event) => {

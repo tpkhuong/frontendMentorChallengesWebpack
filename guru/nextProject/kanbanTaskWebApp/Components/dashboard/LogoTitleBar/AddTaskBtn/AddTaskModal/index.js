@@ -2,6 +2,7 @@ import React from "react";
 import AddTaskModalStyles from "./AddTaskModal.module.css";
 import CloseModalBtn from "../../../CloseModalBtn";
 import StatusMenu from "../../../StatusMenu";
+import { keyboardModalTabbingAndSpaceKey } from "../../../../../utils/sharedHelpers";
 
 const Subtasks = TaskComponent();
 
@@ -12,6 +13,7 @@ export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
         role="dialog"
         aria-modal="true"
         className={AddTaskModalStyles[`add-task-modal`]}
+        onKeyDown={keyboardModalTabbingAndSpaceKey}
       >
         <fieldset className={AddTaskModalStyles[`add-task-fieldset`]}>
           <div className={AddTaskModalStyles[`title-close-btn-container`]}>
@@ -32,9 +34,6 @@ export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
               type="text"
               id="add-task-title"
               placeholder="e.g. Take coffee break"
-              onChange={(event) => {
-                console.log(renderAddTaskModalFunc);
-              }}
             />
             <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
             <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
@@ -62,8 +61,16 @@ recharge the batteries a little."
           <StatusMenu>Status</StatusMenu>
           {/* create task btn */}
           <button
+            data-lastitem="true"
             className={AddTaskModalStyles[`create-task-btn`]}
             type="button"
+            onClick={(event) => {
+              // add-task-title
+              // add-task-description
+              // subtasks: using getElementById select one of the subtasks inputs by id
+              // use property .parentelement.parentelement to select ul then get children of that ul
+              // loop through that children list
+            }}
           >
             Create Task
           </button>
@@ -74,13 +81,6 @@ recharge the batteries a little."
     </div>
   );
 }
-
-/**
- * idea for keyboard tabbing when one of the modal is opened.
- * have attr data-firstitem on close modal btn
- * have attr data-lastitem on btn of the specific modal
- * run algorithm based on first or last item
- * **/
 
 // use high order component, we have access to a list of placeholder values
 
