@@ -66,10 +66,52 @@ recharge the batteries a little."
             type="button"
             onClick={(event) => {
               // add-task-title
+              const titleInput = document.getElementById("add-task-title");
               // add-task-description
+              const descriptionInput = document.getElementById(
+                "add-task-description"
+              );
+              titleDescriptionInputs(titleInput, descriptionInput);
               // subtasks: using getElementById select one of the subtasks inputs by id
               // use property .parentelement.parentelement to select ul then get children of that ul
               // loop through that children list
+              const subtasksContainer =
+                document.getElementById("subtask-1").parentElement.parentElement
+                  .parentElement;
+
+              const methodsObjForSubtasks = {
+                true: function equalEmptyString(listitem) {
+                  listitem.getAttribute("data-isempty") == "" ||
+                  listitem.getAttribute("data-isempty") == "false"
+                    ? listitem.setAttribute("data-isempty", "true")
+                    : null;
+                },
+                false: function notEqualEmptyString(listitem) {
+                  listitem.getAttribute("data-isempty") == "true"
+                    ? listitem.setAttribute("data-isempty", "false")
+                    : null;
+                },
+              };
+
+              if (subtasksContainer.childElementCount === 0) {
+                const firstSubtaskInput =
+                  subtasksContainer.firstElementChild.firstElementChild
+                    .childNodes[1];
+
+                methodsObjForSubtasks[firstSubtaskInput.value === ""](
+                  subtasksContainer.firstElementChild
+                );
+              } else {
+                // ul children length is greater than 1 loop through ul children (li > div > label + inputs)
+                subtasksContainer.childNodes.forEach(
+                  function checkSubtasksInputsValue(listitem, index) {
+                    const subtaskInput =
+                      listitem.firstElementChild.childNodes[1];
+
+                    methodsObjForSubtasks[subtaskInput.value === ""](listitem);
+                  }
+                );
+              }
             }}
           >
             Create Task
@@ -80,6 +122,21 @@ recharge the batteries a little."
       </form>
     </div>
   );
+}
+
+function titleDescriptionInputs(...inputs) {
+  inputs.forEach(function checkInput(element, index) {
+    if (element.value === "") {
+      element.parentElement.getAttribute("data-isempty") === "" ||
+      element.parentElement.getAttribute("data-isempty") === "false"
+        ? element.parentElement.setAttribute("data-isempty", "true")
+        : null;
+    } else {
+      element.parentElement.getAttribute("data-isempty") == "true"
+        ? element.parentElement.setAttribute("data-isempty", "false")
+        : null;
+    }
+  });
 }
 
 // use high order component, we have access to a list of placeholder values
@@ -190,7 +247,6 @@ function TaskComponent() {
 
     return (
       <div
-        data-showemptytext=""
         className={AddTaskModalStyles[`subtask-inputs-container`]}
         onClick={(event) => {
           const clickedBtn = event.target.closest("BUTTON");
@@ -245,6 +301,12 @@ function TaskComponent() {
                     type="text"
                     placeholder={`e.g. ${objForComponent.arrayOfStrings[index]}`}
                   />
+                  <span className={AddTaskModalStyles[`empty`]}>
+                    Can't be empty
+                  </span>
+                  <span className={AddTaskModalStyles[`accepted`]}>
+                    Accepted
+                  </span>
                 </div>
                 <button
                   data-typeofbtn="remove"
@@ -268,8 +330,6 @@ function TaskComponent() {
             );
           })}
         </ul>
-        <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
-        <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
         {/* add subtask */}
         {/* check if inputs are empty or not for add task modal */}
         <button

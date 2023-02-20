@@ -1,19 +1,20 @@
 import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 
-const testArr = [
-  {
-    name: "Platform Launch",
-  },
-  {
-    name: "Marketing Plan",
-  },
-  {
-    name: "Platform Launch",
-  },
-];
+// const testArr = [
+//   {
+//     name: "Platform Launch",
+//   },
+//   {
+//     name: "Marketing Plan",
+//   },
+//   {
+//     name: "Platform Launch",
+//   },
+// ];
 
 export default function BoardSelector({ children }) {
+  const str = "hello";
   // have attr data-boardindex
   // use boardindex to apply data-currentselectedboard "true"
   // when boardindex matches the index of item in array of property boards of currentuser obj
@@ -23,4 +24,28 @@ export default function BoardSelector({ children }) {
    * index of obj matches index of data-boardinex
    * re-render when the boardindex changes
    * **/
+  return (
+    <div className={BoardSelectorStyles[`boards-selector-container`]}>
+      {/* number of boards */}
+      <span className={BoardSelectorStyles[`boards-quantity`]}>
+        <span>ALL BOARDS</span>
+        <span>({str})</span>
+      </span>
+      {/* buttons container */}
+      <div className={BoardSelectorStyles[`board-selector-btns-container`]}>
+        {/* board selector btn */}
+        {/* create new board */}
+        <button className={BoardSelectorStyles[`create-new-board-btn`]}>
+          <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
+              fill="#828FA3"
+            />
+          </svg>
+          <span aria-hidden="true">+</span>
+          <span>Create New Board</span>
+        </button>
+      </div>
+    </div>
+  );
 }
