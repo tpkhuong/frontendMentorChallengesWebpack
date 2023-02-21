@@ -1,0 +1,95 @@
+/* mobile */
+/* --hover-notselectedboard-sidebar-light-bg */
+/* --hover-notselectedboard-sidebar-light-fg */
+/* --notselectedboard-sidebar-dark-bg */
+/* --notselectedboard-sidebar-dark-fg */
+.boards-selector-container {
+  font-weight: 600;
+  font-size: var(--heading-reg-sm);
+}
+
+.boards-quantity,
+.board-selector-btn {
+  color: var(--color-medium-grey);
+}
+
+.boards-quantity {
+  font-size: var(--heading-reg-xxx-sm);
+  letter-spacing: 2px;
+  padding-inline-start: 24px;
+}
+
+.board-selector-btns-container {
+  margin-block: 19px;
+  /* margin-block-start: 19px; */
+}
+
+ul.ul-container-of-btns {
+  padding-inline-end: 25px;
+}
+
+/* hover on selector btn */
+
+.board-selector-btn[data-currentselected="true"] {
+  color: var(--color-neutral-white);
+  background-color: var(--color-purple);
+}
+
+.board-selector-btn[data-currentselected="true"] path {
+  fill: var(--color-neutral-white);
+}
+
+.board-selector-btn[data-currentselected="false"]:hover,
+.board-selector-btn[data-currentselected="false"]:focus {
+  background-color: var(
+    --hover-notselectedboard-sidebar-light-bg,
+    var(--notselectedboard-sidebar-dark-bg)
+  );
+  color: var(
+    --hover-notselectedboard-sidebar-light-fg,
+    var(--notselectedboard-sidebar-dark-fg)
+  );
+}
+
+/* selector btn icon */
+
+.board-selector-btn[data-currentselected="false"]:hover path,
+.board-selector-btn[data-currentselected="false"]:focus path {
+  fill: var(--color-purple);
+}
+
+.board-selector-btn {
+  padding: 14px;
+  padding-inline-start: 24px;
+  border-top-right-radius: 100vw;
+  border-bottom-right-radius: 100vw;
+}
+
+.board-selector-btn,
+.create-new-board-btn {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* create new board btn */
+
+.create-new-board-btn {
+  padding-inline-start: 24px;
+  padding-block: 14px;
+  color: var(--color-purple);
+}
+
+.create-new-board-btn path {
+  fill: var(--color-purple);
+}
+/* tablet */
+/* desktop */
+
+@media screen and (min-width: 48rem) {
+  ul.ul-container-of-btns {
+    padding-inline-end: 20px;
+  }
+}

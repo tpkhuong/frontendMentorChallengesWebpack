@@ -1,9 +1,41 @@
 /* mobile */
 
+@media screen and (max-width: 23.4375rem) {
+  .sidebar-modal {
+    height: 100%;
+    position: absolute;
+    background-color: hsla(0 0% 0% / 0.4);
+    inset: 0;
+    padding-block-start: 12px;
+    padding-inline: 56px;
+  }
+
+  .boards-toggle-container {
+    border-radius: 8px;
+    padding-block: 21px;
+    padding-block-end: 12px;
+  }
+}
+
 .boards-toggle-container {
   background-color: var(--top-sidebar-modals-bg, var(--color-neutral-white));
 }
 
 .add-task-title {
   border: 1px solid red;
+}
+
+@media screen and (min-width: 48rem) {
+  .boards-toggle-container {
+    --border: 1px solid var(--dark-theme-lines, var(--color-light-lines));
+    max-width: 262px;
+    height: 996.2px;
+    border-inline-end: var(--border);
+    display: flex;
+    flex-direction: column;
+    padding-block: 32px;
+  }
+}
+
+@media screen and (min-width: 90rem) {
 }

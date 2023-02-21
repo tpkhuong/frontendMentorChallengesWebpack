@@ -19,6 +19,8 @@
   --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
   --hover-hide-sidebar-light-fg: var(--color-purple);
 
+  --hover-addnewtask-create-btn: var(--color-purple-secondary);
+
   --modal-input-placeholder-light: hsl(240, 4%, 76%);
 
   /* modals */
@@ -33,7 +35,7 @@
   --toggle-icon-container-bg-light: var(--color-light-bg);
   --toggle-bg-light: var(--color-purple);
   --createboard--hover-new-column-taskbtn-light: var(--color-purple);
-  --subtasks-hover-light: hsl(242, 48%, 89%);
+  --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%);
 
   --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2);
 }

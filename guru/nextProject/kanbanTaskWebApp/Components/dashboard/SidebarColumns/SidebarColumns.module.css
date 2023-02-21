@@ -1,0 +1,7 @@
+/* mobile */
+
+@media screen and (max-width: 23.4375rem) {
+  .sidebar-columns-container {
+    position: relative;
+  }
+}

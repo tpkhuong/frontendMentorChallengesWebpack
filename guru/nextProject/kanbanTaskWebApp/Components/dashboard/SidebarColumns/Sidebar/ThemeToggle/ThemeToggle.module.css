@@ -1,5 +1,9 @@
 /* mobile */
 
+.toggle-container {
+  padding-inline: 15px;
+}
+
 /* move toggle circle when toggle btn is clicked */
 
 .toggle-btn[data-currenttheme="dark"] .toggle-circle {
@@ -15,7 +19,13 @@
   display: flex;
   justify-content: center;
   padding-block: 14px;
+
   gap: 24px;
+}
+
+.toggle-btn:hover,
+.toggle-btn:focus {
+  background-color: var(--color-purple-secondary);
 }
 
 .toggle-btn {
@@ -31,4 +41,12 @@
   background-color: white;
   padding: 7px;
   border-radius: 50%;
+}
+
+@media screen and (min-width: 48rem) {
+  .toggle-container {
+    padding-inline: 12px;
+    margin-block-end: 16px;
+    margin-block-start: auto;
+  }
 }

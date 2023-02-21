@@ -11,6 +11,7 @@ export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
     <div className={AddTaskModalStyles[`modal-bg`]}>
       <form
         role="dialog"
+        id="add-task-modal-selector"
         aria-modal="true"
         className={AddTaskModalStyles[`add-task-modal`]}
         onKeyDown={keyboardModalTabbingAndSpaceKey}
@@ -87,6 +88,7 @@ recharge the batteries a little."
                     : null;
                 },
                 false: function notEqualEmptyString(listitem) {
+                  listitem.getAttribute("data-isempty") == "" ||
                   listitem.getAttribute("data-isempty") == "true"
                     ? listitem.setAttribute("data-isempty", "false")
                     : null;
@@ -112,6 +114,23 @@ recharge the batteries a little."
                   }
                 );
               }
+              // once all inputs are accepted send input data to storage
+              const itemsWithDataIsEmptyAttr = Array.from(
+                document.querySelectorAll(
+                  "#add-task-modal-selector [data-isempty]"
+                )
+              );
+
+              const isAllAccepted = itemsWithDataIsEmptyAttr.every(
+                function checkingIfInputsAreEmpty(element, index) {
+                  return element.getAttribute("data-isempty") === "false";
+                }
+              );
+
+              if (isAllAccepted) {
+                // we enter here means all inputs are not empty string
+                renderAddTaskModalFunc(false);
+              }
             }}
           >
             Create Task
@@ -132,6 +151,7 @@ function titleDescriptionInputs(...inputs) {
         ? element.parentElement.setAttribute("data-isempty", "true")
         : null;
     } else {
+      element.parentElement.getAttribute("data-isempty") === "" ||
       element.parentElement.getAttribute("data-isempty") == "true"
         ? element.parentElement.setAttribute("data-isempty", "false")
         : null;

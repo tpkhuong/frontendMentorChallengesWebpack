@@ -39,6 +39,10 @@
 
 /* desktop */
 @media screen and (min-width: 90rem) {
+  .tablet-desktop-btn:hover,
+  .tablet-desktop-btn:focus {
+    background-color: var(--color-purple-secondary);
+  }
 }
 
 .active-btn {

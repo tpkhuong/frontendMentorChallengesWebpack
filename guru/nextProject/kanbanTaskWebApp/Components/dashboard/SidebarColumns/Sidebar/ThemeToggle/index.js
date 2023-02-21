@@ -49,7 +49,7 @@ export default function ThemeToggle({ children }) {
     },
   };
   return (
-    <div className={ThemeToggleStyles[`toggle-hide-sidebar-container`]}>
+    <div className={ThemeToggleStyles[`toggle-container`]}>
       <div className={ThemeToggleStyles[`toggle-icons-container`]}>
         {/* light theme icon */}
         <svg width="19" height="19" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,6 @@ export default function ThemeToggle({ children }) {
           />
         </svg>
       </div>
-      <HideSidebar />
     </div>
   );
 }

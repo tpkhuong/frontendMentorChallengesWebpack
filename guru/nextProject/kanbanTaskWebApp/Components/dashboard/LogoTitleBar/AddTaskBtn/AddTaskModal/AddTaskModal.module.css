@@ -92,6 +92,7 @@
 
 .subtask-label-input-container {
   position: relative;
+  flex-grow: 1;
 }
 
 /* show can't be empty, show accepted */
@@ -143,7 +144,8 @@
 .subtasks-container li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 16px;
 }
 
 .subtasks-container > * + * {
@@ -161,6 +163,14 @@
 --addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple);
 --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary);
 --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white); */
+
+.add-subtask-btn:hover,
+.add-subtask-btn:focus {
+  background-color: var(
+    --subtasks-modal-btn-hover-light,
+    var(--color-neutral-white)
+  );
+}
 
 .add-subtask-btn {
   width: 100%;
@@ -180,6 +190,11 @@
 }
 
 /* subtasks */
+
+.create-task-btn:hover,
+.create-task-btn:focus {
+  background-color: var(--color-purple-secondary);
+}
 
 .create-task-btn {
   width: 100%;

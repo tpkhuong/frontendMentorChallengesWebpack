@@ -3,11 +3,14 @@ import SidebarStyles from "./Sidebar.module.css";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 import ThemeToggle from "./ThemeToggle";
 import BoardSelector from "./BoardSelector/index";
+import HideSidebar from "./HideBar/index";
 
 export default function Sidebar({ children }) {
   const isTabletSize = useMediaQuery("min", 768);
   return (
     <div
+      id="sidebar-menu-show-selector"
+      data-show-sidebar-menu="false"
       className={SidebarStyles[`sidebar-modal`]}
       role={`${isTabletSize ? "" : "dialog"}`}
       aria-modal={`${isTabletSize ? "false" : "true"}`}
@@ -21,6 +24,7 @@ export default function Sidebar({ children }) {
         <BoardSelector />
         {/* themetoggle */}
         <ThemeToggle />
+        <HideSidebar />
       </aside>
     </div>
   );
