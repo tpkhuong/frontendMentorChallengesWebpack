@@ -16,6 +16,7 @@
     border-bottom: 1px solid;
     border-bottom-color: transparent;
   }
+  /* work on delaying movement of showing spacer */
   .spacer {
     display: inline-block;
     width: 56px;

@@ -19,8 +19,40 @@
   }
 }
 
+/* --hover-hide-sidebar-dark-bg
+--hover-hide-sidebar-dark-fg
+
+--hover-hide-sidebar-light-bg
+--hover-hide-sidebar-light-fg */
+
 @media screen and (min-width: 90rem) {
+  .hide-sidebar-style-wrapper {
+    padding-inline-end: 24px;
+  }
+
+  .hide-sidebar-btn:hover,
+  .hide-sidebar-btn:focus {
+    background-color: var(
+      --hover-hide-sidebar-dark-bg,
+      var(--hover-hide-sidebar-light-bg)
+    );
+    color: var(
+      --hover-hide-sidebar-dark-fg,
+      var(--hover-hide-sidebar-light-fg)
+    );
+  }
+
+  .hide-sidebar-btn:hover path,
+  .hide-sidebar-btn:focus path {
+    fill: var(--hover-hide-sidebar-dark-fg, var(--hover-hide-sidebar-light-fg));
+  }
+
   .hide-sidebar-btn {
+    border-top-right-radius: 100vw;
+    border-bottom-right-radius: 100vw;
+    padding-inline-start: 32px;
     gap: 16px;
+    padding-block: 14px;
+    width: 100%;
   }
 }

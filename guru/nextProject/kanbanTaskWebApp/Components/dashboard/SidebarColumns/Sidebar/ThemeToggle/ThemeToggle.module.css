@@ -50,3 +50,10 @@
     margin-block-start: auto;
   }
 }
+
+@media screen and (min-width: 90rem) {
+  .toggle-container {
+    padding-inline: 24px;
+    margin-block-end: 8px;
+  }
+}

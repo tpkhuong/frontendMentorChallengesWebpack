@@ -93,3 +93,14 @@ ul.ul-container-of-btns {
     padding-inline-end: 20px;
   }
 }
+
+@media screen and (min-width: 90rem) {
+  .board-selector-btn {
+    gap: 16px;
+    padding-inline-start: 32px;
+  }
+
+  .create-new-board-btn {
+    padding-inline-start: 32px;
+  }
+}

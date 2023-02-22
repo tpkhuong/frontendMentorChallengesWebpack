@@ -1,44 +1,48 @@
 import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 
-const testArr = [
-  {
-    title: "Platform Launch",
-    user: "coolperson@gmail.com",
-    columns: {
-      todo: [],
-      doing: [],
-      done: [],
+const testObj = {
+  clickedIndex: null,
+  testArr: [
+    {
+      title: "Platform Launch",
+      user: "coolperson@gmail.com",
+      columns: {
+        todo: [],
+        doing: [],
+        done: [],
+      },
+      index: 0,
+      selected: true,
     },
-    index: 0,
-    selected: true,
-  },
-  {
-    title: "Marketing Plan",
-    user: "coolperson@gmail.com",
-    columns: {
-      todo: [],
-      doing: [],
-      done: [],
+    {
+      title: "Marketing Plan",
+      user: "coolperson@gmail.com",
+      columns: {
+        todo: [],
+        doing: [],
+        done: [],
+      },
+      index: 1,
+      selected: false,
     },
-    index: 1,
-    selected: false,
-  },
-  {
-    title: "Roadmap",
-    user: "coolperson@gmail.com",
-    columns: {
-      todo: [],
-      doing: [],
-      done: [],
+    {
+      title: "Roadmap",
+      user: "coolperson@gmail.com",
+      columns: {
+        todo: [],
+        doing: [],
+        done: [],
+      },
+      index: 2,
+      selected: false,
     },
-    index: 2,
-    selected: false,
-  },
-];
+  ],
+};
 
 export default function BoardSelector({ children }) {
-  const length = testArr.length;
+  const [initialValuesObj, setBoardSelector] = React.useState(testObj);
+
   // have attr data-boardindex
   // use boardindex to apply data-currentselectedboard "true"
   // when boardindex matches the index of item in array of property boards of currentuser obj
@@ -53,18 +57,40 @@ export default function BoardSelector({ children }) {
       {/* number of boards */}
       <span className={BoardSelectorStyles[`boards-quantity`]}>
         <span>ALL BOARDS</span>
-        <span>({length})</span>
+        <span>({initialValuesObj.testArr.length})</span>
       </span>
       {/* buttons container */}
-      <div
-        onClick={(event) => {
-          console.log(testArr);
-        }}
-        className={BoardSelectorStyles[`board-selector-btns-container`]}
-      >
+      <div className={BoardSelectorStyles[`board-selector-btns-container`]}>
         {/* board selector btn */}
-        <ul className={BoardSelectorStyles[`ul-container-of-btns`]}>
-          {testArr.map(function createBoardBtn(item, index) {
+        <ul
+          onClick={(event) => {
+            const clickedBoardBtn = event.target.closest("BUTTON");
+            const copiedArr = [...initialValuesObj.testArr];
+
+            if (clickedBoardBtn) {
+              const boardIndex = Number(
+                clickedBoardBtn.getAttribute("data-boardindex")
+              );
+
+              copiedArr.forEach(function changeCurrentSelected(obj, index) {
+                if (index == boardIndex) {
+                  obj.selected = true;
+                } else {
+                  obj.selected = false;
+                }
+              });
+
+              setBoardSelector((prev) => {
+                return {
+                  clickedIndex: boardIndex,
+                  testArr: [].concat(copiedArr),
+                };
+              });
+            }
+          }}
+          className={BoardSelectorStyles[`ul-container-of-btns`]}
+        >
+          {initialValuesObj.testArr.map(function createBoardBtn(item, index) {
             return (
               <li key={Math.random() * index}>
                 <button

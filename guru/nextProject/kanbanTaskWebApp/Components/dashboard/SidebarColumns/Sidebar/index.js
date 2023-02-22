@@ -10,7 +10,7 @@ export default function Sidebar({ children }) {
   return (
     <div
       id="sidebar-menu-show-selector"
-      data-show-sidebar-menu="false"
+      data-showsidebar-menu="false"
       className={SidebarStyles[`sidebar-modal`]}
       role={`${isTabletSize ? "" : "dialog"}`}
       aria-modal={`${isTabletSize ? "false" : "true"}`}
@@ -23,6 +23,7 @@ export default function Sidebar({ children }) {
         {/* boardselector */}
         <BoardSelector />
         {/* themetoggle */}
+        <button>Learning</button>
         <ThemeToggle />
         <HideSidebar />
       </aside>

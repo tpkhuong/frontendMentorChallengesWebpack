@@ -26,6 +26,17 @@
 }
 
 @media screen and (min-width: 48rem) {
+  .sidebar-modal {
+    transition: transform 1.5s linear;
+  }
+  .sidebar-modal[data-showsidebar-menu="false"] {
+    transform: translateX(-262px);
+  }
+
+  .sidebar-modal[data-showsidebar-menu="true"] {
+    transform: translateX(0px);
+  }
+
   .boards-toggle-container {
     --border: 1px solid var(--dark-theme-lines, var(--color-light-lines));
     max-width: 262px;
@@ -38,4 +49,9 @@
 }
 
 @media screen and (min-width: 90rem) {
+  .boards-toggle-container {
+    max-width: 300px;
+    height: 800.2px;
+    padding-block-start: 16px;
+  }
 }
