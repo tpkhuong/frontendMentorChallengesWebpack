@@ -1,7 +1,7 @@
 import React from "react";
 import AddTaskBtnStyles from "./AddTaskBtn.module.css";
 import AddTaskModal from "./AddTaskModal/index";
-import { BoardTaskRenderContext } from "../../Context";
+import { BoardTaskRenderContext } from "../../Context/index";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 
 export default function AddTaskBtn({ children }) {

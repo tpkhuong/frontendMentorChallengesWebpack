@@ -1,8 +1,11 @@
 import React from "react";
 import HideBarStyles from "./HideBar.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
+import { BoardTaskRenderContext } from "../../../Context/index";
 
 export default function HideSidebar({ children }) {
+  const renderContextHideSidebar = React.useContext(BoardTaskRenderContext);
+
   const isTabletSize = useMediaQuery("min", 768);
   return (
     <React.Fragment>
@@ -12,6 +15,31 @@ export default function HideSidebar({ children }) {
             aria-label="hide side bar"
             role="button"
             className={HideBarStyles[`hide-sidebar-btn`]}
+            // attr is "true" assign "false"
+            onClick={(event) => {
+              const sidebar = document.getElementById(
+                "sidebar-menu-show-selector"
+              );
+              const logoSpacer = document.getElementById("logo-spacer");
+
+              const hideSidebarBtnClicked = event.target.closest("BUTTON");
+
+              if (hideSidebarBtnClicked) {
+                // delay rendering showsidebarbtn
+                // sidebar
+                if (sidebar.getAttribute("data-showsidebar-menu") == "true") {
+                  sidebar.setAttribute("data-showsidebar-menu", "false");
+                }
+                // spacer
+                if (logoSpacer.getAttribute("data-showsidebar") == "true") {
+                  logoSpacer.setAttribute("data-showsidebar", "false");
+                }
+
+                setTimeout(() => {
+                  renderContextHideSidebar.setStateFuncs.showSidebarBtn(true);
+                }, 2050);
+              }
+            }}
           >
             <svg
               className={HideBarStyles[`hide-icon`]}

@@ -24,11 +24,12 @@
 .add-task-title {
   border: 1px solid red;
 }
-
+/* move animation to sidebarcolumns css */
 @media screen and (min-width: 48rem) {
   .sidebar-modal {
-    transition: transform 1.5s linear;
+    transition: transform 2s linear;
   }
+
   .sidebar-modal[data-showsidebar-menu="false"] {
     transform: translateX(-262px);
   }
@@ -50,8 +51,12 @@
 
 @media screen and (min-width: 90rem) {
   .boards-toggle-container {
-    max-width: 300px;
+    max-width: 301px;
     height: 800.2px;
     padding-block-start: 16px;
+  }
+
+  .sidebar-modal[data-showsidebar-menu="false"] {
+    transform: translateX(-301px);
   }
 }

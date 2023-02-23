@@ -1,0 +1,12 @@
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .columns-message-container {
+    position: relative;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+}

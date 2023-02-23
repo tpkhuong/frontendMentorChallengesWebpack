@@ -1,0 +1,19 @@
+/* tablet */
+
+.show-sidebar-btn:hover,
+.show-sidebar-btn:focus {
+  background-color: var(--color-purple-secondary);
+}
+
+.show-sidebar-btn {
+  background-color: var(--color-purple);
+  position: absolute;
+  bottom: 32px;
+
+  border-top-right-radius: 100vw;
+  border-bottom-right-radius: 100vw;
+
+  padding: 18px;
+}
+
+/* desktop */

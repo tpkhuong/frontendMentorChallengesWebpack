@@ -1,5 +1,5 @@
 import React from "react";
-import { BoardTaskRenderContext } from "../../Context";
+import { BoardTaskRenderContext } from "../../Context/index";
 import LogoStyles from "./Logo.module.css";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 

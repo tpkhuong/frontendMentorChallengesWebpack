@@ -20,7 +20,7 @@
   .spacer {
     display: inline-block;
     width: 56px;
-    transition: width 1s linear;
+    transition: width 435ms linear;
   }
 }
 /* desktop */
@@ -32,5 +32,6 @@
   }
   .spacer {
     width: 87px;
+    transition: width 575ms linear;
   }
 }
