@@ -14,7 +14,76 @@ export default function BoardTitle({ children }) {
           className={BoardTitleStyles[`mobile-menu-btn`]}
           role="button"
           aria-label="open current board menu"
-          data-showboardmenu="false"
+          id="mobile-title-btn"
+          onClick={(event) => {
+            const mobileMenuBtnClicked = event.target.closest("BUTTON");
+
+            if (mobileMenuBtnClicked) {
+              // show mobile menu
+              const mobileMenuModal = document.getElementById(
+                "sidebar-mobile-selector"
+              );
+
+              mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
+                ? mobileMenuModal.setAttribute("data-show-mobile-menu", "true")
+                : mobileMenuModal.setAttribute(
+                    "data-show-mobile-menu",
+                    "false"
+                  );
+              // focus btn based on length of currentUsers boards property
+              const boards = JSON.parse(
+                localStorage.getItem("currentUser")
+              ).boards;
+
+              if (boards.length == 0) {
+                // focus create new board btn
+                document.getElementById("mobile-tab-selector").focus();
+                return;
+              } else {
+                // focus element with data-boardindex == 0
+                document.querySelector("[data-boardindex='0']").focus();
+                return;
+              }
+            }
+          }}
+          onKeyDown={(event) => {
+            // only when mobile menu is showen
+            // we run key down algorithm
+            const mobileMenu = document.getElementById(
+              "sidebar-mobile-selector"
+            );
+
+            if (mobileMenu.getAttribute("data-show-mobile-menu") == "true") {
+              // tab focus
+              const currentUser = JSON.parse(
+                localStorage.getItem("currentUser")
+              );
+
+              const currentBoards = currentUser.boards;
+
+              // shift tab
+              if (event.shiftKey && event.code == "Tab") {
+                // focus toggle theme btn
+                document.getElementById("toggle-theme-btn").focus();
+                event.preventDefault();
+                return;
+              }
+
+              if (event.code == "Tab") {
+                if (currentBoards.length > 0) {
+                  document.querySelector("[data-boardindex='0']").focus();
+                  event.preventDefault();
+                  return;
+                } else {
+                  document.getElementById("mobile-tab-selector").focus();
+                  event.preventDefault();
+                  return;
+                }
+              }
+            }
+
+            console.log("show mobile is false");
+          }}
         >
           <h2 className={BoardTitleStyles[`title`]}>Platform Launch</h2>
           <span className={BoardTitleStyles[`chevron-down`]}>

@@ -5,17 +5,13 @@ import ThemeToggle from "./ThemeToggle";
 import BoardSelector from "./BoardSelector/index";
 import HideSidebar from "./HideBar/index";
 
-const styleObj = {
-  transform: "translateX(262px)",
-};
-
 export default function Sidebar({ children }) {
   const isTabletSize = useMediaQuery("min", 768);
   return (
     // move animation to parent element sidebarcolumns
     <div
-      id="sidebar-menu-show-selector"
-      data-showsidebar-menu="true"
+      id="sidebar-mobile-selector"
+      data-show-mobile-menu="false"
       className={SidebarStyles[`sidebar-modal`]}
       role={`${isTabletSize ? "" : "dialog"}`}
       aria-modal={`${isTabletSize ? "false" : "true"}`}
@@ -28,7 +24,7 @@ export default function Sidebar({ children }) {
         {/* boardselector */}
         <BoardSelector />
         {/* themetoggle */}
-        <button
+        {/* <button
           style={styleObj}
           onClick={(event) => {
             const sidebar = document.getElementById(
@@ -60,7 +56,7 @@ export default function Sidebar({ children }) {
           }}
         >
           Learning
-        </button>
+        </button> */}
         <ThemeToggle />
         <HideSidebar />
       </aside>

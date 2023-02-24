@@ -1,0 +1,44 @@
+[data-apptheme="dark"] .empty-message-modal-bg {
+  --empty-message-bg-dark: var(--color-dark-bg);
+}
+/* [data-showsidebar-menu="true"] is attr declared on ancestors of empty-message-modal */
+
+[data-showsidebar-menu="true"] .empty-message-modal-bg {
+  /* background-color: black; */
+}
+
+.empty-message-modal-bg {
+  background-color: var(--empty-message-bg-dark, var(--color-light-bg));
+  min-height: calc(812px - 64px);
+  text-align: center;
+  font-weight: 600;
+  padding-inline: 16px;
+
+  display: flex;
+  align-items: center;
+}
+
+.empty-message-container {
+  font-size: var(--heading-sm-four);
+  color: var(--color-medium-grey);
+}
+
+.add-column-btn {
+  background-color: var(--color-purple);
+  padding: 18px;
+  padding-block: 10px;
+  border-radius: 100vw;
+  margin-block-start: 25px;
+}
+
+.add-column-btn span {
+  font-size: var(--heading-reg-sm);
+  color: var(--color-neutral-white);
+}
+
+@media screen and (min-width: 48rem) {
+  .empty-message-modal-bg {
+    position: absolute;
+    inset: 0;
+  }
+}

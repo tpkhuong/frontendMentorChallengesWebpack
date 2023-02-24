@@ -1,9 +1,12 @@
 import React from "react";
 import { BoardTaskRenderContext } from "../../../Context/index";
 import ThemeToggleStyles from "./ThemeToggle.module.css";
+import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import HideSidebar from "../HideBar";
 
 export default function ThemeToggle({ children }) {
+  const isLargerThanMobile = useMediaQuery("min", 768);
+
   const renderContextForToggleBtn = React.useContext(BoardTaskRenderContext);
 
   const toggleThemeMethods = {
@@ -59,7 +62,60 @@ export default function ThemeToggle({ children }) {
           />
         </svg>
         {/* toggle */}
-        <button
+        {isLargerThanMobile ? (
+          <button
+            aria-label="toggle light dark theme currently light theme"
+            id="toggle-theme-btn"
+            className={ThemeToggleStyles[`toggle-btn`]}
+            data-currenttheme="light"
+            onClick={(event) => {
+              const dashboardContainer = document.getElementById("color-theme");
+              const toggleBtn = event.target.closest("BUTTON");
+              toggleThemeMethods[toggleBtn.getAttribute("data-currenttheme")](
+                toggleBtn,
+                dashboardContainer
+              );
+            }}
+          >
+            <span className={ThemeToggleStyles[`toggle-circle`]}></span>
+          </button>
+        ) : (
+          <button
+            aria-label="toggle light dark theme currently light theme"
+            id="toggle-theme-btn"
+            className={ThemeToggleStyles[`toggle-btn`]}
+            data-currenttheme="light"
+            onKeyDown={(event) => {
+              const mobileMenuModal = document.getElementById(
+                "sidebar-mobile-selector"
+              );
+
+              if (
+                mobileMenuModal.getAttribute("data-show-mobile-menu") == "true"
+              ) {
+                if (!event.shiftKey) {
+                  if (event.code == "Tab") {
+                    // focus title btn
+                    document.getElementById("mobile-title-btn").focus();
+                    event.preventDefault();
+                    return;
+                  }
+                }
+              }
+            }}
+            onClick={(event) => {
+              const dashboardContainer = document.getElementById("color-theme");
+              const toggleBtn = event.target.closest("BUTTON");
+              toggleThemeMethods[toggleBtn.getAttribute("data-currenttheme")](
+                toggleBtn,
+                dashboardContainer
+              );
+            }}
+          >
+            <span className={ThemeToggleStyles[`toggle-circle`]}></span>
+          </button>
+        )}
+        {/* <button
           aria-label="toggle light dark theme currently light theme"
           id="toggle-theme-btn"
           className={ThemeToggleStyles[`toggle-btn`]}
@@ -74,7 +130,7 @@ export default function ThemeToggle({ children }) {
           }}
         >
           <span className={ThemeToggleStyles[`toggle-circle`]}></span>
-        </button>
+        </button> */}
         {/* dark theme icon */}
         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
           <path

@@ -3,6 +3,30 @@
 @media screen and (max-width: 23.4375rem) {
   .sidebar-columns-container {
     position: relative;
-    height: 100%;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  .sidebar-columns-container {
+    transition: transform 2s linear;
+    min-width: 1030px;
+    display: flex;
+  }
+
+  .sidebar-columns-container[data-showsidebar-menu="false"] {
+    transform: translateX(-262px);
+  }
+
+  .sidebar-columns-container[data-showsidebar-menu="true"] {
+    transform: translateX(0px);
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  .sidebar-columns-container {
+    min-width: 1741px;
+  }
+  .sidebar-columns-container[data-showsidebar-menu="false"] {
+    transform: translateX(-301px);
   }
 }

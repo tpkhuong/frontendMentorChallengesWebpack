@@ -93,3 +93,12 @@
 .dashboard {
   color: var(--fg, --color-neutral-black);
 }
+
+@media screen and (min-width: 48rem) {
+  .dashboard {
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+}

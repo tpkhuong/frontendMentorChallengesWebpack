@@ -1,13 +1,19 @@
 /* mobile */
 
 @media screen and (max-width: 23.4375rem) {
+  .sidebar-modal[data-show-mobile-menu="true"] {
+    display: revert;
+  }
+
   .sidebar-modal {
     height: 100%;
+    display: none;
     position: absolute;
     background-color: hsla(0 0% 0% / 0.4);
     inset: 0;
     padding-block-start: 12px;
     padding-inline: 56px;
+    z-index: 1;
   }
 
   .boards-toggle-container {
@@ -27,6 +33,9 @@
 /* move animation to sidebarcolumns css */
 @media screen and (min-width: 48rem) {
   .sidebar-modal {
+    min-width: 262px;
+  }
+  /* .sidebar-modal {
     transition: transform 2s linear;
   }
 
@@ -36,7 +45,7 @@
 
   .sidebar-modal[data-showsidebar-menu="true"] {
     transform: translateX(0px);
-  }
+  } */
 
   .boards-toggle-container {
     --border: 1px solid var(--dark-theme-lines, var(--color-light-lines));
@@ -50,13 +59,12 @@
 }
 
 @media screen and (min-width: 90rem) {
+  .sidebar-modal {
+    min-width: 301px;
+  }
   .boards-toggle-container {
     max-width: 301px;
     height: 800.2px;
     padding-block-start: 16px;
-  }
-
-  .sidebar-modal[data-showsidebar-menu="false"] {
-    transform: translateX(-301px);
   }
 }
