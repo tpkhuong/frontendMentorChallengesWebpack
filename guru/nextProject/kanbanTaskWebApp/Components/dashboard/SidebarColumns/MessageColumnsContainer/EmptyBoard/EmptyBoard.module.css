@@ -3,9 +3,9 @@
 }
 /* [data-showsidebar-menu="true"] is attr declared on ancestors of empty-message-modal */
 
-[data-showsidebar-menu="true"] .empty-message-modal-bg {
-  /* background-color: black; */
-}
+/* [data-showsidebar-menu="true"] .empty-message-modal-bg {
+  background-color: black;
+} */
 
 .empty-message-modal-bg {
   background-color: var(--empty-message-bg-dark, var(--color-light-bg));
@@ -37,8 +37,21 @@
 }
 
 @media screen and (min-width: 48rem) {
+  [data-showsidebar-menu="true"] .empty-message-modal-bg {
+    right: 262px;
+  }
+
   .empty-message-modal-bg {
     position: absolute;
     inset: 0;
+    justify-content: center;
+
+    transition: right 2s linear;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  [data-showsidebar-menu="true"] .empty-message-modal-bg {
+    right: 301px;
   }
 }

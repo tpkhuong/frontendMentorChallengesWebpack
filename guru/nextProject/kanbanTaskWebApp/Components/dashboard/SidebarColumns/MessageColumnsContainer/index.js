@@ -1,11 +1,11 @@
 import React from "react";
-import ColumnsStyles from "./Columns.module.css";
+import MessageColumnsStyles from "./MessageColumnsContainer.module.css";
 import ShowSidebarBtn from "./ShowSidebar/index";
 import EmptyBoardMessage from "./EmptyBoard/index";
 
-export default function Columns({ children }) {
+export default function MessageColumnsContainer({ children }) {
   return (
-    <div className={ColumnsStyles[`columns-message-container`]}>
+    <div className={MessageColumnsStyles[`columns-message-container`]}>
       <EmptyBoardMessage />
       {/* padding declare on parent of single column */}
       <ShowSidebarBtn />

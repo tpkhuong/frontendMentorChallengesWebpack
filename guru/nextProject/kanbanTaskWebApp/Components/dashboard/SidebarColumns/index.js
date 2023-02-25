@@ -1,7 +1,7 @@
 import React from "react";
 import SidebarColumnsContainerStyles from "./SidebarColumns.module.css";
 import Sidebar from "./Sidebar";
-import Columns from "./Columns";
+import MessageColumnsContainer from "./MessageColumnsContainer/index";
 
 export default function SidebarColumns({ children }) {
   return (
@@ -14,7 +14,7 @@ export default function SidebarColumns({ children }) {
       {/* sidebar */}
       <Sidebar />
       {/* columns */}
-      <Columns />
+      <MessageColumnsContainer />
     </div>
   );
 }

@@ -7,17 +7,17 @@
 
   /* btns */
 
-  --selectedboard-sidebar-light: var(--color-purple);
+  /* --selectedboard-sidebar-light: var(--color-purple); */
 
   --addcreate-taskboard-save-btn-light: var(--color-purple);
 
   --addsubtask-addcolumn-cancel-btn-light-bg: hsl(240, 45%, 96%);
-  --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%);
-  --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%);
+  /* --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%); */
+  /* --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%); */
 
   --addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple);
-  --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
-  --hover-hide-sidebar-light-fg: var(--color-purple);
+  /* --hover-notselectedboard-sidebar-light-fg: var(--color-purple); */
+  /* --hover-hide-sidebar-light-fg: var(--color-purple); */
 
   --hover-addnewtask-create-btn: var(--color-purple-secondary);
 
@@ -32,12 +32,12 @@
   --modal-labels-light: var(--color-medium-grey);
   /* toggle */
 
-  --toggle-icon-container-bg-light: var(--color-light-bg);
-  --toggle-bg-light: var(--color-purple);
-  --createboard--hover-new-column-taskbtn-light: var(--color-purple);
-  --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%);
+  /* --toggle-icon-container-bg-light: var(--color-light-bg);
+  --toggle-bg-light: var(--color-purple); */
+  --createboard-hover-new-column-taskbtn-light: var(--color-purple);
+  /* --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%); */
 
-  --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2);
+  /* --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2); */
 }
 
 .dashboard[data-apptheme="dark"] {
@@ -49,19 +49,19 @@
 
   /* btns */
 
-  --selectedboard-sidebar-dark: var(--color-purple-secondary);
+  /* --selectedboard-sidebar-dark: var(--color-purple-secondary); */
   --addcreate-taskboard-save-btn-dark: var(--color-purple-secondary);
 
   --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-neutral-white);
-  --notselectedboard-sidebar-dark-bg: var(--color-neutral-white);
-  --hover-hide-sidebar-dark-bg: var(--color-neutral-white);
+  /* --notselectedboard-sidebar-dark-bg: var(--color-neutral-white); */
+  /* --hover-hide-sidebar-dark-bg: var(--color-neutral-white); */
 
   --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-purple);
-  --notselectedboard-sidebar-dark-fg: var(--color-purple);
-  --hover-hide-sidebar-dark-fg: var(--color-purple);
+  /* --notselectedboard-sidebar-dark-fg: var(--color-purple); */
+  /* --hover-hide-sidebar-dark-fg: var(--color-purple); */
 
-  --logout-fg-dark: var(--color-purple);
-  --logout-bg-dark: var(--color-neutral-white);
+  /* --logout-fg-dark: var(--color-purple);
+  --logout-bg-dark: var(--color-neutral-white); */
 
   /* modals */
   --top-sidebar-modals-bg: var(--color-dark-grey);
@@ -69,19 +69,19 @@
   --edit-delete-modals-box-shadow-dark: 0px 0px 10px 3px hsla(0 100% 100% / 0.4);
   --modal-inputs-border-dark: hsl(226, 12%, 29%);
   --modal-labels-dark: var(--color-neutral-white);
-  --close-modal-btn-dark: var(--color-neutral-white);
+  /* --close-modal-btn-dark: var(--color-neutral-white); */
   --modal-placeholder-fg-dark: hsl(233, 4%, 39%);
   --modal-input-placeholder-dark: hsl(233, 4%, 39%);
   --modal-input-dark: var(--color-neutral-white);
-  --status-value-dark: var(--color-neutral-white);
-  --status-drop-down-menu-bg-dark: var(--color-dark-bg);
+  /* --status-value-dark: var(--color-neutral-white); */
+  /* --status-drop-down-menu-bg-dark: var(--color-dark-bg); */
 
   /* toggle */
 
-  --subtasks-hover-dark: hsl(240, 23%, 29%);
-  --createboard--hover-new-column-taskbtn-dark: var(--color-purple-secondary);
-  --toggle-bg-dark: var(--color-purple-secondary);
-  --toggle-icon-container-bg-dark: var(--color-dark-bg);
+  /* --subtasks-hover-dark: hsl(240, 23%, 29%); */
+  --createboard-hover-new-column-taskbtn-dark: var(--color-purple-secondary);
+  /* --toggle-bg-dark: var(--color-purple-secondary);
+  --toggle-icon-container-bg-dark: var(--color-dark-bg); */
 }
 
 @media screen and (max-width: 23.4375rem) {

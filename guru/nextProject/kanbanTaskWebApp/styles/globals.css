@@ -322,62 +322,62 @@ button:hover {
 
 .light {
   /* text and logo */
-  --color-text-logo-light: var(--color-neutral-black);
+  /* --color-text-logo-light: var(--color-neutral-black); */
 
   /* btns */
 
-  --selectedboard-sidebar-light: var(--color-purple);
+  /* --selectedboard-sidebar-light: var(--color-purple); */
 
-  --addcreate-taskboard-save-btn-light: var(--color-purple);
+  /* --addcreate-taskboard-save-btn-light: var(--color-purple); */
 
-  --addsubtask-addcolumn-cancel-btn-light-bg: hsl(240, 45%, 96%);
-  --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%);
-  --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%);
+  /* --addsubtask-addcolumn-cancel-btn-light-bg: hsl(240, 45%, 96%); */
+  /* --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%); */
+  /* --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%); */
 
-  --addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple);
-  --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
-  --hover-hide-sidebar-light-fg: var(--color-purple);
+  /* --addsubtask-addcolumn-cancel-btn-light-fg: var(--color-purple); */
+  /* --hover-notselectedboard-sidebar-light-fg: var(--color-purple); */
+  /* --hover-hide-sidebar-light-fg: var(--color-purple); */
 
-  --input-placeholder-light: hsl(240, 4%, 76%);
-  --input-placeholder-dark: hsl(233, 4%, 39%);
+  /* --input-placeholder-light: hsl(240, 4%, 76%); */
+  /* --input-placeholder-dark: hsl(233, 4%, 39%); */
 
   /* modals */
 
-  --modals-label-light: var(--color-medium-grey);
-  --modal-subtasks-title-light: var(--color-medium-grey);
+  /* --modals-label-light: var(--color-medium-grey); */
+  /* --modal-subtasks-title-light: var(--color-medium-grey); */
 
   /* toggle */
 
-  --toggle-icon-container-bg-light: var(--color-light-bg);
-  --toggle-bg-light: var(--color-purple);
-  --createboard--hover-new-column-taskbtn-light: var(--color-purple);
-  --subtasks-hover-light: hsl(242, 48%, 89%);
+  /* --toggle-icon-container-bg-light: var(--color-light-bg); */
+  /* --toggle-bg-light: var(--color-purple); */
+  /* --createboard--hover-new-column-taskbtn-light: var(--color-purple); */
+  /* --subtasks-hover-light: hsl(242, 48%, 89%); */
 }
 
 .dark {
   /* text and logo */
 
-  --color-text-logo-dark: var(--color-neutral-white);
+  /* --color-text-logo-dark: var(--color-neutral-white); */
 
   /* btns */
 
-  --selectedboard-sidebar-dark: var(--color-purple-secondary);
-  --addcreate-taskboard-save-btn-dark: var(--color-purple-secondary);
+  /* --selectedboard-sidebar-dark: var(--color-purple-secondary); */
+  /* --addcreate-taskboard-save-btn-dark: var(--color-purple-secondary); */
 
-  --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary);
-  --notselectedboard-sidebar-dark-bg: var(--color-purple-secondary);
-  --hover-hide-sidebar-dark-bg: var(--color-purple-secondary);
+  /* --addsubtask-addcolumn-cancel-btn-dark-bg: var(--color-purple-secondary); */
+  /* --notselectedboard-sidebar-dark-bg: var(--color-purple-secondary); */
+  /* --hover-hide-sidebar-dark-bg: var(--color-purple-secondary); */
 
-  --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white);
-  --notselectedboard-sidebar-dark-fg: var(--color-neutral-white);
-  --hover-hide-sidebar-dark-fg: var(--color-neutral-white);
+  /* --addsubtask-addcolumn-cancel-btn-dark-fg: var(--color-neutral-white); */
+  /* --notselectedboard-sidebar-dark-fg: var(--color-neutral-white); */
+  /* --hover-hide-sidebar-dark-fg: var(--color-neutral-white); */
 
   /* modals */
 
   /* toggle */
 
-  --subtasks-hover-dark: hsl(240, 23%, 29%);
-  --createboard--hover-new-column-taskbtn-dark: var(--color-purple-secondary);
-  --toggle-bg-dark: var(--color-purple-secondary);
-  --toggle-icon-container-bg-dark: var(--color-dark-bg);
+  /* --subtasks-hover-dark: hsl(240, 23%, 29%); */
+  /* --createboard--hover-new-column-taskbtn-dark: var(--color-purple-secondary); */
+  /* --toggle-bg-dark: var(--color-purple-secondary); */
+  /* --toggle-icon-container-bg-dark: var(--color-dark-bg); */
 }

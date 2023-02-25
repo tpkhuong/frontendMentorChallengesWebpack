@@ -1,5 +1,21 @@
 /* mobile */
 
+[data-apptheme="light"] .sidebar-modal {
+  --selectedboard-sidebar-light: var(--color-purple);
+  --hover-notselectedboard-sidebar-light-bg: hsl(240, 45%, 96%);
+  --hover-hide-sidebar-light-bg: hsl(240, 45%, 96%);
+  --hover-notselectedboard-sidebar-light-fg: var(--color-purple);
+  --hover-hide-sidebar-light-fg: var(--color-purple);
+}
+
+[data-apptheme="dark"] .sidebar-modal {
+  --selectedboard-sidebar-dark: var(--color-purple-secondary);
+  --notselectedboard-sidebar-dark-bg: var(--color-neutral-white);
+  --hover-hide-sidebar-dark-bg: var(--color-neutral-white);
+  --notselectedboard-sidebar-dark-fg: var(--color-purple);
+  --hover-hide-sidebar-dark-fg: var(--color-purple);
+}
+
 @media screen and (max-width: 23.4375rem) {
   .sidebar-modal[data-show-mobile-menu="true"] {
     display: revert;

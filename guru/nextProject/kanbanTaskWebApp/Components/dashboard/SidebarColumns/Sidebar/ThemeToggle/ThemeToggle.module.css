@@ -1,5 +1,15 @@
 /* mobile */
 
+[data-apptheme="light"] .toggle-container {
+  --toggle-icon-container-bg-light: var(--color-light-bg);
+  --toggle-bg-light: var(--color-purple);
+}
+
+[data-apptheme="dark"] .toggle-container {
+  --toggle-bg-dark: var(--color-purple-secondary);
+  --toggle-icon-container-bg-dark: var(--color-dark-bg);
+}
+
 .toggle-container {
   padding-inline: 15px;
 }

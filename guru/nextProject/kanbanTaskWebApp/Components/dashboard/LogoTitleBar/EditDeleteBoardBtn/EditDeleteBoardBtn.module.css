@@ -1,5 +1,10 @@
 /* mobile: modal size: 56.25 */
 
+[data-apptheme="dark"] .edit-delete-board-modal-wrapper {
+  --logout-fg-dark: var(--color-purple);
+  --logout-bg-dark: var(--color-neutral-white);
+}
+
 .open-edit-delete-board-btn {
   background-color: transparent;
 }

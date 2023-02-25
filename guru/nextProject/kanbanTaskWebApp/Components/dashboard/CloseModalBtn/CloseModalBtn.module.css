@@ -1,3 +1,7 @@
+[data-apptheme="dark"] .close-btn {
+  --close-modal-btn-dark: var(--color-neutral-white);
+}
+
 .close-btn {
   background-color: transparent;
 }

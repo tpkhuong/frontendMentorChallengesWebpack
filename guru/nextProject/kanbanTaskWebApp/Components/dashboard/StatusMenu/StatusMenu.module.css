@@ -1,5 +1,14 @@
 /* mobile */
 
+[data-apptheme="light"] .statusbar-container {
+  --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2);
+}
+
+[data-apptheme="dark"] .statusbar-container {
+  --status-value-dark: var(--color-neutral-white);
+  --status-drop-down-menu-bg-dark: var(--color-dark-bg);
+}
+
 .statusbar-container {
   display: flex;
   flex-direction: column;

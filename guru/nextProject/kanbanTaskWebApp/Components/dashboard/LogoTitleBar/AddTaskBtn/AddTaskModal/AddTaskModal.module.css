@@ -1,10 +1,20 @@
 /* mobile */
 /* --heading-reg-xx-sm add subtask create task*/
 /* --modal-inputs-border-dark */
+
+[data-apptheme="light"] .modal-bg {
+  --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%);
+}
+
+[data-apptheme="dark"] .modal-bg {
+  --subtasks-hover-dark: hsl(240, 23%, 29%);
+}
+
 .modal-bg {
   position: absolute;
   inset: 0;
   background-color: hsla(0 0% 0% / 0.4);
+  z-index: 1;
 }
 
 .add-task-modal {
