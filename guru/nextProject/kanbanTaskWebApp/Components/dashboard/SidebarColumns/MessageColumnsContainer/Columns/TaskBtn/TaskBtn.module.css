@@ -1,0 +1,32 @@
+[data-apptheme="light"] .task-btn {
+  --task-btn-box-shadow-light: hsl(216, 38%, 92%);
+}
+
+[data-apptheme="dark"] .task-btn {
+  --task-btn-dark-bg: var(--color-dark-grey);
+}
+
+.task-btn {
+  background-color: var(--task-btn-dark-bg, var(--color-neutral-white));
+  display: block;
+  padding-block: 23px;
+  padding-inline: 16px;
+  box-shadow: 0px 3px 16px 0px
+    var(--task-btn-box-shadow-light, var(--color-neutral-black));
+  border-radius: 8px;
+}
+
+.task-title {
+  font-size: var(--heading-reg-sm);
+  color: var(--fg, var(--color-neutral-black));
+}
+
+.subtasks-container {
+  color: var(--color-medium-grey);
+  font-size: var(--heading-reg-xxx-sm);
+  font-weight: 600;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-block-start: 8px;
+}

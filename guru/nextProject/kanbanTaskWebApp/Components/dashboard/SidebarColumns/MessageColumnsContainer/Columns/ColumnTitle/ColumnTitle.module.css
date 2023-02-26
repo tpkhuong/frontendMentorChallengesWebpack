@@ -1,0 +1,35 @@
+/* todo: hsl 193 75% 59% */
+/* doing: hsl 248 83% 70% */
+/* done: 155 68% 65% */
+
+.circle-title-container {
+  font-size: var(--heading-reg-xxx-sm);
+  color: var(--color-medium-grey);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  display: block;
+  padding: 8px;
+  margin-inline-end: 12px;
+  border-radius: 50%;
+}
+
+.circle[data-statusbtncolor="todo"] {
+  background-color: hsl(193, 75%, 59%);
+}
+
+.circle[data-statusbtncolor="doing"] {
+  background-color: hsl(248, 83%, 70%);
+}
+
+.circle[data-statusbtncolor="done"] {
+  background-color: hsl(155, 68%, 65%);
+}
+
+.quantity {
+  margin-inline-start: 7px;
+  letter-spacing: 2px;
+}
