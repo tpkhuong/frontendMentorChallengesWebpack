@@ -1,4 +1,16 @@
 /* mobile */
 
+.todo-tasks-container {
+  margin-block-start: 24px;
+  list-style: none;
+  padding-inline-start: 0;
+
+  display: flex;
+  flex-flow: column wrap;
+
+  gap: 20px;
+  max-height: 748px;
+}
+
 /* tablet */
 /* desktop */

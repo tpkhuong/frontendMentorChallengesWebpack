@@ -1,7 +1,25 @@
 /* tablet */
 
+[data-apptheme="dark"] .columns-message-container {
+  --column-container-bg-dark: var(--color-dark-bg);
+}
+
+/* --color-dark-bg
+--color-light-bg */
+
+.columns-message-container {
+  background-color: var(--column-container-bg-dark, var(--color-light-bg));
+  padding-block-start: 24px;
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+  min-height: 748px;
+
+  overflow-x: scroll;
+}
+
 @media screen and (min-width: 48rem) {
   .columns-message-container {
+    padding-inline-end: 0;
     position: relative;
     min-width: 768px;
     display: flex;

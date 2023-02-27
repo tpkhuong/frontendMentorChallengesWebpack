@@ -1,5 +1,6 @@
 import React from "react";
 import ColumnTitleStyles from "./ColumnTitle.module.css";
+import { BoardTaskRenderContext } from "../../../../Context";
 
 export default function ColumnTitle({
   children,

@@ -1,27 +1,47 @@
 import React from "react";
 import MessageColumnsStyles from "./MessageColumnsContainer.module.css";
 import ShowSidebarBtn from "./ShowSidebar/index";
+import TodoColumn from "./Columns/Todo";
 import EmptyBoardMessage from "./EmptyBoard/index";
-import ColumnTitle from "./Columns/ColumnTitle/index";
+// import ColumnTitle from "./Columns/ColumnTitle/index";
 import TaskBtn from "./Columns/TaskBtn/index";
 
 export default function MessageColumnsContainer({ children }) {
   // useState here
   return (
     <div className={MessageColumnsStyles[`columns-message-container`]}>
+      <TodoColumn />
       {/* <EmptyBoardMessage /> */}
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">
-        TODO
+        Todo
       </ColumnTitle>
       <ColumnTitle quantity="3" status="doing">
-        DOING
+        Doing
       </ColumnTitle>
       <ColumnTitle quantity="5" status="done">
-        DONE
+        Done
       </ColumnTitle> */}
-      <TaskBtn completed="5" total="8">
+      {/* <TaskBtn
+        completed={`${[
+          {
+            title: "Sign up page",
+            isCompleted: true,
+          },
+          {
+            title: "Sign in page",
+            isCompleted: false,
+          },
+          {
+            title: "Welcome page",
+            isCompleted: false,
+          },
+        ].reduce((buildingUp, currentValue) => {
+          return currentValue.isCompleted ? buildingUp + 1 : buildingUp;
+        }, 0)}`}
+        total="8"
+      >
         Build UI for onboarding flow
-      </TaskBtn>
+      </TaskBtn> */}
       {/* padding declare on parent of single column */}
       <ShowSidebarBtn />
     </div>

@@ -1,6 +1,6 @@
-[data-apptheme="dark"] .empty-message-modal-bg {
+/* [data-apptheme="dark"] .empty-message-modal-bg {
   --empty-message-bg-dark: var(--color-dark-bg);
-}
+} */
 /* [data-showsidebar-menu="true"] is attr declared on ancestors of empty-message-modal */
 
 /* [data-showsidebar-menu="true"] .empty-message-modal-bg {
@@ -8,11 +8,10 @@
 } */
 
 .empty-message-modal-bg {
-  background-color: var(--empty-message-bg-dark, var(--color-light-bg));
-  min-height: calc(812px - 64px);
+  /* background-color: var(--empty-message-bg-dark, var(--color-light-bg)); */
+  min-height: 724px;
   text-align: center;
   font-weight: 600;
-  padding-inline: 16px;
 
   display: flex;
   align-items: center;
@@ -45,6 +44,7 @@
     position: absolute;
     inset: 0;
     justify-content: center;
+    padding-inline: 16px;
 
     transition: right 2s linear;
   }
