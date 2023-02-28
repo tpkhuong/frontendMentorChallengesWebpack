@@ -22,6 +22,9 @@ export default function HideSidebar({ children }) {
               );
               const logoSpacer = document.getElementById("logo-spacer");
 
+              const messageColumnsContainer =
+                document.getElementById("message-columns");
+
               const hideSidebarBtnClicked = event.target.closest("BUTTON");
 
               if (hideSidebarBtnClicked) {
@@ -33,6 +36,17 @@ export default function HideSidebar({ children }) {
                 // spacer
                 if (logoSpacer.getAttribute("data-showsidebar") == "true") {
                   logoSpacer.setAttribute("data-showsidebar", "false");
+                }
+
+                // columns container make width grow
+                if (
+                  messageColumnsContainer.getAttribute("data-issidebarshown") ==
+                  "true"
+                ) {
+                  messageColumnsContainer.setAttribute(
+                    "data-issidebarshown",
+                    "false"
+                  );
                 }
 
                 setTimeout(() => {

@@ -9,7 +9,15 @@ import TaskBtn from "./Columns/TaskBtn/index";
 export default function MessageColumnsContainer({ children }) {
   // useState here
   return (
-    <div className={MessageColumnsStyles[`columns-message-container`]}>
+    <div
+      id="message-columns"
+      data-issidebarshown="true"
+      className={MessageColumnsStyles[`columns-message-container`]}
+    >
+      <TodoColumn />
+      <TodoColumn />
+      <TodoColumn />
+      <TodoColumn />
       <TodoColumn />
       {/* <EmptyBoardMessage /> */}
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">

@@ -144,11 +144,84 @@ const todoArray = [
       },
     ],
   },
+  {
+    title: "Build settings UI",
+    description: "",
+    status: "todo",
+    isSelected: false,
+    index: 2,
+    subtasks: [
+      {
+        title: "Account page",
+        isCompleted: false,
+      },
+      {
+        title: "Billing page",
+        isCompleted: false,
+      },
+    ],
+  },
+  {
+    title: "QA and test all major user journeys",
+    description:
+      "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
+    status: "todo",
+    isSelected: false,
+    index: 3,
+    subtasks: [
+      {
+        title: "Internal testing",
+        isCompleted: false,
+      },
+      {
+        title: "External testing",
+        isCompleted: false,
+      },
+    ],
+  },
+  {
+    title: "Build settings UI",
+    description: "",
+    status: "todo",
+    isSelected: false,
+    index: 2,
+    subtasks: [
+      {
+        title: "Account page",
+        isCompleted: false,
+      },
+      {
+        title: "Billing page",
+        isCompleted: false,
+      },
+    ],
+  },
+  {
+    title: "QA and test all major user journeys",
+    description:
+      "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
+    status: "todo",
+    isSelected: false,
+    index: 3,
+    subtasks: [
+      {
+        title: "Internal testing",
+        isCompleted: false,
+      },
+      {
+        title: "External testing",
+        isCompleted: false,
+      },
+    ],
+  },
 ];
 
 export default function TodoColumn({ children }) {
   return (
-    <div className={TodoColumnStyles[`todo-quantity-task-container`]}>
+    <div
+      data-columncontainerstyleattr
+      className={TodoColumnStyles[`todo-quantity-task-container`]}
+    >
       <ColumnTitle
         quantity={`${todoArray.length}`}
         assistiveText="Todo"
@@ -157,7 +230,10 @@ export default function TodoColumn({ children }) {
         Todo
       </ColumnTitle>
       {/* tasks */}
-      <ul className={TodoColumnStyles[`todo-tasks-container`]}>
+      <ul
+        data-taskscontainerstyleattr
+        className={TodoColumnStyles[`todo-tasks-container`]}
+      >
         {todoArray.map(function buildTodoTask(obj, index) {
           return (
             <li key={Math.random() * index}>

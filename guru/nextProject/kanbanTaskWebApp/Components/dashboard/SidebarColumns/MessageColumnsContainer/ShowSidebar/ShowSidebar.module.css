@@ -8,12 +8,22 @@
 .show-sidebar-btn {
   background-color: var(--color-purple);
   position: absolute;
-  bottom: 32px;
 
   border-top-right-radius: 100vw;
   border-bottom-right-radius: 100vw;
 
   padding: 18px;
+}
+
+@media screen and (min-width: 48rem) {
+  [data-showsidebar-menu="false"] .show-sidebar-btn {
+    left: 0px;
+    top: 736px;
+  }
+
+  [data-showsidebar-menu="false"] .show-sidebar-btn {
+    top: 704px;
+  }
 }
 
 /* desktop */

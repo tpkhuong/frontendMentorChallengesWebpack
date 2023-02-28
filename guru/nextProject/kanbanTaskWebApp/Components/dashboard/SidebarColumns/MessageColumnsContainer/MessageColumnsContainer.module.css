@@ -9,29 +9,81 @@
 
 .columns-message-container {
   background-color: var(--column-container-bg-dark, var(--color-light-bg));
-  padding-block-start: 24px;
-  padding-inline-start: 16px;
-  padding-inline-end: 16px;
+  padding-block: 24px;
+  padding-inline: 16px;
   min-height: 748px;
 
-  overflow-x: scroll;
+  overflow: scroll;
+
+  display: flex;
+  gap: 24px;
+}
+
+.columns-message-container [data-columncontainerstyleattr] {
+  min-width: 343px;
+}
+
+.columns-message-container [data-taskscontainerstyleattr] {
+  /* max-height: 748px; */
+  /* max-width: 280px; */
+
+  margin-block-start: 24px;
+  list-style: none;
+  padding-inline-start: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
 }
 
 @media screen and (min-width: 48rem) {
+  [data-issidebarshown="true"].columns-message-container {
+    /* declaring max-width because this is a flex item. its parent has display flex declared */
+    max-width: 506px;
+  }
+
+  [data-issidebarshown="false"].columns-message-container {
+    /* declaring max-width because this is a flex item. its parent has display flex declared */
+    max-width: 768px;
+  }
+
   .columns-message-container {
-    padding-inline-end: 0;
     position: relative;
-    min-width: 768px;
+    /* min-width: 768px; */
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
+    /* flex-wrap: nowrap; */
+    /* overflow-x: scroll; */
+    /* padding-block-end: 24px; */
+    max-height: 996.2px;
+  }
+
+  .columns-message-container [data-columncontainerstyleattr] {
+    min-width: 280px;
+  }
+
+  .columns-message-container [data-taskscontainerstyleattr] {
   }
 }
 
 /* desktop */
 
 @media screen and (min-width: 90rem) {
+  [data-issidebarshown="true"].columns-message-container {
+    /* declaring max-width because this is a flex item. its parent has display flex declared */
+    max-width: 1139px;
+  }
+
+  [data-issidebarshown="false"].columns-message-container {
+    /* declaring max-width because this is a flex item. its parent has display flex declared */
+    max-width: 1440px;
+  }
+
   .columns-message-container {
-    min-width: 1440px;
+    /* min-width: 1440px; */
+    max-height: 800.2px;
+  }
+
+  .columns-message-container [data-taskscontainerstyleattr] {
   }
 }

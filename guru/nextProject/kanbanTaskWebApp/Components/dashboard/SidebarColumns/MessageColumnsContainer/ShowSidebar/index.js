@@ -23,6 +23,9 @@ export default function ShowSidebarBtn({ children }) {
 
             const showSidebarBtnClicked = event.target.closest("BUTTON");
 
+            const messageColumnsContainer =
+              document.getElementById("message-columns");
+
             if (showSidebarBtnClicked) {
               // sidebar
               if (sidebar.getAttribute("data-showsidebar-menu") == "false") {
@@ -40,6 +43,18 @@ export default function ShowSidebarBtn({ children }) {
                   }, 1405);
                 }
               }
+              setTimeout(() => {
+                // columns container make width shrink
+                if (
+                  messageColumnsContainer.getAttribute("data-issidebarshown") ==
+                  "false"
+                ) {
+                  messageColumnsContainer.setAttribute(
+                    "data-issidebarshown",
+                    "true"
+                  );
+                }
+              }, 2050);
               // don't render show sidebar btn
               setShowSidebarBtn(false);
             }
