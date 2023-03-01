@@ -12,14 +12,15 @@ export default function MessageColumnsContainer({ children }) {
     <div
       id="message-columns"
       data-issidebarshown="true"
+      data-atleastonecolumnshown="false"
       className={MessageColumnsStyles[`columns-message-container`]}
     >
+      {/* <TodoColumn />
       <TodoColumn />
       <TodoColumn />
       <TodoColumn />
-      <TodoColumn />
-      <TodoColumn />
-      {/* <EmptyBoardMessage /> */}
+      <TodoColumn /> */}
+      <EmptyBoardMessage />
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">
         Todo
       </ColumnTitle>

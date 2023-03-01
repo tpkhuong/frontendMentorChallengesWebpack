@@ -22,6 +22,13 @@
   color: var(--color-medium-grey);
 }
 
+/* hover and focus */
+
+.add-column-btn:hover,
+.add-column-btn:focus {
+  background-color: var(--color-purple-secondary);
+}
+
 .add-column-btn {
   background-color: var(--color-purple);
   padding: 18px;

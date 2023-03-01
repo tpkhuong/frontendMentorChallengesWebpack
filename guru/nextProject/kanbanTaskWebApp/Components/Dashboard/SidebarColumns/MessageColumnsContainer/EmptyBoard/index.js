@@ -25,3 +25,13 @@ export default function EmptyBoardMessage({ children }) {
     </div>
   );
 }
+
+async function getData() {
+  const response = await fetch(`/api/test`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: "Marvel" }),
+  });
+}

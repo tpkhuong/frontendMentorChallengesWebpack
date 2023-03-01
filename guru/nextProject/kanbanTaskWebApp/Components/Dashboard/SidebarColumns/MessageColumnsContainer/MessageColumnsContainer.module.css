@@ -38,14 +38,21 @@
 }
 
 @media screen and (min-width: 48rem) {
-  [data-issidebarshown="true"].columns-message-container {
+  /* columns container */
+  [data-atleastonecolumnshown="true"][data-issidebarshown="true"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
     max-width: 506px;
   }
 
-  [data-issidebarshown="false"].columns-message-container {
+  [data-atleastonecolumnshown="true"][data-issidebarshown="false"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
     max-width: 768px;
+  }
+
+  /* empty message container */
+
+  [data-atleastonecolumnshown="false"].columns-message-container {
+    min-width: 768px;
   }
 
   .columns-message-container {
@@ -62,21 +69,28 @@
     min-width: 280px;
   }
 
-  .columns-message-container [data-taskscontainerstyleattr] {
-  }
+  /* .columns-message-container [data-taskscontainerstyleattr] {
+  } */
 }
 
 /* desktop */
 
 @media screen and (min-width: 90rem) {
-  [data-issidebarshown="true"].columns-message-container {
+  /* columns container */
+  [data-atleastonecolumnshown="true"][data-issidebarshown="true"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
     max-width: 1139px;
   }
 
-  [data-issidebarshown="false"].columns-message-container {
+  [data-atleastonecolumnshown="true"][data-issidebarshown="false"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
     max-width: 1440px;
+  }
+
+  /* empty message container */
+
+  [data-atleastonecolumnshown="false"].columns-message-container {
+    min-width: 1440px;
   }
 
   .columns-message-container {

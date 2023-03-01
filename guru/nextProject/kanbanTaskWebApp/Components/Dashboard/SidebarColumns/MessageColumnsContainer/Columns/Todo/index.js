@@ -257,15 +257,3 @@ export default function TodoColumn({ children }) {
     </div>
   );
 }
-
-// make column title and single task component
-
-const arrayOfSubtasksObj = todoArray.map(function getSubtasksObj(obj, index) {
-  return obj.subtasks;
-});
-
-const lengthOfSubtasks = arrayOfSubtasksObj.map(function calculateCompleted(
-  subarray
-) {
-  return subarray.length;
-});

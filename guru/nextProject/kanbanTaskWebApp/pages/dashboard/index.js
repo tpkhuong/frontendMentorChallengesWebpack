@@ -1,31 +1,25 @@
 import React from "react";
-import { BoardTaskRenderContext } from "../../Components/dashboard/Context/index";
+import { BoardTaskRenderContext } from "../../Components/Dashboard/Context/index";
 import DashboardStyles from "../../styles/Dashboard.module.css";
-import LogoTitleBar from "../../Components/dashboard/LogoTitleBar";
-import SidebarColumns from "../../Components/dashboard/SidebarColumns";
+import LogoTitleBar from "../../Components/Dashboard/LogoTitleBar";
+import SidebarColumns from "../../Components/Dashboard/SidebarColumns";
+import clientPromise from "../../config/mongoDB";
 
 // set context here
 
-export default function Dashboard({ children }) {
+export default function Dashboard({ children, userData }) {
+  console.log(userData, "userData");
+
   const memoizedStateValueAndFunc = React.useMemo(() => {
     return {
       // setStateFuncs
       setStateFuncs: {},
       stateFuncsForModals: {},
-      // boards
-      boards: {
-        name: "hello",
-      },
-      // tasks
-      tasks: {
-        name: "world",
-      },
-      theme: "light",
     };
   }, []);
 
   React.useEffect(() => {
-    saveDateToLocalStorage();
+    // saveDateToLocalStorage();
   }, []);
   return (
     <section
@@ -41,6 +35,23 @@ export default function Dashboard({ children }) {
       </BoardTaskRenderContext.Provider>
     </section>
   );
+}
+
+export async function getServerSideProps(context) {
+  const clientConnect = await clientPromise;
+
+  const usersCollection = clientConnect.db().collection("Users");
+  const isUserExist = await usersCollection.findOne({
+    email: "cooldev@tech.net",
+  });
+  if (isUserExist) {
+    console.log("We found user", isUserExist);
+    const data = JSON.parse(JSON.stringify(isUserExist));
+    console.log(data, "data");
+    return {
+      props: { userData: data },
+    };
+  }
 }
 
 function notes() {
@@ -92,7 +103,19 @@ function notes() {
 
 function saveDateToLocalStorage() {
   const data = {
+    currentSelectedIndex: 0,
     boards: [
+      {
+        title: "Software Development",
+        user: "coolperson@gmail.com",
+        columns: {
+          todo: null,
+          doing: null,
+          done: null,
+        },
+        index: 0,
+        selected: true,
+      },
       {
         title: "Platform Launch",
         user: "coolperson@gmail.com",
@@ -412,8 +435,8 @@ function saveDateToLocalStorage() {
             },
           ],
         },
-        index: 0,
-        selected: true,
+        index: 1,
+        selected: false,
       },
       {
         title: "Marketing Plan",
@@ -423,24 +446,33 @@ function saveDateToLocalStorage() {
           doing: [],
           done: [],
         },
-        index: 1,
-        selected: false,
-      },
-      {
-        title: "Roadmap",
-        user: "coolperson@gmail.com",
-        columns: {
-          todo: [],
-          doing: [],
-          done: [],
-        },
         index: 2,
         selected: false,
       },
+      // {
+      //   title: "Roadmap",
+      //   user: "coolperson@gmail.com",
+      //   columns: {
+      //     todo: [],
+      //     doing: [],
+      //     done: [],
+      //   },
+      //   index: 2,
+      //   selected: false,
+      // },
     ],
   };
 
   !localStorage.getItem("currentUser")
     ? localStorage.setItem("currentUser", JSON.stringify(data))
+    : null;
+
+  // make currentBoard in localStorage
+  const selectedBoard = data.boards.filter(function findSelected(obj, index) {
+    return obj.selected;
+  });
+
+  !localStorage.getItem("currentBoard")
+    ? localStorage.setItem("currentBoard", JSON.stringify(selectedBoard))
     : null;
 }
