@@ -4,9 +4,10 @@ import AddTaskModal from "./AddTaskModal/index";
 import { BoardTaskRenderContext } from "../../Context/index";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 
-export default function AddTaskBtn({ children }) {
+export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
+  console.log(typeof isCurrentBoardEmpty, isCurrentBoardEmpty);
   const isScreenLargerThanTabletSize = useMediaQuery("min", 768);
-  const [renderAddTaskBtn, setAddTaskBtn] = React.useState(true);
+  const [renderAddTaskBtn, setAddTaskBtn] = React.useState(isCurrentBoardEmpty);
   const [renderAddTaskModal, setTaskModal] = React.useState(false);
 
   const renderContextForAddTaskBtn = React.useContext(BoardTaskRenderContext);
@@ -17,7 +18,7 @@ export default function AddTaskBtn({ children }) {
     <React.Fragment>
       {
         isScreenLargerThanTabletSize ? (
-          !renderAddTaskBtn ? (
+          renderAddTaskBtn ? (
             <span
               className={`${AddTaskBtnStyles[`tablet-desktop-btn`]} ${
                 AddTaskBtnStyles[`display-block`]
@@ -56,7 +57,7 @@ export default function AddTaskBtn({ children }) {
         //   }`}
         // >
         // </span>
-        !renderAddTaskBtn ? (
+        renderAddTaskBtn ? (
           <span
             className={`${AddTaskBtnStyles[`mobile-btn`]} ${
               AddTaskBtnStyles[`display-block`]

@@ -2,13 +2,13 @@ import React from "react";
 import BoardTitleStyles from "./BoardTitle.module.css";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 
-export default function BoardTitle({ children }) {
+export default function BoardTitle({ children, boardTitle }) {
   const isLargerThanMobile = useMediaQuery("min", 768);
   // make onclick work when user click on button
   return (
     <React.Fragment>
       {isLargerThanMobile ? (
-        <h2 className={BoardTitleStyles[`title`]}>Platform Launch</h2>
+        <h2 className={BoardTitleStyles[`title`]}>{boardTitle}</h2>
       ) : (
         <button
           className={BoardTitleStyles[`mobile-menu-btn`]}
@@ -85,7 +85,7 @@ export default function BoardTitle({ children }) {
             console.log("show mobile is false");
           }}
         >
-          <h2 className={BoardTitleStyles[`title`]}>Platform Launch</h2>
+          <h2 className={BoardTitleStyles[`title`]}>{boardTitle}</h2>
           <span className={BoardTitleStyles[`chevron-down`]}>
             <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
               <path

@@ -5,7 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import BoardSelector from "./BoardSelector/index";
 import HideSidebar from "./HideBar/index";
 
-export default function Sidebar({ children }) {
+export default function Sidebar({ children, objOfValuesForBoards }) {
   const isTabletSize = useMediaQuery("min", 768);
   return (
     // move animation to parent element sidebarcolumns
@@ -22,7 +22,7 @@ export default function Sidebar({ children }) {
         className={SidebarStyles[`boards-toggle-container`]}
       >
         {/* boardselector */}
-        <BoardSelector />
+        <BoardSelector infoForCurrentUser={objOfValuesForBoards} />
         {/* themetoggle */}
         {/* <button
           style={styleObj}

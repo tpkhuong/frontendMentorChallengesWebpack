@@ -9,3 +9,8 @@ function productHandler(req, res) {
 }
 
 export default productHandler;
+
+// {"_id":{"$oid":"63ff74342dbdf7d3c5f206de"},
+//   "email":"lovecode@dev.io",
+//   "currentSelectedIndex": null
+// }

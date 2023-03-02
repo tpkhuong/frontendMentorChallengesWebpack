@@ -3,7 +3,7 @@ import SidebarColumnsContainerStyles from "./SidebarColumns.module.css";
 import Sidebar from "./Sidebar";
 import MessageColumnsContainer from "./MessageColumnsContainer/index";
 
-export default function SidebarColumns({ children }) {
+export default function SidebarColumns({ children, valuesForBoardsColumns }) {
   return (
     // position relative
     <div
@@ -12,9 +12,16 @@ export default function SidebarColumns({ children }) {
       className={SidebarColumnsContainerStyles[`sidebar-columns-container`]}
     >
       {/* sidebar */}
-      <Sidebar />
+      <Sidebar
+        objOfValuesForBoards={valuesForBoardsColumns.currentUserBoardsInfo}
+      />
       {/* columns */}
-      <MessageColumnsContainer />
+      <MessageColumnsContainer
+        objOfValuesForColumns={{
+          currentBoardEmpty: valuesForBoardsColumns.isBoardEmpty,
+          columnsObj: valuesForBoardsColumns.columns,
+        }}
+      />
     </div>
   );
 }

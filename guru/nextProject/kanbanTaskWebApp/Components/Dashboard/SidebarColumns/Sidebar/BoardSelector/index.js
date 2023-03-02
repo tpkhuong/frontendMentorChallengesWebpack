@@ -2,49 +2,56 @@ import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 
-const testObj = {
-  clickedIndex: null,
-  testArr: [
-    {
-      title: "Platform Launch",
-      user: "coolperson@gmail.com",
-      columns: {
-        todo: [],
-        doing: [],
-        done: [],
-      },
-      index: 0,
-      selected: true,
-    },
-    {
-      title: "Marketing Plan",
-      user: "coolperson@gmail.com",
-      columns: {
-        todo: [],
-        doing: [],
-        done: [],
-      },
-      index: 1,
-      selected: false,
-    },
-    {
-      title: "Roadmap",
-      user: "coolperson@gmail.com",
-      columns: {
-        todo: [],
-        doing: [],
-        done: [],
-      },
-      index: 2,
-      selected: false,
-    },
-  ],
-};
+// const testObj = {
+//   clickedIndex: null,
+//   testArr: [
+//     {
+//       title: "Platform Launch",
+//       user: "coolperson@gmail.com",
+//       columns: {
+//         todo: [],
+//         doing: [],
+//         done: [],
+//       },
+//       index: 0,
+//       selected: true,
+//     },
+//     {
+//       title: "Marketing Plan",
+//       user: "coolperson@gmail.com",
+//       columns: {
+//         todo: [],
+//         doing: [],
+//         done: [],
+//       },
+//       index: 1,
+//       selected: false,
+//     },
+//     {
+//       title: "Roadmap",
+//       user: "coolperson@gmail.com",
+//       columns: {
+//         todo: [],
+//         doing: [],
+//         done: [],
+//       },
+//       index: 2,
+//       selected: false,
+//     },
+//   ],
+// };
+// infoForCurrentUser
+export default function BoardSelector({ children, infoForCurrentUser }) {
+  const memoizedBoardsValues = React.useMemo(() => {
+    return {
+      clickedIndex: infoForCurrentUser.currentSelectedIndex,
+      boardsArray: infoForCurrentUser.boards,
+    };
+  }, []);
+  const [initialValuesObj, setBoardSelector] =
+    React.useState(memoizedBoardsValues);
 
-export default function BoardSelector({ children }) {
   const isTabletSizeOrLarger = useMediaQuery("min", 768);
-
-  const [initialValuesObj, setBoardSelector] = React.useState(testObj);
 
   // have attr data-boardindex
   // use boardindex to apply data-currentselectedboard "true"
@@ -60,7 +67,7 @@ export default function BoardSelector({ children }) {
       {/* number of boards */}
       <span className={BoardSelectorStyles[`boards-quantity`]}>
         <span>ALL BOARDS</span>
-        <span>({initialValuesObj.testArr.length})</span>
+        <span>({initialValuesObj.boardsArray.length})</span>
       </span>
       {/* buttons container */}
       <div className={BoardSelectorStyles[`board-selector-btns-container`]}>
@@ -68,7 +75,7 @@ export default function BoardSelector({ children }) {
         <ul
           onClick={(event) => {
             const clickedBoardBtn = event.target.closest("BUTTON");
-            const copiedArr = [...initialValuesObj.testArr];
+            const copiedArr = [...initialValuesObj.boardsArray];
 
             if (clickedBoardBtn) {
               const boardIndex = Number(
@@ -77,33 +84,36 @@ export default function BoardSelector({ children }) {
 
               copiedArr.forEach(function changeCurrentSelected(obj, index) {
                 if (index == boardIndex) {
-                  obj.selected = true;
+                  obj.isSelected = true;
                 } else {
-                  obj.selected = false;
+                  obj.isSelected = false;
                 }
               });
 
               setBoardSelector((prev) => {
                 return {
                   clickedIndex: boardIndex,
-                  testArr: [].concat(copiedArr),
+                  boardsArray: [].concat(copiedArr),
                 };
               });
             }
           }}
           className={BoardSelectorStyles[`ul-container-of-btns`]}
         >
-          {initialValuesObj.testArr.map(function createBoardBtn(item, index) {
+          {initialValuesObj.boardsArray.map(function createBoardBtn(
+            item,
+            index
+          ) {
             return (
               <li key={Math.random() * index}>
                 <button
                   className={BoardSelectorStyles[`board-selector-btn`]}
                   data-boardindex={`${index}`}
-                  data-currentselected={`${item.selected}`}
+                  data-currentselected={`${item.isSelected}`}
                   onKeyDown={
                     !isTabletSizeOrLarger && index == 0
                       ? (event) => {
-                          console.log(event);
+                          // console.log(event);
                           if (event.shiftKey && event.code == "Tab") {
                             document.getElementById("mobile-title-btn").focus();
                             event.preventDefault();

@@ -6,8 +6,13 @@ import EmptyBoardMessage from "./EmptyBoard/index";
 // import ColumnTitle from "./Columns/ColumnTitle/index";
 import TaskBtn from "./Columns/TaskBtn/index";
 
-export default function MessageColumnsContainer({ children }) {
+export default function MessageColumnsContainer({
+  children,
+  objOfValuesForColumns,
+}) {
   // useState here
+  // currentBoardEmpty
+  // columnsObj
   return (
     <div
       id="message-columns"

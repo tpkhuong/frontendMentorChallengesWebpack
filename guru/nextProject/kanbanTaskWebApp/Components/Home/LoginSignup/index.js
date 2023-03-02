@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import LoginSignupStyles from "./LoginSignup.module.css";
+import { loginSignUpHandler } from "./loginHelpers";
 import { preventDefaultSpaceBar } from "../../../utils/sharedHelpers";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
@@ -53,7 +54,11 @@ export default function LoginSignup({ children, ...props }) {
           />
         </div>
         {/* button */}
-        <button type="button" className={LoginSignupStyles[`sign-in-btn`]}>
+        <button
+          onClick={loginSignUpHandler}
+          type="button"
+          className={LoginSignupStyles[`sign-in-btn`]}
+        >
           sign in
         </button>
       </form>
