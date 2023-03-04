@@ -948,3 +948,7 @@ const user = {
 //     }
 //     ]
 // }
+
+// {"_id":{"$oid":"63fe5a086a1911c5350fc39e"},"email":"cooldev@tech.net","currentSelectedIndex":{"$numberInt":"0"},"boards":[{"title":"Software Development","user":"coolperson@gmail.com","columns":{"todo":null,"doing":null,"done":null},"index":{"$numberInt":"0"},"isSelected":true},{"title":"Marketing Plan","user":"coolperson@gmail.com","columns":{"todo":null,"doing":null,"done":null},"index":{"$numberInt":"1"},"isSelected":false},{"title":"Roadmap","user":"coolperson@gmail.com","columns":{"todo":null,"doing":null,"done":null},"index":{"$numberInt":"2"},"isSelected":false}]}
+
+// kanbanTaskDB
