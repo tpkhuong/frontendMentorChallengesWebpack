@@ -6,5 +6,6 @@ export async function loginSignUpHandler(event) {
 
   await signIn("email", {
     email,
+    callbackUrl: "/dashboard",
   });
 }

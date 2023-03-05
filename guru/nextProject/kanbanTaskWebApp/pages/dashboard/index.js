@@ -3,7 +3,11 @@ import { BoardTaskRenderContext } from "../../Components/Dashboard/Context/index
 import DashboardStyles from "../../styles/Dashboard.module.css";
 import LogoTitleBar from "../../Components/Dashboard/LogoTitleBar";
 import SidebarColumns from "../../Components/Dashboard/SidebarColumns";
-import clientPromise from "../../config/mongoDB";
+// import { authOptions } from "../api/auth/[...nextauth].js";
+// import Link from "next/link";
+// import { getServerSession } from "next-auth/next";
+// import clientPromise from "../../config/mongoDB";
+import { testCreateBoards } from "../../Components/Dashboard/SidebarColumns/Sidebar/BoardSelector/boardSelectorHelpers";
 
 // set context here
 
@@ -26,19 +30,31 @@ export default function Dashboard({
   }, []);
 
   React.useEffect(() => {
-    saveDataToLocalStorage(userData, currentBoard);
+    // saveDataToLocalStorage(userData, currentBoard);
   }, []);
   return (
-    <section
-      id="color-theme"
-      data-apptheme="light"
-      className={DashboardStyles[`dashboard`]}
-    >
-      <BoardTaskRenderContext.Provider value={memoizedStateValueAndFunc}>
-        {/* logotitlebar */}
-        <LogoTitleBar valuesForTitleAddTask={{ isBoardEmpty, title }} />
-        {/* sidebarcolumns */}
-        <SidebarColumns
+    <React.Fragment>
+      <button onClick={testCreateBoards}>click me</button>
+    </React.Fragment>
+  );
+  // return (
+  // <section
+  //   id="color-theme"
+  //   data-apptheme="light"
+  //   className={DashboardStyles[`dashboard`]}
+  // >
+  //   <BoardTaskRenderContext.Provider value={memoizedStateValueAndFunc}>
+  {
+    /* logotitlebar */
+  }
+  {
+    /* <LogoTitleBar valuesForTitleAddTask={{ isBoardEmpty, title }} /> */
+  }
+  {
+    /* sidebarcolumns */
+  }
+  {
+    /* <SidebarColumns
           valuesForBoardsColumns={{
             currentUserBoardsInfo: userData,
             isBoardEmpty,
@@ -46,76 +62,104 @@ export default function Dashboard({
           }}
         />
       </BoardTaskRenderContext.Provider>
-    </section>
-  );
-}
-
-export async function getServerSideProps(context) {
-  const clientConnect = await clientPromise;
-
-  const usersCollection = clientConnect.db().collection("Users");
-  const isUserExist = await usersCollection.findOne({
-    email: "cooldev@tech.net",
-    // email: "lovecode@dev.io",
-  });
-
-  if (isUserExist) {
-    console.log("We found user", isUserExist);
-    const data = JSON.parse(JSON.stringify(isUserExist));
-
-    // check if current user boards is empty
-    if (data.boards.length === 0) {
-      return {
-        props: {
-          userData: data,
-          currentBoard,
-          title: "Add New Board",
-          isBoardEmpty: true,
-        },
-      };
-    } else {
-      const [currentBoard] = data.boards.filter(function findCurrentIndex(
-        obj,
-        index
-      ) {
-        return obj.isSelected;
-      });
-      console.log(currentBoard);
-
-      const isBoardEmpty =
-        !currentBoard.columns.todo &&
-        !currentBoard.columns.doing &&
-        !currentBoard.columns.done;
-
-      if (isBoardEmpty) {
-        return {
-          props: {
-            userData: data,
-            currentBoard,
-            title: currentBoard.title,
-            isBoardEmpty: true,
-          },
-        };
-      }
-
-      if (!isBoardEmpty) {
-        return {
-          props: {
-            userData: data,
-            currentBoard,
-            title: currentBoard.title,
-            isBoardEmpty: false,
-            columns: {
-              todo: currentBoard.columns.todo,
-              doing: currentBoard.columns.doing,
-              done: currentBoard.columns.done,
-            },
-          },
-        };
-      }
-    }
+    </section> */
   }
+  // );
 }
+
+// export async function getServerSideProps(context) {
+//   // const session = await getServerSession(context.req, context.res, authOptions);
+//   // console.log(session, "session");
+//   // if (!session) {
+//   //   console.log("session not found");
+//   //   return {
+//   //     props: {},
+//   //   };
+//   //   // return (
+//   //   //   <React.Fragment>
+//   //   //     <h2>You are not logged in</h2>
+//   //   //     <Link href="/">
+//   //   //       <a>Go to Sign In</a>
+//   //   //     </Link>
+//   //   //   </React.Fragment>
+//   //   // );
+//   // }
+//   // if (session) {
+//   //   console.log("session found", session);
+//   //   return {
+//   //     props: {},
+//   //   };
+//   //   // return (
+//   //   //   <React.Fragment>
+//   //   //     <h2>You are not logged in</h2>
+//   //   //     <Link href="/">
+//   //   //       <a>Go to Sign In</a>
+//   //   //     </Link>
+//   //   //   </React.Fragment>
+//   //   // );
+//   // }
+//   // return {
+//   //   props: { data: session },
+//   // };
+//   // const clientConnect = await clientPromise;
+//   // const usersCollection = clientConnect.db().collection("Users");
+//   // const isUserExist = await usersCollection.findOne({
+//   //   email: "cooldev@tech.net",
+//   //   // email: "lovecode@dev.io",
+//   // });
+//   // if (isUserExist) {
+//   //   console.log("We found user", isUserExist);
+//   //   const data = JSON.parse(JSON.stringify(isUserExist));
+//   //   // check if current user boards is empty
+//   //   if (data.boards.length === 0) {
+//   //     return {
+//   //       props: {
+//   //         userData: data,
+//   //         currentBoard,
+//   //         title: "Add New Board",
+//   //         isBoardEmpty: true,
+//   //       },
+//   //     };
+//   //   } else {
+//   //     const [currentBoard] = data.boards.filter(function findCurrentIndex(
+//   //       obj,
+//   //       index
+//   //     ) {
+//   //       return obj.isSelected;
+//   //     });
+//   //     console.log(currentBoard);
+//   //     const isBoardEmpty =
+//   //       !currentBoard.columns.todo &&
+//   //       !currentBoard.columns.doing &&
+//   //       !currentBoard.columns.done;
+//   //     if (isBoardEmpty) {
+//   //       return {
+//   //         props: {
+//   //           userData: data,
+//   //           currentBoard,
+//   //           title: currentBoard.title,
+//   //           isBoardEmpty: true,
+//   //         },
+//   //       };
+//   //     }
+//   //     if (!isBoardEmpty) {
+//   //       return {
+//   //         props: {
+//   //           userData: data,
+//   //           currentBoard,
+//   //           title: currentBoard.title,
+//   //           isBoardEmpty: false,
+//   //           columns: {
+//   //             todo: currentBoard.columns.todo,
+//   //             doing: currentBoard.columns.doing,
+//   //             done: currentBoard.columns.done,
+//   //           },
+//   //         },
+//   //       };
+//   //     }
+//   //   }
+//   // }
+// }
 
 function notes() {
   const styleObj = {

@@ -1,7 +1,7 @@
 /**
  * make a call to this api in showordermodal func in helpers.js
  * **/
-
+// postman body x-www-form-urlencoded
 import dbConnect from "../../../config/mongooseMongoDatabase";
 import User from "../../../models/Users";
 import Customer from "../../../models/Customers";

@@ -1,6 +1,7 @@
 import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
+import { testCreateBoards } from "./boardSelectorHelpers";
 
 // const testObj = {
 //   clickedIndex: null,
