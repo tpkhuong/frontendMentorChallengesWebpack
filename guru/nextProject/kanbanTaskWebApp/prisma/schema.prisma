@@ -15,6 +15,7 @@ model User {
   email         String    @unique
   createdAt     DateTime  @default(now())
   emailVerified DateTime? @map("verifiedAt")
+  boards        Board[]
   sessions      Session[]
 
   @@map("users")
@@ -38,4 +39,52 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Board {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  index      Int
+  isSelected Boolean
+  userId     String  @db.ObjectId
+  user       User    @relation(fields: [userId], references: [id])
+
+  columns Column[]
+
+  @@map("boards")
+}
+
+model Column {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  index   Int
+  boardId String @db.ObjectId
+  board   Board  @relation(fields: [boardId], references: [id])
+  tasks   Task[]
+
+  @@map("columns")
+}
+
+model Task {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  status   String
+  index    Int
+  columnId String @db.ObjectId
+  column   Column @relation(fields: [columnId], references: [id])
+
+  subtasks Subtask[]
+
+  @@map("tasks")
+}
+
+model Subtask {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  isCompleted Boolean
+  index       Int
+  taskId      String  @db.ObjectId
+  task        Task    @relation(fields: [taskId], references: [id])
+
+  @@map("subtasks")
 }
