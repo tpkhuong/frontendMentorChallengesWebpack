@@ -45,7 +45,9 @@ import { testCreateBoards } from "./boardSelectorHelpers";
 export default function BoardSelector({ children, infoForCurrentUser }) {
   const memoizedBoardsValues = React.useMemo(() => {
     return {
-      clickedIndex: infoForCurrentUser.currentSelectedIndex,
+      clickedIndex: !infoForCurrentUser.currentSelectedIndex
+        ? 0
+        : infoForCurrentUser.currentSelectedIndex,
       boardsArray: infoForCurrentUser.boards,
     };
   }, []);

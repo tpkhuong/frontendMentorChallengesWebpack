@@ -1,17 +1,19 @@
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-// import clientPromise from "../../../config/mongoDB";
+// import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+// import { PrismaClient } from "@prisma/client";
+import clientPromise from "../../../config/mongoDB";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export const authOptions = {
   session: {
     strategy: "jwt",
   },
   secret: `${process.env.NEXTAUTH_SECRET}`,
-  adapter: PrismaAdapter(prisma),
+  adapter: MongoDBAdapter(clientPromise),
+  // adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/",
   },
