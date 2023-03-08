@@ -1,5 +1,7 @@
 import React from "react";
 import DoingColumnStyles from "./Doing.module.css";
+import ColumnTitle from "../ColumnTitle";
+import TaskBtn from "../TaskBtn";
 
 // hsl 248 83% 70%
 
@@ -128,5 +130,43 @@ const doingArray = [
 ];
 
 export default function DoingColumn({ children }) {
-  return <div></div>;
+  return (
+    <div
+      data-columncontainerstyleattr=""
+      className={DoingColumnStyles[`doing-quantity-task-container`]}
+    >
+      <ColumnTitle
+        quantity={`${doingArray.length}`}
+        assistiveText="doing"
+        status="doing"
+      >
+        Doing
+      </ColumnTitle>
+      {/* tasks */}
+      <ul
+        data-taskscontainerstyleattr
+        className={DoingColumnStyles[`doing-tasks-container`]}
+      >
+        {doingArray.map(function buildDoingTask(obj, index) {
+          return (
+            <li key={Math.random() * index}>
+              <TaskBtn
+                completed={`${obj.subtasks.reduce(
+                  (buildingUp, currentValue) => {
+                    return currentValue.isCompleted
+                      ? buildingUp + 1
+                      : buildingUp;
+                  },
+                  0
+                )}`}
+                total={`${obj.subtasks.length}`}
+              >
+                {obj.title}
+              </TaskBtn>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }

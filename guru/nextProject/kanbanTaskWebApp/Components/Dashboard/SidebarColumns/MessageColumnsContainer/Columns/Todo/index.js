@@ -219,7 +219,7 @@ const todoArray = [
 export default function TodoColumn({ children }) {
   return (
     <div
-      data-columncontainerstyleattr
+      data-columncontainerstyleattr=""
       className={TodoColumnStyles[`todo-quantity-task-container`]}
     >
       <ColumnTitle

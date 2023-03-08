@@ -12,9 +12,9 @@ export default function EmptyBoardMessage({ children }) {
         <p>This board is empty. Create a new column to get started.</p>
         <button
           onClick={(event) => {
-            const localData = JSON.parse(localStorage.getItem("currentUser"));
-            localData.boards.length = 0;
-            localStorage.setItem("currentUser", JSON.stringify(localData));
+            // const localData = JSON.parse(localStorage.getItem("currentUser"));
+            // localData.boards.length = 0;
+            // localStorage.setItem("currentUser", JSON.stringify(localData));
           }}
           className={EmptyBoardStyles[`add-column-btn`]}
         >
@@ -26,12 +26,12 @@ export default function EmptyBoardMessage({ children }) {
   );
 }
 
-async function getData() {
-  const response = await fetch(`/api/test`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name: "Marvel" }),
-  });
-}
+// async function getData() {
+//   const response = await fetch(`/api/test`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ name: "Marvel" }),
+//   });
+// }

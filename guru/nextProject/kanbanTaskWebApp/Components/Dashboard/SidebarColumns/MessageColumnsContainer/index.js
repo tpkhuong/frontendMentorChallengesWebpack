@@ -1,8 +1,9 @@
 import React from "react";
 import MessageColumnsStyles from "./MessageColumnsContainer.module.css";
 import ShowSidebarBtn from "./ShowSidebar/index";
-import TodoColumn from "./Columns/Todo";
 import EmptyBoardMessage from "./EmptyBoard/index";
+import Columns from "./Columns";
+import TodoColumn from "./Columns/Todo";
 // import ColumnTitle from "./Columns/ColumnTitle/index";
 import TaskBtn from "./Columns/TaskBtn/index";
 
@@ -25,7 +26,13 @@ export default function MessageColumnsContainer({
       <TodoColumn />
       <TodoColumn />
       <TodoColumn /> */}
-      <EmptyBoardMessage />
+      {objOfValuesForColumns.currentBoardEmpty ? (
+        <EmptyBoardMessage />
+      ) : (
+        <Columns columnsObjData={objOfValuesForColumns.columnsObj} />
+      )}
+      {/* add column button height has to be around 756.2 */}
+      <button>hello</button>
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">
         Todo
       </ColumnTitle>

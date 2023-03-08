@@ -11,12 +11,12 @@
   background-color: var(--column-container-bg-dark, var(--color-light-bg));
   padding-block: 24px;
   padding-inline: 16px;
-  min-height: 748px;
+  /* min-height: 748px;
+  display: flex;
 
   overflow: scroll;
 
-  display: flex;
-  gap: 24px;
+  gap: 24px; */
 }
 
 .columns-message-container [data-columncontainerstyleattr] {
@@ -58,20 +58,23 @@
   .columns-message-container {
     position: relative;
     /* min-width: 768px; */
-    display: flex;
+    /* display: flex; */
     /* flex-wrap: nowrap; */
     /* overflow-x: scroll; */
     /* padding-block-end: 24px; */
-    max-height: 996.2px;
+    /* max-height: 996.2px; */
   }
 
   .columns-message-container [data-columncontainerstyleattr] {
     min-width: 280px;
+    width: 280px;
   }
 
   /* .columns-message-container [data-taskscontainerstyleattr] {
   } */
 }
+
+/* remove height and scroll on columns container. declare height and scroll on messagecolumnscontainer */
 
 /* desktop */
 
@@ -79,12 +82,14 @@
   /* columns container */
   [data-atleastonecolumnshown="true"][data-issidebarshown="true"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
-    max-width: 1139px;
+    max-width: revert;
+    width: 1139px;
   }
 
   [data-atleastonecolumnshown="true"][data-issidebarshown="false"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
-    max-width: 1440px;
+    max-width: revert;
+    width: 1440px;
   }
 
   /* empty message container */
@@ -95,7 +100,12 @@
 
   .columns-message-container {
     /* min-width: 1440px; */
-    max-height: 800.2px;
+    /* max-height: 800.2px; */
+  }
+
+  .columns-message-container [data-columncontainerstyleattr] {
+    min-width: revert;
+    width: 280px;
   }
 
   .columns-message-container [data-taskscontainerstyleattr] {

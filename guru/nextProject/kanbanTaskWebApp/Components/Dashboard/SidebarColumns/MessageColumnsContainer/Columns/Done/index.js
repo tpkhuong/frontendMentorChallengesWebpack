@@ -1,9 +1,11 @@
 import React from "react";
 import DoneColumnStyles from "./Done.module.css";
+import ColumnTitle from "../ColumnTitle";
+import TaskBtn from "../TaskBtn";
 
 // 155 68% 65%
 
-const done = [
+const doneArray = [
   {
     title: "Conduct 5 wireframe tests",
     description:
@@ -124,5 +126,43 @@ const done = [
 ];
 
 export default function DoneColumn({ children }) {
-  return <div></div>;
+  return (
+    <div
+      data-columncontainerstyleattr=""
+      className={DoneColumnStyles[`done-quantity-task-container`]}
+    >
+      <ColumnTitle
+        quantity={`${doneArray.length}`}
+        assistiveText="done"
+        status="done"
+      >
+        Done
+      </ColumnTitle>
+      {/* tasks */}
+      <ul
+        data-taskscontainerstyleattr
+        className={DoneColumnStyles[`done-tasks-container`]}
+      >
+        {doneArray.map(function buildDoneTask(obj, index) {
+          return (
+            <li key={Math.random() * index}>
+              <TaskBtn
+                completed={`${obj.subtasks.reduce(
+                  (buildingUp, currentValue) => {
+                    return currentValue.isCompleted
+                      ? buildingUp + 1
+                      : buildingUp;
+                  },
+                  0
+                )}`}
+                total={`${obj.subtasks.length}`}
+              >
+                {obj.title}
+              </TaskBtn>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
