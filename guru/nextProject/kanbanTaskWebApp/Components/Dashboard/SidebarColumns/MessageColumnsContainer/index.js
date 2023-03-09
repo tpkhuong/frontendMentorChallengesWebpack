@@ -32,7 +32,9 @@ export default function MessageColumnsContainer({
         <Columns columnsObjData={objOfValuesForColumns.columnsObj} />
       )}
       {/* add column button height has to be around 756.2 */}
-      <button>hello</button>
+      <button className={MessageColumnsStyles[`new-column-btn`]}>
+        + New Column
+      </button>
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">
         Todo
       </ColumnTitle>

@@ -1,19 +1,18 @@
 /* mobile */
 
 .column-container {
-  min-height: 748px;
-
-  overflow: scroll;
-
   display: flex;
   gap: 24px;
+
+  /* min-height: 748px; */
+  /* overflow: scroll; */
 }
 
 /* tablet */
 
 @media screen and (min-width: 48rem) {
   .column-container {
-    max-height: 996.2px;
+    /* max-height: 996.2px; */
   }
 }
 
@@ -21,6 +20,6 @@
 
 @media screen and (min-width: 90rem) {
   .column-container {
-    max-height: 800.2px;
+    /* max-height: 800.2px; */
   }
 }

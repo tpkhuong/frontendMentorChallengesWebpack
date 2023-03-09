@@ -176,9 +176,9 @@ export async function getServerSideProps(context) {
         });
         console.log(currentBoard);
         const isBoardEmpty =
-          !currentBoard.columns.todo &&
-          !currentBoard.columns.doing &&
-          !currentBoard.columns.done;
+          !Array.isArray(currentBoard.columns.todo) &&
+          !Array.isArray(currentBoard.columns.doing) &&
+          !Array.isArray(currentBoard.columns.done);
 
         if (isBoardEmpty) {
           return {
@@ -186,7 +186,7 @@ export async function getServerSideProps(context) {
               userData: data,
               currentBoard,
               title: currentBoard.title,
-              isBoardEmpty: true,
+              isBoardEmpty: false,
               columns: {
                 todo: null,
                 doing: null,

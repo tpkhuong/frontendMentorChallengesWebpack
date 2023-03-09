@@ -2,6 +2,9 @@
 
 [data-apptheme="dark"] .columns-message-container {
   --column-container-bg-dark: var(--color-dark-bg);
+  /* --color-new-column-light: hsl(219, 64%, 96%); */
+  --color-new-column-btn-dark-top: hsl(235, 12%, 19%);
+  --color-new-column-btn-dark-bottom: hsla(235 12% 19%);
 }
 
 /* --color-dark-bg
@@ -11,15 +14,17 @@
   background-color: var(--column-container-bg-dark, var(--color-light-bg));
   padding-block: 24px;
   padding-inline: 16px;
-  /* min-height: 748px;
+  min-height: 748px;
   display: flex;
-
   overflow: scroll;
+  gap: 24px;
+  /* min-height: 748px;
 
   gap: 24px; */
 }
 
-.columns-message-container [data-columncontainerstyleattr] {
+.columns-message-container [data-columncontainerstyleattr],
+.columns-message-container .new-column-btn {
   min-width: 343px;
 }
 
@@ -35,6 +40,36 @@
   flex-direction: column;
 
   gap: 20px;
+}
+
+[data-atleastonecolumnshown="true"] .new-column-btn {
+  display: revert;
+}
+
+.new-column-btn:hover,
+.new-column-btn:focus {
+  color: var(--color-purple);
+}
+
+.new-column-btn {
+  display: none;
+  /* background-color: var(
+    --color-new-column-btn-dark,
+    var(--color-new-column-light)
+  ); */
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-new-column-btn-dark-top, hsl(219, 63%, 95%)),
+    var(--color-new-column-btn-dark-bottom, hsla(218 66% 95% / 0.5))
+  );
+  color: var(--color-medium-grey);
+  font-size: var(--heading-sm-three);
+  margin-block-start: 46px;
+
+  border-radius: 8px;
+  flex-shrink: 0;
+
+  font-weight: 600;
 }
 
 @media screen and (min-width: 48rem) {
@@ -57,15 +92,16 @@
 
   .columns-message-container {
     position: relative;
+    max-height: 996.2px;
     /* min-width: 768px; */
     /* display: flex; */
     /* flex-wrap: nowrap; */
     /* overflow-x: scroll; */
     /* padding-block-end: 24px; */
-    /* max-height: 996.2px; */
   }
 
-  .columns-message-container [data-columncontainerstyleattr] {
+  .columns-message-container [data-columncontainerstyleattr],
+  .columns-message-container .new-column-btn {
     min-width: 280px;
     width: 280px;
   }
@@ -100,10 +136,11 @@
 
   .columns-message-container {
     /* min-width: 1440px; */
-    /* max-height: 800.2px; */
+    max-height: 800.2px;
   }
 
-  .columns-message-container [data-columncontainerstyleattr] {
+  .columns-message-container [data-columncontainerstyleattr],
+  .columns-message-container .new-column-btn {
     min-width: revert;
     width: 280px;
   }

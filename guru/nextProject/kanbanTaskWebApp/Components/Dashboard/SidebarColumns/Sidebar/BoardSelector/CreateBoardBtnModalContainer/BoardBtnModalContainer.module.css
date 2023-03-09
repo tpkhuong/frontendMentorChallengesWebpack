@@ -1,0 +1,25 @@
+/* mobile */
+
+.create-new-board-btn {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+
+  padding-inline-start: 24px;
+  padding-block: 14px;
+  color: var(--color-purple);
+}
+
+.create-new-board-btn path {
+  fill: var(--color-purple);
+}
+/* tablet */
+/* desktop */
+
+@media screen and (min-width: 90rem) {
+  .create-new-board-btn {
+    padding-inline-start: 32px;
+  }
+}

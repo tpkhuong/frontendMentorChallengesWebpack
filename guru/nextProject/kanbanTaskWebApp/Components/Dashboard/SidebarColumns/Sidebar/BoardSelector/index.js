@@ -1,5 +1,6 @@
 import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
+import CreateBoardBtnModalContainer from "./CreateBoardBtnModalContainer/index";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import { testCreateBoards } from "./boardSelectorHelpers";
 
@@ -143,7 +144,8 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
           })}
         </ul>
         {/* create new board */}
-        {isTabletSizeOrLarger ? (
+        <CreateBoardBtnModalContainer />
+        {/* {isTabletSizeOrLarger ? (
           <button className={BoardSelectorStyles[`create-new-board-btn`]}>
             <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -197,7 +199,7 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               <span>Create New Board</span>
             </span>
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

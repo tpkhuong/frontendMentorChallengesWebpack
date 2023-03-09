@@ -1,34 +1,36 @@
 import React from "react";
-import AddTaskModalStyles from "../../../../../styles/TaskModal.module.css";
-import CloseModalBtn from "../../../CloseModalBtn";
-import StatusMenu from "../../../StatusMenu";
-import { keyboardModalTabbingAndSpaceKey } from "../../../../../utils/sharedHelpers";
+import EditTaskModalStyles from "../../../../../../styles/TaskModal.module.css";
+import CloseModalBtn from "../../../../CloseModalBtn";
+// import StatusMenu from "../../../StatusMenu";
+import StatusMenu from "../../../../StatusMenu";
+import { keyboardModalTabbingAndSpaceKey } from "../../../../../../utils/sharedHelpers";
+// import { keyboardModalTabbingAndSpaceKey } from "../../../../../utils/sharedHelpers";
 
 const Subtasks = TaskComponent();
 
-export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
+export default function EditTaskModal({ children, renderAddTaskModalFunc }) {
   return (
-    <div className={AddTaskModalStyles[`modal-bg`]}>
+    <div className={EditTaskModalStyles[`modal-bg`]}>
       <form
         role="dialog"
         id="task-modal-selector"
         aria-modal="true"
-        className={AddTaskModalStyles[`task-modal`]}
+        className={EditTaskModalStyles[`task-modal`]}
         onKeyDown={keyboardModalTabbingAndSpaceKey}
       >
-        <fieldset className={AddTaskModalStyles[`task-fieldset`]}>
-          <div className={AddTaskModalStyles[`title-close-btn-container`]}>
-            <legend className={AddTaskModalStyles[`task-title`]}>
+        <fieldset className={EditTaskModalStyles[`task-fieldset`]}>
+          <div className={EditTaskModalStyles[`title-close-btn-container`]}>
+            <legend className={EditTaskModalStyles[`task-title`]}>
               <span>Add New Task</span>
             </legend>
-            <CloseModalBtn hideModalFunc={renderAddTaskModalFunc}>
+            <CloseModalBtn hideAddTaskModalFunc={renderAddTaskModalFunc}>
               Close add new task modal
             </CloseModalBtn>
           </div>
           {/* title */}
           <div
             data-isempty=""
-            className={AddTaskModalStyles[`title-input-container`]}
+            className={EditTaskModalStyles[`title-input-container`]}
           >
             <label htmlFor="task-title">Title</label>
             <input
@@ -36,13 +38,13 @@ export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
               id="task-title"
               placeholder="e.g. Take coffee break"
             />
-            <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
-            <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
+            <span className={EditTaskModalStyles[`empty`]}>Can't be empty</span>
+            <span className={EditTaskModalStyles[`accepted`]}>Accepted</span>
           </div>
           {/* description */}
           <div
             data-isempty=""
-            className={AddTaskModalStyles[`description-input-container`]}
+            className={EditTaskModalStyles[`description-input-container`]}
           >
             <label htmlFor="task-description">Description</label>
             <textarea
@@ -53,8 +55,8 @@ export default function AddTaskModal({ children, renderAddTaskModalFunc }) {
               placeholder="e.g. It’s always good to take a break. This 15 minute break will 
 recharge the batteries a little."
             />
-            <span className={AddTaskModalStyles[`empty`]}>Can't be empty</span>
-            <span className={AddTaskModalStyles[`accepted`]}>Accepted</span>
+            <span className={EditTaskModalStyles[`empty`]}>Can't be empty</span>
+            <span className={EditTaskModalStyles[`accepted`]}>Accepted</span>
           </div>
           {/* subtasks */}
           <Subtasks />
@@ -63,7 +65,7 @@ recharge the batteries a little."
           {/* create task btn */}
           <button
             data-lastitem="true"
-            className={AddTaskModalStyles[`create-task-btn`]}
+            className={EditTaskModalStyles[`create-task-btn`]}
             type="button"
             onClick={(event) => {
               // task-title
@@ -271,7 +273,6 @@ function TaskComponent() {
         index
       ) {
         document.getElementById(`subtask-${index + 1}`).value = obj.text;
-
         if (obj.text === "" && isSubtaskInputEmptyMsgShown) {
           const inputContainer = document.getElementById(`subtask-${index + 1}`)
             .parentElement.parentElement;
@@ -285,7 +286,7 @@ function TaskComponent() {
 
     return (
       <div
-        className={AddTaskModalStyles[`subtask-inputs-container`]}
+        className={EditTaskModalStyles[`subtask-inputs-container`]}
         onClick={(event) => {
           const clickedBtn = event.target.closest("BUTTON");
 
@@ -302,7 +303,7 @@ function TaskComponent() {
           }
         }}
       >
-        <span className={AddTaskModalStyles[`label`]}>Subtasks</span>
+        <span className={EditTaskModalStyles[`label`]}>Subtasks</span>
         <ul
           onChange={(event) => {
             // want to update the text property of obj in arrayOfObjForSubtasks that
@@ -317,7 +318,7 @@ function TaskComponent() {
             // will be assign to value of input
             objInArrayOfObjForSubtasks.text = event.target.value;
           }}
-          className={AddTaskModalStyles[`subtasks-container`]}
+          className={EditTaskModalStyles[`subtasks-container`]}
         >
           {subtasksArray.arrayOfObjForSubtasks.map(function makeSubtasks(
             taskObj,
@@ -327,7 +328,7 @@ function TaskComponent() {
               <li data-isempty="" key={Math.random() * index}>
                 <div
                   className={
-                    AddTaskModalStyles[`subtask-label-input-container`]
+                    EditTaskModalStyles[`subtask-label-input-container`]
                   }
                 >
                   <label
@@ -339,10 +340,10 @@ function TaskComponent() {
                     type="text"
                     placeholder={`e.g. ${objForComponent.arrayOfStrings[index]}`}
                   />
-                  <span className={AddTaskModalStyles[`empty`]}>
+                  <span className={EditTaskModalStyles[`empty`]}>
                     Can't be empty
                   </span>
-                  <span className={AddTaskModalStyles[`accepted`]}>
+                  <span className={EditTaskModalStyles[`accepted`]}>
                     Accepted
                   </span>
                 </div>
@@ -350,10 +351,10 @@ function TaskComponent() {
                   data-typeofbtn="remove"
                   type="button"
                   data-subtaskclosebtnindex={`${index}`}
-                  className={AddTaskModalStyles[`remove-subtask-btn`]}
+                  className={EditTaskModalStyles[`remove-subtask-btn`]}
                 >
                   <svg
-                    className={AddTaskModalStyles[`remove-subtask-btn-icon`]}
+                    className={EditTaskModalStyles[`remove-subtask-btn-icon`]}
                     width="15"
                     height="15"
                     xmlns="http://www.w3.org/2000/svg"
@@ -373,7 +374,7 @@ function TaskComponent() {
         <button
           data-typeofbtn="add"
           type="button"
-          className={AddTaskModalStyles[`subtask-btn`]}
+          className={EditTaskModalStyles[`subtask-btn`]}
         >
           <span aria-hidden="true">+</span>
           <span>Add New Subtask</span>
