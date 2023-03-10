@@ -1,18 +1,18 @@
 import React from "react";
 import BoardBtnModalStyles from "./BoardBtnModalContainer.module.css";
 import { useMediaQuery } from "../../../../../../utils/sharedHelpers";
-import EditTaskModal from "./editTask";
+import { EditTaskModal } from "./editTask";
 
 export default function CreateBoardBtnModalContainer({ children }) {
   const isScreenLargerThanTablet = useMediaQuery("min", 768);
 
-  const [renderEditModal, setEditModal] = React.useState(false);
+  const [renderAddBoardModal, setAddBoardModal] = React.useState(false);
   return (
     <React.Fragment>
       {isScreenLargerThanTablet ? (
         <button
           onClick={(event) => {
-            setEditModal(true);
+            setAddBoardModal(true);
           }}
           className={BoardBtnModalStyles[`create-new-board-btn`]}
         >
@@ -69,7 +69,23 @@ export default function CreateBoardBtnModalContainer({ children }) {
           </span>
         </button>
       )}
-      {renderEditModal ? <EditTaskModal /> : null}
+      {renderAddBoardModal ? (
+        <EditTaskModal
+          idAttr="edit"
+          modalTitle="Edit Task"
+          renderTaskModalFunc={setAddBoardModal}
+          editModalValuesObj={{
+            titleInput: "Define React World",
+            descriptionInput:
+              "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
+            subtasksArray: [
+              { placeholder: "", text: "Add auth endpoints" },
+              { placeholder: "", text: "Talk to Boss" },
+            ],
+            statusInput: "Doing",
+          }}
+        />
+      ) : null}
     </React.Fragment>
   );
 }

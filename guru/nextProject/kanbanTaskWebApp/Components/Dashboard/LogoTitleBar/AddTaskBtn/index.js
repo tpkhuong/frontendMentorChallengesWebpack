@@ -1,6 +1,7 @@
 import React from "react";
 import AddTaskBtnStyles from "./AddTaskBtn.module.css";
-import AddTaskModal from "./AddTaskModal/index";
+import { AddTaskModal } from "./AddTaskModal/index";
+// import AddTaskModal from "./AddTaskModal/index";
 import { BoardTaskRenderContext } from "../../Context/index";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
 
@@ -40,14 +41,28 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                     document.getElementById("add-task-title").focus();
                   }, 80);
 
-                  showAddTaskModal(renderAddTaskModal, setTaskModal);
+                  setTaskModal(true);
+                  // showAddTaskModal(renderAddTaskModal, setTaskModal);
                 }}
               >
                 <span aria-hidden="true">+</span>
                 <span>Add New Task</span>
               </button>
               {renderAddTaskModal ? (
-                <AddTaskModal renderAddTaskModalFunc={setTaskModal} />
+                <AddTaskModal
+                  idAttr="add"
+                  modalTitle="Add New Task"
+                  renderTaskModalFunc={setTaskModal}
+                  editModalValuesObj={{
+                    titleInput: "",
+                    descriptionInput: "",
+                    subtasksArray: [
+                      { placeholder: "", text: "" },
+                      { placeholder: "", text: "" },
+                    ],
+                    statusInput: "",
+                  }}
+                />
               ) : null}
             </React.Fragment>
           )
@@ -83,7 +98,8 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                   document.getElementById("add-task-title").focus();
                 }, 80);
 
-                showAddTaskModal(renderAddTaskModal, setTaskModal);
+                setTaskModal(true);
+                // showAddTaskModal(renderAddTaskModal, setTaskModal);
               }}
             >
               <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +110,20 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
               </svg>
             </button>
             {renderAddTaskModal ? (
-              <AddTaskModal renderAddTaskModalFunc={setTaskModal} />
+              <AddTaskModal
+                idAttr="add"
+                modalTitle="Add New Task"
+                renderTaskModalFunc={setTaskModal}
+                editModalValuesObj={{
+                  titleInput: "",
+                  descriptionInput: "",
+                  subtasksArray: [
+                    { placeholder: "", text: "" },
+                    { placeholder: "", text: "" },
+                  ],
+                  statusInput: "",
+                }}
+              />
             ) : null}
           </React.Fragment>
         )

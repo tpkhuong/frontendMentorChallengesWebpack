@@ -1,11 +1,13 @@
 import React from "react";
 import StatusMenuStyles from "./StatusMenu.module.css";
 
-export default function StatusMenu({ children }) {
+export default function StatusMenu({ children, statusValueFromEditModal }) {
   // const [valueOfStatusBtn, setStatusBtn] = React.useState("Todo");
   // const [isStatusMenuShown, setStatusMenu] = React.useState(false);
   const [initialStatusValues, setStatusMenu] = React.useState({
-    valueOfStatusBtn: "Todo",
+    valueOfStatusBtn: !statusValueFromEditModal
+      ? "Todo"
+      : statusValueFromEditModal,
     isStatusMenuShown: false,
   });
   return (
