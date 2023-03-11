@@ -1,7 +1,7 @@
 import React from "react";
 import BoardBtnModalStyles from "./BoardBtnModalContainer.module.css";
 import { useMediaQuery } from "../../../../../../utils/sharedHelpers";
-import { EditTaskModal } from "./editTask";
+// import { EditTaskModal } from "./editTask";
 
 export default function CreateBoardBtnModalContainer({ children }) {
   const isScreenLargerThanTablet = useMediaQuery("min", 768);
@@ -69,7 +69,7 @@ export default function CreateBoardBtnModalContainer({ children }) {
           </span>
         </button>
       )}
-      {renderAddBoardModal ? (
+      {/* {renderAddBoardModal ? (
         <EditTaskModal
           idAttr="edit"
           modalTitle="Edit Task"
@@ -85,7 +85,7 @@ export default function CreateBoardBtnModalContainer({ children }) {
             statusInput: "Doing",
           }}
         />
-      ) : null}
+      ) : null} */}
     </React.Fragment>
   );
 }

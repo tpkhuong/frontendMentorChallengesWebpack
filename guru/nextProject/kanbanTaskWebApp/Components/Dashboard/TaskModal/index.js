@@ -16,7 +16,17 @@ export function taskModal() {
     editModalValuesObj,
     submitBtnFunc,
   }) {
-    React.useEffect(() => {}, []);
+    idAttr == "edit"
+      ? React.useEffect(() => {
+          // title input
+          document.getElementById("edit-task-title").value =
+            editModalValuesObj.titleInput;
+          // description input
+          document.getElementById("edit-task-description").value =
+            editModalValuesObj.descriptionInput;
+        })
+      : null;
+
     return (
       <div className={TaskModalStyles[`modal-bg`]}>
         <form
@@ -281,6 +291,7 @@ function SubtasksComponent() {
       // check length of arrayOfObjForSubtasks
       // only remove subtasks if length is > 1
       if (objForComponent.arrayOfObjForSubtasks.length > 1) {
+        console.log(setStateFunc);
         // filter out obj that matches Number(removeBtn.getAttribute("data-subtaskclosebtnindex"))
         const arrayWithRemovedObj =
           objForComponent.arrayOfObjForSubtasks.filter(function removeItem(
@@ -296,6 +307,7 @@ function SubtasksComponent() {
         objForComponent.arrayOfObjForSubtasks = [...arrayWithRemovedObj];
         // render subtasks with removed item using new length of arrayOfObjForSubtasks
         console.log(objForComponent.arrayOfObjForSubtasks, "remove");
+        console.log(arrayWithRemovedObj, "remove");
         setStateFunc((prevValues) => {
           return {
             ...prevValues,
@@ -312,7 +324,7 @@ function SubtasksComponent() {
     typeOfModal,
     arrayFromEditModal,
   }) {
-    objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
+    // objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
     // if (typeOfModal == "edit") {
     // }
 
@@ -323,9 +335,13 @@ function SubtasksComponent() {
     //   ];
     // }
 
+    React.useEffect(() => {
+      objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
+    }, []);
+
     const [subtasksArray, setSubtasks] = React.useState({
-      lengthOfArray: objForComponent.arrayOfObjForSubtasks.length,
-      arrayOfObjForSubtasks: objForComponent.arrayOfObjForSubtasks,
+      lengthOfArray: arrayFromEditModal.length,
+      arrayOfObjForSubtasks: arrayFromEditModal,
     });
 
     React.useEffect(() => {
