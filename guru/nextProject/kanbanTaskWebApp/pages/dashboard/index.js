@@ -47,7 +47,10 @@ export default function Dashboard({
     >
       <BoardTaskRenderContext.Provider value={memoizedStateValueAndFunc}>
         {/* logotitlebar */}
-        <LogoTitleBar valuesForTitleAddTask={{ isBoardEmpty, title }} />
+        <LogoTitleBar
+          valueForLogoutBtn
+          valuesForTitleAddTask={{ isBoardEmpty, title }}
+        />
         {/* sidebarcolumns */}
         <SidebarColumns
           valuesForBoardsColumns={{

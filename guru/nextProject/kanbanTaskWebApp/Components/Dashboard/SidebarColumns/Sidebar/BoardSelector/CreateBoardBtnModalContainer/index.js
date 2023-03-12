@@ -1,7 +1,10 @@
 import React from "react";
 import BoardBtnModalStyles from "./BoardBtnModalContainer.module.css";
 import { useMediaQuery } from "../../../../../../utils/sharedHelpers";
+import { boardComponent } from "../../../../BoardModal/index";
 // import { EditTaskModal } from "./editTask";
+
+const AddBoardModal = boardComponent();
 
 export default function CreateBoardBtnModalContainer({ children }) {
   const isScreenLargerThanTablet = useMediaQuery("min", 768);
@@ -69,6 +72,7 @@ export default function CreateBoardBtnModalContainer({ children }) {
           </span>
         </button>
       )}
+      {renderAddBoardModal ? <AddBoardModal /> : null}
       {/* {renderAddBoardModal ? (
         <EditTaskModal
           idAttr="edit"

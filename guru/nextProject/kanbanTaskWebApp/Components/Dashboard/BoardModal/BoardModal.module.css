@@ -1,0 +1,23 @@
+/* mobile */
+.board-title {
+}
+
+.label {
+  font-size: var(--heading-reg-xxx-sm);
+  color: red;
+}
+
+.column-btn-container span {
+  font-weight: 100;
+}
+
+.remove-column-btn {
+  background-color: transparent;
+}
+
+.btns-container {
+  font-size: var(--heading-reg-xx-sm);
+}
+
+/* tablet */
+/* desktop */
