@@ -1,21 +1,25 @@
 import React from "react";
 import BoardBtnModalStyles from "./BoardBtnModalContainer.module.css";
 import { useMediaQuery } from "../../../../../../utils/sharedHelpers";
-import { boardComponent } from "../../../../BoardModal/index";
-// import { EditTaskModal } from "./editTask";
-
-const AddBoardModal = boardComponent();
 
 export default function CreateBoardBtnModalContainer({ children }) {
   const isScreenLargerThanTablet = useMediaQuery("min", 768);
 
   const [renderAddBoardModal, setAddBoardModal] = React.useState(false);
+
   return (
     <React.Fragment>
       {isScreenLargerThanTablet ? (
         <button
           onClick={(event) => {
-            setAddBoardModal(true);
+            document
+              .getElementById("board-modal-selector")
+              .getAttribute("data-showboardmodal") == "false"
+              ? document
+                  .getElementById("board-modal-selector")
+                  .setAttribute("data-showboardmodal", "true")
+              : null;
+            // setAddBoardModal(true);
           }}
           className={BoardBtnModalStyles[`create-new-board-btn`]}
         >
@@ -72,7 +76,9 @@ export default function CreateBoardBtnModalContainer({ children }) {
           </span>
         </button>
       )}
-      {renderAddBoardModal ? <AddBoardModal /> : null}
+      {/* declaration of transform translateX on SidebarColumns_sidebar-columns-container making  */}
+      {/* board-modal-bg not cover full screen. it will cover the sidebar-column container */}
+      {/* {renderAddBoardModal ? <AddBoardModal /> : null} */}
       {/* {renderAddBoardModal ? (
         <EditTaskModal
           idAttr="edit"

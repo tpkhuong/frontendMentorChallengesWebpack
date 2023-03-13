@@ -16,7 +16,11 @@ export function boardComponent() {
 
   return function innerComponent({ children, typeOfBoard }) {
     return (
-      <div className={BoardModalStyles[`board-modal-bg`]}>
+      <div
+        id="board-modal-selector"
+        data-showboardmodal="false"
+        className={BoardModalStyles[`board-modal-bg`]}
+      >
         <form
           aria-modal="true"
           role="dialog"
@@ -37,14 +41,21 @@ export function boardComponent() {
               >
                 Board Name
               </label>
-              <input id="board-name-input" type="text" />
+              <input
+                id="board-name-input"
+                type="text"
+                placeholder="e.g. Web Design"
+              />
             </div>
             {/* columns */}
             <span className={BoardModalStyles["label"]}>Board Columns</span>
             <ul className={BoardModalStyles[`column-btn-container`]}>
               {testArr.map(function makeColumnBtn(subarray, index) {
                 return subarray[1] ? (
-                  <li key={Math.random() * index}>
+                  <li
+                    className={BoardModalStyles[`remove-column-btn-container`]}
+                    key={Math.random() * index}
+                  >
                     <span>{subarray[0]}</span>
                     <button
                       className={BoardModalStyles[`remove-column-btn`]}

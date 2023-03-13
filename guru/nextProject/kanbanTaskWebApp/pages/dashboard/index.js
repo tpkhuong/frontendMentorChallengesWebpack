@@ -7,7 +7,10 @@ import { authOptions } from "../api/auth/[...nextauth].js";
 // import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import clientPromise from "../../config/mongoDB";
+import { boardComponent } from "../../Components/Dashboard/BoardModal/index";
 import { testCreateBoards } from "../../Components/Dashboard/SidebarColumns/Sidebar/BoardSelector/boardSelectorHelpers";
+
+const AddBoardModal = boardComponent();
 
 // set context here
 
@@ -26,6 +29,7 @@ export default function Dashboard({
       // setStateFuncs
       setStateFuncs: {},
       stateFuncsForModals: {},
+      stateValuesForModals: {},
     };
   }, []);
 
