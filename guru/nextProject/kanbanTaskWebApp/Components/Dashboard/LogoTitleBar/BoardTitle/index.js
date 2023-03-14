@@ -37,7 +37,7 @@ export default function BoardTitle({ children, boardTitle }) {
 
               if (boards.length == 0) {
                 // focus create new board btn
-                document.getElementById("mobile-tab-selector").focus();
+                document.getElementById("mobile-tab-refocus-selector").focus();
                 return;
               } else {
                 // focus element with data-boardindex == 0
@@ -75,7 +75,9 @@ export default function BoardTitle({ children, boardTitle }) {
                   event.preventDefault();
                   return;
                 } else {
-                  document.getElementById("mobile-tab-selector").focus();
+                  document
+                    .getElementById("mobile-tab-refocus-selector")
+                    .focus();
                   event.preventDefault();
                   return;
                 }

@@ -27,7 +27,10 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
           }}
         />
       </div>
-      <AddBoardModal />
+      <AddBoardModal
+        boardModalTitle="Add New Board"
+        columnObj={{ todo: null, doing: null, done: null }}
+      />
     </React.Fragment>
   );
 }

@@ -1,27 +1,30 @@
 /* mobile */
 
-.board-modal-bg[data-showboardmodal="true"] {
+/* .board-modal-bg[data-showboardmodal="true"] {
   display: revert;
-}
+} */
 
 .board-modal-bg {
   background-color: hsla(0 0% 0% / 0.4);
-  display: none;
+  /* display: none; */
+  z-index: 1;
 
   position: absolute;
   inset: 0;
 }
 
 .board-modal-container {
+  --board-container-padding: 24px;
   --inline: 16px;
   font-weight: 600;
-  background-color: var(--color-neutral-white);
+  /* --color-neutral-white */
+  background-color: var(--edit-delete-modals-bg, var(--color-neutral-white));
   position: absolute;
   inset: 0;
   max-width: 480px;
   height: min-content;
   margin: auto;
-  padding: 24px;
+  padding: var(--board-container-padding);
   border-radius: 8px;
   left: var(--inline);
   right: var(--inline);
@@ -37,7 +40,7 @@
 
 .label {
   font-size: var(--heading-reg-xxx-sm);
-  color: var(--color-medium-grey);
+  color: var(--modal-labels-light, var(--modal-labels-dark));
 }
 
 .name-input-container {
@@ -46,7 +49,13 @@
 
 .name-input-container input {
   border-radius: 4px;
-  border: var(--border-lines);
+  border: 2px solid;
+  border-color: var(
+    --modal-inputs-border-dark,
+    var(--modal-inputs-border-light)
+  );
+  color: var(--modal-input-dark);
+  background-color: transparent;
   width: 100%;
   padding-inline-start: 16px;
   padding-block: 8px;
@@ -57,6 +66,10 @@
 .name-input-container input,
 .column-btn-container span {
   font-weight: 100;
+}
+
+.column-btn-container span::first-letter {
+  text-transform: uppercase;
 }
 
 .column-btn-container {
@@ -73,7 +86,11 @@
 }
 
 .remove-column-btn-container span {
-  border: var(--border-lines);
+  border: 2px solid;
+  border-color: var(
+    --modal-inputs-border-dark,
+    var(--modal-inputs-border-light)
+  );
   border-radius: 4px;
   padding-inline-start: 16px;
   padding-block: 8px;
@@ -86,7 +103,50 @@
 
 .btns-container {
   font-size: var(--heading-reg-xx-sm);
+  margin-block-start: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --addcreate-taskboard-save-btn-light
+--addsubtask-addcolumn-cancel-btn-light-bg
+--addsubtask-addcolumn-cancel-btn-light-fg */
+
+/* --addcreate-taskboard-save-btn-dark
+--addsubtask-addcolumn-cancel-btn-dark-bg
+--addsubtask-addcolumn-cancel-btn-dark-fg */
+
+/* add new column */
+
+.add-column-btn,
+.create-save-btn {
+  padding-block: 10px;
+  border-radius: 100vw;
+}
+
+.add-column-btn {
+  color: var(--color-purple);
+  background-color: var(
+    --addsubtask-addcolumn-cancel-btn-light-bg,
+    var(--addsubtask-addcolumn-cancel-btn-dark-bg)
+  );
+}
+
+/* create new board / save changes */
+
+.create-save-btn {
+  color: var(--color-neutral-white);
+  background-color: var(--color-purple);
 }
 
 /* tablet */
+
+@media screen and (min-width: 48rem) {
+  .board-modal-container {
+    --board-container-padding: 32px;
+  }
+}
+
 /* desktop */

@@ -1,7 +1,11 @@
 import React from "react";
 import CloseModalStyles from "./CloseModalBtn.module.css";
 
-export default function CloseModalBtn({ children, hideModalFunc }) {
+export default function CloseModalBtn({
+  children,
+  focusClickedElement,
+  hideModalFunc,
+}) {
   return (
     <button
       type="button"
@@ -10,7 +14,7 @@ export default function CloseModalBtn({ children, hideModalFunc }) {
       aria-label={children}
       onClick={(event) => {
         // focus add task btn
-        document.getElementById("add-task-btn").focus();
+        document.getElementById(`${focusClickedElement}`).focus();
 
         hideModalFunc(false);
       }}

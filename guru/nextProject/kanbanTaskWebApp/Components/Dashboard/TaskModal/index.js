@@ -41,7 +41,10 @@ export function taskModal() {
               <legend className={TaskModalStyles[`task-title`]}>
                 <span>{modalTitle}</span>
               </legend>
-              <CloseModalBtn hideModalFunc={renderTaskModalFunc}>
+              <CloseModalBtn
+                focusClickedElement="add-task-btn"
+                hideModalFunc={renderTaskModalFunc}
+              >
                 Close {modalTitle} modal
               </CloseModalBtn>
             </div>

@@ -1,24 +1,30 @@
 import React from "react";
 import BoardBtnModalStyles from "./BoardBtnModalContainer.module.css";
+import { BoardTaskRenderContext } from "../../../../Context";
 import { useMediaQuery } from "../../../../../../utils/sharedHelpers";
 
 export default function CreateBoardBtnModalContainer({ children }) {
   const isScreenLargerThanTablet = useMediaQuery("min", 768);
 
-  const [renderAddBoardModal, setAddBoardModal] = React.useState(false);
+  const renderContextForCreateBoardModalBtn = React.useContext(
+    BoardTaskRenderContext
+  );
 
   return (
     <React.Fragment>
       {isScreenLargerThanTablet ? (
         <button
           onClick={(event) => {
-            document
-              .getElementById("board-modal-selector")
-              .getAttribute("data-showboardmodal") == "false"
-              ? document
-                  .getElementById("board-modal-selector")
-                  .setAttribute("data-showboardmodal", "true")
-              : null;
+            renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
+              true
+            );
+            // document
+            //   .getElementById("board-modal-selector")
+            //   .getAttribute("data-showboardmodal") == "false"
+            //   ? document
+            //       .getElementById("board-modal-selector")
+            //       .setAttribute("data-showboardmodal", "true")
+            //   : null;
             // setAddBoardModal(true);
           }}
           className={BoardBtnModalStyles[`create-new-board-btn`]}
@@ -36,8 +42,21 @@ export default function CreateBoardBtnModalContainer({ children }) {
         </button>
       ) : (
         <button
-          id="mobile-tab-selector"
+          id="mobile-tab-refocus-selector"
           className={BoardBtnModalStyles[`create-new-board-btn`]}
+          onClick={(event) => {
+            renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
+              true
+            );
+            // document
+            //   .getElementById("board-modal-selector")
+            //   .getAttribute("data-showboardmodal") == "false"
+            //   ? document
+            //       .getElementById("board-modal-selector")
+            //       .setAttribute("data-showboardmodal", "true")
+            //   : null;
+            // setAddBoardModal(true);
+          }}
           onKeyDown={(event) => {
             const mobileMenuContainer = document.getElementById(
               "sidebar-mobile-selector"

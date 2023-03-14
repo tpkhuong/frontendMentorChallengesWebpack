@@ -1,6 +1,8 @@
 import React from "react";
 import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
+import { BoardTaskRenderContext } from "../Context";
+import { makeObjForBoardColumn } from "./BoardModalHelpers";
 
 export function boardComponent() {
   const objForBoardComponent = {
@@ -14,83 +16,160 @@ export function boardComponent() {
     ["done", true],
   ];
 
-  return function innerComponent({ children, typeOfBoard }) {
+  const objOfMethods = {
+    addColumn: function addBoardColumn(obj, setStateFunc) {
+      console.log(obj);
+      console.log(setStateFunc);
+    },
+    removeColumn: function removeBoardColumn(obj, setStateFunc, index) {
+      console.log(obj);
+      console.log(setStateFunc);
+      console.log(index);
+    },
+  };
+
+  // pass array in for board columns
+  return function innerComponent({
+    children,
+    typeOfBoard,
+    boardModalTitle,
+    columnObj,
+  }) {
+    const modifiedOriginalColumnObj = makeObjForBoardColumn(columnObj);
+
+    objForBoardComponent.objForRenderingColumnBtnAlgor =
+      modifiedOriginalColumnObj;
+
+    const [renderBoardModal, setAddBoardModal] = React.useState(false);
+    const [arrayForBoardColumn, setBoardColumn] = React.useState(
+      Object.entries(modifiedOriginalColumnObj)
+    );
+
+    const renderContextForBoardModal = React.useContext(BoardTaskRenderContext);
+
+    renderContextForBoardModal.stateFuncsForModals.addNewBoardModal =
+      setAddBoardModal;
+
     return (
-      <div
-        id="board-modal-selector"
-        data-showboardmodal="false"
-        className={BoardModalStyles[`board-modal-bg`]}
-      >
-        <form
-          aria-modal="true"
-          role="dialog"
-          className={BoardModalStyles[`board-modal-container`]}
-        >
-          <fieldset className={BoardModalStyles[`board-fieldset`]}>
-            <div className={BoardModalStyles[`title-btn-container`]}>
-              <legend className={BoardModalStyles[`board-title`]}>
-                <span>Add New Board</span>
-              </legend>
-              <CloseModalBtn>Close Add New Board Modal</CloseModalBtn>
-            </div>
-            {/* name */}
-            <div className={BoardModalStyles[`name-input-container`]}>
-              <label
-                className={BoardModalStyles[`label`]}
-                htmlFor="board-name-input"
+      <React.Fragment>
+        {renderBoardModal ? (
+          <div
+            id="board-modal-selector"
+            data-showboardmodal="false"
+            className={BoardModalStyles[`board-modal-bg`]}
+          >
+            <form
+              aria-modal="true"
+              role="dialog"
+              className={BoardModalStyles[`board-modal-container`]}
+            >
+              <fieldset
+                onClick={(event) => {
+                  const btnClicked = event.target.closest("BUTTON");
+
+                  if (
+                    btnClicked &&
+                    objOfMethods[btnClicked.getAttribute("data-typeofboardbtn")]
+                  ) {
+                    objOfMethods[
+                      btnClicked.getAttribute("data-typeofboardbtn")
+                    ](
+                      objForBoardComponent.objForRenderingColumnBtnAlgor,
+                      setBoardColumn,
+                      "index"
+                    );
+                    return;
+                  }
+                }}
+                className={BoardModalStyles[`board-fieldset`]}
               >
-                Board Name
-              </label>
-              <input
-                id="board-name-input"
-                type="text"
-                placeholder="e.g. Web Design"
-              />
-            </div>
-            {/* columns */}
-            <span className={BoardModalStyles["label"]}>Board Columns</span>
-            <ul className={BoardModalStyles[`column-btn-container`]}>
-              {testArr.map(function makeColumnBtn(subarray, index) {
-                return subarray[1] ? (
-                  <li
-                    className={BoardModalStyles[`remove-column-btn-container`]}
-                    key={Math.random() * index}
+                <div className={BoardModalStyles[`title-btn-container`]}>
+                  <legend className={BoardModalStyles[`board-title`]}>
+                    <span>{boardModalTitle}</span>
+                  </legend>
+                  <CloseModalBtn
+                    focusClickedElement="mobile-tab-refocus-selector"
+                    hideModalFunc={setAddBoardModal}
                   >
-                    <span>{subarray[0]}</span>
-                    <button
-                      className={BoardModalStyles[`remove-column-btn`]}
-                      aria-label="remove column"
-                      data-removecolumnbtnindex={`${index}`}
-                    >
-                      <svg
-                        className={BoardModalStyles[`remove-subtask-btn-icon`]}
-                        width="15"
-                        height="15"
-                        xmlns="http://www.w3.org/2000/svg"
+                    Close {boardModalTitle} Modal
+                  </CloseModalBtn>
+                </div>
+                {/* name */}
+                <div className={BoardModalStyles[`name-input-container`]}>
+                  <label
+                    className={BoardModalStyles[`label`]}
+                    htmlFor="board-name-input"
+                  >
+                    Board Name
+                  </label>
+                  <input
+                    id="board-name-input"
+                    type="text"
+                    placeholder="e.g. Web Design"
+                  />
+                </div>
+                {/* columns */}
+                <span className={BoardModalStyles["label"]}>Board Columns</span>
+                <ul className={BoardModalStyles[`column-btn-container`]}>
+                  {arrayForBoardColumn.map(function makeColumnBtn(
+                    subarray,
+                    index
+                  ) {
+                    return subarray[1] ? (
+                      <li
+                        className={
+                          BoardModalStyles[`remove-column-btn-container`]
+                        }
+                        key={Math.random() * index}
                       >
-                        <g fill="#828FA3" fillRule="evenodd">
-                          <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />
-                          <path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z" />
-                        </g>
-                      </svg>
-                    </button>
-                  </li>
-                ) : null;
-              })}
-            </ul>
-            {/* btns container */}
-            <div className={BoardModalStyles[`btns-container`]}>
-              <button className={BoardModalStyles[`add-column-btn`]}>
-                <span>+</span>
-                <span>Add New Column</span>
-              </button>
-              <button className={BoardModalStyles[`create-save-btn`]}>
-                Create New Board
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
+                        <span>{subarray[0]}</span>
+                        <button
+                          type="button"
+                          data-typeofboardbtn="removeColumn"
+                          className={BoardModalStyles[`remove-column-btn`]}
+                          aria-label="remove column"
+                          data-removecolumnbtnindex={`${index}`}
+                        >
+                          <svg
+                            className={
+                              BoardModalStyles[`remove-subtask-btn-icon`]
+                            }
+                            width="15"
+                            height="15"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g fill="#828FA3" fillRule="evenodd">
+                              <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />
+                              <path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z" />
+                            </g>
+                          </svg>
+                        </button>
+                      </li>
+                    ) : null;
+                  })}
+                </ul>
+                {/* btns container */}
+                <div className={BoardModalStyles[`btns-container`]}>
+                  <button
+                    type="button"
+                    data-typeofboardbtn="addColumn"
+                    className={BoardModalStyles[`add-column-btn`]}
+                  >
+                    <span>+</span>
+                    <span>Add New Column</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={BoardModalStyles[`create-save-btn`]}
+                  >
+                    Create New Board
+                  </button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        ) : null}
+      </React.Fragment>
     );
   };
 }
@@ -279,8 +358,8 @@ const objOfCompares = Object.entries(makeObj(objTwo)).reduce(
       return buildingUp;
     }
     if (Array.isArray(outerValue) !== innerValue) {
-      // we enter this if statement the the value of the property ("todo","doing","done") is an array
-      // user decide to not render one of the status column.
+      // we enter this if statement when the value of the property ("todo","doing","done") is an array
+      // and user decide to not render one of the status column.
       // we can also check if there is tasks in the status columns here,
       // if there is assign an obj to buildingUp[innerKey]: {booleanValue:false,isTasksInColumn: true},
       // if there isnt assign an obj to buildingUp[innerKey]: {booleanValue:false,isTasksInColumn: false}
@@ -299,6 +378,60 @@ const objOfCompares = Object.entries(makeObj(objTwo)).reduce(
 // pass that array in to warning message modal component. also pass objOfCompares into warning message modal.
 // that has tasks in them. ask if they want to confirm
 // !!objTwo.todo === Array.isArray(arrOfSubarrays[1][1])
+
+function addingColumn(obj) {
+  const arrayOfSubarrays = Object.entries(obj);
+  var index = 0;
+
+  while (index < arrayOfSubarrays.length) {
+    if (
+      !Array.isArray(arrayOfSubarrays[index][1]) &&
+      !arrayOfSubarrays[index][1]
+    ) {
+      arrayOfSubarrays[index][1] = true;
+
+      return arrayOfSubarrays.reduce(function makeObj(
+        buildingUp,
+        currentValue
+      ) {
+        const [key, value] = currentValue;
+
+        buildingUp[key] = value;
+        return buildingUp;
+      },
+      {});
+    }
+
+    index += 1;
+  }
+
+  return arrayOfSubarrays.reduce(function makeObj(buildingUp, currentValue) {
+    const [key, value] = currentValue;
+
+    buildingUp[key] = value;
+    return buildingUp;
+  }, {});
+}
+
+function removeColumn(obj, clickedIndex) {
+  const subarrays = Object.entries(obj);
+
+  subarrays[clickedIndex][1] ? (subarrays[clickedIndex][1] = false) : null;
+
+  const modifiedObj = subarrays.reduce(function removeProperty(
+    buildingUp,
+    currentValue,
+    index
+  ) {
+    const [key, value] = currentValue;
+
+    buildingUp[key] = value;
+    return buildingUp;
+  },
+  {});
+
+  return [subarrays, modifiedObj];
+}
 
 function createFunc() {
   return function innerFunc(obj) {
@@ -334,38 +467,4 @@ function createFunc() {
       return buildingUp;
     }, {});
   };
-}
-
-function addingColumn(obj) {
-  const arrayOfSubarrays = Object.entries(obj);
-  var index = 0;
-
-  while (index < arrayOfSubarrays.length) {
-    if (
-      !Array.isArray(arrayOfSubarrays[index][1]) &&
-      !arrayOfSubarrays[index][1]
-    ) {
-      arrayOfSubarrays[index][1] = true;
-
-      return arrayOfSubarrays.reduce(function makeObj(
-        buildingUp,
-        currentValue
-      ) {
-        const [key, value] = currentValue;
-
-        buildingUp[key] = value;
-        return buildingUp;
-      },
-      {});
-    }
-
-    index += 1;
-  }
-
-  return arrayOfSubarrays.reduce(function makeObj(buildingUp, currentValue) {
-    const [key, value] = currentValue;
-
-    buildingUp[key] = value;
-    return buildingUp;
-  }, {});
 }
