@@ -18,13 +18,116 @@ export function boardComponent() {
 
   const objOfMethods = {
     addColumn: function addBoardColumn(obj, setStateFunc) {
-      console.log(obj);
-      console.log(setStateFunc);
+      const arrayOfSubarrays = Object.entries(obj);
+      const allColumnsAreShown = arrayOfSubarrays.every(
+        function isAllColumnsShown(subarray, index) {
+          return subarray[1];
+        }
+      );
+
+      if (allColumnsAreShown) {
+        return;
+      }
+
+      // we get here, it means one of the columns is not shown
+      var index = 0;
+
+      // obj passed in to this func will be objForBoardComponent.objForRenderingColumnBtnAlgor
+      // {todo: false,doing:true,done:true} etc
+      while (index < arrayOfSubarrays.length) {
+        if (!arrayOfSubarrays[index][1]) {
+          arrayOfSubarrays[index][1] = true;
+          console.log(objForBoardComponent.objForRenderingColumnBtnAlgor);
+
+          // const newObj = arrayOfSubarrays.reduce(function makeObj(
+          //   buildingUp,
+          //   currentValue
+          // ) {
+          //   const [key, value] = currentValue;
+
+          //   buildingUp[key] = value;
+          //   return buildingUp;
+          // },
+          // {});
+
+          objForBoardComponent.objForRenderingColumnBtnAlgor =
+            arrayOfSubarrays.reduce(function makeObj(buildingUp, currentValue) {
+              const [key, value] = currentValue;
+
+              buildingUp[key] = value;
+              return buildingUp;
+            }, {});
+          console.log(objForBoardComponent.objForRenderingColumnBtnAlgor);
+
+          setStateFunc(arrayOfSubarrays);
+          // setStateFunc((preValues) => {
+          //   return {
+          //     ...preValues,
+          //     indexOrLength: index,
+          //     arrayForBoardColumn: arrOfSubarrays,
+          //   };
+          // });
+          return;
+          // return arrayOfSubarrays.reduce(function makeObj(
+          //   buildingUp,
+          //   currentValue
+          // ) {
+          //   const [key, value] = currentValue;
+
+          //   buildingUp[key] = value;
+          //   return buildingUp;
+          // },
+          // {});
+        }
+
+        index += 1;
+      }
+
+      // objForBoardComponent.objForRenderingColumnBtnAlgor =
+      //   arrayOfSubarrays.reduce(function makeObj(buildingUp, currentValue) {
+      //     const [key, value] = currentValue;
+
+      //     buildingUp[key] = value;
+      //     return buildingUp;
+      //   }, {});
+
+      // setStateFunc((preValues) => {
+      //   return {
+      //     ...preValues,
+      //     randomNumber: Math.random(),
+      //     arrayForBoardColumn: arrOfSubarrays,
+      //   };
+      // });
     },
-    removeColumn: function removeBoardColumn(obj, setStateFunc, index) {
-      console.log(obj);
-      console.log(setStateFunc);
-      console.log(index);
+    removeColumn: function removeBoardColumn(obj, setStateFunc, target) {
+      const clickedContentValue = target.getAttribute(
+        "data-removecolumnbtncontent"
+      );
+      // const subarrays = Object.entries(obj);
+      // if value of property in obj is truthy, assign false to it
+      // subarrays[clickedContentValue][1] ? (subarrays[clickedContentValue][1] = false) : null;
+      obj[clickedContentValue] ? (obj[clickedContentValue] = false) : null;
+
+      objForBoardComponent.objForRenderingColumnBtnAlgor = obj;
+
+      // objForBoardComponent.objForRenderingColumnBtnAlgor = subarrays.reduce(
+      //   function removeProperty(buildingUp, currentValue, index) {
+      //     const [key, value] = currentValue;
+
+      //     buildingUp[key] = value;
+      //     return buildingUp;
+      //   },
+      //   {}
+      // );
+
+      // setStateFunc((preValues) => {
+      //   return {
+      //     ...preValues,
+      //     indexOrLength: clickedIndex + 5,
+      //     arrayForBoardColumn: subarrays,
+      //   };
+      // });
+      setStateFunc(Object.entries(obj));
     },
   };
 
@@ -35,14 +138,15 @@ export function boardComponent() {
     boardModalTitle,
     columnObj,
   }) {
-    const modifiedOriginalColumnObj = makeObjForBoardColumn(columnObj);
-
-    objForBoardComponent.objForRenderingColumnBtnAlgor =
-      modifiedOriginalColumnObj;
+    console.log(columnObj);
+    React.useEffect(() => {
+      objForBoardComponent.objForRenderingColumnBtnAlgor =
+        makeObjForBoardColumn(columnObj);
+    }, []);
 
     const [renderBoardModal, setAddBoardModal] = React.useState(false);
     const [arrayForBoardColumn, setBoardColumn] = React.useState(
-      Object.entries(modifiedOriginalColumnObj)
+      Object.entries(makeObjForBoardColumn(columnObj))
     );
 
     const renderContextForBoardModal = React.useContext(BoardTaskRenderContext);
@@ -76,7 +180,7 @@ export function boardComponent() {
                     ](
                       objForBoardComponent.objForRenderingColumnBtnAlgor,
                       setBoardColumn,
-                      "index"
+                      btnClicked
                     );
                     return;
                   }
@@ -128,7 +232,7 @@ export function boardComponent() {
                           data-typeofboardbtn="removeColumn"
                           className={BoardModalStyles[`remove-column-btn`]}
                           aria-label="remove column"
-                          data-removecolumnbtnindex={`${index}`}
+                          data-removecolumnbtncontent={subarray[0]}
                         >
                           <svg
                             className={
@@ -218,7 +322,7 @@ export function boardColumnComponent() {
                     <button
                       className={BoardModalStyles[`remove-column-btn`]}
                       aria-label="remove column"
-                      data-removecolumnbtnindex={`${index}`}
+                      data-removecolumnbtncontent={`${index}`}
                     >
                       <svg
                         className={BoardModalStyles[`remove-subtask-btn-icon`]}
