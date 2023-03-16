@@ -154,9 +154,57 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
           <button
             id="mobile-tab-refocus-selector"
             onClick={(event) => {
+              // {
+              //   renderBoardModal: false,
+              //   boardModalTitle: "",
+              //   forRefocusElement: "",
+              //   typeOfBoard: "",
+              //   columnObj: {
+              //     todo: null,
+              //     doing: null,
+              //     done: null,
+              //   },
+              // }
+              /**
+               * add new board modal
+               * **/
               renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-                true
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderBoardModal: true,
+                    boardModalTitle: "Add New Board",
+                    forRefocusElement: "mobile-tab-refocus-selector",
+                    typeOfBoard: "add",
+                    columnObj: {
+                      todo: null,
+                      doing: null,
+                      done: null,
+                    },
+                  };
+                }
               );
+              /**
+               * edit board modal
+               * **/
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       renderBoardModal: true,
+              //       boardModalTitle: "Edit Board",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
+              //       typeOfBoard: "edit",
+              //       columnObj: {
+              //         todo: [],
+              //         doing: null,
+              //         done: [],
+              //       },
+              //     };
+              //   }
+              // );
+
               // document
               //   .getElementById("board-modal-selector")
               //   .getAttribute("data-showboardmodal") == "false"

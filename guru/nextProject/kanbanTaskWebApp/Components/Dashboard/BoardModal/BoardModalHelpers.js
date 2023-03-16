@@ -20,6 +20,10 @@ export function makeObjForBoardColumn(obj) {
   return copiedObj;
 }
 
+export function createNewBoardBtn(event) {}
+
+// export function
+
 export function addNewColumnAlgorithm(obj, boardComponentObj) {
   const arrayOfSubarrays = Object.entries(obj);
   var index = 0;

@@ -32,6 +32,7 @@ export function boardComponent() {
       // we get here, it means one of the columns is not shown
       var index = 0;
 
+      console.log(objForBoardComponent);
       // obj passed in to this func will be objForBoardComponent.objForRenderingColumnBtnAlgor
       // {todo: false,doing:true,done:true} etc
       while (index < arrayOfSubarrays.length) {
@@ -50,16 +51,26 @@ export function boardComponent() {
           // },
           // {});
 
-          objForBoardComponent.objForRenderingColumnBtnAlgor =
-            arrayOfSubarrays.reduce(function makeObj(buildingUp, currentValue) {
-              const [key, value] = currentValue;
+          const newObj = arrayOfSubarrays.reduce(function makeObj(
+            buildingUp,
+            currentValue
+          ) {
+            const [key, value] = currentValue;
 
-              buildingUp[key] = value;
-              return buildingUp;
-            }, {});
-          console.log(objForBoardComponent.objForRenderingColumnBtnAlgor);
+            buildingUp[key] = value;
+            return buildingUp;
+          },
+          {});
 
-          setStateFunc(arrayOfSubarrays);
+          objForBoardComponent.objForRenderingColumnBtnAlgor = newObj;
+          console.log(objForBoardComponent);
+
+          setStateFunc((previousValues) => {
+            return {
+              ...previousValues,
+              columnObj: newObj,
+            };
+          });
           // setStateFunc((preValues) => {
           //   return {
           //     ...preValues,
@@ -127,7 +138,13 @@ export function boardComponent() {
       //     arrayForBoardColumn: subarrays,
       //   };
       // });
-      setStateFunc(Object.entries(obj));
+      // setStateFunc(Object.entries(obj));
+      setStateFunc((prevValues) => {
+        return {
+          ...prevValues,
+          columnObj: obj,
+        };
+      });
     },
   };
 
@@ -138,25 +155,47 @@ export function boardComponent() {
     boardModalTitle,
     columnObj,
   }) {
-    console.log(columnObj);
+    // console.log(columnObj);
+
+    const [initialValueObjBoardMoal, setBoardModal] = React.useState({
+      renderBoardModal: false,
+      boardModalTitle: "",
+      forRefocusElement: "",
+      typeOfBoard: "",
+      columnObj: {
+        todo: null,
+        doing: null,
+        done: null,
+      },
+    });
+    console.log(initialValueObjBoardMoal);
     React.useEffect(() => {
       objForBoardComponent.objForRenderingColumnBtnAlgor =
-        makeObjForBoardColumn(columnObj);
-    }, []);
+        makeObjForBoardColumn(initialValueObjBoardMoal.columnObj);
+      // want to compare original column obj of current user
+      if (initialValueObjBoardMoal.typeOfBoard == "edit") {
+        objForBoardComponent.currentBoardColumnObj =
+          initialValueObjBoardMoal.columnObj;
+        return;
+      }
+    }, [initialValueObjBoardMoal.renderBoardModal]);
 
-    const [renderBoardModal, setAddBoardModal] = React.useState(false);
-    const [arrayForBoardColumn, setBoardColumn] = React.useState(
-      Object.entries(makeObjForBoardColumn(columnObj))
-    );
+    // const [renderBoardModal, setAddBoardModal] = React.useState(false);
+    // const [arrayForBoardColumn, setBoardColumn] = React.useState(
+    //   Object.entries(makeObjForBoardColumn(columnObj))
+    // );
 
     const renderContextForBoardModal = React.useContext(BoardTaskRenderContext);
 
     renderContextForBoardModal.stateFuncsForModals.addNewBoardModal =
-      setAddBoardModal;
+      setBoardModal;
+
+    renderContextForBoardModal.stateFuncsForModals.editBoardModal =
+      setBoardModal;
 
     return (
       <React.Fragment>
-        {renderBoardModal ? (
+        {initialValueObjBoardMoal.renderBoardModal ? (
           <div
             id="board-modal-selector"
             data-showboardmodal="false"
@@ -179,7 +218,7 @@ export function boardComponent() {
                       btnClicked.getAttribute("data-typeofboardbtn")
                     ](
                       objForBoardComponent.objForRenderingColumnBtnAlgor,
-                      setBoardColumn,
+                      setBoardModal,
                       btnClicked
                     );
                     return;
@@ -189,13 +228,16 @@ export function boardComponent() {
               >
                 <div className={BoardModalStyles[`title-btn-container`]}>
                   <legend className={BoardModalStyles[`board-title`]}>
-                    <span>{boardModalTitle}</span>
+                    <span>{initialValueObjBoardMoal.boardModalTitle}</span>
                   </legend>
                   <CloseModalBtn
-                    focusClickedElement="mobile-tab-refocus-selector"
-                    hideModalFunc={setAddBoardModal}
+                    renderStateObjKey="renderBoardModal"
+                    focusClickedElement={
+                      initialValueObjBoardMoal.forRefocusElement
+                    }
+                    hideModalFunc={setBoardModal}
                   >
-                    Close {boardModalTitle} Modal
+                    {`Close ${initialValueObjBoardMoal.boardModalTitle} Modal`}
                   </CloseModalBtn>
                 </div>
                 {/* name */}
@@ -215,42 +257,41 @@ export function boardComponent() {
                 {/* columns */}
                 <span className={BoardModalStyles["label"]}>Board Columns</span>
                 <ul className={BoardModalStyles[`column-btn-container`]}>
-                  {arrayForBoardColumn.map(function makeColumnBtn(
-                    subarray,
-                    index
-                  ) {
-                    return subarray[1] ? (
-                      <li
-                        className={
-                          BoardModalStyles[`remove-column-btn-container`]
-                        }
-                        key={Math.random() * index}
-                      >
-                        <span>{subarray[0]}</span>
-                        <button
-                          type="button"
-                          data-typeofboardbtn="removeColumn"
-                          className={BoardModalStyles[`remove-column-btn`]}
-                          aria-label="remove column"
-                          data-removecolumnbtncontent={subarray[0]}
+                  {Object.entries(initialValueObjBoardMoal.columnObj).map(
+                    function makeColumnBtn(subarray, index) {
+                      return subarray[1] ? (
+                        <li
+                          className={
+                            BoardModalStyles[`remove-column-btn-container`]
+                          }
+                          key={Math.random() * index}
                         >
-                          <svg
-                            className={
-                              BoardModalStyles[`remove-subtask-btn-icon`]
-                            }
-                            width="15"
-                            height="15"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span>{subarray[0]}</span>
+                          <button
+                            type="button"
+                            data-typeofboardbtn="removeColumn"
+                            className={BoardModalStyles[`remove-column-btn`]}
+                            aria-label="remove column"
+                            data-removecolumnbtncontent={subarray[0]}
                           >
-                            <g fill="#828FA3" fillRule="evenodd">
-                              <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />
-                              <path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z" />
-                            </g>
-                          </svg>
-                        </button>
-                      </li>
-                    ) : null;
-                  })}
+                            <svg
+                              className={
+                                BoardModalStyles[`remove-subtask-btn-icon`]
+                              }
+                              width="15"
+                              height="15"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g fill="#828FA3" fillRule="evenodd">
+                                <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />
+                                <path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z" />
+                              </g>
+                            </svg>
+                          </button>
+                        </li>
+                      ) : null;
+                    }
+                  )}
                 </ul>
                 {/* btns container */}
                 <div className={BoardModalStyles[`btns-container`]}>

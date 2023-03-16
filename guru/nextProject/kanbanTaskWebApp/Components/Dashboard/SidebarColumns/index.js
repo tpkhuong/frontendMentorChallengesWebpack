@@ -5,6 +5,7 @@ import MessageColumnsContainer from "./MessageColumnsContainer/index";
 import { boardComponent } from "../BoardModal/index";
 
 const AddBoardModal = boardComponent();
+const EditBoardModal = boardComponent();
 
 export default function SidebarColumns({ children, valuesForBoardsColumns }) {
   return (
@@ -27,10 +28,13 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
           }}
         />
       </div>
-      <AddBoardModal
+      {/* reason we see console.log(initialValueObjBoardMoal); twice in browser console. Below are the initial render of board modal */}
+      <AddBoardModal />
+      <EditBoardModal />
+      {/* <AddBoardModal
         boardModalTitle="Add New Board"
         columnObj={{ todo: null, doing: [], done: null }}
-      />
+      /> */}
     </React.Fragment>
   );
 }

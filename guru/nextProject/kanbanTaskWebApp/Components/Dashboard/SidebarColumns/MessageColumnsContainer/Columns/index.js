@@ -5,6 +5,8 @@ import DoingColumn from "./Doing";
 import DoneColumn from "./Done";
 
 export default function Columns({ children, columnsObjData }) {
+  const [initialColumnsValueObj, setStatusColumn] =
+    React.useState(columnsObjData);
   return (
     <section
       className={ColumnsStyles[`column-container`]}

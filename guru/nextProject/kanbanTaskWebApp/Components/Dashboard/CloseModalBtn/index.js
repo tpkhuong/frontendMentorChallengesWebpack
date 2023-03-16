@@ -3,6 +3,7 @@ import CloseModalStyles from "./CloseModalBtn.module.css";
 
 export default function CloseModalBtn({
   children,
+  renderStateObjKey,
   focusClickedElement,
   hideModalFunc,
 }) {
@@ -16,7 +17,12 @@ export default function CloseModalBtn({
         // focus add task btn
         document.getElementById(`${focusClickedElement}`).focus();
 
-        hideModalFunc(false);
+        hideModalFunc((prevValues) => {
+          return {
+            ...prevValues,
+            [renderStateObjKey]: false,
+          };
+        });
       }}
     >
       <svg
