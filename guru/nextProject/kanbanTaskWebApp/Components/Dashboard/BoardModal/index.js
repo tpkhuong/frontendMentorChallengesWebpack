@@ -1,7 +1,7 @@
 import React from "react";
 import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
-import { BoardTaskRenderContext } from "../Context";
+import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardColumn } from "./BoardModalHelpers";
 
 export function boardComponent() {
@@ -152,15 +152,16 @@ export function boardComponent() {
   return function innerComponent({
     children,
     typeOfBoard,
+    idAttr,
+    forRefocusElement,
     boardModalTitle,
     columnObj,
   }) {
     // console.log(columnObj);
-
     const [initialValueObjBoardMoal, setBoardModal] = React.useState({
+      id: "",
       renderBoardModal: false,
       boardModalTitle: "",
-      forRefocusElement: "",
       typeOfBoard: "",
       columnObj: {
         todo: null,
@@ -173,7 +174,7 @@ export function boardComponent() {
       objForBoardComponent.objForRenderingColumnBtnAlgor =
         makeObjForBoardColumn(initialValueObjBoardMoal.columnObj);
       // want to compare original column obj of current user
-      if (initialValueObjBoardMoal.typeOfBoard == "edit") {
+      if (initialValueObjBoardMoal.id == "edit") {
         objForBoardComponent.currentBoardColumnObj =
           initialValueObjBoardMoal.columnObj;
         return;
@@ -232,9 +233,7 @@ export function boardComponent() {
                   </legend>
                   <CloseModalBtn
                     renderStateObjKey="renderBoardModal"
-                    focusClickedElement={
-                      initialValueObjBoardMoal.forRefocusElement
-                    }
+                    focusClickedElement={forRefocusElement}
                     hideModalFunc={setBoardModal}
                   >
                     {`Close ${initialValueObjBoardMoal.boardModalTitle} Modal`}
@@ -244,12 +243,12 @@ export function boardComponent() {
                 <div className={BoardModalStyles[`name-input-container`]}>
                   <label
                     className={BoardModalStyles[`label`]}
-                    htmlFor="board-name-input"
+                    htmlFor={`${initialValueObjBoardMoal.id}-board-name-input`}
                   >
                     Board Name
                   </label>
                   <input
-                    id="board-name-input"
+                    id={`${initialValueObjBoardMoal.id}-board-name-input`}
                     type="text"
                     placeholder="e.g. Web Design"
                   />

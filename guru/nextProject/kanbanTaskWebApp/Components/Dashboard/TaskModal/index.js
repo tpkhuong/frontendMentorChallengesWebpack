@@ -2,6 +2,7 @@ import React from "react";
 import TaskModalStyles from "./TaskModal.module.css";
 import CloseModalBtn from "../CloseModalBtn/index";
 import StatusMenu from "../StatusMenu/index";
+import { BoardTaskRenderContext } from "../Context/index";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 
 const AddNewTaskModalSubtasks = SubtasksComponent();
@@ -10,208 +11,266 @@ const EditTaskModalSubtasks = SubtasksComponent();
 export function taskModal() {
   return function innerComponent({
     children,
-    idAttr,
     modalTitle,
+    refocusElementTaskModal,
     renderTaskModalFunc,
     editModalValuesObj,
     submitBtnFunc,
   }) {
-    idAttr == "edit"
-      ? React.useEffect(() => {
-          // title input
-          document.getElementById("edit-task-title").value =
-            editModalValuesObj.titleInput;
-          // description input
-          document.getElementById("edit-task-description").value =
-            editModalValuesObj.descriptionInput;
-        })
-      : null;
+    // taskModalValues.id
+    const [taskModalValues, setTaskModal] = React.useState({
+      renderTaskModal: false,
+      id: "",
+      refocusElementTaskModal: "",
+      modalTitle: "",
+      titleInput: "",
+      descriptionInput: "",
+      subtasksArray: [
+        { placeholder: "", text: "" },
+        { placeholder: "", text: "" },
+      ],
+    });
+
+    console.log(taskModalValues);
+
+    const renderContextForTaskModal = React.useContext(BoardTaskRenderContext);
+
+    // add task modal
+    renderContextForTaskModal.stateFuncsForModals.addTaskModal = setTaskModal;
+    // edit task moda
+    renderContextForTaskModal.stateFuncsForModals.editTaskModal = setTaskModal;
+
+    // taskModalValues.id == "edit"
+    //   ? React.useEffect(() => {
+    //       // title input
+    //       document.getElementById("edit-task-title").value =
+    //         taskModalValues.titleInput;
+    //       // description input
+    //       document.getElementById("edit-task-description").value =
+    //         taskModalValues.descriptionInput;
+    //     }, [taskModalValues.renderTaskModal])
+    //   : null;
+
+    React.useEffect(() => {
+      if (taskModalValues.renderTaskModal && taskModalValues.id == "edit") {
+        // title input
+        console.log(document.getElementById("edit-task-title"));
+        document.getElementById("edit-task-title").value =
+          taskModalValues.titleInput;
+        // description input
+        console.log(document.getElementById("edit-task-description"));
+        document.getElementById("edit-task-description").value =
+          taskModalValues.descriptionInput;
+      }
+    }, [taskModalValues.renderTaskModal]);
 
     return (
-      <div className={TaskModalStyles[`modal-bg`]}>
-        <form
-          role="dialog"
-          id={`${idAttr}-task-modal-selector`}
-          aria-modal="true"
-          className={TaskModalStyles[`task-modal`]}
-          onKeyDown={keyboardModalTabbingAndSpaceKey}
-        >
-          <fieldset className={TaskModalStyles[`task-fieldset`]}>
-            <div className={TaskModalStyles[`title-close-btn-container`]}>
-              <legend className={TaskModalStyles[`task-title`]}>
-                <span>{modalTitle}</span>
-              </legend>
-              <CloseModalBtn
-                focusClickedElement="add-task-btn"
-                hideModalFunc={renderTaskModalFunc}
-              >
-                Close {modalTitle} modal
-              </CloseModalBtn>
-            </div>
-            {/* title */}
-            <div
-              data-isempty=""
-              className={TaskModalStyles[`title-input-container`]}
+      <React.Fragment>
+        {taskModalValues.renderTaskModal ? (
+          <div className={TaskModalStyles[`modal-bg`]}>
+            <form
+              role="dialog"
+              id={`${taskModalValues.id}-task-modal-selector`}
+              aria-modal="true"
+              className={TaskModalStyles[`task-modal`]}
+              onKeyDown={keyboardModalTabbingAndSpaceKey}
             >
-              <label htmlFor={`${idAttr}-task-title`}>Title</label>
-              <input
-                type="text"
-                id={`${idAttr}-task-title`}
-                placeholder="e.g. Take coffee break"
-                // value={editModalValuesObj.titleInput}
-                // onChange={(event) => {}}
-              />
-              <span className={TaskModalStyles[`empty`]}>Can't be empty</span>
-              <span className={TaskModalStyles[`accepted`]}>Accepted</span>
-            </div>
-            {/* description */}
-            <div
-              data-isempty=""
-              className={TaskModalStyles[`description-input-container`]}
-            >
-              <label htmlFor={`${idAttr}-task-description`}>Description</label>
-              <textarea
-                name="task-description"
-                id={`${idAttr}-task-description`}
-                cols="10"
-                rows="4"
-                // value={editModalValuesObj.descriptionInput}
-                // onChange={(event) => {}}
-                placeholder="e.g. It’s always good to take a break. This 15 minute break will 
+              <fieldset className={TaskModalStyles[`task-fieldset`]}>
+                <div className={TaskModalStyles[`title-close-btn-container`]}>
+                  <legend className={TaskModalStyles[`task-title`]}>
+                    <span>{taskModalValues.modalTitle}</span>
+                  </legend>
+                  <CloseModalBtn
+                    renderStateObjKey="renderTaskModal"
+                    focusClickedElement={
+                      taskModalValues.refocusElementTaskModal
+                    }
+                    hideModalFunc={setTaskModal}
+                  >
+                    {`Close ${taskModalValues.modalTitle} Modal`}
+                  </CloseModalBtn>
+                </div>
+                {/* title */}
+                <div
+                  data-isempty=""
+                  className={TaskModalStyles[`title-input-container`]}
+                >
+                  <label htmlFor={`${taskModalValues.id}-task-title`}>
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id={`${taskModalValues.id}-task-title`}
+                    placeholder="e.g. Take coffee break"
+                    // value={taskModalValues.titleInput}
+                    // onChange={(event) => {}}
+                  />
+                  <span className={TaskModalStyles[`empty`]}>
+                    Can't be empty
+                  </span>
+                  <span className={TaskModalStyles[`accepted`]}>Accepted</span>
+                </div>
+                {/* description */}
+                <div
+                  data-isempty=""
+                  className={TaskModalStyles[`description-input-container`]}
+                >
+                  <label htmlFor={`${taskModalValues.id}-task-description`}>
+                    Description
+                  </label>
+                  <textarea
+                    name="task-description"
+                    id={`${taskModalValues.id}-task-description`}
+                    cols="10"
+                    rows="4"
+                    // value={taskModalValues.descriptionInput}
+                    // onChange={(event) => {}}
+                    placeholder="e.g. It’s always good to take a break. This 15 minute break will 
         recharge the batteries a little."
-              />
-              <span className={TaskModalStyles[`empty`]}>Can't be empty</span>
-              <span className={TaskModalStyles[`accepted`]}>Accepted</span>
-            </div>
-            {/* subtasks */}
-            {idAttr == "edit" ? (
-              <EditTaskModalSubtasks
-                typeOfModal="edit"
-                arrayFromEditModal={editModalValuesObj.subtasksArray}
-              />
-            ) : (
-              <AddNewTaskModalSubtasks
-                typeOfModal="add"
-                arrayFromEditModal={editModalValuesObj.subtasksArray}
-              />
-            )}
-            {/* status */}
-            <StatusMenu
-              statusValueFromEditModal={editModalValuesObj.statusInput}
-            >
-              Status
-            </StatusMenu>
-            {/* create task btn */}
-            <button
-              data-lastitem="true"
-              className={TaskModalStyles[`create-task-btn`]}
-              type="button"
-              onClick={(event) => {
-                // task-title
-                const titleInput = document.getElementById(
-                  `${idAttr}-task-title`
-                );
-                // task-description
-                const descriptionInput = document.getElementById(
-                  `${idAttr}-task-description`
-                );
-                titleDescriptionInputs(titleInput, descriptionInput);
-                // subtasks: using getElementById select one of the subtasks inputs by id
-                // use property .parentelement.parentelement to select ul then get children of that ul
-                // loop through that children list
-                const subtasksContainer =
-                  document.getElementById("subtask-1").parentElement
-                    .parentElement.parentElement;
+                  />
+                  <span className={TaskModalStyles[`empty`]}>
+                    Can't be empty
+                  </span>
+                  <span className={TaskModalStyles[`accepted`]}>Accepted</span>
+                </div>
+                {/* subtasks */}
+                {taskModalValues.id == "edit" ? (
+                  <EditTaskModalSubtasks
+                    typeOfModal="edit"
+                    arrayFromEditModal={taskModalValues.subtasksArray}
+                  />
+                ) : (
+                  <AddNewTaskModalSubtasks
+                    typeOfModal="add"
+                    arrayFromEditModal={taskModalValues.subtasksArray}
+                  />
+                )}
+                {/* status */}
+                <StatusMenu
+                  statusValueFromEditModal={taskModalValues.statusInput}
+                >
+                  Status
+                </StatusMenu>
+                {/* create task btn */}
+                <button
+                  data-lastitem="true"
+                  className={TaskModalStyles[`create-task-btn`]}
+                  type="button"
+                  onClick={(event) => {
+                    // task-title
+                    const titleInput = document.getElementById(
+                      `${taskModalValues.id}-task-title`
+                    );
+                    // task-description
+                    const descriptionInput = document.getElementById(
+                      `${taskModalValues.id}-task-description`
+                    );
+                    titleDescriptionInputs(titleInput, descriptionInput);
+                    // subtasks: using getElementById select one of the subtasks inputs by id
+                    // use property .parentelement.parentelement to select ul then get children of that ul
+                    // loop through that children list
+                    const subtasksContainer =
+                      document.getElementById("subtask-1").parentElement
+                        .parentElement.parentElement;
 
-                const methodsObjForSubtasks = {
-                  true: function equalEmptyString(listitem) {
-                    listitem.getAttribute("data-isempty") == "" ||
-                    listitem.getAttribute("data-isempty") == "false"
-                      ? listitem.setAttribute("data-isempty", "true")
-                      : null;
-                  },
-                  false: function notEqualEmptyString(listitem) {
-                    listitem.getAttribute("data-isempty") == "" ||
-                    listitem.getAttribute("data-isempty") == "true"
-                      ? listitem.setAttribute("data-isempty", "false")
-                      : null;
-                  },
-                };
+                    const methodsObjForSubtasks = {
+                      true: function equalEmptyString(listitem) {
+                        listitem.getAttribute("data-isempty") == "" ||
+                        listitem.getAttribute("data-isempty") == "false"
+                          ? listitem.setAttribute("data-isempty", "true")
+                          : null;
+                      },
+                      false: function notEqualEmptyString(listitem) {
+                        listitem.getAttribute("data-isempty") == "" ||
+                        listitem.getAttribute("data-isempty") == "true"
+                          ? listitem.setAttribute("data-isempty", "false")
+                          : null;
+                      },
+                    };
 
-                if (subtasksContainer.childElementCount === 0) {
-                  const firstSubtaskInput =
-                    subtasksContainer.firstElementChild.firstElementChild
-                      .childNodes[1];
+                    if (subtasksContainer.childElementCount === 0) {
+                      const firstSubtaskInput =
+                        subtasksContainer.firstElementChild.firstElementChild
+                          .childNodes[1];
 
-                  methodsObjForSubtasks[firstSubtaskInput.value === ""](
-                    subtasksContainer.firstElementChild
-                  );
-                } else {
-                  // ul children length is greater than 1 loop through ul children (li > div > label + inputs)
-                  subtasksContainer.childNodes.forEach(
-                    function checkSubtasksInputsValue(listitem, index) {
-                      const subtaskInput =
-                        listitem.firstElementChild.childNodes[1];
+                      methodsObjForSubtasks[firstSubtaskInput.value === ""](
+                        subtasksContainer.firstElementChild
+                      );
+                    } else {
+                      // ul children length is greater than 1 loop through ul children (li > div > label + inputs)
+                      subtasksContainer.childNodes.forEach(
+                        function checkSubtasksInputsValue(listitem, index) {
+                          const subtaskInput =
+                            listitem.firstElementChild.childNodes[1];
 
-                      methodsObjForSubtasks[subtaskInput.value === ""](
-                        listitem
+                          methodsObjForSubtasks[subtaskInput.value === ""](
+                            listitem
+                          );
+                        }
                       );
                     }
-                  );
-                }
-                // once all inputs are accepted send input data to storage
-                const itemsWithDataIsEmptyAttr = Array.from(
-                  document.querySelectorAll(
-                    `#${idAttr}-task-modal-selector [data-isempty]`
-                  )
-                );
+                    // once all inputs are accepted send input data to storage
+                    const itemsWithDataIsEmptyAttr = Array.from(
+                      document.querySelectorAll(
+                        `#${taskModalValues.id}-task-modal-selector [data-isempty]`
+                      )
+                    );
 
-                const isAllAccepted = itemsWithDataIsEmptyAttr.every(
-                  function checkingIfInputsAreEmpty(element, index) {
-                    return element.getAttribute("data-isempty") === "false";
-                  }
-                );
+                    const isAllAccepted = itemsWithDataIsEmptyAttr.every(
+                      function checkingIfInputsAreEmpty(element, index) {
+                        return element.getAttribute("data-isempty") === "false";
+                      }
+                    );
 
-                // document
-                //   .getElementById(`#${idAttr}-subtasks-listitem-container`)
-                //   .getAttribute("data-issavechangescreatebtnclicked") == "false"
-                //   ? document
-                //       .getElementById(`#${idAttr}-subtasks-listitem-container`)
-                //       .setAttribute(
-                //         "data-issavechangescreatebtnclicked",
-                //         "true"
-                //       )
-                //   : null;
+                    // document
+                    //   .getElementById(`#${taskModalValues.id}-subtasks-listitem-container`)
+                    //   .getAttribute("data-issavechangescreatebtnclicked") == "false"
+                    //   ? document
+                    //       .getElementById(`#${taskModalValues.id}-subtasks-listitem-container`)
+                    //       .setAttribute(
+                    //         "data-issavechangescreatebtnclicked",
+                    //         "true"
+                    //       )
+                    //   : null;
 
-                if (isAllAccepted) {
-                  // run func based on idAttr
+                    if (isAllAccepted) {
+                      // run func based on taskModalValues.id
 
-                  //   document
-                  //     .getElementById(`#${idAttr}-subtasks-listitem-container`)
-                  //     .getAttribute("data-issavechangescreatebtnclicked") ==
-                  //   "true"
-                  //     ? document
-                  //         .getElementById(
-                  //           `#${idAttr}-subtasks-listitem-container`
-                  //         )
-                  //         .setAttribute(
-                  //           "data-issavechangescreatebtnclicked",
-                  //           "false"
-                  //         )
-                  //     : null;
+                      //   document
+                      //     .getElementById(`#${taskModalValues.id}-subtasks-listitem-container`)
+                      //     .getAttribute("data-issavechangescreatebtnclicked") ==
+                      //   "true"
+                      //     ? document
+                      //         .getElementById(
+                      //           `#${taskModalValues.id}-subtasks-listitem-container`
+                      //         )
+                      //         .setAttribute(
+                      //           "data-issavechangescreatebtnclicked",
+                      //           "false"
+                      //         )
+                      //     : null;
 
-                  // we enter here means all inputs are not empty string
-                  renderTaskModalFunc(false);
-                }
-              }}
-            >
-              {idAttr == "edit" ? "Save Changes" : "Create Task"}
-            </button>
-            {/* create task btn: algorithm will select all inputs of li with attr data-isempty */}
-            {/* loop through that array of inputs assign correct value to data-isempty based on value of inputs */}
-          </fieldset>
-        </form>
-      </div>
+                      // we enter here means all inputs are not empty string
+                      setTaskModal((prevValues) => {
+                        return {
+                          ...prevValues,
+                          renderTaskModal: false,
+                        };
+                      });
+                    }
+                  }}
+                >
+                  {taskModalValues.id == "edit"
+                    ? "Save Changes"
+                    : "Create Task"}
+                </button>
+                {/* create task btn: algorithm will select all inputs of li with attr data-isempty */}
+                {/* loop through that array of inputs assign correct value to data-isempty based on value of inputs */}
+              </fieldset>
+            </form>
+          </div>
+        ) : null}
+      </React.Fragment>
     );
   };
 }
@@ -269,6 +328,15 @@ function SubtasksComponent() {
       // only allow 8 subtasks
       // when length of arrayOfObjForSubtasks is less than 8 add subtasks
       if (objForComponent.arrayOfObjForSubtasks.length < 8) {
+        const subtaskInputsContainer = Array.from(
+          document.getElementById("subtask-1").parentElement.parentElement
+            .parentElement.childNodes
+        );
+
+        console.log(
+          subtaskInputsContainer,
+          "subtaskInputsContainer inside add method"
+        );
         // length of arrayOfObjForSubtasks
         const indexForSubtaskStr = objForComponent.arrayOfObjForSubtasks.length;
 
@@ -353,13 +421,17 @@ function SubtasksComponent() {
         document.getElementById("subtask-1").parentElement.parentElement
           .parentElement.childNodes
       );
+      console.log(subtaskInputsContainer, "subtaskInputsContainer");
 
       const isSubtaskInputEmptyMsgShown = subtaskInputsContainer.some(
         function checkForEmptyMsg(listitem, index) {
+          console.log(listitem, "listitem");
           return listitem.getAttribute("data-isempty") == "true";
         }
       );
 
+      console.log(isSubtaskInputEmptyMsgShown, "isSubtaskInputEmptyMsgShown");
+      // assign value to data-isempty dynamic by adding property to objs in subtasksArray.arrayOfObjForSubtasks
       subtasksArray.arrayOfObjForSubtasks.forEach(function updateSubtasksValue(
         obj,
         index

@@ -41,29 +41,36 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                     document.getElementById("add-task-title").focus();
                   }, 80);
 
-                  setTaskModal(true);
+                  // setTaskModal(true);
                   // showAddTaskModal(renderAddTaskModal, setTaskModal);
+                  renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
+                    (prevValues) => {
+                      return {
+                        ...prevValues,
+                        id: "add",
+                        renderTaskModal: true,
+                        refocusElementTaskModal: "add-task-btn",
+                        modalTitle: "Add New Task",
+                        titleInput: "",
+                        descriptionInput: "",
+                        subtasksArray: [
+                          { placeholder: "", text: "" },
+                          { placeholder: "", text: "" },
+                        ],
+                      };
+                    }
+                  );
                 }}
               >
                 <span aria-hidden="true">+</span>
                 <span>Add New Task</span>
               </button>
-              {renderAddTaskModal ? (
-                <AddTaskModal
-                  idAttr="add"
-                  modalTitle="Add New Task"
-                  renderTaskModalFunc={setTaskModal}
-                  editModalValuesObj={{
-                    titleInput: "",
-                    descriptionInput: "",
-                    subtasksArray: [
-                      { placeholder: "", text: "" },
-                      { placeholder: "", text: "" },
-                    ],
-                    statusInput: "",
-                  }}
-                />
-              ) : null}
+              <AddTaskModal
+                idAttr="add"
+                refocusElementTaskModal="add-task-btn"
+              />
+              {/* {renderAddTaskModal ? (
+              ) : null} */}
             </React.Fragment>
           )
         ) : // <span
@@ -98,8 +105,25 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                   document.getElementById("add-task-title").focus();
                 }, 80);
 
-                setTaskModal(true);
+                // setTaskModal(true);
                 // showAddTaskModal(renderAddTaskModal, setTaskModal);
+                renderContextForTaskModal.stateFuncsForModals.addTaskModal(
+                  (prevValues) => {
+                    return {
+                      ...prevValues,
+                      id: "add",
+                      renderTaskModal: true,
+                      refocusElementTaskModal: "add-task-btn",
+                      modalTitle: "Add New Task",
+                      titleInput: "",
+                      descriptionInput: "",
+                      subtasksArray: [
+                        { placeholder: "", text: "" },
+                        { placeholder: "", text: "" },
+                      ],
+                    };
+                  }
+                );
               }}
             >
               <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
@@ -109,22 +133,9 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                 />
               </svg>
             </button>
-            {renderAddTaskModal ? (
-              <AddTaskModal
-                idAttr="add"
-                modalTitle="Add New Task"
-                renderTaskModalFunc={setTaskModal}
-                editModalValuesObj={{
-                  titleInput: "",
-                  descriptionInput: "",
-                  subtasksArray: [
-                    { placeholder: "", text: "" },
-                    { placeholder: "", text: "" },
-                  ],
-                  statusInput: "",
-                }}
-              />
-            ) : null}
+            <AddTaskModal idAttr="add" refocusElementTaskModal="add-task-btn" />
+            {/* {renderAddTaskModal ? (
+            ) : null} */}
           </React.Fragment>
         )
         // <span

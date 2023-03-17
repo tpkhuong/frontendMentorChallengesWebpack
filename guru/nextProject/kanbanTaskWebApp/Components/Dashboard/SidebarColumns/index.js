@@ -29,8 +29,14 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
         />
       </div>
       {/* reason we see console.log(initialValueObjBoardMoal); twice in browser console. Below are the initial render of board modal */}
-      <AddBoardModal />
-      <EditBoardModal />
+      <AddBoardModal
+        idAttr="add"
+        forRefocusElement="mobile-tab-refocus-selector"
+      />
+      <EditBoardModal
+        idAttr="edit"
+        forRefocusElement="mobile-tab-refocus-selector"
+      />
       {/* <AddBoardModal
         boardModalTitle="Add New Board"
         columnObj={{ todo: null, doing: [], done: null }}

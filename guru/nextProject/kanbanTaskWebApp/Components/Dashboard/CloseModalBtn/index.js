@@ -17,6 +17,14 @@ export default function CloseModalBtn({
         // focus add task btn
         document.getElementById(`${focusClickedElement}`).focus();
 
+        // hide task modal
+
+        // if (isTaskModal) {
+        //   hideModalFunc(false);
+        //   return;
+        // }
+
+        // hide board mdoal
         hideModalFunc((prevValues) => {
           return {
             ...prevValues,
