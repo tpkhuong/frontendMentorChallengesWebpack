@@ -53,9 +53,10 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                         modalTitle: "Add New Task",
                         titleInput: "",
                         descriptionInput: "",
+                        statusInput: "Todo",
                         subtasksArray: [
-                          { placeholder: "", text: "" },
-                          { placeholder: "", text: "" },
+                          { placeholder: "", text: "", isEmptyAttr: "" },
+                          { placeholder: "", text: "", isEmptyAttr: "" },
                         ],
                       };
                     }
@@ -118,8 +119,8 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                       titleInput: "",
                       descriptionInput: "",
                       subtasksArray: [
-                        { placeholder: "", text: "" },
-                        { placeholder: "", text: "" },
+                        { placeholder: "", text: "", isEmptyAttr: "" },
+                        { placeholder: "", text: "", isEmptyAttr: "" },
                       ],
                     };
                   }

@@ -23,11 +23,12 @@
   inset: 0;
   max-width: 480px;
   height: min-content;
-  margin: auto;
+  /* margin: auto; */
   padding: var(--board-container-padding);
   border-radius: 8px;
   left: var(--inline);
   right: var(--inline);
+  top: 42px;
 }
 
 .title-btn-container {
@@ -144,6 +145,10 @@
 /* tablet */
 
 @media screen and (min-width: 48rem) {
+  .board-modal-bg {
+    margin-inline: auto;
+    right: 262px;
+  }
   .board-modal-container {
     --board-container-padding: 32px;
   }

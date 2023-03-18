@@ -172,9 +172,18 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
                   titleInput: "Add authentication endpoints",
                   descriptionInput:
                     " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
+                  statusInput: "Doing",
                   subtasksArray: [
-                    { placeholder: "", text: "Make React App" },
-                    { placeholder: "", text: "Work on Next Js project" },
+                    {
+                      placeholder: "",
+                      text: "Make React App",
+                      isEmptyAttr: "",
+                    },
+                    {
+                      placeholder: "",
+                      text: "Work on Next Js project",
+                      isEmptyAttr: "",
+                    },
                   ],
                 }
               );
@@ -257,39 +266,47 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
                * testing rendering edit task modal
                * **/
               // setEditTaskModal(true);
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.editTaskModal(
-                {
-                  renderTaskModal: true,
-                  modalTitle: "Edit Task",
-                  refocusElementTaskModal: "mobile-tab-refocus-selector",
-                  titleInput: "Add authentication endpoints",
-                  descriptionInput:
-                    " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
-                  subtasksArray: [
-                    { placeholder: "", text: "Make React App" },
-                    { placeholder: "", text: "Work on Next Js project" },
-                  ],
-                }
-              );
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editTaskModal(
+              //   {
+              //     renderTaskModal: true,
+              //     modalTitle: "Edit Task",
+              //     refocusElementTaskModal: "mobile-tab-refocus-selector",
+              //     titleInput: "Add authentication endpoints",
+              //     descriptionInput:
+              //       " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
+              //     subtasksArray: [
+              //       {
+              //         placeholder: "",
+              //         text: "Make React App",
+              //         isEmptyAttr: "",
+              //       },
+              //       {
+              //         placeholder: "",
+              //         text: "Work on Next Js project",
+              //         isEmptyAttr: "",
+              //       },
+              //     ],
+              //   }
+              // );
 
               /**
                * add new board modal
                * **/
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       renderBoardModal: true,
-              //       boardModalTitle: "Add New Board",
-              //       typeOfBoard: "add",
-              //       columnObj: {
-              //         todo: null,
-              //         doing: null,
-              //         done: null,
-              //       },
-              //     };
-              //   }
-              // );
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderBoardModal: true,
+                    boardModalTitle: "Add New Board",
+                    typeOfBoard: "add",
+                    columnObj: {
+                      todo: null,
+                      doing: null,
+                      done: null,
+                    },
+                  };
+                }
+              );
               /**
                * edit board modal
                * **/

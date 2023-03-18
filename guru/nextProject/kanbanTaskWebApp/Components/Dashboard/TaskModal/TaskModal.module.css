@@ -26,9 +26,10 @@
   height: min-content;
   padding: 24px;
   max-width: 480px;
-  margin: auto;
+  /* margin: auto; */
   left: var(--inline-space);
   right: var(--inline-space);
+  top: 42px;
 }
 
 .task-fieldset > * + * {
@@ -218,6 +219,10 @@
 
 /* tablet */
 @media screen and (min-width: 48rem) {
+  .task-modal {
+    margin-inline: auto;
+    right: 262px;
+  }
 }
 /* desktop */
 @media screen and (min-width: 90rem) {

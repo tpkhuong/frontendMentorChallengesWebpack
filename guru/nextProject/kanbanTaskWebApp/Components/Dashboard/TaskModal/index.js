@@ -24,10 +24,11 @@ export function taskModal() {
       refocusElementTaskModal: "",
       modalTitle: "",
       titleInput: "",
+      statusInput: "",
       descriptionInput: "",
       subtasksArray: [
-        { placeholder: "", text: "" },
-        { placeholder: "", text: "" },
+        { placeholder: "", text: "", isEmptyAttr: "" },
+        { placeholder: "", text: "", isEmptyAttr: "" },
       ],
     });
 
@@ -54,11 +55,11 @@ export function taskModal() {
     React.useEffect(() => {
       if (taskModalValues.renderTaskModal && taskModalValues.id == "edit") {
         // title input
-        console.log(document.getElementById("edit-task-title"));
+        // console.log(document.getElementById("edit-task-title"));
         document.getElementById("edit-task-title").value =
           taskModalValues.titleInput;
         // description input
-        console.log(document.getElementById("edit-task-description"));
+        // console.log(document.getElementById("edit-task-description"));
         document.getElementById("edit-task-description").value =
           taskModalValues.descriptionInput;
       }
@@ -137,11 +138,13 @@ export function taskModal() {
                 {taskModalValues.id == "edit" ? (
                   <EditTaskModalSubtasks
                     typeOfModal="edit"
+                    taskModalStateValue={taskModalValues.renderTaskModal}
                     arrayFromEditModal={taskModalValues.subtasksArray}
                   />
                 ) : (
                   <AddNewTaskModalSubtasks
                     typeOfModal="add"
+                    taskModalStateValue={taskModalValues.renderTaskModal}
                     arrayFromEditModal={taskModalValues.subtasksArray}
                   />
                 )}
@@ -188,15 +191,30 @@ export function taskModal() {
                       },
                     };
 
-                    if (subtasksContainer.childElementCount === 0) {
-                      const firstSubtaskInput =
-                        subtasksContainer.firstElementChild.firstElementChild
-                          .childNodes[1];
+                    console.log(subtasksContainer);
 
-                      methodsObjForSubtasks[firstSubtaskInput.value === ""](
-                        subtasksContainer.firstElementChild
-                      );
-                    } else {
+                    // if (subtasksContainer.childElementCount === 0) {
+                    //   const firstSubtaskInput =
+                    //     subtasksContainer.firstElementChild.firstElementChild
+                    //       .childNodes[1];
+
+                    //   methodsObjForSubtasks[firstSubtaskInput.value === ""](
+                    //     subtasksContainer.firstElementChild
+                    //   );
+                    // } else {
+                    //   // ul children length is greater than 1 loop through ul children (li > div > label + inputs)
+                    //   subtasksContainer.childNodes.forEach(
+                    //     function checkSubtasksInputsValue(listitem, index) {
+                    //       const subtaskInput =
+                    //         listitem.firstElementChild.childNodes[1];
+
+                    //       methodsObjForSubtasks[subtaskInput.value === ""](
+                    //         listitem
+                    //       );
+                    //     }
+                    //   );
+                    // }
+                    if (subtasksContainer.childElementCount > 0) {
                       // ul children length is greater than 1 loop through ul children (li > div > label + inputs)
                       subtasksContainer.childNodes.forEach(
                         function checkSubtasksInputsValue(listitem, index) {
@@ -328,24 +346,81 @@ function SubtasksComponent() {
       // only allow 8 subtasks
       // when length of arrayOfObjForSubtasks is less than 8 add subtasks
       if (objForComponent.arrayOfObjForSubtasks.length < 8) {
-        const subtaskInputsContainer = Array.from(
+        // get input elements
+        const subtaskInputsContainerChildNodes = Array.from(
           document.getElementById("subtask-1").parentElement.parentElement
             .parentElement.childNodes
         );
 
-        console.log(
-          subtaskInputsContainer,
-          "subtaskInputsContainer inside add method"
+        // console.log(
+        //   subtaskInputsContainerChildNodes,
+        //   "subtaskInputsContainerChildNodes inside add method"
+        // );
+        // check if one of subtaskinputs is empty
+        const booleanForEmptySubtask = isThereAnEmptySubtask(
+          subtaskInputsContainerChildNodes
         );
+
+        // console.log(
+        //   booleanForEmptySubtask,
+        //   "booleanForEmptySubtask inside add method"
+        // );
         // length of arrayOfObjForSubtasks
         const indexForSubtaskStr = objForComponent.arrayOfObjForSubtasks.length;
+
+        // const copiedArray = [].concat(objForComponent.arrayOfObjForSubtasks);
+
+        // console.log(copiedArray, "copiedArray add above loop");
 
         objForComponent.arrayOfObjForSubtasks.push({
           placeholder: `${objForComponent.arrayOfStrings[indexForSubtaskStr]}`,
           text: "",
+          isEmptyAttr: booleanForEmptySubtask ? "true" : "",
         });
+        // copiedArray.push({
+        //   placeholder: `${objForComponent.arrayOfStrings[indexForSubtaskStr]}`,
+        //   text: "",
+        //   isEmptyAttr: booleanForEmptySubtask ? "true" : "",
+        // });
 
-        console.log(objForComponent.arrayOfObjForSubtasks, "add");
+        console.log(
+          objForComponent.arrayOfObjForSubtasks,
+          "objForComponent.arrayOfObjForSubtasks add below loop"
+        );
+
+        // const copiedArray = [].concat(objForComponent.arrayOfObjForSubtasks);
+
+        // console.log(copiedArray, "copiedArray add below loop");
+        // loop through objForComponent.arrayOfObjForSubtasks check if text  === ""
+
+        objForComponent.arrayOfObjForSubtasks.forEach(function checkIsTextEmpty(
+          obj,
+          index
+        ) {
+          if (booleanForEmptySubtask) {
+            if (obj.text === "") {
+              obj.isEmptyAttr = "true";
+            } else {
+              obj.isEmptyAttr = "false";
+            }
+          }
+        });
+        // copiedArray.forEach(function checkIsTextEmpty(obj, index) {
+        //   if (booleanForEmptySubtask) {
+        //     if (obj.text === "") {
+        //       obj.isEmptyAttr = "true";
+        //     } else {
+        //       obj.isEmptyAttr = "false";
+        //     }
+        //   }
+        // });
+
+        // objForComponent.arrayOfObjForSubtasks = copiedArray;
+
+        console.log(
+          objForComponent.arrayOfObjForSubtasks,
+          "objForComponent.arrayOfObjForSubtasks add after loop"
+        );
 
         setStateFunc((prevValues) => {
           return {
@@ -362,7 +437,28 @@ function SubtasksComponent() {
       // check length of arrayOfObjForSubtasks
       // only remove subtasks if length is > 1
       if (objForComponent.arrayOfObjForSubtasks.length > 1) {
-        console.log(setStateFunc);
+        console.log(objForComponent.arrayOfObjForSubtasks);
+        // get input elements
+        const inputsContainerChildNodes = Array.from(
+          document.getElementById("subtask-1").parentElement.parentElement
+            .parentElement.childNodes
+        );
+        // check for empty string of subtask inputs
+        const booleanForEmptySubtaskInputs = isThereAnEmptySubtask(
+          inputsContainerChildNodes
+        );
+        // change value of isEmptyAttr of each obj in objForComponent.arrayOfObjForSubtasks
+        objForComponent.arrayOfObjForSubtasks.forEach(
+          function checkIfInputIsEmpty(subtaskObj, index) {
+            if (booleanForEmptySubtaskInputs) {
+              if (subtaskObj.text === "") {
+                subtaskObj.isEmptyAttr = "true";
+              } else {
+                subtaskObj.isEmptyAttr = "false";
+              }
+            }
+          }
+        );
         // filter out obj that matches Number(removeBtn.getAttribute("data-subtaskclosebtnindex"))
         const arrayWithRemovedObj =
           objForComponent.arrayOfObjForSubtasks.filter(function removeItem(
@@ -394,6 +490,7 @@ function SubtasksComponent() {
     children,
     typeOfModal,
     arrayFromEditModal,
+    taskModalStateValue,
   }) {
     // objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
     // if (typeOfModal == "edit") {
@@ -406,46 +503,51 @@ function SubtasksComponent() {
     //   ];
     // }
 
-    React.useEffect(() => {
-      objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
-    }, []);
-
     const [subtasksArray, setSubtasks] = React.useState({
       lengthOfArray: arrayFromEditModal.length,
       arrayOfObjForSubtasks: arrayFromEditModal,
     });
+    console.log(taskModalStateValue, "taskModalStateValue");
+    React.useEffect(() => {
+      objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
+      console.log(
+        objForComponent.arrayOfObjForSubtasks,
+        "objForComponent.arrayOfObjForSubtasks in useeffect that render once"
+      );
+    }, []);
 
     React.useEffect(() => {
       // li of input
-      const subtaskInputsContainer = Array.from(
-        document.getElementById("subtask-1").parentElement.parentElement
-          .parentElement.childNodes
-      );
-      console.log(subtaskInputsContainer, "subtaskInputsContainer");
-
-      const isSubtaskInputEmptyMsgShown = subtaskInputsContainer.some(
-        function checkForEmptyMsg(listitem, index) {
-          console.log(listitem, "listitem");
-          return listitem.getAttribute("data-isempty") == "true";
-        }
-      );
-
-      console.log(isSubtaskInputEmptyMsgShown, "isSubtaskInputEmptyMsgShown");
+      // const subtaskInputsContainer = Array.from(
+      //   document.getElementById("subtask-1").parentElement.parentElement
+      //     .parentElement.childNodes
+      // );
+      // console.log(subtaskInputsContainer, "subtaskInputsContainer useEffect");
+      // const isSubtaskInputEmptyMsgShown = subtaskInputsContainer.some(
+      //   function checkForEmptyMsg(listitem, index) {
+      //     console.log(listitem, "listitem");
+      //     return listitem.getAttribute("data-isempty") == "true";
+      //   }
+      // );
+      // console.log(
+      //   isSubtaskInputEmptyMsgShown,
+      //   "isSubtaskInputEmptyMsgShown useEffect"
+      // );
       // assign value to data-isempty dynamic by adding property to objs in subtasksArray.arrayOfObjForSubtasks
+      // update value of subtasks inputs
       subtasksArray.arrayOfObjForSubtasks.forEach(function updateSubtasksValue(
         obj,
         index
       ) {
         document.getElementById(`subtask-${index + 1}`).value = obj.text;
-
-        if (obj.text === "" && isSubtaskInputEmptyMsgShown) {
-          const inputContainer = document.getElementById(`subtask-${index + 1}`)
-            .parentElement.parentElement;
-          inputContainer.getAttribute("data-isempty") === "" ||
-          inputContainer.getAttribute("data-isempty") == "false"
-            ? inputContainer.setAttribute("data-isempty", "true")
-            : null;
-        }
+        // if (obj.text === "" && isSubtaskInputEmptyMsgShown) {
+        //   const inputContainer = document.getElementById(`subtask-${index + 1}`)
+        //     .parentElement.parentElement;
+        //   inputContainer.getAttribute("data-isempty") === "" ||
+        //   inputContainer.getAttribute("data-isempty") == "false"
+        //     ? inputContainer.setAttribute("data-isempty", "true")
+        //     : null;
+        // }
       });
     }, [subtasksArray.lengthOfArray]);
 
@@ -490,8 +592,12 @@ function SubtasksComponent() {
             taskObj,
             index
           ) {
+            console.log(taskObj, "taskObj inside map function");
             return (
-              <li data-isempty="" key={Math.random() * index}>
+              <li
+                data-isempty={`${taskObj.isEmptyAttr}`}
+                key={Math.random() * index}
+              >
                 <div
                   className={TaskModalStyles[`subtask-label-input-container`]}
                 >
@@ -555,4 +661,21 @@ function SubtasksComponent() {
       </div>
     );
   };
+}
+
+function isThereAnEmptySubtask(parentContainerChildNodes) {
+  // ul of subtasks
+  // parentContainerChildNodes
+  // document.getElementById("subtask-1").parentElement.parentElement
+  //     .parentElement.childNodes
+  const subtaskInputsContainer = Array.from(parentContainerChildNodes);
+
+  const isSubtaskInputEmptyMsgShown = subtaskInputsContainer.some(
+    function checkForEmptyMsg(listitem, index) {
+      console.log(listitem, "listitem");
+      return listitem.getAttribute("data-isempty") == "true";
+    }
+  );
+
+  return isSubtaskInputEmptyMsgShown;
 }
