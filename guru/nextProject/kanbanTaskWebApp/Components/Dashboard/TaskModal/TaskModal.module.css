@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0;
   background-color: hsla(0 0% 0% / 0.4);
-  z-index: 1;
+  z-index: 2;
 }
 
 .task-modal {
@@ -29,7 +29,7 @@
   /* margin: auto; */
   left: var(--inline-space);
   right: var(--inline-space);
-  top: 42px;
+  top: 78px;
 }
 
 .task-fieldset > * + * {
@@ -221,7 +221,7 @@
 @media screen and (min-width: 48rem) {
   .task-modal {
     margin-inline: auto;
-    right: 262px;
+    /* right: 262px; */
   }
 }
 /* desktop */

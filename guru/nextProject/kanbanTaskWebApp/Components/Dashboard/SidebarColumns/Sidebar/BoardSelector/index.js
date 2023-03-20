@@ -2,11 +2,11 @@ import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../../../Context/index";
-import { taskModal } from "../../../TaskModal/index";
-import CreateBoardBtnModalContainer from "./CreateBoardBtnModalContainer/index";
-import { testCreateBoards } from "./boardSelectorHelpers";
+// import { taskModal } from "../../../TaskModal/index";
+// import CreateBoardBtnModalContainer from "./CreateBoardBtnModalContainer/index";
+// import { testCreateBoards } from "./boardSelectorHelpers";
 
-const EditTaskModal = taskModal();
+// const EditTaskModal = taskModal();
 
 // const testObj = {
 //   clickedIndex: null,
@@ -159,34 +159,41 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
           <button
             id="mobile-tab-refocus-selector"
             onClick={(event) => {
+              // setTimeout(() => {
+              //   document.getElementById("add-board-name-input");
+              // }, 80);
               /**
                * testing rendering edit task modal
                * **/
               // setEditTaskModal(true);
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.editTaskModal(
-                {
-                  renderTaskModal: true,
-                  id: "edit",
-                  modalTitle: "Edit Task",
-                  refocusElementTaskModal: "mobile-tab-refocus-selector",
-                  titleInput: "Add authentication endpoints",
-                  descriptionInput:
-                    " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
-                  statusInput: "Doing",
-                  subtasksArray: [
-                    {
-                      placeholder: "",
-                      text: "Make React App",
-                      isEmptyAttr: "",
-                    },
-                    {
-                      placeholder: "",
-                      text: "Work on Next Js project",
-                      isEmptyAttr: "",
-                    },
-                  ],
-                }
-              );
+              // setTimeout(() => {
+              //   document.getElementById("edit-task-title").focus();
+              // }, 80);
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editTaskModal(
+              //   {
+              //     renderTaskModal: true,
+              //     id: "edit",
+              //     modalTitle: "Edit Task",
+              //     refocusElementTaskModal: "mobile-tab-refocus-selector",
+              //     titleInput: "Add authentication endpoints",
+              //     descriptionInput:
+              //       " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
+              //     statusInput: "Doing",
+              //     subtasksArray: [
+              //       {
+              //         placeholder: "",
+              //         text: "Make React App",
+              //         isEmptyAttr: "",
+              //       },
+              //       {
+              //         placeholder: "",
+              //         text: "Work on Next Js project",
+              //         isEmptyAttr: "",
+              //       },
+              //     ],
+              //   }
+              // );
               // {
               //   renderBoardModal: false,
               //   boardModalTitle: "",
@@ -206,9 +213,11 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               //   (prevValues) => {
               //     return {
               //       ...prevValues,
+              //       id: "add",
               //       renderBoardModal: true,
               //       boardModalTitle: "Add New Board",
-              //       typeOfBoard: "add",
+              //       typeOfSubmitBtn: "createNewBoard",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
               //       columnObj: {
               //         todo: null,
               //         doing: null,
@@ -220,21 +229,29 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               /**
                * edit board modal
                * **/
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       renderBoardModal: true,
-              //       boardModalTitle: "Edit Board",
-              //       typeOfBoard: "edit",
-              //       columnObj: {
-              //         todo: [],
-              //         doing: null,
-              //         done: [],
-              //       },
-              //     };
-              //   }
-              // );
+
+              setTimeout(() => {
+                document.getElementById("edit-board-name-input").focus();
+              }, 80);
+
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    id: "edit",
+                    renderBoardModal: true,
+                    boardModalTitle: "Edit Board",
+                    boardTitleInput: "Platform Launch",
+                    typeOfSubmitBtn: "saveChanges",
+                    forRefocusElement: "mobile-tab-refocus-selector",
+                    columnObj: {
+                      todo: [],
+                      doing: null,
+                      done: [],
+                    },
+                  };
+                }
+              );
               /****** uncomment here ******/
               // document
               //   .getElementById("board-modal-selector")
@@ -266,14 +283,20 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
                * testing rendering edit task modal
                * **/
               // setEditTaskModal(true);
+              // setTimeout(() => {
+              //   document.getElementById("edit-task-title").focus();
+              // }, 80);
+
               // renderContextForCreateBoardModalBtn.stateFuncsForModals.editTaskModal(
               //   {
               //     renderTaskModal: true,
+              //     id: "edit",
               //     modalTitle: "Edit Task",
               //     refocusElementTaskModal: "mobile-tab-refocus-selector",
               //     titleInput: "Add authentication endpoints",
               //     descriptionInput:
               //       " It’s always good to take a break. This 15 minute break will recharge the batteries a little.",
+              //     statusInput: "Doing",
               //     subtasksArray: [
               //       {
               //         placeholder: "",
@@ -292,29 +315,61 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               /**
                * add new board modal
                * **/
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
-                    renderBoardModal: true,
-                    boardModalTitle: "Add New Board",
-                    typeOfBoard: "add",
-                    columnObj: {
-                      todo: null,
-                      doing: null,
-                      done: null,
-                    },
-                  };
-                }
-              );
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       id: "add",
+              //       renderBoardModal: true,
+              //       boardModalTitle: "Add New Board",
+              //       typeOfSubmitBtn: "createNewBoard",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
+              //       columnObj: {
+              //         todo: null,
+              //         doing: null,
+              //         done: null,
+              //       },
+              //     };
+              //   }
+              // );
+              // renderBoardModal: true,
+              //       boardModalTitle: "Add New Board",
+              //       typeOfBoard: "add",
+              //       columnObj: {
+              //         todo: null,
+              //         doing: null,
+              //         done: null,
               /**
                * edit board modal
                * **/
 
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
+              setTimeout(() => {
+                document.getElementById("edit-board-name-input");
+              }, 80);
+
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    id: "edit",
+                    renderBoardModal: true,
+                    boardModalTitle: "Edit Board",
+                    boardTitleInput: "Platform Launch",
+                    typeOfSubmitBtn: "saveChanges",
+                    forRefocusElement: "mobile-tab-refocus-selector",
+                    columnObj: {
+                      todo: [],
+                      doing: null,
+                      done: [],
+                    },
+                  };
+                }
+              );
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
+              //   true
+              // );
+              // ...prevValues,
               //       renderBoardModal: true,
               //       boardModalTitle: "Edit Board",
               //       typeOfBoard: "edit",
@@ -322,14 +377,6 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               //         todo: [],
               //         doing: null,
               //         done: [],
-              //       },
-              //     };
-              //   }
-              // );
-
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-              //   true
-              // );
               // document
               //   .getElementById("board-modal-selector")
               //   .getAttribute("data-showboardmodal") == "false"
@@ -379,10 +426,10 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
           </button>
         )}
       </div>
-      <EditTaskModal
-        idAttr="edit"
-        refocusElementTaskModal="mobile-tab-refocus-selector"
-      />
+      {/* <EditTaskModal
+      idAttr="edit"
+      refocusElementTaskModal="mobile-tab-refocus-selector"
+      /> */}
     </div>
   );
 }

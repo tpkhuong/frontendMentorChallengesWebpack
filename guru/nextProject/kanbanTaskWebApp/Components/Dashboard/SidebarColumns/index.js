@@ -2,10 +2,10 @@ import React from "react";
 import SidebarColumnsContainerStyles from "./SidebarColumns.module.css";
 import Sidebar from "./Sidebar";
 import MessageColumnsContainer from "./MessageColumnsContainer/index";
-import { boardComponent } from "../BoardModal/index";
+// import { boardComponent } from "../BoardModal/index";
 
-const AddBoardModal = boardComponent();
-const EditBoardModal = boardComponent();
+// const AddBoardModal = boardComponent();
+// const EditBoardModal = boardComponent();
 
 export default function SidebarColumns({ children, valuesForBoardsColumns }) {
   return (
@@ -29,14 +29,14 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
         />
       </div>
       {/* reason we see console.log(initialValueObjBoardMoal); twice in browser console. Below are the initial render of board modal */}
-      <AddBoardModal
+      {/* <AddBoardModal
         idAttr="add"
         forRefocusElement="mobile-tab-refocus-selector"
-      />
-      <EditBoardModal
+      /> */}
+      {/* <EditBoardModal
         idAttr="edit"
         forRefocusElement="mobile-tab-refocus-selector"
-      />
+      /> */}
       {/* <AddBoardModal
         boardModalTitle="Add New Board"
         columnObj={{ todo: null, doing: [], done: null }}

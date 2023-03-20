@@ -3,6 +3,7 @@ import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
 import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardColumn } from "./BoardModalHelpers";
+import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 
 export function boardComponent() {
   const objForBoardComponent = {
@@ -110,6 +111,7 @@ export function boardComponent() {
       //   };
       // });
     },
+    // remove column
     removeColumn: function removeBoardColumn(obj, setStateFunc, target) {
       const clickedContentValue = target.getAttribute(
         "data-removecolumnbtncontent"
@@ -146,6 +148,15 @@ export function boardComponent() {
         };
       });
     },
+    // create new
+    createNewBoard: function (event) {
+      console.log("create new board");
+    },
+    // save changes
+    saveChanges: function (event) {
+      console.log("save changes");
+      // if edit-board-name-input is empty when user click on save changes keep original board name
+    },
   };
 
   // pass array in for board columns
@@ -158,28 +169,35 @@ export function boardComponent() {
     columnObj,
   }) {
     // console.log(columnObj);
-    const [initialValueObjBoardMoal, setBoardModal] = React.useState({
+    const [initialValueObjBoardModal, setBoardModal] = React.useState({
       id: "",
       renderBoardModal: false,
       boardModalTitle: "",
-      typeOfBoard: "",
+      boardTitleInput: "",
+      typeOfSubmitBtn: "",
+      forRefocusElement: "",
       columnObj: {
         todo: null,
         doing: null,
         done: null,
       },
     });
-    console.log(initialValueObjBoardMoal);
+    console.log(initialValueObjBoardModal);
     React.useEffect(() => {
       objForBoardComponent.objForRenderingColumnBtnAlgor =
-        makeObjForBoardColumn(initialValueObjBoardMoal.columnObj);
+        makeObjForBoardColumn(initialValueObjBoardModal.columnObj);
       // want to compare original column obj of current user
-      if (initialValueObjBoardMoal.id == "edit") {
+      if (
+        initialValueObjBoardModal.renderBoardModal &&
+        initialValueObjBoardModal.id == "edit"
+      ) {
         objForBoardComponent.currentBoardColumnObj =
-          initialValueObjBoardMoal.columnObj;
-        return;
+          initialValueObjBoardModal.columnObj;
+
+        document.getElementById("edit-board-name-input").value =
+          initialValueObjBoardModal.boardTitleInput;
       }
-    }, [initialValueObjBoardMoal.renderBoardModal]);
+    }, [initialValueObjBoardModal.renderBoardModal]);
 
     // const [renderBoardModal, setAddBoardModal] = React.useState(false);
     // const [arrayForBoardColumn, setBoardColumn] = React.useState(
@@ -196,7 +214,7 @@ export function boardComponent() {
 
     return (
       <React.Fragment>
-        {initialValueObjBoardMoal.renderBoardModal ? (
+        {initialValueObjBoardModal.renderBoardModal ? (
           <div
             id="board-modal-selector"
             data-showboardmodal="false"
@@ -206,6 +224,7 @@ export function boardComponent() {
               aria-modal="true"
               role="dialog"
               className={BoardModalStyles[`board-modal-container`]}
+              onKeyDown={keyboardModalTabbingAndSpaceKey}
             >
               <fieldset
                 onClick={(event) => {
@@ -229,34 +248,43 @@ export function boardComponent() {
               >
                 <div className={BoardModalStyles[`title-btn-container`]}>
                   <legend className={BoardModalStyles[`board-title`]}>
-                    <span>{initialValueObjBoardMoal.boardModalTitle}</span>
+                    <span>{initialValueObjBoardModal.boardModalTitle}</span>
                   </legend>
                   <CloseModalBtn
                     renderStateObjKey="renderBoardModal"
-                    focusClickedElement={forRefocusElement}
+                    focusClickedElement={
+                      initialValueObjBoardModal.forRefocusElement
+                    }
                     hideModalFunc={setBoardModal}
                   >
-                    {`Close ${initialValueObjBoardMoal.boardModalTitle} Modal`}
+                    {`Close ${initialValueObjBoardModal.boardModalTitle} Modal`}
                   </CloseModalBtn>
                 </div>
                 {/* name */}
-                <div className={BoardModalStyles[`name-input-container`]}>
+                <div
+                  data-isempty=""
+                  className={BoardModalStyles[`name-input-container`]}
+                >
                   <label
                     className={BoardModalStyles[`label`]}
-                    htmlFor={`${initialValueObjBoardMoal.id}-board-name-input`}
+                    htmlFor={`${initialValueObjBoardModal.id}-board-name-input`}
                   >
                     Board Name
                   </label>
                   <input
-                    id={`${initialValueObjBoardMoal.id}-board-name-input`}
+                    id={`${initialValueObjBoardModal.id}-board-name-input`}
                     type="text"
                     placeholder="e.g. Web Design"
                   />
+                  <span className={BoardModalStyles[`empty`]}>
+                    Can't be empty
+                  </span>
+                  <span className={BoardModalStyles[`accepted`]}>Accepted</span>
                 </div>
                 {/* columns */}
                 <span className={BoardModalStyles["label"]}>Board Columns</span>
                 <ul className={BoardModalStyles[`column-btn-container`]}>
-                  {Object.entries(initialValueObjBoardMoal.columnObj).map(
+                  {Object.entries(initialValueObjBoardModal.columnObj).map(
                     function makeColumnBtn(subarray, index) {
                       return subarray[1] ? (
                         <li
@@ -304,9 +332,15 @@ export function boardComponent() {
                   </button>
                   <button
                     type="button"
+                    data-lastitem="true"
+                    data-typeofboardbtn={`${initialValueObjBoardModal.typeOfSubmitBtn}`}
                     className={BoardModalStyles[`create-save-btn`]}
                   >
-                    Create New Board
+                    {`${
+                      initialValueObjBoardModal.id == "edit"
+                        ? "Save Changes"
+                        : "Create New Board"
+                    }`}
                   </button>
                 </div>
               </fieldset>

@@ -8,7 +8,7 @@ import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 const AddNewTaskModalSubtasks = SubtasksComponent();
 const EditTaskModalSubtasks = SubtasksComponent();
 
-export function taskModal() {
+export function taskModalComponent() {
   return function innerComponent({
     children,
     modalTitle,
@@ -126,8 +126,7 @@ export function taskModal() {
                     rows="4"
                     // value={taskModalValues.descriptionInput}
                     // onChange={(event) => {}}
-                    placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-        recharge the batteries a little."
+                    placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
                   />
                   <span className={TaskModalStyles[`empty`]}>
                     Can't be empty

@@ -7,7 +7,7 @@
 .board-modal-bg {
   background-color: hsla(0 0% 0% / 0.4);
   /* display: none; */
-  z-index: 1;
+  z-index: 2;
 
   position: absolute;
   inset: 0;
@@ -28,7 +28,7 @@
   border-radius: 8px;
   left: var(--inline);
   right: var(--inline);
-  top: 42px;
+  top: 78px;
 }
 
 .title-btn-container {
@@ -46,6 +46,11 @@
 
 .name-input-container {
   margin-block: 16px;
+  position: relative;
+}
+
+[data-isempty="true"].name-input-container input {
+  border-color: var(--color-red);
 }
 
 .name-input-container input {
@@ -62,6 +67,26 @@
   padding-block: 8px;
   display: inline-block;
   margin-block-start: 8px;
+}
+
+/* show can't be empty, show accepted */
+
+[data-isempty="true"] .empty,
+[data-isempty="false"] .accepted {
+  display: revert;
+}
+
+.empty {
+  color: var(--color-red);
+}
+
+.empty,
+.accepted {
+  font-size: 0.7rem;
+  position: absolute;
+  display: none;
+  right: 2px;
+  top: 8px;
 }
 
 .name-input-container input,
@@ -146,11 +171,12 @@
 
 @media screen and (min-width: 48rem) {
   .board-modal-bg {
-    margin-inline: auto;
-    right: 262px;
+    /* right: 262px; */
   }
   .board-modal-container {
     --board-container-padding: 32px;
+    margin-inline: auto;
+    top: 170px;
   }
 }
 
