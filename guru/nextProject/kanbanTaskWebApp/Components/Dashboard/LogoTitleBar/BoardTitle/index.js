@@ -8,7 +8,12 @@ export default function BoardTitle({ children, boardTitle }) {
   return (
     <React.Fragment>
       {isLargerThanMobile ? (
-        <h2 className={BoardTitleStyles[`title`]}>{boardTitle}</h2>
+        <h2
+          id="tablet-desktop-title-notbtn"
+          className={BoardTitleStyles[`title`]}
+        >
+          {boardTitle}
+        </h2>
       ) : (
         <button
           className={BoardTitleStyles[`mobile-menu-btn`]}

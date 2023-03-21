@@ -46,14 +46,11 @@ import { BoardTaskRenderContext } from "../../../Context/index";
 //     },
 //   ],
 // };
-// infoForCurrentUser
-export default function BoardSelector({ children, infoForCurrentUser }) {
+// currUserBoardsArray
+export default function BoardSelector({ children, currUserBoardsArray }) {
   const memoizedBoardsValues = React.useMemo(() => {
     return {
-      clickedIndex: !infoForCurrentUser.currentSelectedIndex
-        ? 0
-        : infoForCurrentUser.currentSelectedIndex,
-      boardsArray: infoForCurrentUser.boards,
+      boardsArray: currUserBoardsArray,
     };
   }, []);
   const [initialValuesObj, setBoardSelector] =
@@ -64,6 +61,9 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
   const renderContextForCreateBoardModalBtn = React.useContext(
     BoardTaskRenderContext
   );
+
+  renderContextForCreateBoardModalBtn.setStateFuncs.boardSelector =
+    setBoardSelector;
 
   // const [renderEditTaskModal, setEditTaskModal] = React.useState(false);
 
@@ -106,7 +106,6 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
 
               setBoardSelector((prev) => {
                 return {
-                  clickedIndex: boardIndex,
                   boardsArray: [].concat(copiedArr),
                 };
               });
@@ -209,49 +208,54 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               /**
                * add new board modal
                * **/
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       id: "add",
-              //       renderBoardModal: true,
-              //       boardModalTitle: "Add New Board",
-              //       typeOfSubmitBtn: "createNewBoard",
-              //       forRefocusElement: "mobile-tab-refocus-selector",
-              //       columnObj: {
-              //         todo: null,
-              //         doing: null,
-              //         done: null,
-              //       },
-              //     };
-              //   }
-              // );
-              /**
-               * edit board modal
-               * **/
 
               setTimeout(() => {
-                document.getElementById("edit-board-name-input").focus();
+                document.getElementById("add-board-name-input").focus();
               }, 80);
 
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
                 (prevValues) => {
                   return {
                     ...prevValues,
-                    id: "edit",
+                    id: "add",
                     renderBoardModal: true,
-                    boardModalTitle: "Edit Board",
-                    boardTitleInput: "Platform Launch",
-                    typeOfSubmitBtn: "saveChanges",
+                    boardModalTitle: "Add New Board",
+                    typeOfSubmitBtn: "createNewBoard",
                     forRefocusElement: "mobile-tab-refocus-selector",
                     columnObj: {
-                      todo: [],
+                      todo: null,
                       doing: null,
-                      done: [],
+                      done: null,
                     },
                   };
                 }
               );
+              /**
+               * edit board modal
+               * **/
+
+              // setTimeout(() => {
+              //   document.getElementById("edit-board-name-input").focus();
+              // }, 80);
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       id: "edit",
+              //       renderBoardModal: true,
+              //       boardModalTitle: "Edit Board",
+              //       boardTitleInput: "Platform Launch",
+              //       typeOfSubmitBtn: "saveChanges",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
+              //       columnObj: {
+              //         todo: [],
+              //         doing: null,
+              //         done: [],
+              //       },
+              //     };
+              //   }
+              // );
               /****** uncomment here ******/
               // document
               //   .getElementById("board-modal-selector")
@@ -315,56 +319,57 @@ export default function BoardSelector({ children, infoForCurrentUser }) {
               /**
                * add new board modal
                * **/
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       id: "add",
-              //       renderBoardModal: true,
-              //       boardModalTitle: "Add New Board",
-              //       typeOfSubmitBtn: "createNewBoard",
-              //       forRefocusElement: "mobile-tab-refocus-selector",
-              //       columnObj: {
-              //         todo: null,
-              //         doing: null,
-              //         done: null,
-              //       },
-              //     };
-              //   }
-              // );
-              // renderBoardModal: true,
-              //       boardModalTitle: "Add New Board",
-              //       typeOfBoard: "add",
-              //       columnObj: {
-              //         todo: null,
-              //         doing: null,
-              //         done: null,
-              /**
-               * edit board modal
-               * **/
+
+              console.log(renderContextForCreateBoardModalBtn);
 
               setTimeout(() => {
-                document.getElementById("edit-board-name-input");
+                document.getElementById("add-board-name-input");
               }, 80);
 
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
                 (prevValues) => {
                   return {
                     ...prevValues,
-                    id: "edit",
+                    id: "add",
                     renderBoardModal: true,
-                    boardModalTitle: "Edit Board",
-                    boardTitleInput: "Platform Launch",
-                    typeOfSubmitBtn: "saveChanges",
+                    boardModalTitle: "Add New Board",
+                    typeOfSubmitBtn: "createNewBoard",
                     forRefocusElement: "mobile-tab-refocus-selector",
                     columnObj: {
-                      todo: [],
+                      todo: null,
                       doing: null,
-                      done: [],
+                      done: null,
                     },
                   };
                 }
               );
+
+              /**
+               * edit board modal
+               * **/
+
+              // setTimeout(() => {
+              //   document.getElementById("edit-board-name-input");
+              // }, 80);
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       id: "edit",
+              //       renderBoardModal: true,
+              //       boardModalTitle: "Edit Board",
+              //       boardTitleInput: "Platform Launch",
+              //       typeOfSubmitBtn: "saveChanges",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
+              //       columnObj: {
+              //         todo: [],
+              //         doing: null,
+              //         done: [],
+              //       },
+              //     };
+              //   }
+              // );
 
               // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
               //   true

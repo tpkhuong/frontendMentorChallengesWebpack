@@ -32,10 +32,21 @@ export default function Dashboard({
       stateValuesForModals: {},
     };
   }, []);
-
+  // will use React.useState
+  const [initialDashboardValues, setDashboard] = React.useState({
+    currentUserBoardsObj: userData.boards,
+    columns,
+    title,
+    isBoardEmpty,
+  });
   React.useEffect(() => {
-    // saveDataToLocalStorage(userData, currentBoard);
-  }, []);
+    saveCurrentUserDataToLocalStorage(userData);
+    saveCurrentBoardDataToLocalStorage(currentBoard);
+  }, [userData.email]);
+  // render dashboard every time user select a new board
+  React.useEffect(() => {
+    saveCurrentBoardDataToLocalStorage(currentBoard);
+  }, [initialDashboardValues.title]);
   // return (
   //   <React.Fragment>
   //     <button onClick={testCreateBoards.bind({ email: userData.user.email })}>
@@ -53,14 +64,17 @@ export default function Dashboard({
         {/* logotitlebar */}
         <LogoTitleBar
           valueForLogoutBtn
-          valuesForTitleAddTask={{ isBoardEmpty, title }}
+          valuesForTitleAddTask={{
+            isBoardEmpty: initialDashboardValues.isBoardEmpty,
+            title: initialDashboardValues.title,
+          }}
         />
         {/* sidebarcolumns */}
         <SidebarColumns
           valuesForBoardsColumns={{
-            currentUserBoardsInfo: userData,
-            isBoardEmpty,
-            columns,
+            currentUserBoardsInfo: initialDashboardValues.currentUserBoardsObj,
+            isBoardEmpty: initialDashboardValues.isBoardEmpty,
+            columns: initialDashboardValues.columns,
           }}
         />
       </BoardTaskRenderContext.Provider>
@@ -170,7 +184,7 @@ export async function getServerSideProps(context) {
             userData: data,
             currentBoard: data.boards,
             title: "Add New Board",
-            isBoardEmpty: false,
+            isBoardEmpty: true,
             columns: null,
           },
         };
@@ -193,7 +207,7 @@ export async function getServerSideProps(context) {
               userData: data,
               currentBoard,
               title: currentBoard.title,
-              isBoardEmpty: false,
+              isBoardEmpty: true,
               columns: {
                 todo: null,
                 doing: null,
@@ -289,13 +303,17 @@ function notes() {
   );
 }
 
-function saveDataToLocalStorage(user, board) {
-  !localStorage.getItem("currentUser")
-    ? localStorage.setItem("currentUser", JSON.stringify(user))
-    : null;
+function saveCurrentUserDataToLocalStorage(user) {
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  // !localStorage.getItem("currentUser")
+  //   ? localStorage.setItem("currentUser", JSON.stringify(user))
+  //   : null;
+}
 
+function saveCurrentBoardDataToLocalStorage(board) {
+  localStorage.setItem("currentBoard", JSON.stringify(board));
   // make currentBoard in localStorage. algorithm in getServerSideProps
-  !localStorage.getItem("currentBoard")
-    ? localStorage.setItem("currentBoard", JSON.stringify(board))
-    : null;
+  // !localStorage.getItem("currentBoard")
+  //   ? localStorage.setItem("currentBoard", JSON.stringify(board))
+  //   : null;
 }

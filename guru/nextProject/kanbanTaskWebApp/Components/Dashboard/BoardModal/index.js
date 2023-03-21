@@ -11,11 +11,11 @@ export function boardComponent() {
     currentBoardColumnObj: null,
   };
 
-  const testArr = [
-    ["todo", true],
-    ["doing", false],
-    ["done", true],
-  ];
+  // const testArr = [
+  //   ["todo", true],
+  //   ["doing", false],
+  //   ["done", true],
+  // ];
 
   const objOfMethods = {
     addColumn: function addBoardColumn(obj, setStateFunc) {
@@ -149,11 +149,119 @@ export function boardComponent() {
       });
     },
     // create new
-    createNewBoard: function (event) {
-      console.log("create new board");
+    createNewBoard: function (obj, setStateFunc, target, renderContextObj) {
+      // target board name input
+      const boardNameInput = document.getElementById("add-board-name-input");
+      if (boardNameInput.value === "") {
+        boardNameInput.parentElement.getAttribute("data-isempty") === "" ||
+        boardNameInput.parentElement.getAttribute("data-isempty") == "false"
+          ? boardNameInput.parentElement.setAttribute("data-isempty", "true")
+          : null;
+        return;
+      }
+
+      if (boardNameInput.value !== "") {
+        // render the column component based on objForBoardComponent.objForRenderingColumnBtnAlgor obj
+        boardNameInput.parentElement.getAttribute("data-isempty") === "true"
+          ? boardNameInput.parentElement.setAttribute("data-isempty", "")
+          : null;
+
+        /**
+         * check current user boards in local storage
+         * **/
+        // when algorithm based on length of user boards array
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+        // board columns container
+        const boardColumnsContainer = document.getElementById(
+          "add-board-columns-container-selector"
+        );
+        // create new board obj
+        const newBoardObj = {
+          title: boardNameInput.value,
+          index: user.boards.length,
+          isSelected: null,
+          columns:
+            boardColumnsContainer.childElementCount === 0
+              ? { todo: true, doing: false, done: false }
+              : objForBoardComponent.objForRenderingColumnBtnAlgor,
+        };
+        // push newBoardObj into current user boards array
+        user.boards.push(newBoardObj);
+        if (user.boards.length === 0) {
+          // there are no board obj in user boards array
+          // based on screen size update the title heading element if screen is tablet or larger
+          if (window.innerWidth >= 768) {
+            document.getElementById("tablet-desktop-title-notbtn").innerText =
+              boardNameInput.value;
+          } else {
+            // update title btn for mobile layout
+            document.getElementById("mobile-title-btn").innerText =
+              boardNameInput.value;
+          }
+          // update isSelected property of newboardobj to true
+          user.boards[0].isSelected = true;
+          // we will call setStateFuncs of addTaskBtn passing false value because current board will have one board obj
+          renderContextObj.setStateFuncs.addTaskBtn(false);
+          // boardSelector passing user boards array
+          renderContextObj.setStateFuncs.boardSelector(user.boards);
+          // msgColumnsContainer passing newBoardObj.columns
+          renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+            return {
+              ...prevValues,
+              isCurrentBoardEmpty: false,
+              currentBoardColumnsObj: newBoardObj.columns,
+            };
+          });
+        } else {
+          // update isSelected property of newboardobj to false
+          user.boards[user.boards.length - 1].isSelected = false;
+          // we will call boardSelector with recent created board obj to render correct board selector
+          renderContextObj.setStateFuncs.boardSelector(user.boards);
+        }
+        // tablet-desktop-title-notbtn
+        // mobile-title-btn
+        // setStateFuncs.addTaskBtn
+        console.log(user);
+        // const testObj = {
+        //   title,
+        //   index,
+        //   isSelected,
+        //   columns: {
+        //     todo: null,
+        //     doing: null,
+        //     done: null,
+        //   },
+        // };
+        // index of new board obj will be the length of current user boards array
+        // call setstate func of message column container
+        // setTimeout(() => {
+        // }, 80);
+        // call set state func to not render add new board modal
+        // setStateFunc((prevValues) => {
+        //   return {
+        //     ...prevValues,
+        //     renderBoardModal: false,
+        //   };
+        // });
+
+        // // console.log(renderContextObj);
+        // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+        //   return {
+        //     ...prevValues,
+        //     isCurrentBoardEmpty: false,
+        //     currentBoardColumnsObj:
+        //       objForBoardComponent.objForRenderingColumnBtnAlgor,
+        //   };
+        // });
+
+        // console.log(objForBoardComponent.objForRenderingColumnBtnAlgor);
+
+        return;
+      }
     },
     // save changes
-    saveChanges: function (event) {
+    saveChanges: function (obj, setStateFunc, target, renderContextObj) {
+      // target board name input
       console.log("save changes");
       // if edit-board-name-input is empty when user click on save changes keep original board name
     },
@@ -239,7 +347,8 @@ export function boardComponent() {
                     ](
                       objForBoardComponent.objForRenderingColumnBtnAlgor,
                       setBoardModal,
-                      btnClicked
+                      btnClicked,
+                      renderContextForBoardModal
                     );
                     return;
                   }
@@ -283,7 +392,10 @@ export function boardComponent() {
                 </div>
                 {/* columns */}
                 <span className={BoardModalStyles["label"]}>Board Columns</span>
-                <ul className={BoardModalStyles[`column-btn-container`]}>
+                <ul
+                  id={`${initialValueObjBoardModal.id}-board-columns-container-selector`}
+                  className={BoardModalStyles[`column-btn-container`]}
+                >
                   {Object.entries(initialValueObjBoardModal.columnObj).map(
                     function makeColumnBtn(subarray, index) {
                       return subarray[1] ? (
@@ -646,3 +758,5 @@ function createFunc() {
     }, {});
   };
 }
+
+// {"_id":{"$oid":"64077f458bb3484cbbe88813"},"email":"webinclusivedeveloper@toankhuong.com","emailVerified":{"$date":{"$numberLong":"1679340555144"}},"boards":[{"title":"Software Development","index":{"$numberInt":"0"},"isSelected":true,"columns":{"todo":null,"doing":null,"done":null}},{"title":"Marketing Plan","columns":{"todo":null,"doing":null,"done":null},"index":{"$numberInt":"1"},"isSelected":false}]}

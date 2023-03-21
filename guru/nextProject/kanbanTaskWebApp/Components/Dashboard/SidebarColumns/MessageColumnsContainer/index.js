@@ -3,6 +3,7 @@ import MessageColumnsStyles from "./MessageColumnsContainer.module.css";
 import ShowSidebarBtn from "./ShowSidebar/index";
 import EmptyBoardMessage from "./EmptyBoard/index";
 import Columns from "./Columns";
+import { BoardTaskRenderContext } from "../../Context/index";
 import TodoColumn from "./Columns/Todo";
 // import ColumnTitle from "./Columns/ColumnTitle/index";
 import TaskBtn from "./Columns/TaskBtn/index";
@@ -12,8 +13,14 @@ export default function MessageColumnsContainer({
   objOfValuesForColumns,
 }) {
   // useState here
-  // currentBoardEmpty
-  // columnsObj
+  const [initialMsgColumnsObj, setMsgColumns] = React.useState({
+    isCurrentBoardEmpty: objOfValuesForColumns.currentBoardEmpty,
+    currentBoardColumnsObj: objOfValuesForColumns.columnsObj,
+  });
+
+  const renderContextForMsgColumns = React.useContext(BoardTaskRenderContext);
+
+  renderContextForMsgColumns.setStateFuncs.msgColumnsContainer = setMsgColumns;
   return (
     <div
       id="message-columns"
@@ -26,10 +33,10 @@ export default function MessageColumnsContainer({
       <TodoColumn />
       <TodoColumn />
       <TodoColumn /> */}
-      {objOfValuesForColumns.currentBoardEmpty ? (
+      {initialMsgColumnsObj.isCurrentBoardEmpty ? (
         <EmptyBoardMessage />
       ) : (
-        <Columns columnsObjData={objOfValuesForColumns.columnsObj} />
+        <Columns columnsObjData={initialMsgColumnsObj.currentBoardColumnsObj} />
       )}
       {/* add column button height has to be around 756.2 */}
       <button className={MessageColumnsStyles[`new-column-btn`]}>

@@ -15,9 +15,12 @@ export default function Columns({ children, columnsObjData }) {
       <h2 className="visually-hidden" id="status-column-title">
         Status Columns
       </h2>
-      <TodoColumn />
+      {initialColumnsValueObj.todo && <TodoColumn />}
+      {initialColumnsValueObj.doing && <DoingColumn />}
+      {initialColumnsValueObj.done && <DoneColumn />}
+      {/* <TodoColumn />
       <DoingColumn />
-      <DoneColumn />
+      <DoneColumn /> */}
     </section>
   );
 }

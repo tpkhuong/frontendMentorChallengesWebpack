@@ -22,7 +22,7 @@ export default function Sidebar({ children, objOfValuesForBoards }) {
         className={SidebarStyles[`boards-toggle-container`]}
       >
         {/* boardselector */}
-        <BoardSelector infoForCurrentUser={objOfValuesForBoards} />
+        <BoardSelector currUserBoardsArray={objOfValuesForBoards} />
         {/* themetoggle */}
         {/* <button
           style={styleObj}

@@ -103,17 +103,17 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                 <span aria-hidden="true">+</span>
                 <span>Add New Task</span>
               </button>
-              <TaskModal />
-              <BoardModal />
               {/* <AddTaskModal
               idAttr="add"
               refocusElementTaskModal="add-task-btn"
-              /> */}
+            /> */}
               {/* {renderAddTaskModal ? (
               ) : null} */}
             </React.Fragment>
           )
-        ) : // <span
+        ) : // <TaskModal />
+        // <BoardModal />
+        // <span
         //   className={`${AddTaskBtnStyles[`tablet-desktop-btn-bg`]} ${
         //     AddTaskBtnStyles[`display-block`]
         //   }`}
@@ -204,13 +204,13 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                 />
               </svg>
             </button>
-            <TaskModal />
-            <BoardModal />
             {/* <AddTaskModal /> */}
             {/* {renderAddTaskModal ? (
             ) : null} */}
           </React.Fragment>
         )
+        // <TaskModal />
+        // <BoardModal />
         // <span
         //   className={`${AddTaskBtnStyles[`mobile-btn-bg`]} ${
         //     AddTaskBtnStyles[`display-block`]
@@ -218,6 +218,8 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
         // >
         // </span>
       }
+      <TaskModal />
+      <BoardModal />
     </React.Fragment>
   );
 }
