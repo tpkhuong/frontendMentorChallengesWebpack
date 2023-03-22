@@ -129,14 +129,14 @@ const doingArray = [
   },
 ];
 
-export default function DoingColumn({ children }) {
+export default function DoingColumn({ children, doingColumnArray }) {
   return (
     <div
       data-columncontainerstyleattr=""
       className={DoingColumnStyles[`doing-quantity-task-container`]}
     >
       <ColumnTitle
-        quantity={`${doingArray.length}`}
+        quantity={`${doingColumnArray.length}`}
         assistiveText="doing"
         status="doing"
       >
@@ -147,7 +147,7 @@ export default function DoingColumn({ children }) {
         data-taskscontainerstyleattr
         className={DoingColumnStyles[`doing-tasks-container`]}
       >
-        {doingArray.map(function buildDoingTask(obj, index) {
+        {doingColumnArray.map(function buildDoingTask(obj, index) {
           return (
             <li key={Math.random() * index}>
               <TaskBtn

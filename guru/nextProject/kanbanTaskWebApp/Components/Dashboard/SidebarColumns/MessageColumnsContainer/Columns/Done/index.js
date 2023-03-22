@@ -125,14 +125,14 @@ const doneArray = [
   },
 ];
 
-export default function DoneColumn({ children }) {
+export default function DoneColumn({ children, doneColumnArray }) {
   return (
     <div
       data-columncontainerstyleattr=""
       className={DoneColumnStyles[`done-quantity-task-container`]}
     >
       <ColumnTitle
-        quantity={`${doneArray.length}`}
+        quantity={`${doneColumnArray.length}`}
         assistiveText="done"
         status="done"
       >
@@ -143,7 +143,7 @@ export default function DoneColumn({ children }) {
         data-taskscontainerstyleattr
         className={DoneColumnStyles[`done-tasks-container`]}
       >
-        {doneArray.map(function buildDoneTask(obj, index) {
+        {doneColumnArray.map(function buildDoneTask(obj, index) {
           return (
             <li key={Math.random() * index}>
               <TaskBtn

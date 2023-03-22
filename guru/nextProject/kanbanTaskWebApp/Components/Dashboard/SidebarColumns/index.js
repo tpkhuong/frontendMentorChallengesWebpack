@@ -18,7 +18,7 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
       >
         {/* sidebar */}
         <Sidebar
-          objOfValuesForBoards={valuesForBoardsColumns.currentUserBoardsInfo}
+          arrayOfBoardsObjs={valuesForBoardsColumns.currentUserBoardsArray}
         />
         {/* columns */}
         <MessageColumnsContainer

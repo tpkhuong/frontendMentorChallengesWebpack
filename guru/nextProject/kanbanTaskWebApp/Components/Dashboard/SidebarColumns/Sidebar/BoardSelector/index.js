@@ -48,13 +48,13 @@ import { BoardTaskRenderContext } from "../../../Context/index";
 // };
 // currUserBoardsArray
 export default function BoardSelector({ children, currUserBoardsArray }) {
-  const memoizedBoardsValues = React.useMemo(() => {
-    return {
-      boardsArray: currUserBoardsArray,
-    };
-  }, []);
-  const [initialValuesObj, setBoardSelector] =
-    React.useState(memoizedBoardsValues);
+  // const memoizedBoardsValues = React.useMemo(() => {
+  //   return {
+  //     boardsArray: currUserBoardsArray,
+  //   };
+  // }, []);
+  const [initialValuesArray, setBoardSelector] =
+    React.useState(currUserBoardsArray);
 
   const isTabletSizeOrLarger = useMediaQuery("min", 768);
 
@@ -81,15 +81,16 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
       {/* number of boards */}
       <span className={BoardSelectorStyles[`boards-quantity`]}>
         <span>ALL BOARDS</span>
-        <span>({initialValuesObj.boardsArray.length})</span>
+        <span>({initialValuesArray.length})</span>
       </span>
       {/* buttons container */}
       <div className={BoardSelectorStyles[`board-selector-btns-container`]}>
         {/* board selector btn */}
         <ul
+          id="board-btn-selector-ul-container"
           onClick={(event) => {
             const clickedBoardBtn = event.target.closest("BUTTON");
-            const copiedArr = [...initialValuesObj.boardsArray];
+            const copiedArr = [...initialValuesArray];
 
             if (clickedBoardBtn) {
               const boardIndex = Number(
@@ -104,19 +105,18 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
                 }
               });
 
-              setBoardSelector((prev) => {
-                return {
-                  boardsArray: [].concat(copiedArr),
-                };
-              });
+              setBoardSelector([].concat(copiedArr));
+
+              // setBoardSelector((prev) => {
+              //   return {
+              //     boardsArray: [].concat(copiedArr),
+              //   };
+              // });
             }
           }}
           className={BoardSelectorStyles[`ul-container-of-btns`]}
         >
-          {initialValuesObj.boardsArray.map(function createBoardBtn(
-            item,
-            index
-          ) {
+          {initialValuesArray.map(function createBoardBtn(item, index) {
             return (
               <li key={Math.random() * index}>
                 <button
@@ -209,53 +209,53 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
                * add new board modal
                * **/
 
-              setTimeout(() => {
-                document.getElementById("add-board-name-input").focus();
-              }, 80);
-
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
-                    id: "add",
-                    renderBoardModal: true,
-                    boardModalTitle: "Add New Board",
-                    typeOfSubmitBtn: "createNewBoard",
-                    forRefocusElement: "mobile-tab-refocus-selector",
-                    columnObj: {
-                      todo: null,
-                      doing: null,
-                      done: null,
-                    },
-                  };
-                }
-              );
-              /**
-               * edit board modal
-               * **/
-
               // setTimeout(() => {
-              //   document.getElementById("edit-board-name-input").focus();
+              //   document.getElementById("add-board-name-input").focus();
               // }, 80);
 
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
               //   (prevValues) => {
               //     return {
               //       ...prevValues,
-              //       id: "edit",
+              //       id: "add",
               //       renderBoardModal: true,
-              //       boardModalTitle: "Edit Board",
-              //       boardTitleInput: "Platform Launch",
-              //       typeOfSubmitBtn: "saveChanges",
+              //       boardModalTitle: "Add New Board",
+              //       typeOfSubmitBtn: "createNewBoard",
               //       forRefocusElement: "mobile-tab-refocus-selector",
               //       columnObj: {
-              //         todo: [],
+              //         todo: null,
               //         doing: null,
-              //         done: [],
+              //         done: null,
               //       },
               //     };
               //   }
               // );
+              /**
+               * edit board modal
+               * **/
+
+              setTimeout(() => {
+                document.getElementById("edit-board-name-input").focus();
+              }, 80);
+
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    id: "edit",
+                    renderBoardModal: true,
+                    boardModalTitle: "Edit Board",
+                    boardTitleInput: "Platform Launch",
+                    typeOfSubmitBtn: "saveChanges",
+                    forRefocusElement: "mobile-tab-refocus-selector",
+                    columnObj: {
+                      todo: [],
+                      doing: null,
+                      done: [],
+                    },
+                  };
+                }
+              );
               /****** uncomment here ******/
               // document
               //   .getElementById("board-modal-selector")

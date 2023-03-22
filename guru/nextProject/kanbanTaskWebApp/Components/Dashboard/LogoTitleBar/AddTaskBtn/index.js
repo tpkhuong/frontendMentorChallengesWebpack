@@ -19,7 +19,7 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
   const renderContextForAddTaskBtn = React.useContext(BoardTaskRenderContext);
 
   renderContextForAddTaskBtn.setStateFuncs.addTaskBtn = setAddTaskBtn;
-
+  // renderAddTaskBtn is based on value of BoardTaskRenderContext
   return (
     <React.Fragment>
       {

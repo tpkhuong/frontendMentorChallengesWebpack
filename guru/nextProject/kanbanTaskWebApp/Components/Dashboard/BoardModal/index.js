@@ -5,6 +5,8 @@ import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardColumn } from "./BoardModalHelpers";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 
+var testWarningState;
+
 export function boardComponent() {
   const objForBoardComponent = {
     objForRenderingColumnBtnAlgor: null,
@@ -169,8 +171,12 @@ export function boardComponent() {
         /**
          * check current user boards in local storage
          * **/
-        // when algorithm based on length of user boards array
+        // run algorithm based on length of user boards array
         const user = JSON.parse(localStorage.getItem("currentUser"));
+        // // get current board from local storage
+        // const singleUserBoard = JSON.parse(
+        //   localStorage.getItem("currentBoard")
+        // );
         // board columns container
         const boardColumnsContainer = document.getElementById(
           "add-board-columns-container-selector"
@@ -185,8 +191,7 @@ export function boardComponent() {
               ? { todo: true, doing: false, done: false }
               : objForBoardComponent.objForRenderingColumnBtnAlgor,
         };
-        // push newBoardObj into current user boards array
-        user.boards.push(newBoardObj);
+
         if (user.boards.length === 0) {
           // there are no board obj in user boards array
           // based on screen size update the title heading element if screen is tablet or larger
@@ -198,8 +203,33 @@ export function boardComponent() {
             document.getElementById("mobile-title-btn").innerText =
               boardNameInput.value;
           }
+          // push newBoardObj into current user boards array
+          user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to true
           user.boards[0].isSelected = true;
+          // console.log(user, "before update");
+          // update current user boards array and current board in local storage
+          console.log(
+            JSON.parse(localStorage.getItem("currentUser")),
+            "user before update"
+          );
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          localStorage.setItem("currentBoard", JSON.stringify(newBoardObj));
+          console.log(
+            JSON.parse(localStorage.getItem("currentUser")),
+            "user after update"
+          );
+          console.log(
+            JSON.parse(localStorage.getItem("currentBoard")),
+            "board after update"
+          );
+          // call setStateFunc pass in false to renderBoardModal property to no render add new board modal
+          setStateFunc((prevValues) => {
+            return {
+              ...prevValues,
+              renderBoardModal: false,
+            };
+          });
           // we will call setStateFuncs of addTaskBtn passing false value because current board will have one board obj
           renderContextObj.setStateFuncs.addTaskBtn(false);
           // boardSelector passing user boards array
@@ -213,15 +243,40 @@ export function boardComponent() {
             };
           });
         } else {
+          // push newBoardObj into current user boards array
+          user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to false
           user.boards[user.boards.length - 1].isSelected = false;
+          // console.log(user, "before update");
+          console.log(
+            JSON.parse(localStorage.getItem("currentUser")),
+            "user before update"
+          );
+          // update current user boards array and current board in local storage
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          // localStorage.setItem("currentBoard", JSON.stringify(newBoardObj));
+          console.log(
+            JSON.parse(localStorage.getItem("currentUser")),
+            "user after update"
+          );
+          // console.log(
+          //   JSON.parse(localStorage.getItem("currentBoard")),
+          //   "board after update"
+          // );
+          // call setStateFunc pass in false to renderBoardModal property to no render add new board modal
+          setStateFunc((prevValues) => {
+            return {
+              ...prevValues,
+              renderBoardModal: false,
+            };
+          });
           // we will call boardSelector with recent created board obj to render correct board selector
           renderContextObj.setStateFuncs.boardSelector(user.boards);
         }
         // tablet-desktop-title-notbtn
         // mobile-title-btn
         // setStateFuncs.addTaskBtn
-        console.log(user);
+        // console.log(user);
         // const testObj = {
         //   title,
         //   index,
@@ -255,6 +310,10 @@ export function boardComponent() {
         // });
 
         // console.log(objForBoardComponent.objForRenderingColumnBtnAlgor);
+        // focus create new board button
+        setTimeout(() => {
+          document.getElementById("mobile-tab-refocus-selector").focus();
+        }, 80);
 
         return;
       }
@@ -262,7 +321,11 @@ export function boardComponent() {
     // save changes
     saveChanges: function (obj, setStateFunc, target, renderContextObj) {
       // target board name input
-      console.log("save changes");
+      // target selected board btn container board-btn-selector-ul-container
+      // console.log("save changes");
+      console.log(testWarningState);
+      console.log(objForBoardComponent.currentBoardColumnObj);
+      testWarningState(true);
       // if edit-board-name-input is empty when user click on save changes keep original board name
     },
   };
@@ -457,11 +520,48 @@ export function boardComponent() {
                 </div>
               </fieldset>
             </form>
+            <WarningMessage />
           </div>
         ) : null}
       </React.Fragment>
     );
   };
+}
+
+function WarningMessage({ children }) {
+  const strings = ["todo", "doing", "done"];
+  const [renderWarningMessage, setWarningMessage] = React.useState(false);
+  testWarningState = setWarningMessage;
+  // const []
+  // You decided to remove a status column with tasks in it.
+  // Clicking "Keep Changes" will remove all tasks in the column listed below.
+  // ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!
+  return (
+    <React.Fragment>
+      {renderWarningMessage && (
+        <div className={BoardModalStyles[`warning-message-container`]}>
+          <h2 className={BoardModalStyles[`warning-title`]}>Warning!!!</h2>
+          <p>You decided to remove a status column with tasks in it.</p>
+          <p>
+            Clicking "Keep Changes" will remove all tasks in the column listed
+            below.
+          </p>
+          <p>ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!</p>
+          <ul>
+            {strings.map(function makeListitem(string, index) {
+              return <li key={Math.random() * index}>{`${string}`}</li>;
+            })}
+          </ul>
+          <div className={BoardModalStyles[`warning-message-btns-container`]}>
+            <button className={BoardModalStyles[`keep-changes-btn`]}>
+              Keep Changes
+            </button>
+            <button className={BoardModalStyles[`go-back-btn`]}>Go Back</button>
+          </div>
+        </div>
+      )}
+    </React.Fragment>
+  );
 }
 
 export function boardColumnComponent() {
@@ -760,3 +860,4 @@ function createFunc() {
 }
 
 // {"_id":{"$oid":"64077f458bb3484cbbe88813"},"email":"webinclusivedeveloper@toankhuong.com","emailVerified":{"$date":{"$numberLong":"1679340555144"}},"boards":[{"title":"Software Development","index":{"$numberInt":"0"},"isSelected":true,"columns":{"todo":null,"doing":null,"done":null}},{"title":"Marketing Plan","columns":{"todo":null,"doing":null,"done":null},"index":{"$numberInt":"1"},"isSelected":false}]}
+// {"_id":{"$oid":"6418bf071b90e273a39224b7"},"email":"tpkhuong@gmail.com","emailVerified":{"$date":{"$numberLong":"1679343959879"}},"boards":[]}

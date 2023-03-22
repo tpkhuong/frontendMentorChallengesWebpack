@@ -216,14 +216,14 @@ const todoArray = [
   },
 ];
 
-export default function TodoColumn({ children }) {
+export default function TodoColumn({ children, todoColumnArray }) {
   return (
     <div
       data-columncontainerstyleattr=""
       className={TodoColumnStyles[`todo-quantity-task-container`]}
     >
       <ColumnTitle
-        quantity={`${todoArray.length}`}
+        quantity={`${todoColumnArray.length}`}
         assistiveText="Todo"
         status="todo"
       >
@@ -234,7 +234,7 @@ export default function TodoColumn({ children }) {
         data-taskscontainerstyleattr
         className={TodoColumnStyles[`todo-tasks-container`]}
       >
-        {todoArray.map(function buildTodoTask(obj, index) {
+        {todoColumnArray.map(function buildTodoTask(obj, index) {
           return (
             <li key={Math.random() * index}>
               <TaskBtn

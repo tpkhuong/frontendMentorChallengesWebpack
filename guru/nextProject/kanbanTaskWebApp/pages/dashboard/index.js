@@ -34,7 +34,7 @@ export default function Dashboard({
   }, []);
   // will use React.useState
   const [initialDashboardValues, setDashboard] = React.useState({
-    currentUserBoardsObj: userData.boards,
+    currentUserBoardsArray: userData.boards,
     columns,
     title,
     isBoardEmpty,
@@ -72,7 +72,8 @@ export default function Dashboard({
         {/* sidebarcolumns */}
         <SidebarColumns
           valuesForBoardsColumns={{
-            currentUserBoardsInfo: initialDashboardValues.currentUserBoardsObj,
+            currentUserBoardsArray:
+              initialDashboardValues.currentUserBoardsArray,
             isBoardEmpty: initialDashboardValues.isBoardEmpty,
             columns: initialDashboardValues.columns,
           }}
@@ -162,7 +163,7 @@ export async function getServerSideProps(context) {
       return {
         props: {
           userData: data,
-          currentBoard: updatedUser.boards,
+          currentBoard: null,
           title: "Add New Board",
           isBoardEmpty: true,
           columns: null,
@@ -182,7 +183,7 @@ export async function getServerSideProps(context) {
         return {
           props: {
             userData: data,
-            currentBoard: data.boards,
+            currentBoard: null,
             title: "Add New Board",
             isBoardEmpty: true,
             columns: null,
