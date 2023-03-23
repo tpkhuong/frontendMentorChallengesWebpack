@@ -15,10 +15,11 @@
   align-items: flex-start;
   gap: 16px;
   position: absolute;
+  z-index: 1;
   right: 20px;
   top: 70px;
   font-size: var(--heading-reg-sm);
-  background-color: var(--edit-delete-modals-bg, --color-neutral-white);
+  background-color: var(--edit-delete-modals-bg, var(--color-neutral-white));
   padding: 16px;
   border-radius: 8px;
   box-shadow: var(

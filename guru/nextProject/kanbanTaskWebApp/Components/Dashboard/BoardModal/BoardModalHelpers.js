@@ -80,3 +80,36 @@ export function removeBoardColumnAlgorithm(obj, clickedIndex) {
 
   return [subarrays, modifiedObj];
 }
+
+export function makeObjForCompareFunc(obj) {
+  const copiedObj = Object.entries(obj).reduce(function objForBoardColumn(
+    buildingUp,
+    currentValue
+  ) {
+    const [key, value] = currentValue;
+    if (Array.isArray(value)) {
+      buildingUp[key] = true;
+      return buildingUp;
+    }
+
+    if (!Array.isArray(value)) {
+      buildingUp[key] = false;
+      return buildingUp;
+    }
+  },
+  {});
+
+  return copiedObj;
+}
+
+export function compareColumnObjs(
+  modifiedColumnsObj,
+  originalColumnsObj,
+  makeObjFunc
+) {
+  const convertedObjIntoArray = Object.entries(originalColumnsObj);
+
+  const resultsOfCompare = Object.entries(
+    makeObjFunc(modifiedColumnsObj)
+  ).reduce(function checkingForTasksInColumn(buildingUp, currentValues) {}, {});
+}

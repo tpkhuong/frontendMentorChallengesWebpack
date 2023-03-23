@@ -1,0 +1,99 @@
+[data-apptheme="light"] .warning-message-container {
+  --goback-btn-hover-light: hsl(242, 48%, 89%);
+}
+
+[data-apptheme="dark"] .warning-message-container {
+  --goback-btn-hover-dark: var(--color-neutral-white);
+  --dark-theme-red: hsl(0, 90.1%, 68.2%);
+  --dark-theme-text: hsl(0, 44.1%, 13.3%);
+}
+
+/* add new column */
+
+.keep-changes-btn,
+.go-back-btn {
+  padding-block: 10px;
+  border-radius: 100vw;
+}
+
+.go-back-btn {
+  color: var(--color-purple);
+  background-color: var(
+    --addsubtask-addcolumn-cancel-btn-light-bg,
+    var(--addsubtask-addcolumn-cancel-btn-dark-bg)
+  );
+}
+
+.go-back-btn:hover,
+.go-back-btn:focus {
+  background-color: var(--goback-btn-hover-dark, var(--goback-btn-hover-light));
+}
+
+.warning-message-container {
+  --warning-container-padding: 24px;
+  --warning-inline: 16px;
+  position: absolute;
+  padding: var(--warning-container-padding);
+  font-weight: 600;
+  background-color: var(--edit-delete-modals-bg, var(--color-neutral-white));
+  inset: 0;
+  max-width: 480px;
+  height: min-content;
+  border-radius: 8px;
+  top: 76px;
+  left: var(--warning-inline);
+  right: var(--warning-inline);
+}
+
+.warning-message-container {
+  text-align: center;
+}
+
+.warning-message-container h2 {
+  color: var(--color-red);
+  margin-block-end: 8px;
+}
+
+.red-text {
+  color: var(--dark-theme-red, red);
+}
+
+.warning-message-container p:nth-of-type(2) {
+  margin-block: 8px;
+}
+
+.warning-message-container p {
+  color: var(--color-medium-grey);
+}
+
+.warning-message-container p:last-of-type {
+  color: var(--dark-theme-red, var(--color-red));
+}
+
+.warning-message-container ul {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block-end: 12px;
+}
+
+.warning-message-container li::first-letter {
+  text-transform: uppercase;
+}
+
+.warning-message-btns-container {
+  margin-block-start: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.keep-changes-btn {
+  color: var(--dark-theme-text, var(--color-neutral-white));
+  background-color: var(--color-red);
+}
+
+.keep-changes-btn:hover,
+.keep-changes-btn:focus {
+  background-color: var(--color-red-hover);
+  color: hsl(0, 44.1%, 13.3%);
+}

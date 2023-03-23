@@ -320,10 +320,10 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
                * add new board modal
                * **/
 
-              console.log(renderContextForCreateBoardModalBtn);
+              // console.log(renderContextForCreateBoardModalBtn);
 
               setTimeout(() => {
-                document.getElementById("add-board-name-input");
+                document.getElementById("add-board-name-input").focus();
               }, 80);
 
               renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(

@@ -1,16 +1,15 @@
 import React from "react";
 import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
+import WarningMessage from "../WarningMessage/index";
 import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardColumn } from "./BoardModalHelpers";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 
-var testWarningState;
-
 export function boardComponent() {
   const objForBoardComponent = {
     objForRenderingColumnBtnAlgor: null,
-    currentBoardColumnObj: null,
+    originalCurrentBoardColumnObj: null,
   };
 
   // const testArr = [
@@ -20,7 +19,7 @@ export function boardComponent() {
   // ];
 
   const objOfMethods = {
-    addColumn: function addBoardColumn(obj, setStateFunc) {
+    addColumn: function addBoardColumn({ obj, setStateFunc }) {
       const arrayOfSubarrays = Object.entries(obj);
       const allColumnsAreShown = arrayOfSubarrays.every(
         function isAllColumnsShown(subarray, index) {
@@ -114,7 +113,7 @@ export function boardComponent() {
       // });
     },
     // remove column
-    removeColumn: function removeBoardColumn(obj, setStateFunc, target) {
+    removeColumn: function removeBoardColumn({ obj, setStateFunc, target }) {
       const clickedContentValue = target.getAttribute(
         "data-removecolumnbtncontent"
       );
@@ -151,7 +150,7 @@ export function boardComponent() {
       });
     },
     // create new
-    createNewBoard: function (obj, setStateFunc, target, renderContextObj) {
+    createNewBoard: function ({ setStateFunc, renderContextObj }) {
       // target board name input
       const boardNameInput = document.getElementById("add-board-name-input");
       if (boardNameInput.value === "") {
@@ -319,13 +318,34 @@ export function boardComponent() {
       }
     },
     // save changes
-    saveChanges: function (obj, setStateFunc, target, renderContextObj) {
+    saveChanges: function ({ obj, setStateFunc, target, renderContextObj }) {
+      // console.log(obj);
+      // console.log(setStateFunc);
+      // console.log(target);
+      // console.log(renderContextObj);
       // target board name input
-      // target selected board btn container board-btn-selector-ul-container
+      // target selected board btn container board-btn-selector-ul-container by use index property of current board in local storage
+      // will match index of li of ul container
+      // edit-board-modal-btn
       // console.log("save changes");
-      console.log(testWarningState);
-      console.log(objForBoardComponent.currentBoardColumnObj);
-      testWarningState(true);
+
+      // console.log(objForBoardComponent.originalCurrentBoardColumnObj);
+
+      // setTimeout(() => {
+      //   document.getElementById("warning-message-modal").focus();
+      // }, 80);
+
+      renderContextObj.stateFuncsForModals.warningMsg((prevValues) => {
+        return {
+          ...prevValues,
+          renderWarningMessage: true,
+          stringsArray: ["todo", "doing"],
+          testFunc: (str) => {
+            console.log(renderContextObj);
+            return str;
+          },
+        };
+      });
       // if edit-board-name-input is empty when user click on save changes keep original board name
     },
   };
@@ -362,7 +382,7 @@ export function boardComponent() {
         initialValueObjBoardModal.renderBoardModal &&
         initialValueObjBoardModal.id == "edit"
       ) {
-        objForBoardComponent.currentBoardColumnObj =
+        objForBoardComponent.originalCurrentBoardColumnObj =
           initialValueObjBoardModal.columnObj;
 
         document.getElementById("edit-board-name-input").value =
@@ -405,14 +425,22 @@ export function boardComponent() {
                     btnClicked &&
                     objOfMethods[btnClicked.getAttribute("data-typeofboardbtn")]
                   ) {
+                    // objOfMethods[
+                    //   btnClicked.getAttribute("data-typeofboardbtn")
+                    // ](
+                    //   objForBoardComponent.objForRenderingColumnBtnAlgor,
+                    //   setBoardModal,
+                    //   btnClicked,
+                    //   renderContextForBoardModal
+                    // );
                     objOfMethods[
                       btnClicked.getAttribute("data-typeofboardbtn")
-                    ](
-                      objForBoardComponent.objForRenderingColumnBtnAlgor,
-                      setBoardModal,
-                      btnClicked,
-                      renderContextForBoardModal
-                    );
+                    ]({
+                      obj: objForBoardComponent.objForRenderingColumnBtnAlgor,
+                      setStateFunc: setBoardModal,
+                      target: btnClicked,
+                      renderContextObj: renderContextForBoardModal,
+                    });
                     return;
                   }
                 }}
@@ -528,41 +556,42 @@ export function boardComponent() {
   };
 }
 
-function WarningMessage({ children }) {
-  const strings = ["todo", "doing", "done"];
-  const [renderWarningMessage, setWarningMessage] = React.useState(false);
-  testWarningState = setWarningMessage;
-  // const []
-  // You decided to remove a status column with tasks in it.
-  // Clicking "Keep Changes" will remove all tasks in the column listed below.
-  // ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!
-  return (
-    <React.Fragment>
-      {renderWarningMessage && (
-        <div className={BoardModalStyles[`warning-message-container`]}>
-          <h2 className={BoardModalStyles[`warning-title`]}>Warning!!!</h2>
-          <p>You decided to remove a status column with tasks in it.</p>
-          <p>
-            Clicking "Keep Changes" will remove all tasks in the column listed
-            below.
-          </p>
-          <p>ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!</p>
-          <ul>
-            {strings.map(function makeListitem(string, index) {
-              return <li key={Math.random() * index}>{`${string}`}</li>;
-            })}
-          </ul>
-          <div className={BoardModalStyles[`warning-message-btns-container`]}>
-            <button className={BoardModalStyles[`keep-changes-btn`]}>
-              Keep Changes
-            </button>
-            <button className={BoardModalStyles[`go-back-btn`]}>Go Back</button>
-          </div>
-        </div>
-      )}
-    </React.Fragment>
-  );
-}
+// function WarningMessage({ children }) {
+//   const strings = ["todo", "doing", "done"];
+//   const [renderWarningMessage, setWarningMessage] = React.useState(false);
+
+//   // const []
+//   // You decided to remove a status column with tasks in it.
+//   // Clicking "Keep Changes" will remove all tasks in the column listed below.
+//   // ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!
+//   return (
+//     <React.Fragment>
+//       {renderWarningMessage && (
+//         <div className={BoardModalStyles[`warning-message-container`]}>
+//           <h2 className={BoardModalStyles[`warning-title`]}>Warning!!!</h2>
+//           <p>You decided to remove a status column with tasks in it.</p>
+//           <p>
+//             Clicking "
+//             <span className={BoardModalStyles[`red-text`]}>Keep Changes</span> "
+//             will remove all tasks in the column listed below.
+//           </p>
+//           <ul>
+//             {strings.map(function makeListitem(string, index) {
+//               return <li key={Math.random() * index}>{`${string}`}</li>;
+//             })}
+//           </ul>
+//           <p>ARE YOU SURE YOU WANT TO CONTINUE WITH THIS ACTION?!</p>
+//           <div className={BoardModalStyles[`warning-message-btns-container`]}>
+//             <button className={BoardModalStyles[`keep-changes-btn`]}>
+//               Keep Changes
+//             </button>
+//             <button className={BoardModalStyles[`go-back-btn`]}>Go Back</button>
+//           </div>
+//         </div>
+//       )}
+//     </React.Fragment>
+//   );
+// }
 
 export function boardColumnComponent() {
   // pass in the column obj of current board into this (board column component)
@@ -741,8 +770,7 @@ const objOfCompares = Object.entries(makeObj(objTwo)).reduce(
 
     const [innerKey, innerValue] = currentValue;
     const [outerKey, outerValue] = arrOfSubarrays[index];
-    if (Array.isArray(innerValue)) {
-    }
+
     if (Array.isArray(outerValue) === innerValue) {
       buildingUp[innerKey] = true;
       return buildingUp;

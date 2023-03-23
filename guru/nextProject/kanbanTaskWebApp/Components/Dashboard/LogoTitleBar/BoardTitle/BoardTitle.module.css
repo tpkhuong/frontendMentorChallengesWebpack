@@ -16,7 +16,7 @@
 
 .title {
   font-size: var(--heading-sm-four);
-  color: var(--fg, --color-neutral-black);
+  color: var(--fg, var(--color-neutral-black));
 }
 
 .chevron-down {

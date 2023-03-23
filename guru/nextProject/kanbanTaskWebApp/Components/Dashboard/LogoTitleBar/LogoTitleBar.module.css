@@ -9,7 +9,7 @@
 .logo-title-container {
   padding: 16px;
   align-items: center;
-  background-color: var(--top-sidebar-modals-bg, --color-neutral-white);
+  background-color: var(--top-sidebar-modals-bg, var(--color-neutral-white));
 }
 
 .title-btns-container {
