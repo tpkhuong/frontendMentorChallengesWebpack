@@ -3,7 +3,7 @@ import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
 import WarningMessage from "../WarningMessage/index";
 import { BoardTaskRenderContext } from "../Context/index";
-import { makeObjForBoardColumn } from "./BoardModalHelpers";
+import { makeObjForBoardModal, compareColumnObjs } from "./BoardModalHelpers";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
 
 export function boardComponent() {
@@ -318,34 +318,198 @@ export function boardComponent() {
       }
     },
     // save changes
-    saveChanges: function ({ obj, setStateFunc, target, renderContextObj }) {
-      // console.log(obj);
-      // console.log(setStateFunc);
-      // console.log(target);
-      // console.log(renderContextObj);
+    saveChanges: function ({
+      obj,
+      originalObj,
+      setStateFunc,
+      target,
+      renderContextObj,
+      makeObjForBoardModal,
+      compareColumnObjs,
+    }) {
+      const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
       // target board name input
+      const boardNameInputElement = document.getElementById(
+        "edit-board-name-input"
+      );
+      // target board title
+      const boardTitleElement =
+        window.innerWidth <= 378
+          ? document.getElementById("mobile-title-btn")
+          : document.getElementById("tablet-desktop-title-notbtn");
       // target selected board btn container board-btn-selector-ul-container by use index property of current board in local storage
       // will match index of li of ul container
+      // id="tablet-desktop-title-notbtn"
+      // id="mobile-title-btn"
+      const boardSelectorBtn = document.getElementById(
+        "board-btn-selector-ul-container"
+      ).children[currentBoard.index].firstElementChild.children[1];
+      const changeBoardTitle = ({
+        titleInput,
+        boardTitleElement,
+        boardSelectorBtn,
+      }) => {
+        if (titleInput === "") {
+          boardTitleElement.innerText = currentBoard.title;
+          boardSelectorBtn.innerText = currentBoard.title;
+          return;
+        }
+
+        if (titleInput && titleInput === currentBoard.title) return;
+
+        if (titleInput && titleInput !== currentBoard.title) {
+          boardTitleElement.innerText = titleInput;
+          boardSelectorBtn.innerText = titleInput;
+          currentBoard.title = titleInput;
+
+          return;
+        }
+      };
+      /**
+       * rendering column
+       * **/
+
+      // when properties todo,doing and done in original column are all null
+      // and user does add new column in edit board modal
+      // call renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj:{todo:[],doing:null,done:null}
+
+      const isValuesInBothObjsFalsy = ({ obj, originalObj }) => {
+        const outerArray = Object.entries(obj);
+
+        return Object.entries(originalObj).every(function allFalsy(
+          subarray,
+          index
+        ) {
+          return !subarray[1] && !outerArray[index][1];
+        });
+      };
+
+      if (isValuesInBothObjsFalsy) {
+        setTimeout(() => {
+          boardNameInputElement.focus();
+        }, 80);
+
+        changeBoardTitle({
+          titleInput: boardNameInputElement.value,
+          boardTitleElement,
+          boardSelectorBtn,
+        });
+
+        renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          return {
+            ...prevValues,
+            isCurrentBoardEmpty: false,
+            currentBoardColumnsObj: { todo: [], doing: null, done: null },
+          };
+        });
+
+        setStateFunc((prevValues) => {
+          return {
+            ...prevValues,
+            renderBoardModal: false,
+          };
+        });
+        return;
+      }
+
+      /**
+       * we get here it means we will render at least one status column
+       * **/
+
+      const objAfterRunningCompareFunc = compareColumnObjs({
+        modifiedColumnsObj: obj,
+        originalColumnsObj: originalObj,
+      });
+
+      const arrayColumnToRemoveWithTasks = Object.entries(
+        objAfterRunningCompareFunc
+      ).reduce(function findArrayWithTasks(buildingUp, currentValue, index) {
+        const obj = currentValue[1];
+        if (!obj.booleanValue && obj.isTasksInColumn) {
+          buildingUp.push(currentValue[0]);
+          return buildingUp;
+        }
+        return buildingUp;
+      }, []);
+      // check length of arrayColumnToRemoveWithTasks array
+      // if length is 0 run changeboardtitle func
+      // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: obj, setStateFunc
+      if (arrayColumnToRemoveWithTasks.length === 0) {
+        setTimeout(() => {
+          boardNameInputElement.focus();
+        }, 80);
+
+        changeBoardTitle({
+          titleInput: boardNameInputElement.value,
+          boardTitleElement,
+          boardSelectorBtn,
+        });
+
+        renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          return {
+            ...prevValues,
+            isCurrentBoardEmpty: false,
+            currentBoardColumnsObj: obj,
+          };
+        });
+
+        setStateFunc((prevValues) => {
+          return {
+            ...prevValues,
+            renderBoardModal: false,
+          };
+        });
+
+        return;
+      }
+      // if arrayColumnToRemoveWithTasks.length > 0 render warning message
+      if (arrayColumnToRemoveWithTasks.length > 0) {
+        /**
+         * user decide to keep changes
+         * **/
+        // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc
+        /**
+         * user decide to go back to edit board modal
+         * **/
+        // run setState to not render warning message modal and focus create board save changes btn
+      }
       // edit-board-modal-btn
+      // console.log(
+      //   Object.entries(
+      //     compareColumnObjs({
+      //       modifiedColumnsObj: obj,
+      //       originalColumnsObj: originalObj,
+      //     })
+      //   )
+      // );
+      // const userWantToRenderAllColumns = Object.entries(
+      //   compareColumnObjs({
+      //     modifiedColumnsObj: obj,
+      //     originalColumnsObj: originalObj,
+      //   })
+      // ).every(function checkValuesOfObj(subarray, index) {
+      //   return subarray[1];
+      // });
+
       // console.log("save changes");
-
       // console.log(objForBoardComponent.originalCurrentBoardColumnObj);
-
       // setTimeout(() => {
       //   document.getElementById("warning-message-modal").focus();
       // }, 80);
-
-      renderContextObj.stateFuncsForModals.warningMsg((prevValues) => {
-        return {
-          ...prevValues,
-          renderWarningMessage: true,
-          stringsArray: ["todo", "doing"],
-          testFunc: (str) => {
-            console.log(renderContextObj);
-            return str;
-          },
-        };
-      });
+      // renderContextObj.stateFuncsForModals.warningMsg((prevValues) => {
+      //   return {
+      //     ...prevValues,
+      //     renderWarningMessage: true,
+      //     stringsArray: ["todo", "doing"],
+      //     testFunc: (str) => {
+      //       console.log(
+      //         objForBoardComponent.originalCurrentBoardColumnObj,
+      //         "originalCurrentBoardColumnObj"
+      //       );
+      //       return str;
+      //     },
+      //   };
+      // });
       // if edit-board-name-input is empty when user click on save changes keep original board name
     },
   };
@@ -375,8 +539,9 @@ export function boardComponent() {
     });
     console.log(initialValueObjBoardModal);
     React.useEffect(() => {
-      objForBoardComponent.objForRenderingColumnBtnAlgor =
-        makeObjForBoardColumn(initialValueObjBoardModal.columnObj);
+      objForBoardComponent.objForRenderingColumnBtnAlgor = makeObjForBoardModal(
+        initialValueObjBoardModal.columnObj
+      );
       // want to compare original column obj of current user
       if (
         initialValueObjBoardModal.renderBoardModal &&
@@ -392,7 +557,7 @@ export function boardComponent() {
 
     // const [renderBoardModal, setAddBoardModal] = React.useState(false);
     // const [arrayForBoardColumn, setBoardColumn] = React.useState(
-    //   Object.entries(makeObjForBoardColumn(columnObj))
+    //   Object.entries(makeObjForBoardModal(columnObj))
     // );
 
     const renderContextForBoardModal = React.useContext(BoardTaskRenderContext);
@@ -437,9 +602,13 @@ export function boardComponent() {
                       btnClicked.getAttribute("data-typeofboardbtn")
                     ]({
                       obj: objForBoardComponent.objForRenderingColumnBtnAlgor,
+                      originalObj:
+                        objForBoardComponent.originalCurrentBoardColumnObj,
                       setStateFunc: setBoardModal,
                       target: btnClicked,
                       renderContextObj: renderContextForBoardModal,
+                      makeObjForBoardModal,
+                      compareColumnObjs,
                     });
                     return;
                   }
@@ -534,6 +703,7 @@ export function boardComponent() {
                     <span>Add New Column</span>
                   </button>
                   <button
+                    id="create-board-save-changes-btn"
                     type="button"
                     data-lastitem="true"
                     data-typeofboardbtn={`${initialValueObjBoardModal.typeOfSubmitBtn}`}

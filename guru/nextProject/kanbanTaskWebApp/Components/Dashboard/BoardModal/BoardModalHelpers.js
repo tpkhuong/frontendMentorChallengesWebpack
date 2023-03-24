@@ -1,4 +1,4 @@
-export function makeObjForBoardColumn(obj) {
+export function makeObjForBoardModal(obj) {
   const copiedObj = Object.entries(obj).reduce(function objForBoardColumn(
     buildingUp,
     currentValue
@@ -81,35 +81,74 @@ export function removeBoardColumnAlgorithm(obj, clickedIndex) {
   return [subarrays, modifiedObj];
 }
 
-export function makeObjForCompareFunc(obj) {
-  const copiedObj = Object.entries(obj).reduce(function objForBoardColumn(
-    buildingUp,
-    currentValue
-  ) {
-    const [key, value] = currentValue;
-    if (Array.isArray(value)) {
-      buildingUp[key] = true;
-      return buildingUp;
-    }
-
-    if (!Array.isArray(value)) {
-      buildingUp[key] = false;
-      return buildingUp;
-    }
-  },
-  {});
-
-  return copiedObj;
-}
-
-export function compareColumnObjs(
-  modifiedColumnsObj,
-  originalColumnsObj,
-  makeObjFunc
-) {
+export function compareColumnObjs({ modifiedColumnsObj, originalColumnsObj }) {
   const convertedObjIntoArray = Object.entries(originalColumnsObj);
+  const resultsOfCompare = Object.entries(modifiedColumnsObj).reduce(
+    function checkingForTasksInColumn(buildingUp, currentValue, index) {
+      const [modKey, modValue] = currentValue;
+      const [originalKey, originalValue] = convertedObjIntoArray[index];
+      if (Array.isArray(originalValue) && modValue) {
+        // we enter here means value of todo,doing,done property in obj is an array
+        // user want to render/show todo,doing or done column
 
-  const resultsOfCompare = Object.entries(
-    makeObjFunc(modifiedColumnsObj)
-  ).reduce(function checkingForTasksInColumn(buildingUp, currentValues) {}, {});
+        buildingUp[modKey] = { booleanValue: true, isTasksInColumn: false };
+        return buildingUp;
+      }
+      if (!Array.isArray(originalValue) && modValue) {
+        // we enter here means value of todo,doing,done property in obj is not an array
+        // user want to render/show todo,doing or done column
+
+        buildingUp[modKey] = { booleanValue: true, isTasksInColumn: false };
+        return buildingUp;
+      }
+
+      console.log(modValue);
+      if (Array.isArray(originalValue) && !modValue) {
+        console.log(modifiedColumnsObj);
+        console.log(originalColumnsObj);
+        // we enter this if statement when the value of the property ("todo","doing","done") is an array
+        // and user decide to not render one of the status column.
+        // check length of array assigned to property todo, doing and done in original column obj
+        const isLengthGreaterThanZero = originalValue.length > 0 ? true : false;
+        // we can also check if there is tasks in the status columns here,
+        // if there is assign an obj to buildingUp[innerKey]: {booleanValue:false,isTasksInColumn: true},
+        // if there isnt assign an obj to buildingUp[innerKey]: {booleanValue:false,isTasksInColumn: false}
+        buildingUp[modKey] = {
+          booleanValue: false,
+          isTasksInColumn: isLengthGreaterThanZero,
+        };
+        return buildingUp;
+      }
+      if (!Array.isArray(originalValue) && !modValue) {
+        // we enter this when user dont want to render todo,doing or done column
+        // and value property of todo,doing,done of original column obj is null
+        buildingUp[modKey] = { booleanValue: false, isTasksInColumn: false };
+        return buildingUp;
+      }
+    },
+    {}
+  );
+
+  return resultsOfCompare;
 }
+
+// export function makeObjForCompareFunc(obj) {
+//   const copiedObj = Object.entries(obj).reduce(function objForBoardColumn(
+//     buildingUp,
+//     currentValue
+//   ) {
+//     const [key, value] = currentValue;
+//     if (Array.isArray(value)) {
+//       buildingUp[key] = true;
+//       return buildingUp;
+//     }
+
+//     if (!Array.isArray(value)) {
+//       buildingUp[key] = false;
+//       return buildingUp;
+//     }
+//   },
+//   {});
+
+//   return copiedObj;
+// }
