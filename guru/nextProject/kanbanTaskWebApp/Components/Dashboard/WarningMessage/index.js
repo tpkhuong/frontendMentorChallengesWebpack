@@ -41,10 +41,11 @@ export default function WarningMessage({ children }) {
           <div className={WarningMsgStyles[`warning-message-btns-container`]}>
             <button
               onClick={(event) => {
-                const valOfFuncCall = initialWarningMsgValuesObj.testFunc(
-                  "hello from boardmodal"
-                );
-                console.log(valOfFuncCall);
+                // focus btn with id edit-board-modal-btn
+                setTimeout(() => {
+                  document.getElementById("edit-board-modal-btn").focus();
+                }, 80);
+                initialWarningMsgValuesObj.keepChanges({ setWarningMessage });
               }}
               data-warningbtn="keepChanges"
               className={WarningMsgStyles[`keep-changes-btn`]}
@@ -52,6 +53,24 @@ export default function WarningMessage({ children }) {
               Keep Changes
             </button>
             <button
+              onClick={(event) => {
+                /**
+                 * user decide to go back to edit board modal
+                 * **/
+                // run setWarningMessage to not render warning message modal and focus btn with id create-board-save-changes-btn
+                setTimeout(() => {
+                  document
+                    .getElementById("create-board-save-changes-btn")
+                    .focus();
+                }, 80);
+
+                setWarningMessage((prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderWarningMessage: false,
+                  };
+                });
+              }}
               data-warningbtn="goBack"
               className={WarningMsgStyles[`go-back-btn`]}
             >

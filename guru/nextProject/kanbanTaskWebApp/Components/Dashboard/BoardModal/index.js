@@ -327,6 +327,7 @@ export function boardComponent() {
       makeObjForBoardModal,
       compareColumnObjs,
     }) {
+      const userBoardInfo = JSON.parse(localStorage.getItem("currentUser"));
       const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
       // target board name input
       const boardNameInputElement = document.getElementById(
@@ -361,7 +362,6 @@ export function boardComponent() {
           boardTitleElement.innerText = titleInput;
           boardSelectorBtn.innerText = titleInput;
           currentBoard.title = titleInput;
-
           return;
         }
       };
@@ -370,10 +370,10 @@ export function boardComponent() {
        * **/
 
       // when properties todo,doing and done in original column are all null
-      // and user does add new column in edit board modal
+      // and user does add new column in edit board modal. WE DONT
       // call renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj:{todo:[],doing:null,done:null}
 
-      const isValuesInBothObjsFalsy = ({ obj, originalObj }) => {
+      const findOutIfValuesInBothObjFalsy = ({ obj, originalObj }) => {
         const outerArray = Object.entries(obj);
 
         return Object.entries(originalObj).every(function allFalsy(
@@ -383,6 +383,11 @@ export function boardComponent() {
           return !subarray[1] && !outerArray[index][1];
         });
       };
+
+      const isValuesInBothObjsFalsy = findOutIfValuesInBothObjFalsy({
+        obj,
+        originalObj,
+      });
 
       if (isValuesInBothObjsFalsy) {
         setTimeout(() => {
@@ -409,6 +414,19 @@ export function boardComponent() {
             renderBoardModal: false,
           };
         });
+        // update data in local storage. updating board title in local storage
+        // is handled by changeBoardTitle func
+        // const copiedCurrentBoard = { ...currentBoard };
+        // current board columns
+        currentBoard.columns = { todo: [], doing: null, done: null };
+        // update board obj in current user boards array
+        userBoardInfo.boards[currentBoard.index].columns = {
+          todo: [],
+          doing: null,
+          done: null,
+        };
+        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+        localStorage.setItem("currentUser", JSON.stringify(userBoardInfo));
         return;
       }
 
@@ -431,12 +449,14 @@ export function boardComponent() {
         }
         return buildingUp;
       }, []);
+      console.log(arrayColumnToRemoveWithTasks, "arrayColumnToRemoveWithTasks");
       // check length of arrayColumnToRemoveWithTasks array
       // if length is 0 run changeboardtitle func
       // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: obj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
         setTimeout(() => {
-          boardNameInputElement.focus();
+          // focus edit board modal btn
+          document.getElementById("edit-board-modal-btn").focus();
         }, 80);
 
         changeBoardTitle({
@@ -462,16 +482,69 @@ export function boardComponent() {
 
         return;
       }
-      // if arrayColumnToRemoveWithTasks.length > 0 render warning message
+      // if arrayColumnToRemoveWithTasks.length > 0 means user does not want to render a column with tasks in it
+      // render warning message modal
       if (arrayColumnToRemoveWithTasks.length > 0) {
-        /**
-         * user decide to keep changes
-         * **/
-        // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc
-        /**
-         * user decide to go back to edit board modal
-         * **/
-        // run setState to not render warning message modal and focus create board save changes btn
+        setTimeout(() => {
+          document.getElementById("warning-message-modal").focus();
+        }, 80);
+
+        renderContextObj.stateFuncsForModals.warningMsg((prevValues) => {
+          return {
+            ...prevValues,
+            renderWarningMessage: true,
+            stringsArray: arrayColumnToRemoveWithTasks,
+            keepChanges: function ({ setWarningMessage }) {
+              /**
+               * user decide to keep changes
+               * **/
+              // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc focus edit board btn
+              // changeBoardTitle({
+              //   titleInput: boardNameInputElement.value,
+              //   boardTitleElement,
+              //   boardSelectorBtn,
+              // });
+              // render columns component
+              // renderContextObj.setStateFuncs.msgColumnsContainer(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       currentBoardColumnsObj: obj,
+              //     };
+              //   }
+              // );
+              // to not render warning messages component
+              // setWarningMessage((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     renderWarningMessage: false,
+              //     stringsArray: [],
+              //   };
+              // });
+              // to not render edit board modal
+              // setStateFunc((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     renderBoardModal: false,
+              //   };
+              // });
+              // update data in local storage. updating board title in local storage
+              // is handled by changeBoardTitle func
+              // current board columns
+              // currentBoard.columns = obj;
+              // // update board obj in current user boards array
+              // userBoardInfo.boards[currentBoard.index].columns = obj;
+              // localStorage.setItem(
+              //   "currentBoard",
+              //   JSON.stringify(currentBoard)
+              // );
+              // localStorage.setItem(
+              //   "currentUser",
+              //   JSON.stringify(userBoardInfo)
+              // );
+            },
+          };
+        });
       }
       // edit-board-modal-btn
       // console.log(
