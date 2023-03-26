@@ -97,3 +97,31 @@
   background-color: var(--color-red-hover);
   color: hsl(0, 44.1%, 13.3%);
 }
+
+@media screen and (min-width: 48rem) {
+  .warning-message-container {
+    --board-container-padding: 32px;
+    --warning-container-padding: 32px;
+    margin-inline: auto;
+    top: 170px;
+    padding-block: 42px;
+  }
+
+  .warning-message-container h2,
+  .warning-message-container ul {
+    margin-block-end: 16px;
+  }
+
+  .warning-message-container p:nth-of-type(2) {
+    margin-block: 16px;
+  }
+
+  .warning-message-btns-container {
+    flex-direction: row;
+    margin-block-start: 38px;
+  }
+
+  .warning-message-btns-container button {
+    flex-basis: 200px;
+  }
+}

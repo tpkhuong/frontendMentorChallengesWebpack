@@ -454,6 +454,14 @@ export function boardComponent() {
       // if length is 0 run changeboardtitle func
       // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: obj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
+        const copiedOriginalColumnsObj = Object.assign({}, originalObj);
+        // loop through obj that is used for adding columns
+        for (let key in obj) {
+          if (obj[key] && !copiedOriginalColumnsObj[key]) {
+            copiedOriginalColumnsObj[key] = [];
+          }
+        }
+
         setTimeout(() => {
           // focus edit board modal btn
           document.getElementById("edit-board-modal-btn").focus();
@@ -479,7 +487,15 @@ export function boardComponent() {
             renderBoardModal: false,
           };
         });
-
+        // update data in local storage. updating board title in local storage
+        // is handled by changeBoardTitle func
+        currentBoard.columns = copiedOriginalColumnsObj;
+        userBoardInfo.boards[currentBoard.index].columns =
+          copiedOriginalColumnsObj;
+        // current board columns
+        // update board obj in current user boards array
+        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+        localStorage.setItem("currentUser", JSON.stringify(userBoardInfo));
         return;
       }
       // if arrayColumnToRemoveWithTasks.length > 0 means user does not want to render a column with tasks in it
@@ -495,53 +511,64 @@ export function boardComponent() {
             renderWarningMessage: true,
             stringsArray: arrayColumnToRemoveWithTasks,
             keepChanges: function ({ setWarningMessage }) {
+              const copiedOriginalObj = Object.assign({}, originalObj);
+
+              arrayColumnToRemoveWithTasks.forEach(function changePropertyValue(
+                string
+              ) {
+                if (copiedOriginalObj[string]) {
+                  copiedOriginalObj[string] = null;
+                }
+              });
               /**
                * user decide to keep changes
                * **/
               // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc focus edit board btn
-              // changeBoardTitle({
-              //   titleInput: boardNameInputElement.value,
-              //   boardTitleElement,
-              //   boardSelectorBtn,
-              // });
+              changeBoardTitle({
+                titleInput: boardNameInputElement.value,
+                boardTitleElement,
+                boardSelectorBtn,
+              });
               // render columns component
-              // renderContextObj.setStateFuncs.msgColumnsContainer(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       currentBoardColumnsObj: obj,
-              //     };
-              //   }
-              // );
+              renderContextObj.setStateFuncs.msgColumnsContainer(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    currentBoardColumnsObj: obj,
+                  };
+                }
+              );
               // to not render warning messages component
-              // setWarningMessage((prevValues) => {
-              //   return {
-              //     ...prevValues,
-              //     renderWarningMessage: false,
-              //     stringsArray: [],
-              //   };
-              // });
+              setWarningMessage((prevValues) => {
+                return {
+                  ...prevValues,
+                  renderWarningMessage: false,
+                  stringsArray: [],
+                };
+              });
               // to not render edit board modal
-              // setStateFunc((prevValues) => {
-              //   return {
-              //     ...prevValues,
-              //     renderBoardModal: false,
-              //   };
-              // });
+              setStateFunc((prevValues) => {
+                return {
+                  ...prevValues,
+                  renderBoardModal: false,
+                };
+              });
               // update data in local storage. updating board title in local storage
               // is handled by changeBoardTitle func
               // current board columns
-              // currentBoard.columns = obj;
-              // // update board obj in current user boards array
-              // userBoardInfo.boards[currentBoard.index].columns = obj;
-              // localStorage.setItem(
-              //   "currentBoard",
-              //   JSON.stringify(currentBoard)
-              // );
-              // localStorage.setItem(
-              //   "currentUser",
-              //   JSON.stringify(userBoardInfo)
-              // );
+              currentBoard.columns = copiedOriginalObj;
+              // update board obj in current user boards array
+              userBoardInfo.boards[currentBoard.index].columns =
+                copiedOriginalObj;
+
+              localStorage.setItem(
+                "currentBoard",
+                JSON.stringify(currentBoard)
+              );
+              localStorage.setItem(
+                "currentUser",
+                JSON.stringify(userBoardInfo)
+              );
             },
           };
         });
@@ -612,9 +639,10 @@ export function boardComponent() {
     });
     console.log(initialValueObjBoardModal);
     React.useEffect(() => {
-      objForBoardComponent.objForRenderingColumnBtnAlgor = makeObjForBoardModal(
-        initialValueObjBoardModal.columnObj
-      );
+      if (initialValueObjBoardModal.renderBoardModal) {
+        objForBoardComponent.objForRenderingColumnBtnAlgor =
+          makeObjForBoardModal(initialValueObjBoardModal.columnObj);
+      }
       // want to compare original column obj of current user
       if (
         initialValueObjBoardModal.renderBoardModal &&

@@ -79,8 +79,8 @@ export default function EditDeleteBoardBtn({ children }) {
               const boardColumnsObj = currentBoard.columns;
               setTimeout(() => {
                 document.getElementById("edit-board-name-input").focus();
-              }, 170);
-
+              }, 80);
+              console.log(currentBoard);
               renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal(
                 (prevValues) => {
                   return {

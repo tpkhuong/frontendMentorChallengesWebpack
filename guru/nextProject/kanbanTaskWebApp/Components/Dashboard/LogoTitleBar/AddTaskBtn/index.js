@@ -218,8 +218,8 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
         // >
         // </span>
       }
-      <TaskModal />
-      <BoardModal />
+      {/* <TaskModal />
+      <BoardModal /> */}
     </React.Fragment>
   );
 }

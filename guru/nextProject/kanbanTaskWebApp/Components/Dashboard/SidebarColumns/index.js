@@ -2,10 +2,15 @@ import React from "react";
 import SidebarColumnsContainerStyles from "./SidebarColumns.module.css";
 import Sidebar from "./Sidebar";
 import MessageColumnsContainer from "./MessageColumnsContainer/index";
+import { taskModalComponent } from "../TaskModal/index";
+import { boardComponent } from "../BoardModal/index";
 // import { boardComponent } from "../BoardModal/index";
 
 // const AddBoardModal = boardComponent();
 // const EditBoardModal = boardComponent();
+
+const TaskModal = taskModalComponent();
+const BoardModal = boardComponent();
 
 export default function SidebarColumns({ children, valuesForBoardsColumns }) {
   return (
@@ -28,6 +33,8 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
           }}
         />
       </div>
+      <TaskModal />
+      <BoardModal />
       {/* reason we see console.log(initialValueObjBoardMoal); twice in browser console. Below are the initial render of board modal */}
       {/* <AddBoardModal
         idAttr="add"
