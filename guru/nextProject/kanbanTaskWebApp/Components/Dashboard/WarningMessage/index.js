@@ -1,7 +1,7 @@
 import React from "react";
 import WarningMsgStyles from "./WarningMessage.module.css";
 import { tabThroughWarningMsgModal } from "./warningMsgHelpers";
-import { BoardTaskRenderContext } from "../Context";
+import { BoardTaskRenderContext } from "../Context/index";
 
 export default function WarningMessage({ children }) {
   //   const strings = ["todo", "doing", "done"];
@@ -19,6 +19,8 @@ export default function WarningMessage({ children }) {
         <div
           tabIndex="-1"
           id="warning-message-modal"
+          aria-modal="true"
+          role="dialog"
           className={WarningMsgStyles[`warning-message-container`]}
           onKeyDown={tabThroughWarningMsgModal}
         >

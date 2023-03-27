@@ -2,6 +2,7 @@ import React from "react";
 import BoardModalStyles from "./BoardModal.module.css";
 import CloseModalBtn from "../CloseModalBtn";
 import WarningMessage from "../WarningMessage/index";
+// import DeleteBoardMessage from "../DeleteBoard/index";
 import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardModal, compareColumnObjs } from "./BoardModalHelpers";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
@@ -820,6 +821,7 @@ export function boardComponent() {
               </fieldset>
             </form>
             <WarningMessage />
+            {/* <DeleteBoardMessage /> */}
           </div>
         ) : null}
       </React.Fragment>

@@ -103,6 +103,16 @@ export default function EditDeleteBoardBtn({ children }) {
           <button
             id="delete-board-modal-btn"
             className={EditDeleteBoardStyles[`delete-board-btn`]}
+            onClick={(event) => {
+              renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderDeleteBoard: true,
+                  };
+                }
+              );
+            }}
           >
             Delete Board
           </button>
