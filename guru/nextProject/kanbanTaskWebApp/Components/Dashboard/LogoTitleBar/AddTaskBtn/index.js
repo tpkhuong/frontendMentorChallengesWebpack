@@ -13,10 +13,12 @@ const BoardModal = boardComponent();
 export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
   console.log(typeof isCurrentBoardEmpty, isCurrentBoardEmpty);
   const isScreenLargerThanTabletSize = useMediaQuery("min", 768);
+  // const [renderAddTaskBtn, setAddTaskBtn] = React.useState(isCurrentBoardEmpty);
   const [renderAddTaskBtn, setAddTaskBtn] = React.useState(isCurrentBoardEmpty);
   const [renderAddTaskModal, setTaskModal] = React.useState(false);
 
   const renderContextForAddTaskBtn = React.useContext(BoardTaskRenderContext);
+  console.log(renderAddTaskBtn, "renderAddTaskBtn");
 
   renderContextForAddTaskBtn.setStateFuncs.addTaskBtn = setAddTaskBtn;
   // renderAddTaskBtn is based on value of BoardTaskRenderContext

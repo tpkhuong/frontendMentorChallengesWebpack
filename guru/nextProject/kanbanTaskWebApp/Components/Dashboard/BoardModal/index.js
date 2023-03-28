@@ -188,21 +188,22 @@ export function boardComponent() {
           isSelected: null,
           columns:
             boardColumnsContainer.childElementCount === 0
-              ? { todo: true, doing: false, done: false }
+              ? { todo: [], doing: null, done: null }
               : objForBoardComponent.objForRenderingColumnBtnAlgor,
         };
 
         if (user.boards.length === 0) {
           // there are no board obj in user boards array
           // based on screen size update the title heading element if screen is tablet or larger
-          if (window.innerWidth >= 768) {
-            document.getElementById("tablet-desktop-title-notbtn").innerText =
-              boardNameInput.value;
-          } else {
-            // update title btn for mobile layout
-            document.getElementById("mobile-title-btn").innerText =
-              boardNameInput.value;
-          }
+          // if (window.innerWidth >= 768) {
+          //   document.getElementById("tablet-desktop-title-notbtn").innerText =
+          //     boardNameInput.value;
+          // } else {
+          //   // update title btn for mobile layout
+          //   document.getElementById(
+          //     "mobile-title-btn"
+          //   ).firstElementChild.innerText = boardNameInput.value;
+          // }
           // push newBoardObj into current user boards array
           user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to true
@@ -230,12 +231,15 @@ export function boardComponent() {
               renderBoardModal: false,
             };
           });
+          renderContextObj.setStateFuncs.boardTitleComp(boardNameInput.value);
           // we will call setStateFuncs of addTaskBtn passing false value because current board will have one board obj
           renderContextObj.setStateFuncs.addTaskBtn(false);
           // boardSelector passing user boards array
           renderContextObj.setStateFuncs.boardSelector(user.boards);
           // msgColumnsContainer passing newBoardObj.columns
           renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+            // when we re-render messagecolumnscontainer, we also render columns component
+            // passing the columns obj to columns component
             return {
               ...prevValues,
               isCurrentBoardEmpty: false,
@@ -352,17 +356,20 @@ export function boardComponent() {
         boardSelectorBtn,
       }) => {
         if (titleInput === "") {
-          boardTitleElement.innerText = currentBoard.title;
-          boardSelectorBtn.innerText = currentBoard.title;
+          // boardTitleElement.innerText = currentBoard.title;
+          // boardSelectorBtn.innerText = currentBoard.title;
+          // renderContextObj.setStateFuncs.boardTitleComp(currentBoard.title);
           return;
         }
 
         if (titleInput && titleInput === currentBoard.title) return;
 
         if (titleInput && titleInput !== currentBoard.title) {
-          boardTitleElement.innerText = titleInput;
+          // boardTitleElement.innerText = titleInput;
           boardSelectorBtn.innerText = titleInput;
           currentBoard.title = titleInput;
+
+          renderContextObj.setStateFuncs.boardTitleComp(titleInput);
           return;
         }
       };
@@ -473,12 +480,15 @@ export function boardComponent() {
           boardTitleElement,
           boardSelectorBtn,
         });
+        console.log("arrayColumnToRemoveWithTasks length is 0");
+        console.log(obj);
+        console.log(copiedOriginalColumnsObj);
 
         renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
           return {
             ...prevValues,
             isCurrentBoardEmpty: false,
-            currentBoardColumnsObj: obj,
+            currentBoardColumnsObj: copiedOriginalColumnsObj,
           };
         });
 
@@ -530,14 +540,20 @@ export function boardComponent() {
                 boardTitleElement,
                 boardSelectorBtn,
               });
-              // render columns component
-              renderContextObj.setStateFuncs.msgColumnsContainer(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
-                    currentBoardColumnsObj: obj,
-                  };
-                }
+              // render columns component. since columns component is already rendered
+              // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
+              // renderContextObj.setStateFuncs.msgColumnsContainer(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       isChange: true,
+              //       currentBoardColumnsObj: copiedOriginalObj,
+              //     };
+              //   }
+              // );
+              // console.log(obj);
+              renderContextObj.setStateFuncs.columnsContainer(
+                copiedOriginalObj
               );
               // to not render warning messages component
               setWarningMessage((prevValues) => {

@@ -31,12 +31,12 @@
   inset: 0;
   max-width: 480px;
   height: min-content;
-  /* margin: auto; */
+  margin-block: auto;
   padding: var(--board-container-padding);
   border-radius: 8px;
   left: var(--inline);
   right: var(--inline);
-  top: 78px;
+  /* top: 78px; */
 }
 
 .title-btn-container {
@@ -278,8 +278,9 @@
   .warning-message-container {
     --board-container-padding: 32px;
     --warning-container-padding: 32px;
-    margin-inline: auto;
-    top: 170px;
+    margin-block: revert;
+    margin: auto;
+    /* top: 170px; */
   }
 
   .warning-message-btns-container {

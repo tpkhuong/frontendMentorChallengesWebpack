@@ -12,6 +12,7 @@ export default function MessageColumnsContainer({
   children,
   objOfValuesForColumns,
 }) {
+  console.log(objOfValuesForColumns, "objOfValuesForColumns");
   // useState here
   const [initialMsgColumnsObj, setMsgColumns] = React.useState({
     isCurrentBoardEmpty: objOfValuesForColumns.currentBoardEmpty,
@@ -21,6 +22,8 @@ export default function MessageColumnsContainer({
   const renderContextForMsgColumns = React.useContext(BoardTaskRenderContext);
 
   renderContextForMsgColumns.setStateFuncs.msgColumnsContainer = setMsgColumns;
+  console.log(initialMsgColumnsObj);
+  console.log("hello this is msgcolumnscontainer");
   return (
     <div
       id="message-columns"

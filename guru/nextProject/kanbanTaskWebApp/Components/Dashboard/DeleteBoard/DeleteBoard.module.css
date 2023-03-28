@@ -27,9 +27,10 @@
   padding: var(--delete-board-container-padding);
   max-width: 480px;
   border-radius: 8px;
+  margin-block: auto;
   left: var(--delete-board-inline);
   right: var(--delete-board-inline);
-  top: 132px;
+  /* top: 132px; */
 }
 
 .title {
@@ -80,4 +81,12 @@
 }
 
 /* tablet */
+@media screen and (min-width: 48rem) {
+  .delete-board-modal-container {
+    --delete-board-container-padding: 32px;
+    padding-block-end: 40px;
+    margin-block: revert;
+    margin: auto;
+  }
+}
 /* desktop */

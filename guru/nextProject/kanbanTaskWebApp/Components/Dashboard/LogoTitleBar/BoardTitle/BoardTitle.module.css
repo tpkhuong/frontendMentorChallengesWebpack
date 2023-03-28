@@ -2,6 +2,13 @@
 
 /* animate down arrow */
 
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 143px;
+}
+
 .mobile-menu-btn[data-showboardmenu="true"] .chevron-down {
   transform: rotate(-0.5turn);
 }
@@ -23,14 +30,14 @@
   transition: transform 1s linear;
 }
 
-@media screen and (max-width: 23.625rem) {
+/* @media screen and (max-width: 23.625rem) {
   .title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 143px;
   }
-}
+} */
 
 /* tablet: font size: 20px */
 
@@ -38,11 +45,13 @@
   .title {
     font-size: 1.25rem;
     margin-inline-end: auto;
+    width: 160px;
   }
 }
 /* desktop: font size: 24px */
 @media screen and (min-width: 90rem) {
   .title {
     font-size: var(--heading-sm-three);
+    width: revert;
   }
 }

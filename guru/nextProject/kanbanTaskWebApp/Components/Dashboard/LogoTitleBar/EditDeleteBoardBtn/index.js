@@ -11,6 +11,9 @@ export default function EditDeleteBoardBtn({ children }) {
 
   const renderContextEditDeleteBtn = React.useContext(BoardTaskRenderContext);
 
+  renderContextEditDeleteBtn.setStateFuncs.editDeleteModalBtn =
+    setEditDeleteModal;
+
   return (
     <React.Fragment>
       {/* btn */}
@@ -104,11 +107,19 @@ export default function EditDeleteBoardBtn({ children }) {
             id="delete-board-modal-btn"
             className={EditDeleteBoardStyles[`delete-board-btn`]}
             onClick={(event) => {
+              const currentBoardTitle = JSON.parse(
+                localStorage.getItem("currentBoard")
+              ).title;
+
+              setTimeout(() => {
+                document.getElementById("delete-board-modal").focus();
+              }, 80);
               renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard(
                 (prevValues) => {
                   return {
                     ...prevValues,
                     renderDeleteBoard: true,
+                    boardName: currentBoardTitle,
                   };
                 }
               );

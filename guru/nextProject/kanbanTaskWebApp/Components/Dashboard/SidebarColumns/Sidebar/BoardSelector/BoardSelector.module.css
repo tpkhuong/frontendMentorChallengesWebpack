@@ -63,6 +63,16 @@ ul.ul-container-of-btns {
   padding-inline-start: 24px;
   border-top-right-radius: 100vw;
   border-bottom-right-radius: 100vw;
+  white-space: nowrap;
+}
+
+.board-selector-btn svg {
+  flex-shrink: 0;
+}
+
+.board-selector-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .board-selector-btn,

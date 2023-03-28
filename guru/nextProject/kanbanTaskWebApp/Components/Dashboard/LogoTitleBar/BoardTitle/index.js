@@ -1,10 +1,15 @@
 import React from "react";
 import BoardTitleStyles from "./BoardTitle.module.css";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
+import { BoardTaskRenderContext } from "../../Context/index";
 
 export default function BoardTitle({ children, boardTitle }) {
   const isLargerThanMobile = useMediaQuery("min", 768);
   // make onclick work when user click on button
+  const [renderBoardTitle, setBoardTitle] = React.useState(boardTitle);
+  const renderContextBoardTitle = React.useContext(BoardTaskRenderContext);
+
+  renderContextBoardTitle.setStateFuncs.boardTitleComp = setBoardTitle;
   return (
     <React.Fragment>
       {isLargerThanMobile ? (
@@ -12,7 +17,7 @@ export default function BoardTitle({ children, boardTitle }) {
           id="tablet-desktop-title-notbtn"
           className={BoardTitleStyles[`title`]}
         >
-          {boardTitle}
+          {renderBoardTitle}
         </h2>
       ) : (
         <button
@@ -92,7 +97,7 @@ export default function BoardTitle({ children, boardTitle }) {
             console.log("show mobile is false");
           }}
         >
-          <h2 className={BoardTitleStyles[`title`]}>{boardTitle}</h2>
+          <h2 className={BoardTitleStyles[`title`]}>{renderBoardTitle}</h2>
           <span className={BoardTitleStyles[`chevron-down`]}>
             <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
               <path

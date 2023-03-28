@@ -35,17 +35,20 @@ export default function Dashboard({
   // will use React.useState
   const [initialDashboardValues, setDashboard] = React.useState({
     currentUserBoardsArray: userData.boards,
+    selectedBoard: currentBoard,
     columns,
     title,
     isBoardEmpty,
   });
+  console.log(initialDashboardValues);
+  console.log(initialDashboardValues.title);
   React.useEffect(() => {
     saveCurrentUserDataToLocalStorage(userData);
     saveCurrentBoardDataToLocalStorage(currentBoard);
   }, [userData.email]);
   // render dashboard every time user select a new board
   React.useEffect(() => {
-    saveCurrentBoardDataToLocalStorage(currentBoard);
+    saveCurrentBoardDataToLocalStorage(initialDashboardValues.selectedBoard);
   }, [initialDashboardValues.title]);
   // return (
   //   <React.Fragment>
@@ -54,6 +57,8 @@ export default function Dashboard({
   //     </button>
   //   </React.Fragment>
   // );
+  console.log(initialDashboardValues);
+  console.log(initialDashboardValues.title);
   return (
     <section
       id="color-theme"
@@ -76,6 +81,7 @@ export default function Dashboard({
               initialDashboardValues.currentUserBoardsArray,
             isBoardEmpty: initialDashboardValues.isBoardEmpty,
             columns: initialDashboardValues.columns,
+            dashboardStateFunc: setDashboard,
           }}
         />
       </BoardTaskRenderContext.Provider>
@@ -166,6 +172,7 @@ export async function getServerSideProps(context) {
           currentBoard: null,
           title: "Add New Board",
           isBoardEmpty: true,
+          boardIndex: 0,
           columns: null,
         },
       };
@@ -187,6 +194,7 @@ export async function getServerSideProps(context) {
             title: "Add New Board",
             isBoardEmpty: true,
             columns: null,
+            boardIndex: 0,
           },
         };
       } else {
@@ -209,6 +217,7 @@ export async function getServerSideProps(context) {
               currentBoard,
               title: currentBoard.title,
               isBoardEmpty: true,
+              boardIndex: 0,
               columns: {
                 todo: null,
                 doing: null,
@@ -225,6 +234,7 @@ export async function getServerSideProps(context) {
               currentBoard,
               title: currentBoard.title,
               isBoardEmpty: false,
+              boardIndex: currentBoard.index,
               columns: {
                 todo: !currentBoard.columns.todo
                   ? null

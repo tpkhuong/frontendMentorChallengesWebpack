@@ -26,10 +26,10 @@
   height: min-content;
   padding: 24px;
   max-width: 480px;
-  /* margin: auto; */
+  margin-block: auto;
   left: var(--inline-space);
   right: var(--inline-space);
-  top: 78px;
+  /* top: 78px; */
 }
 
 .task-fieldset > * + * {
@@ -220,7 +220,8 @@
 /* tablet */
 @media screen and (min-width: 48rem) {
   .task-modal {
-    margin-inline: auto;
+    margin-block: revert;
+    margin: auto;
     /* right: 262px; */
   }
 }

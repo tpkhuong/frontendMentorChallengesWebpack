@@ -1,12 +1,22 @@
 import React from "react";
 import ColumnsStyles from "./Columns.module.css";
+import { BoardTaskRenderContext } from "../../../Context/index";
 import TodoColumn from "./Todo";
 import DoingColumn from "./Doing";
 import DoneColumn from "./Done";
 
 export default function Columns({ children, columnsObjData }) {
+  const renderContextColumnsComponent = React.useContext(
+    BoardTaskRenderContext
+  );
+  console.log(columnsObjData, "columnsObjData");
   const [initialColumnsValueObj, setStatusColumn] =
     React.useState(columnsObjData);
+
+  renderContextColumnsComponent.setStateFuncs.columnsContainer =
+    setStatusColumn;
+
+  console.log(initialColumnsValueObj, "initialColumnsValueObj");
   return (
     <section
       className={ColumnsStyles[`column-container`]}

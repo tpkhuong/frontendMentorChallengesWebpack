@@ -59,3 +59,21 @@ export function keyboardModalTabbingAndSpaceKey(event) {
     }
   }
 }
+
+export function tabThroughWarningMsgModal(event) {
+  if (event.shiftKey && event.code == "Tab") {
+    event.target.getAttribute("data-warningbtn") == "delete"
+      ? (event.target.nextElementSibling.focus(), event.preventDefault())
+      : null;
+    return;
+  }
+
+  if (
+    event.code == "Tab" &&
+    event.target.getAttribute("data-warningbtn") == "cancel"
+  ) {
+    event.target.previousElementSibling.focus();
+    event.preventDefault();
+    return;
+  }
+}

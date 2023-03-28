@@ -14,6 +14,7 @@ const TaskModal = taskModalComponent();
 const BoardModal = boardComponent();
 
 export default function SidebarColumns({ children, valuesForBoardsColumns }) {
+  console.log(valuesForBoardsColumns, "sidebarcolumns");
   return (
     // position relative for mobile menu
     <React.Fragment>
@@ -25,6 +26,7 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
         {/* sidebar */}
         <Sidebar
           arrayOfBoardsObjs={valuesForBoardsColumns.currentUserBoardsArray}
+          dashboardState={valuesForBoardsColumns.dashboardStateFunc}
         />
         {/* columns */}
         <MessageColumnsContainer

@@ -47,7 +47,11 @@ import { BoardTaskRenderContext } from "../../../Context/index";
 //   ],
 // };
 // currUserBoardsArray
-export default function BoardSelector({ children, currUserBoardsArray }) {
+export default function BoardSelector({
+  children,
+  renderDashboard,
+  currUserBoardsArray,
+}) {
   // const memoizedBoardsValues = React.useMemo(() => {
   //   return {
   //     boardsArray: currUserBoardsArray,
@@ -90,12 +94,21 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
           id="board-btn-selector-ul-container"
           onClick={(event) => {
             const clickedBoardBtn = event.target.closest("BUTTON");
-            const copiedArr = [...initialValuesArray];
 
             if (clickedBoardBtn) {
               const boardIndex = Number(
                 clickedBoardBtn.getAttribute("data-boardindex")
               );
+              // want boards array of currentUser
+              const currentUser = JSON.parse(
+                localStorage.getItem("currentUser")
+              );
+              const selectedBoard = currentUser.boards[boardIndex];
+              const selectedBoardsArray = currentUser.boards;
+              const newBoardTitle = selectedBoard.title;
+              const selectedBoardColumnsObj = selectedBoard.columns;
+
+              const copiedArr = [...selectedBoardsArray];
 
               copiedArr.forEach(function changeCurrentSelected(obj, index) {
                 if (index == boardIndex) {
@@ -105,7 +118,33 @@ export default function BoardSelector({ children, currUserBoardsArray }) {
                 }
               });
 
-              setBoardSelector([].concat(copiedArr));
+              const isBoardEmpty =
+                !Array.isArray(selectedBoardColumnsObj.todo) &&
+                !Array.isArray(selectedBoardColumnsObj.doing) &&
+                !Array.isArray(selectedBoardColumnsObj.done);
+
+              // currentUserBoardsArray: userData.boards,
+              // columns,
+              // title,
+              // isBoardEmpty,
+
+              console.log(selectedBoard);
+              console.log(selectedBoardsArray);
+              console.log(newBoardTitle);
+              console.log(selectedBoardColumnsObj);
+              console.log(isBoardEmpty);
+              renderDashboard((prevValues) => {
+                return {
+                  ...prevValues,
+                  currentUserBoardsArray: copiedArr,
+                  columns: selectedBoardColumnsObj,
+                  title: newBoardTitle,
+                  isBoardEmpty,
+                  selectedBoard,
+                };
+              });
+
+              // setBoardSelector([].concat(copiedArr));
 
               // setBoardSelector((prev) => {
               //   return {

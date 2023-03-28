@@ -1,6 +1,6 @@
 import React from "react";
 import WarningMsgStyles from "./WarningMessage.module.css";
-import { tabThroughWarningMsgModal } from "./warningMsgHelpers";
+import { tabThroughWarningMsgModal } from "../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../Context/index";
 
 export default function WarningMessage({ children }) {
@@ -49,7 +49,7 @@ export default function WarningMessage({ children }) {
                 }, 80);
                 initialWarningMsgValuesObj.keepChanges({ setWarningMessage });
               }}
-              data-warningbtn="keepChanges"
+              data-warningbtn="delete"
               className={WarningMsgStyles[`keep-changes-btn`]}
             >
               Keep Changes
@@ -73,7 +73,7 @@ export default function WarningMessage({ children }) {
                   };
                 });
               }}
-              data-warningbtn="goBack"
+              data-warningbtn="cancel"
               className={WarningMsgStyles[`go-back-btn`]}
             >
               Go Back
