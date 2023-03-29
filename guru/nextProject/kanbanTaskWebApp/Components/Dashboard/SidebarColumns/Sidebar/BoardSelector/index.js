@@ -103,48 +103,124 @@ export default function BoardSelector({
               const currentUser = JSON.parse(
                 localStorage.getItem("currentUser")
               );
-              const selectedBoard = currentUser.boards[boardIndex];
-              const selectedBoardsArray = currentUser.boards;
-              const newBoardTitle = selectedBoard.title;
-              const selectedBoardColumnsObj = selectedBoard.columns;
+              // get current board in local storage
+              const currentBoard = JSON.parse(
+                localStorage.getItem("currentBoard")
+              );
 
-              const copiedArr = [...selectedBoardsArray];
+              console.log(boardIndex);
+              console.log(currentBoard);
+              // only run algorithm when boardIndex != currentBoardIndex
+              if (boardIndex != currentBoard.index) {
+                const columnsContainer = document.getElementById(
+                  "columns-container-selector"
+                );
 
-              copiedArr.forEach(function changeCurrentSelected(obj, index) {
-                if (index == boardIndex) {
-                  obj.isSelected = true;
-                } else {
-                  obj.isSelected = false;
+                const addTaskBtn = document.getElementById("add-task-btn");
+                const selectedBoard = currentUser.boards[boardIndex];
+                const selectedBoardsArray = currentUser.boards;
+                const newBoardTitle = selectedBoard.title;
+                const selectedBoardColumnsObj = selectedBoard.columns;
+
+                const copiedArr = [...selectedBoardsArray];
+
+                copiedArr.forEach(function changeCurrentSelected(obj, index) {
+                  if (index == boardIndex) {
+                    obj.isSelected = true;
+                  } else {
+                    obj.isSelected = false;
+                  }
+                });
+
+                const isBoardEmpty =
+                  !Array.isArray(selectedBoardColumnsObj.todo) &&
+                  !Array.isArray(selectedBoardColumnsObj.doing) &&
+                  !Array.isArray(selectedBoardColumnsObj.done);
+                // we want to re-render: board selector, board title, add task btn, msgcolumnscontainer or columns container
+                // based on the values of columns obj
+
+                setBoardSelector([].concat(copiedArr));
+                // update title
+                renderContextForCreateBoardModalBtn.setStateFuncs.boardTitleComp(
+                  newBoardTitle
+                );
+                // .setStateFuncs.columnsContainer
+                // .setStateFuncs.addTaskBtn
+                if (isBoardEmpty) {
+                  // check if add task btn and columns container are rendered
+                  // if ther are call set state for add task btn and msgcolumnscontainer pass value boolean true
+                  // because board is empty
+                  // add task btn
+                  if (addTaskBtn) {
+                    renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
+                      true
+                    );
+                  }
+                  // columns container
+                  if (columnsContainer) {
+                    renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
+                      (prevValues) => {
+                        return {
+                          ...prevValues,
+                          isCurrentBoardEmpty: true,
+                        };
+                      }
+                    );
+                  }
                 }
-              });
 
-              const isBoardEmpty =
-                !Array.isArray(selectedBoardColumnsObj.todo) &&
-                !Array.isArray(selectedBoardColumnsObj.doing) &&
-                !Array.isArray(selectedBoardColumnsObj.done);
+                if (!isBoardEmpty) {
+                  // check if add task btn and columns container are not rendered
+                  // if they are not rendered, call add task btn and msgcolumnscontainer pass value boolean false
+                  // because board is not empty
+                  // if current board and selected board are not empty, columns container is already rendered
+                  // call columns container state func to change the columns
+                  if (!addTaskBtn) {
+                    renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
+                      false
+                    );
+                  }
 
-              // currentUserBoardsArray: userData.boards,
-              // columns,
-              // title,
-              // isBoardEmpty,
+                  if (!columnsContainer) {
+                    renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
+                      (prevValues) => {
+                        return {
+                          ...prevValues,
+                          isCurrentBoardEmpty: false,
+                          currentBoardColumnsObj: selectedBoardColumnsObj,
+                        };
+                      }
+                    );
+                  }
 
-              console.log(selectedBoard);
-              console.log(selectedBoardsArray);
-              console.log(newBoardTitle);
-              console.log(selectedBoardColumnsObj);
-              console.log(isBoardEmpty);
-              renderDashboard((prevValues) => {
-                return {
-                  ...prevValues,
-                  currentUserBoardsArray: copiedArr,
-                  columns: selectedBoardColumnsObj,
-                  title: newBoardTitle,
-                  isBoardEmpty,
-                  selectedBoard,
-                };
-              });
+                  if (columnsContainer) {
+                    renderContextForCreateBoardModalBtn.setStateFuncs.columnsContainer(
+                      selectedBoardColumnsObj
+                    );
+                  }
+                }
+                // update local storage
+                localStorage.setItem(
+                  "currentBoard",
+                  JSON.stringify(selectedBoard)
+                );
+              }
 
-              // setBoardSelector([].concat(copiedArr));
+              // console.log(selectedBoard);
+              // console.log(selectedBoardsArray);
+              // console.log(newBoardTitle);
+              // console.log(selectedBoardColumnsObj);
+              // console.log(isBoardEmpty);
+              // renderDashboard((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     currentUserBoardsArray: copiedArr,
+              //     columns: selectedBoardColumnsObj,
+              //     title: newBoardTitle,
+              //     isBoardEmpty,
+              //     selectedBoard,
+              //   };
+              // });
 
               // setBoardSelector((prev) => {
               //   return {
@@ -248,53 +324,53 @@ export default function BoardSelector({
                * add new board modal
                * **/
 
-              // setTimeout(() => {
-              //   document.getElementById("add-board-name-input").focus();
-              // }, 80);
-
-              // renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       id: "add",
-              //       renderBoardModal: true,
-              //       boardModalTitle: "Add New Board",
-              //       typeOfSubmitBtn: "createNewBoard",
-              //       forRefocusElement: "mobile-tab-refocus-selector",
-              //       columnObj: {
-              //         todo: null,
-              //         doing: null,
-              //         done: null,
-              //       },
-              //     };
-              //   }
-              // );
-              /**
-               * edit board modal
-               * **/
-
               setTimeout(() => {
-                document.getElementById("edit-board-name-input").focus();
+                document.getElementById("add-board-name-input").focus();
               }, 80);
 
-              renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              renderContextForCreateBoardModalBtn.stateFuncsForModals.addNewBoardModal(
                 (prevValues) => {
                   return {
                     ...prevValues,
-                    id: "edit",
+                    id: "add",
                     renderBoardModal: true,
-                    boardModalTitle: "Edit Board",
-                    boardTitleInput: "Platform Launch",
-                    typeOfSubmitBtn: "saveChanges",
+                    boardModalTitle: "Add New Board",
+                    typeOfSubmitBtn: "createNewBoard",
                     forRefocusElement: "mobile-tab-refocus-selector",
                     columnObj: {
-                      todo: [],
+                      todo: null,
                       doing: null,
-                      done: [],
+                      done: null,
                     },
                   };
                 }
               );
+              /**
+               * edit board modal
+               * **/
+
+              // setTimeout(() => {
+              //   document.getElementById("edit-board-name-input").focus();
+              // }, 80);
+
+              // renderContextForCreateBoardModalBtn.stateFuncsForModals.editBoardModal(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       id: "edit",
+              //       renderBoardModal: true,
+              //       boardModalTitle: "Edit Board",
+              //       boardTitleInput: "Platform Launch",
+              //       typeOfSubmitBtn: "saveChanges",
+              //       forRefocusElement: "mobile-tab-refocus-selector",
+              //       columnObj: {
+              //         todo: [],
+              //         doing: null,
+              //         done: [],
+              //       },
+              //     };
+              //   }
+              // );
               /****** uncomment here ******/
               // document
               //   .getElementById("board-modal-selector")

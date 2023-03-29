@@ -33,23 +33,23 @@ export default function Dashboard({
     };
   }, []);
   // will use React.useState
-  const [initialDashboardValues, setDashboard] = React.useState({
-    currentUserBoardsArray: userData.boards,
-    selectedBoard: currentBoard,
-    columns,
-    title,
-    isBoardEmpty,
-  });
-  console.log(initialDashboardValues);
-  console.log(initialDashboardValues.title);
+  // const [initialDashboardValues, setDashboard] = React.useState({
+  //   currentUserBoardsArray: userData.boards,
+  //   selectedBoard: currentBoard,
+  //   columns,
+  //   title,
+  //   isBoardEmpty,
+  // });
+  // console.log(initialDashboardValues);
+  // console.log(initialDashboardValues.title);
   React.useEffect(() => {
     saveCurrentUserDataToLocalStorage(userData);
     saveCurrentBoardDataToLocalStorage(currentBoard);
   }, [userData.email]);
   // render dashboard every time user select a new board
-  React.useEffect(() => {
-    saveCurrentBoardDataToLocalStorage(initialDashboardValues.selectedBoard);
-  }, [initialDashboardValues.title]);
+  // React.useEffect(() => {
+  //   saveCurrentBoardDataToLocalStorage(initialDashboardValues.selectedBoard);
+  // }, [initialDashboardValues.title]);
   // return (
   //   <React.Fragment>
   //     <button onClick={testCreateBoards.bind({ email: userData.user.email })}>
@@ -57,8 +57,8 @@ export default function Dashboard({
   //     </button>
   //   </React.Fragment>
   // );
-  console.log(initialDashboardValues);
-  console.log(initialDashboardValues.title);
+  // console.log(initialDashboardValues);
+  // console.log(initialDashboardValues.title);
   return (
     <section
       id="color-theme"
@@ -70,12 +70,26 @@ export default function Dashboard({
         <LogoTitleBar
           valueForLogoutBtn
           valuesForTitleAddTask={{
+            isBoardEmpty,
+            title,
+          }}
+        />
+        {/* <LogoTitleBar
+          valueForLogoutBtn
+          valuesForTitleAddTask={{
             isBoardEmpty: initialDashboardValues.isBoardEmpty,
             title: initialDashboardValues.title,
           }}
-        />
+        /> */}
         {/* sidebarcolumns */}
         <SidebarColumns
+          valuesForBoardsColumns={{
+            currentUserBoardsArray: userData.boards,
+            isBoardEmpty,
+            columns,
+          }}
+        />
+        {/* <SidebarColumns
           valuesForBoardsColumns={{
             currentUserBoardsArray:
               initialDashboardValues.currentUserBoardsArray,
@@ -83,7 +97,7 @@ export default function Dashboard({
             columns: initialDashboardValues.columns,
             dashboardStateFunc: setDashboard,
           }}
-        />
+        /> */}
       </BoardTaskRenderContext.Provider>
     </section>
 

@@ -19,19 +19,20 @@ export default function Columns({ children, columnsObjData }) {
   console.log(initialColumnsValueObj, "initialColumnsValueObj");
   return (
     <section
+      id="columns-container-selector"
       className={ColumnsStyles[`column-container`]}
       aria-labelledby="status-column-title"
     >
       <h2 className="visually-hidden" id="status-column-title">
         Status Columns
       </h2>
-      {initialColumnsValueObj.todo && (
+      {!!initialColumnsValueObj.todo && (
         <TodoColumn todoColumnArray={initialColumnsValueObj.todo} />
       )}
-      {initialColumnsValueObj.doing && (
+      {!!initialColumnsValueObj.doing && (
         <DoingColumn doingColumnArray={initialColumnsValueObj.doing} />
       )}
-      {initialColumnsValueObj.done && (
+      {!!initialColumnsValueObj.done && (
         <DoneColumn doneColumnArray={initialColumnsValueObj.done} />
       )}
       {/* <TodoColumn />

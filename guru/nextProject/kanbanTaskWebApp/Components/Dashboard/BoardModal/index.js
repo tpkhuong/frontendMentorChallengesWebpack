@@ -189,7 +189,19 @@ export function boardComponent() {
           columns:
             boardColumnsContainer.childElementCount === 0
               ? { todo: [], doing: null, done: null }
-              : objForBoardComponent.objForRenderingColumnBtnAlgor,
+              : Object.entries(
+                  objForBoardComponent.objForRenderingColumnBtnAlgor
+                ).reduce(function makeNewColumnsObj(buildingUp, currentValue) {
+                  // current value is key at index 0 and value at index 1
+                  const [key, value] = currentValue;
+                  if (value) {
+                    buildingUp[key] = [];
+                  }
+                  if (!value) {
+                    buildingUp[key] = null;
+                  }
+                  return buildingUp;
+                }, {}),
         };
 
         if (user.boards.length === 0) {
@@ -368,6 +380,7 @@ export function boardComponent() {
           // boardTitleElement.innerText = titleInput;
           boardSelectorBtn.innerText = titleInput;
           currentBoard.title = titleInput;
+          userBoardInfo.boards[currentBoard.index].title = titleInput;
 
           renderContextObj.setStateFuncs.boardTitleComp(titleInput);
           return;
@@ -415,6 +428,8 @@ export function boardComponent() {
             currentBoardColumnsObj: { todo: [], doing: null, done: null },
           };
         });
+        // render add task btn
+        renderContextObj.setStateFuncs.addTaskBtn(false);
 
         setStateFunc((prevValues) => {
           return {
@@ -460,7 +475,7 @@ export function boardComponent() {
       console.log(arrayColumnToRemoveWithTasks, "arrayColumnToRemoveWithTasks");
       // check length of arrayColumnToRemoveWithTasks array
       // if length is 0 run changeboardtitle func
-      // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: obj, setStateFunc
+      // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: copiedOriginalColumnsObj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
         const copiedOriginalColumnsObj = Object.assign({}, originalObj);
         // loop through obj that is used for adding columns
@@ -484,13 +499,44 @@ export function boardComponent() {
         console.log(obj);
         console.log(copiedOriginalColumnsObj);
 
-        renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
-          return {
-            ...prevValues,
-            isCurrentBoardEmpty: false,
-            currentBoardColumnsObj: copiedOriginalColumnsObj,
-          };
-        });
+        // render columns component. since columns component is already rendered
+        // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
+        // renderContextObj.setStateFuncs.msgColumnsContainer(
+        //   (prevValues) => {
+        //     return {
+        //       ...prevValues,
+        //       isChange: true,
+        //       currentBoardColumnsObj: copiedOriginalColumnsObj,
+        //     };
+        //   }
+        // );
+        // console.log(obj);
+        // check if columns container is rendered
+        if (
+          Object.is(document.getElementById("columns-container-selector"), null)
+        ) {
+          // if columns container is not rendered run mgcolumnscontainer set func;
+          renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+            return {
+              ...prevValues,
+              isCurrentBoardEmpty: false,
+              currentBoardColumnsObj: copiedOriginalColumnsObj,
+            };
+          });
+        }
+
+        if (
+          !Object.is(
+            document.getElementById("columns-container-selector"),
+            null
+          )
+        ) {
+          // if columns container is rendered Object.is(document.getElementById("columns-container-selector"),null) will be false
+          // run columnsContainer set func;
+          renderContextObj.setStateFuncs.columnsContainer(
+            copiedOriginalColumnsObj
+          );
+        }
 
         setStateFunc((prevValues) => {
           return {
@@ -498,6 +544,12 @@ export function boardComponent() {
             renderBoardModal: false,
           };
         });
+        // check if add task btn is rendered
+        const isAddTaskBtnRendered = document.getElementById("add-task-btn");
+        if (Object.is(isAddTaskBtnRendered, null)) {
+          // if add task btn is not rendered isAddTaskBtnRendered will be null
+          renderContextObj.setStateFuncs.addTaskBtn(false);
+        }
         // update data in local storage. updating board title in local storage
         // is handled by changeBoardTitle func
         currentBoard.columns = copiedOriginalColumnsObj;
@@ -534,6 +586,7 @@ export function boardComponent() {
               /**
                * user decide to keep changes
                * **/
+              console.log(copiedOriginalObj, "copiedOriginalObj");
               // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc focus edit board btn
               changeBoardTitle({
                 titleInput: boardNameInputElement.value,
@@ -555,6 +608,26 @@ export function boardComponent() {
               renderContextObj.setStateFuncs.columnsContainer(
                 copiedOriginalObj
               );
+              // for add task btn. we know when the values in copiedOriginalObj are all null
+              // current board is empty
+              const checkValuesForNull = Object.values(copiedOriginalObj).every(
+                function findNull(value) {
+                  return Object.is(value, null);
+                }
+              );
+              console.log(checkValuesForNull);
+              if (checkValuesForNull) {
+                renderContextObj.setStateFuncs.addTaskBtn(true);
+
+                renderContextObj.setStateFuncs.msgColumnsContainer(
+                  (prevValues) => {
+                    return {
+                      ...prevValues,
+                      isCurrentBoardEmpty: true,
+                    };
+                  }
+                );
+              }
               // to not render warning messages component
               setWarningMessage((prevValues) => {
                 return {

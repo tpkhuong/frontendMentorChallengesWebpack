@@ -22,6 +22,7 @@ export default function BoardTitle({ children, boardTitle }) {
       ) : (
         <button
           className={BoardTitleStyles[`mobile-menu-btn`]}
+          data-showboardmenu="false"
           role="button"
           aria-label="open current board menu"
           id="mobile-title-btn"
@@ -33,13 +34,23 @@ export default function BoardTitle({ children, boardTitle }) {
               const mobileMenuModal = document.getElementById(
                 "sidebar-mobile-selector"
               );
-
+              // show board menu modal
               mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
                 ? mobileMenuModal.setAttribute("data-show-mobile-menu", "true")
                 : mobileMenuModal.setAttribute(
                     "data-show-mobile-menu",
                     "false"
                   );
+              // animate chevron icon
+              document
+                .getElementById("mobile-title-btn")
+                .getAttribute("data-showboardmenu") == "false"
+                ? document
+                    .getElementById("mobile-title-btn")
+                    .setAttribute("data-showboardmenu", "true")
+                : document
+                    .getElementById("mobile-title-btn")
+                    .setAttribute("data-showboardmenu", "false");
               // focus btn based on length of currentUsers boards property
               const boards = JSON.parse(
                 localStorage.getItem("currentUser")

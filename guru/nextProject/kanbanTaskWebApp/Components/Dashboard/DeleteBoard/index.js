@@ -39,6 +39,11 @@ export default function DeleteBoardMessage(params) {
                 data-warningbtn="delete"
                 className={DeleteBoardStyles[`delete-board-btn`]}
                 onClick={(event) => {
+                  // .setStateFuncs.boardTitleComp
+                  // .setStateFuncs.boardSelector
+                  // .setStateFuncs.addTaskBtn
+                  // .setStateFuncs.msgColumnsContainer
+                  // .setStateFuncs.columnsContainer
                   const currentUser = JSON.parse(
                     localStorage.getItem("currentUser")
                   );
@@ -46,7 +51,44 @@ export default function DeleteBoardMessage(params) {
                   const currentBoard = JSON.parse(
                     localStorage.getItem("currentBoard")
                   );
-
+                  /**
+                   * algorithm will run based on length of currentUser boards array and index of current board
+                   * **/
+                  const userBoardsArray = currentUser.boards;
+                  // length is 1. render board selector, board title, add task btn, and mscolumnscontainer for empty board
+                  if (userBoardsArray.length == 1) {
+                    // title
+                    renderContextDeleteBoard.setStateFuncs.boardTitleComp(
+                      "Add New Board"
+                    );
+                    // boardselector
+                    renderContextDeleteBoard.setStateFuncs.boardSelector([]);
+                    // add task btn
+                    renderContextDeleteBoard.setStateFuncs.addTaskBtn(true);
+                    // message columns container
+                    renderContextDeleteBoard.setStateFuncs.msgColumnsContainer(
+                      (prevValues) => {
+                        return {
+                          ...prevValues,
+                          isCurrentBoardEmpty: true,
+                        };
+                      }
+                    );
+                    // update current user boards property
+                    currentUser.boards = [];
+                    localStorage.setItem(
+                      "currentUser",
+                      JSON.stringify(currentUser)
+                    );
+                    // update current board in local storage to be null
+                    localStorage.setItem("currentBoard", JSON.stringify(null));
+                  }
+                  // index + 1 == currentUser boards array. render board selector, board title, add task btn, and mscolumnscontainer
+                  // with data of obj at index 0 of currentUser boards array
+                  // if index of current board in local storage is greater than 0 less than length - 1
+                  // filter out the obj that matches the index of current board in local storage
+                  // loop through currentUser boards array, updating the index property of each obj
+                  // render board selector, board title, add task btn, and mscolumnscontainer with data of obj at index 0
                   // setTimeout(() => {
                   //   renderContextDeleteBoard.setStateFuncs.editDeleteModalBtn(
                   //     (prevValues) => {

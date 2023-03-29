@@ -32,4 +32,5 @@
 .quantity {
   margin-inline-start: 7px;
   letter-spacing: 2px;
+  align-self: flex-end;
 }
