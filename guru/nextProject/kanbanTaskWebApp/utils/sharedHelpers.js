@@ -77,3 +77,59 @@ export function tabThroughWarningMsgModal(event) {
     return;
   }
 }
+
+export function renderColumnsAndAddTaskBtnForSelectedBoard({
+  boardsColumnsObj,
+  addTaskBtn,
+  columnsContainer,
+  stateFuncsFromContext,
+}) {
+  const isBoardEmpty =
+    !Array.isArray(boardsColumnsObj.todo) &&
+    !Array.isArray(boardsColumnsObj.doing) &&
+    !Array.isArray(boardsColumnsObj.done);
+
+  if (isBoardEmpty) {
+    // check if add task btn and columns container are rendered
+    // if ther are call set state for add task btn and msgcolumnscontainer pass value boolean true
+    // because board is empty
+    // add task btn
+    if (addTaskBtn) {
+      stateFuncsFromContext.setStateFuncs.addTaskBtn(true);
+    }
+    // columns container
+    if (columnsContainer) {
+      stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+        return {
+          ...prevValues,
+          isCurrentBoardEmpty: true,
+        };
+      });
+    }
+  }
+
+  if (!isBoardEmpty) {
+    // check if add task btn and columns container are not rendered
+    // if they are not rendered, call add task btn and msgcolumnscontainer pass value boolean false
+    // because board is not empty
+    // if current board and selected board are not empty, columns container is already rendered
+    // call columns container state func to change the columns
+    if (!addTaskBtn) {
+      stateFuncsFromContext.setStateFuncs.addTaskBtn(false);
+    }
+
+    if (!columnsContainer) {
+      stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+        return {
+          ...prevValues,
+          isCurrentBoardEmpty: false,
+          currentBoardColumnsObj: boardsColumnsObj,
+        };
+      });
+    }
+
+    if (columnsContainer) {
+      stateFuncsFromContext.setStateFuncs.columnsContainer(boardsColumnsObj);
+    }
+  }
+}

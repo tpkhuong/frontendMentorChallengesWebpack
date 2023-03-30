@@ -2,6 +2,12 @@ import React from "react";
 import DeleteBoardStyles from "./DeleteBoard.module.css";
 import { tabThroughWarningMsgModal } from "../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../Context/index";
+import { renderColumnsAndAddTaskBtnForSelectedBoard } from "../../../utils/sharedHelpers";
+import {
+  saveDataToLocalStorage,
+  filterOutBoardObj,
+  renderBoardSelectorBoardTitle,
+} from "./deleteBoardHelpers";
 
 export default function DeleteBoardMessage(params) {
   const [initialDeleteBoardValues, setDeleteBoard] = React.useState({
@@ -51,18 +57,36 @@ export default function DeleteBoardMessage(params) {
                   const currentBoard = JSON.parse(
                     localStorage.getItem("currentBoard")
                   );
+
+                  const indexOfCurrentBoard = currentBoard.index;
+
+                  const modifiedBoardsArray = filterOutBoardObj({
+                    boardsArray: currentUser.boards,
+                    currentIndex: indexOfCurrentBoard,
+                  });
+
+                  const columnsContainer = document.getElementById(
+                    "columns-container-selector"
+                  );
+
+                  const addTaskBtn = document.getElementById("add-task-btn");
                   /**
                    * algorithm will run based on length of currentUser boards array and index of current board
                    * **/
                   const userBoardsArray = currentUser.boards;
                   // length is 1. render board selector, board title, add task btn, and mscolumnscontainer for empty board
                   if (userBoardsArray.length == 1) {
-                    // title
-                    renderContextDeleteBoard.setStateFuncs.boardTitleComp(
-                      "Add New Board"
-                    );
-                    // boardselector
-                    renderContextDeleteBoard.setStateFuncs.boardSelector([]);
+                    // // title
+                    // renderContextDeleteBoard.setStateFuncs.boardTitleComp(
+                    //   "Add New Board"
+                    // );
+                    // // boardselector
+                    // renderContextDeleteBoard.setStateFuncs.boardSelector([]);
+                    renderBoardSelectorBoardTitle({
+                      boardSelector: modifiedBoardsArray,
+                      boardTitle: "Add New Board",
+                      stateFuncsInContext: renderContextDeleteBoard,
+                    });
                     // add task btn
                     renderContextDeleteBoard.setStateFuncs.addTaskBtn(true);
                     // message columns container
@@ -75,20 +99,130 @@ export default function DeleteBoardMessage(params) {
                       }
                     );
                     // update current user boards property
-                    currentUser.boards = [];
-                    localStorage.setItem(
-                      "currentUser",
-                      JSON.stringify(currentUser)
-                    );
+                    currentUser.boards = modifiedBoardsArray;
+                    saveDataToLocalStorage({
+                      user: currentUser,
+                      board: currentBoard,
+                    });
+                    // localStorage.setItem(
+                    //   "currentUser",
+                    //   JSON.stringify(currentUser)
+                    // );
                     // update current board in local storage to be null
-                    localStorage.setItem("currentBoard", JSON.stringify(null));
+                    // localStorage.setItem("currentBoard", JSON.stringify(null));
+                    return;
                   }
-                  // index + 1 == currentUser boards array. render board selector, board title, add task btn, and mscolumnscontainer
-                  // with data of obj at index 0 of currentUser boards array
+                  // if length is 2 filter out current board then update local storage and render correct components
+                  // with obj left in boards array
+                  if (userBoardsArray.length == 2) {
+                    const onlyObjInBoardsArray = modifiedBoardsArray[0];
+
+                    // board selector and board title
+                    renderBoardSelectorBoardTitle({
+                      boardSelector: modifiedBoardsArray,
+                      boardTitle: onlyObjInBoardsArray.title,
+                      stateFuncsInContext: renderContextDeleteBoard,
+                    });
+                    // columns and add task btn
+                    renderColumnsAndAddTaskBtnForSelectedBoard({
+                      boardsColumnsObj: onlyObjInBoardsArray.columns,
+                      addTaskBtn,
+                      columnsContainer,
+                      stateFuncsFromContext: renderContextDeleteBoard,
+                    });
+                    // update isSelected property
+                    onlyObjInBoardsArray.isSelected = true;
+                    // update current user boards property
+                    currentUser.boards = modifiedBoardsArray;
+                    // update data in local storage
+                    saveDataToLocalStorage({
+                      user: currentUser,
+                      board: onlyObjInBoardsArray,
+                    });
+                    return;
+                  }
+                  /**
+                   * if we get here it means length of boards array is greater than 2
+                   * **/
+                  if (userBoardsArray.length > 2) {
+                    /**
+                     * we want to change
+                     * **/
+                    // index + 1 == currentUser boards array length. render board selector, board title, add task btn, and mscolumnscontainer
+                    // with data of obj before the deleted last board in boards array
+                    if (indexOfCurrentBoard + 1 == userBoardsArray.length) {
+                      // we are removing the last board in boards array
+                      // we dont have to update thte index property of each obj
+                      // the obj will be in the correct order
+
+                      // use currentboard index - 1 to select board obj in boards array
+                      const currentIndexMinusOne = indexOfCurrentBoard - 1;
+                      const renderDataFromThisObj =
+                        modifiedBoardsArray[currentIndexMinusOne];
+                      // update isSelected property
+                      renderDataFromThisObj.isSelected = true;
+                      // board selector and board title
+                      renderBoardSelectorBoardTitle({
+                        boardSelector: modifiedBoardsArray,
+                        boardTitle: renderDataFromThisObj.title,
+                        stateFuncsInContext: renderContextDeleteBoard,
+                      });
+                      // add task btn and columns
+                      renderColumnsAndAddTaskBtnForSelectedBoard({
+                        boardsColumnsObj: renderDataFromThisObj.columns,
+                        addTaskBtn,
+                        columnsContainer,
+                        stateFuncsFromContext: renderContextDeleteBoard,
+                      });
+                      // update data in local storage
+                      currentUser.boards = modifiedBoardsArray;
+                      saveDataToLocalStorage({
+                        user: currentUser,
+                        board: modifiedBoardsArray,
+                      });
+                      return;
+                    }
+                    // else we are not removing last board/obj of boards array
+                    // render components with data of obj at index of currentboard(just deleted obj/board in boards array)
+                    // loop through boards array update index property
+                    modifiedBoardsArray.forEach(function updateIndex(
+                      obj,
+                      index
+                    ) {
+                      obj.index = index;
+                    });
+                    // use currentboard index
+                    const objForRenderFuncs =
+                      modifiedBoardsArray[indexOfCurrentBoard];
+                    // update isSelected property
+                    objForRenderFuncs.isSelected = true;
+                    // board selector and board title
+                    renderBoardSelectorBoardTitle({
+                      boardSelector: modifiedBoardsArray,
+                      boardTitle: objForRenderFuncs.title,
+                      stateFuncsInContext: renderContextDeleteBoard,
+                    });
+                    // add task btn and columns
+                    renderColumnsAndAddTaskBtnForSelectedBoard({
+                      boardsColumnsObj: objForRenderFuncs.columns,
+                      addTaskBtn,
+                      columnsContainer,
+                      stateFuncsFromContext: renderContextDeleteBoard,
+                    });
+                    // update current user boards property
+                    currentUser.boards = modifiedBoardsArray;
+                    // update data in local storage
+                    saveDataToLocalStorage({
+                      user: currentUser,
+                      board: modifiedBoardsArray,
+                    });
+                  }
+
                   // if index of current board in local storage is greater than 0 less than length - 1
                   // filter out the obj that matches the index of current board in local storage
                   // loop through currentUser boards array, updating the index property of each obj
-                  // render board selector, board title, add task btn, and mscolumnscontainer with data of obj at index 0
+                  // render board selector, board title, add task btn, and mscolumnscontainer with data of
+                  // next obj of deleted board
                   // setTimeout(() => {
                   //   renderContextDeleteBoard.setStateFuncs.editDeleteModalBtn(
                   //     (prevValues) => {
@@ -117,18 +251,18 @@ export default function DeleteBoardMessage(params) {
                   // when board index + 1 equal to length of boards array
                   // select board with index 0
                   // update currentBoard
-                  const boardIndex = currentBoard.index;
-                  const updateBoardsArray = currentUser.boards.filter(
-                    function removeCurrentBoard(obj) {
-                      return obj.index != boardIndex;
-                    }
-                  );
+                  // const boardIndex = currentBoard.index;
+                  // const updateBoardsArray = currentUser.boards.filter(
+                  //   function removeCurrentBoard(obj) {
+                  //     return obj.index != boardIndex;
+                  //   }
+                  // );
 
                   // currentUserBoardsArray: userData.boards,
                   //   columns,
                   //   title,
                   //   isBoardEmpty,
-                  console.log(updateBoardsArray);
+                  // console.log(updateBoardsArray);
                 }}
               >
                 Delete

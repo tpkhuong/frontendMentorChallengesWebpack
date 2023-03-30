@@ -88,5 +88,11 @@
     margin-block: revert;
     margin: auto;
   }
+  .delete-cancel-btns-container {
+    flex-direction: row;
+  }
+  .delete-cancel-btns-container button {
+    flex-basis: 200px;
+  }
 }
 /* desktop */

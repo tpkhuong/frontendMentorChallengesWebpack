@@ -2,6 +2,7 @@ import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../../../Context/index";
+import { renderColumnsAndAddTaskBtnForSelectedBoard } from "../../../../../utils/sharedHelpers";
 // import { taskModal } from "../../../TaskModal/index";
 // import CreateBoardBtnModalContainer from "./CreateBoardBtnModalContainer/index";
 // import { testCreateBoards } from "./boardSelectorHelpers";
@@ -132,10 +133,10 @@ export default function BoardSelector({
                   }
                 });
 
-                const isBoardEmpty =
-                  !Array.isArray(selectedBoardColumnsObj.todo) &&
-                  !Array.isArray(selectedBoardColumnsObj.doing) &&
-                  !Array.isArray(selectedBoardColumnsObj.done);
+                // const isBoardEmpty =
+                //   !Array.isArray(selectedBoardColumnsObj.todo) &&
+                //   !Array.isArray(selectedBoardColumnsObj.doing) &&
+                //   !Array.isArray(selectedBoardColumnsObj.done);
                 // we want to re-render: board selector, board title, add task btn, msgcolumnscontainer or columns container
                 // based on the values of columns obj
 
@@ -146,60 +147,73 @@ export default function BoardSelector({
                 );
                 // .setStateFuncs.columnsContainer
                 // .setStateFuncs.addTaskBtn
-                if (isBoardEmpty) {
-                  // check if add task btn and columns container are rendered
-                  // if ther are call set state for add task btn and msgcolumnscontainer pass value boolean true
-                  // because board is empty
-                  // add task btn
-                  if (addTaskBtn) {
-                    renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
-                      true
-                    );
-                  }
-                  // columns container
-                  if (columnsContainer) {
-                    renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
-                      (prevValues) => {
-                        return {
-                          ...prevValues,
-                          isCurrentBoardEmpty: true,
-                        };
-                      }
-                    );
-                  }
-                }
+                renderColumnsAndAddTaskBtnForSelectedBoard({
+                  boardsColumnsObj: selectedBoardColumnsObj,
+                  addTaskBtn,
+                  columnsContainer,
+                  stateFuncsFromContext: renderContextForCreateBoardModalBtn,
+                });
+                // if (isBoardEmpty) {
+                //   // check if add task btn and columns container are rendered
+                //   // if ther are call set state for add task btn and msgcolumnscontainer pass value boolean true
+                //   // because board is empty
+                //   // add task btn
+                //   if (addTaskBtn) {
+                //     renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
+                //       true
+                //     );
+                //   }
+                //   // columns container
+                //   if (columnsContainer) {
+                //     renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
+                //       (prevValues) => {
+                //         return {
+                //           ...prevValues,
+                //           isCurrentBoardEmpty: true,
+                //         };
+                //       }
+                //     );
+                //   }
+                // }
 
-                if (!isBoardEmpty) {
-                  // check if add task btn and columns container are not rendered
-                  // if they are not rendered, call add task btn and msgcolumnscontainer pass value boolean false
-                  // because board is not empty
-                  // if current board and selected board are not empty, columns container is already rendered
-                  // call columns container state func to change the columns
-                  if (!addTaskBtn) {
-                    renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
-                      false
-                    );
-                  }
+                // if (!isBoardEmpty) {
+                //   // check if add task btn and columns container are not rendered
+                //   // if they are not rendered, call add task btn and msgcolumnscontainer pass value boolean false
+                //   // because board is not empty
+                //   // if current board and selected board are not empty, columns container is already rendered
+                //   // call columns container state func to change the columns
+                //   if (!addTaskBtn) {
+                //     renderContextForCreateBoardModalBtn.setStateFuncs.addTaskBtn(
+                //       false
+                //     );
+                //   }
 
-                  if (!columnsContainer) {
-                    renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
-                      (prevValues) => {
-                        return {
-                          ...prevValues,
-                          isCurrentBoardEmpty: false,
-                          currentBoardColumnsObj: selectedBoardColumnsObj,
-                        };
-                      }
-                    );
-                  }
+                //   if (!columnsContainer) {
+                //     renderContextForCreateBoardModalBtn.setStateFuncs.msgColumnsContainer(
+                //       (prevValues) => {
+                //         return {
+                //           ...prevValues,
+                //           isCurrentBoardEmpty: false,
+                //           currentBoardColumnsObj: selectedBoardColumnsObj,
+                //         };
+                //       }
+                //     );
+                //   }
 
-                  if (columnsContainer) {
-                    renderContextForCreateBoardModalBtn.setStateFuncs.columnsContainer(
-                      selectedBoardColumnsObj
-                    );
-                  }
-                }
+                //   if (columnsContainer) {
+                //     renderContextForCreateBoardModalBtn.setStateFuncs.columnsContainer(
+                //       selectedBoardColumnsObj
+                //     );
+                //   }
+                // }
+                // update currentUser boards array
+                currentUser.boards = copiedArr;
                 // update local storage
+                localStorage.setItem(
+                  "currentUser",
+                  JSON.stringify(currentUser)
+                );
+
                 localStorage.setItem(
                   "currentBoard",
                   JSON.stringify(selectedBoard)
