@@ -21,3 +21,9 @@ export function tabThroughEditDeleteModal(event) {
     }
   }
 }
+
+export function fadeEditDeleteBtnModal(element) {
+  element.getAttribute("data-fadeeditdeletemodal") == "false"
+    ? element.setAttribute("data-fadeeditdeletemodal", "true")
+    : element.setAttribute("data-fadeeditdeletemodal", "false");
+}

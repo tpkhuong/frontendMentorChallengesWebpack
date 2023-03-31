@@ -30,7 +30,10 @@ export default function BoardTitle({ children, boardTitle }) {
             const mobileMenuBtnClicked = event.target.closest("BUTTON");
 
             if (mobileMenuBtnClicked) {
+              // add / remove attribute data-isboardtitlebtnclick
+              // to launch-edit-delete-modal-btn
               // show mobile menu
+              alert("test deleting board for mobile,tablet, and desktop");
               const mobileMenuModal = document.getElementById(
                 "sidebar-mobile-selector"
               );

@@ -17,6 +17,16 @@
 }
 
 @media screen and (max-width: 23.4375rem) {
+  /* fade menu at mobile */
+
+  .boards-toggle-container[data-fademenuatmobile="true"] {
+    opacity: 0;
+  }
+
+  .boards-toggle-container {
+    transition: opacity 1s linear;
+  }
+
   .sidebar-modal[data-show-mobile-menu="true"] {
     display: revert;
   }

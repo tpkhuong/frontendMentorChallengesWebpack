@@ -7,6 +7,7 @@ import {
   saveDataToLocalStorage,
   filterOutBoardObj,
   renderBoardSelectorBoardTitle,
+  removeRendersOfDeleteMessageAndBtn,
 } from "./deleteBoardHelpers";
 
 export default function DeleteBoardMessage(params) {
@@ -74,7 +75,7 @@ export default function DeleteBoardMessage(params) {
                    * algorithm will run based on length of currentUser boards array and index of current board
                    * **/
                   const userBoardsArray = currentUser.boards;
-                  // length is 1. render board selector, board title, add task btn, and mscolumnscontainer for empty board
+                  // length is 1. render board selector, board title, add task btn, and mgscolumnscontainer for empty board
                   if (userBoardsArray.length == 1) {
                     // // title
                     // renderContextDeleteBoard.setStateFuncs.boardTitleComp(
@@ -102,14 +103,28 @@ export default function DeleteBoardMessage(params) {
                     currentUser.boards = modifiedBoardsArray;
                     saveDataToLocalStorage({
                       user: currentUser,
-                      board: currentBoard,
+                      board: null,
                     });
+                    // focus create new board btn
+                    setTimeout(() => {
+                      document
+                        .getElementById("mobile-tab-refocus-selector")
+                        .focus();
+                    }, 80);
                     // localStorage.setItem(
                     //   "currentUser",
                     //   JSON.stringify(currentUser)
                     // );
                     // update current board in local storage to be null
                     // localStorage.setItem("currentBoard", JSON.stringify(null));
+                    /**
+                     * does not matter which board is being deleted we want focus one of the board selector btn
+                     * or create new board btn
+                     * **/
+                    removeRendersOfDeleteMessageAndBtn({
+                      setDeleteBoard,
+                      renderContextDeleteBoard,
+                    });
                     return;
                   }
                   // if length is 2 filter out current board then update local storage and render correct components
@@ -138,6 +153,20 @@ export default function DeleteBoardMessage(params) {
                     saveDataToLocalStorage({
                       user: currentUser,
                       board: onlyObjInBoardsArray,
+                    });
+                    // focus board selector btn at index 0
+                    setTimeout(() => {
+                      document
+                        .getElementById("board-btn-selector-ul-container")
+                        .children[0].firstElementChild.focus();
+                    }, 80);
+                    /**
+                     * does not matter which board is being deleted we want focus one of the board selector btn
+                     * or create new board btn
+                     * **/
+                    removeRendersOfDeleteMessageAndBtn({
+                      setDeleteBoard,
+                      renderContextDeleteBoard,
                     });
                     return;
                   }
@@ -178,7 +207,22 @@ export default function DeleteBoardMessage(params) {
                       currentUser.boards = modifiedBoardsArray;
                       saveDataToLocalStorage({
                         user: currentUser,
-                        board: modifiedBoardsArray,
+                        board: renderDataFromThisObj,
+                      });
+                      // get index value in current board obj
+                      // use that index to select board selector btn
+                      setTimeout(() => {
+                        document
+                          .getElementById("board-btn-selector-ul-container")
+                          .children[currentIndexMinusOne].firstElementChild();
+                      }, 80);
+                      /**
+                       * does not matter which board is being deleted we want focus one of the board selector btn
+                       * or create new board btn
+                       * **/
+                      removeRendersOfDeleteMessageAndBtn({
+                        setDeleteBoard,
+                        renderContextDeleteBoard,
                       });
                       return;
                     }
@@ -214,7 +258,23 @@ export default function DeleteBoardMessage(params) {
                     // update data in local storage
                     saveDataToLocalStorage({
                       user: currentUser,
-                      board: modifiedBoardsArray,
+                      board: objForRenderFuncs,
+                    });
+                    // focus board selector at indexOfCurrentBoard
+                    setTimeout(() => {
+                      document
+                        .getElementById("board-btn-selector-ul-container")
+                        .children[
+                          indexOfCurrentBoard
+                        ].firstElementChild.focus();
+                    }, 80);
+                    /**
+                     * does not matter which board is being deleted we want focus one of the board selector btn
+                     * or create new board btn
+                     * **/
+                    removeRendersOfDeleteMessageAndBtn({
+                      setDeleteBoard,
+                      renderContextDeleteBoard,
                     });
                   }
 

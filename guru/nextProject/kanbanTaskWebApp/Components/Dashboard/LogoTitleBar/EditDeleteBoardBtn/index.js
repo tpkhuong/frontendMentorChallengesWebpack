@@ -1,6 +1,7 @@
 import React from "react";
 import EditDeleteBoardStyles from "./EditDeleteBoardBtn.module.css";
 import { BoardTaskRenderContext } from "../../Context";
+import { fadeEditDeleteBtnModal } from "./editDeleteBtnHelpers";
 import LogoutBtn from "./LogoutBtn";
 
 export default function EditDeleteBoardBtn({ children }) {
@@ -25,6 +26,7 @@ export default function EditDeleteBoardBtn({ children }) {
         onClick={(event) => {
           // if initialEditDeleteModalObj.showEditDeleteModal is falsey when user click on btn show modal
           if (!initialEditDeleteModalObj.showEditDeleteModal) {
+            console.log("hello there. here we are");
             // focus edit board btn
             setTimeout(() => {
               document.getElementById("edit-board-modal-btn").focus();
@@ -37,19 +39,93 @@ export default function EditDeleteBoardBtn({ children }) {
                   "close edit or delete board and log out buttons modal",
               };
             });
+            // when at mobile size fade out sidebar menu
+            if (
+              window.innerWidth <= 378 &&
+              document
+                .getElementById("sidebar-mobile-selector")
+                .getAttribute("data-show-mobile-menu") == "true"
+            ) {
+              // id="boards-toggle-container-selector"
+              // data-fademenuatmobile="false"
+              document
+                .getElementById("boards-toggle-container-selector")
+                .getAttribute("data-fademenuatmobile") == "false"
+                ? document
+                    .getElementById("boards-toggle-container-selector")
+                    .setAttribute("data-fademenuatmobile", "true")
+                : null;
+              setTimeout(() => {
+                // fade in edit delete btn modal
+                fadeEditDeleteBtnModal(
+                  document.getElementById("edit-delete-board-modal-selector")
+                );
+              }, 1010);
+            }
             return;
           }
-          // if initialEditDeleteModalObj.showEditDeleteModal is falsey when user click on btn show modal
+          // if initialEditDeleteModalObj.showEditDeleteModal is truthy when user click on btn hide modal
           if (initialEditDeleteModalObj.showEditDeleteModal) {
-            setEditDeleteModal((prevValues) => {
-              return {
-                ...prevValues,
-                showEditDeleteModal: false,
-                ariaLabel:
-                  "open edit or delete board and log out buttons modal",
-              };
-            });
-            return;
+            // when at mobile size fade in sidebar menu
+            if (
+              window.innerWidth <= 378 &&
+              document
+                .getElementById("boards-toggle-container-selector")
+                .getAttribute("data-fademenuatmobile") == "true"
+            ) {
+              // fade out edit delete btn modal
+              console.log("fade into...");
+              fadeEditDeleteBtnModal(
+                document.getElementById("edit-delete-board-modal-selector")
+              );
+              // setTimeout(() => {}, 80);
+              setTimeout(() => {
+                document
+                  .getElementById("boards-toggle-container-selector")
+                  .getAttribute("data-fademenuatmobile") == "true"
+                  ? document
+                      .getElementById("boards-toggle-container-selector")
+                      .setAttribute("data-fademenuatmobile", "false")
+                  : null;
+
+                setEditDeleteModal((prevValues) => {
+                  return {
+                    ...prevValues,
+                    showEditDeleteModal: false,
+                    ariaLabel:
+                      "open edit or delete board and log out buttons modal",
+                  };
+                });
+              }, 1070);
+              return;
+            }
+            if (
+              window.innerWidth <= 378 &&
+              document
+                .getElementById("boards-toggle-container-selector")
+                .getAttribute("data-fademenuatmobile") == "false"
+            ) {
+              setEditDeleteModal((prevValues) => {
+                return {
+                  ...prevValues,
+                  showEditDeleteModal: false,
+                  ariaLabel:
+                    "open edit or delete board and log out buttons modal",
+                };
+              });
+              return;
+            }
+            //
+            if (window.innerWidth > 378) {
+              setEditDeleteModal((prevValues) => {
+                return {
+                  ...prevValues,
+                  showEditDeleteModal: false,
+                  ariaLabel:
+                    "open edit or delete board and log out buttons modal",
+                };
+              });
+            }
           }
         }}
       >
@@ -67,11 +143,14 @@ export default function EditDeleteBoardBtn({ children }) {
         <div
           role="dialog"
           aria-modal="true"
+          id="edit-delete-board-modal-selector"
           className={EditDeleteBoardStyles[`edit-delete-board-modal-wrapper`]}
         >
           <button
             id="edit-board-modal-btn"
             onClick={(event) => {
+              fadeEditDeleteBtnModal(event.target.parentElement);
+
               // get current board from local storage
               const currentBoard = JSON.parse(
                 localStorage.getItem("currentBoard")
@@ -107,6 +186,7 @@ export default function EditDeleteBoardBtn({ children }) {
             id="delete-board-modal-btn"
             className={EditDeleteBoardStyles[`delete-board-btn`]}
             onClick={(event) => {
+              fadeEditDeleteBtnModal(event.target.parentElement);
               const currentBoardTitle = JSON.parse(
                 localStorage.getItem("currentBoard")
               ).title;

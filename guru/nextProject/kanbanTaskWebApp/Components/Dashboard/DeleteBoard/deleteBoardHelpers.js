@@ -22,3 +22,25 @@ export function renderBoardSelectorBoardTitle({
   // boardselector
   stateFuncsInContext.setStateFuncs.boardSelector(boardSelector);
 }
+
+export function removeRendersOfDeleteMessageAndBtn({
+  setDeleteBoard,
+  renderContextDeleteBoard,
+}) {
+  // don't render delete board message modal
+  setDeleteBoard((prevValues) => {
+    return {
+      ...prevValues,
+      renderDeleteBoard: false,
+      boardName: "",
+    };
+  });
+  // don't render edit delete btn modal
+  renderContextDeleteBoard.setStateFuncs.editDeleteModalBtn((prevValues) => {
+    return {
+      ...prevValues,
+      showEditDeleteModal: false,
+      ariaLabel: "open edit or delete board and log out buttons modal",
+    };
+  });
+}

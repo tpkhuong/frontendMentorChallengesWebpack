@@ -14,7 +14,16 @@
   background-color: hsla(0 0% 0% / 0.4);
   position: absolute;
   inset: 0;
-  z-index: 1;
+  /* z-index: 1; */
+}
+
+@media screen and (max-width: 23.4375rem) {
+  .delete-board-modal-bg {
+    background-color: hsla(0 0% 0% / 0.4);
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
 }
 
 .delete-board-modal-container {
@@ -82,6 +91,9 @@
 
 /* tablet */
 @media screen and (min-width: 48rem) {
+  .delete-board-modal-bg {
+    z-index: 1;
+  }
   .delete-board-modal-container {
     --delete-board-container-padding: 32px;
     padding-block-end: 40px;

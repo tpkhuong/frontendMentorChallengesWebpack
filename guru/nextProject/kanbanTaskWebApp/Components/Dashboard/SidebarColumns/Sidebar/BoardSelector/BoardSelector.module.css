@@ -3,8 +3,11 @@
 /* --hover-notselectedboard-sidebar-light-fg */
 /* --notselectedboard-sidebar-dark-bg */
 /* --notselectedboard-sidebar-dark-fg */
+
 .boards-selector-container {
   font-weight: 600;
+  transition: opacity 1s linear;
+  opacity: 1;
   font-size: var(--heading-reg-sm);
 }
 

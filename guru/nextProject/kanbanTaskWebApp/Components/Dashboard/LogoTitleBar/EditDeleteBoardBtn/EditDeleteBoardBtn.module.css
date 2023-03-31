@@ -10,12 +10,14 @@
 }
 
 .edit-delete-board-modal-wrapper {
+  transition: opacity 1s linear;
   display: flex;
+  opacity: 1;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   position: absolute;
-  z-index: 1;
+  /* z-index: 1; */
   right: 20px;
   top: 70px;
   font-size: var(--heading-reg-sm);
@@ -26,6 +28,23 @@
     --edit-delete-modals-box-shadow-dark,
     0px 0px 10px 3px hsla(0 0% 0% / 0.2)
   );
+}
+
+@media screen and (max-width: 23.4375rem) {
+  /* fade modal */
+  [data-isboardtitlebtnclick="true"]
+    + .edit-delete-board-modal-wrapper[data-fadeeditdeletemodal="true"] {
+    opacity: 1;
+  }
+  /* add or remove data-isboardtitlebtnclick when user click on board title btn */
+  /* previous sibling element to edit-delete-board-modal-wrapper */
+  [data-isboardtitlebtnclick="true"]
+    + .edit-delete-board-modal-wrapper[data-fadeeditdeletemodal="false"] {
+    opacity: 0;
+  }
+  .edit-delete-board-modal-wrapper {
+    z-index: 2;
+  }
 }
 
 .edit-board-btn,
@@ -53,6 +72,8 @@
   .edit-delete-board-modal-wrapper {
     right: 30px;
     top: 100px;
+    z-index: 1;
+    /* opacity: 1; */
   }
 }
 /* desktop: modal size: 192 */
