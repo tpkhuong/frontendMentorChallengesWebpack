@@ -6,6 +6,7 @@ export default function CloseModalBtn({
   renderStateObjKey,
   focusClickedElement,
   hideModalFunc,
+  isEditBoardModal,
 }) {
   return (
     <button
@@ -14,6 +15,9 @@ export default function CloseModalBtn({
       className={CloseModalStyles[`close-btn`]}
       aria-label={children}
       onClick={(event) => {
+        if (isEditBoardModal) {
+          return;
+        }
         // focus add task btn
         document.getElementById(`${focusClickedElement}`).focus();
 

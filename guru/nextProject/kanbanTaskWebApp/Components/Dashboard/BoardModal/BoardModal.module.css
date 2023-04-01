@@ -25,6 +25,7 @@
   --board-container-padding: 24px;
   --inline: 16px;
   font-weight: 600;
+  transition: opacity 1s linear;
   /* --color-neutral-white */
   background-color: var(--edit-delete-modals-bg, var(--color-neutral-white));
   position: absolute;
@@ -36,7 +37,13 @@
   border-radius: 8px;
   left: var(--inline);
   right: var(--inline);
+  opacity: 0;
   /* top: 78px; */
+}
+
+[data-showboardmodal="true"]
+  .board-modal-container[data-iseditboardmodal="true"] {
+  opacity: 1;
 }
 
 .title-btn-container {
@@ -274,6 +281,7 @@
   .board-modal-bg {
     /* right: 262px; */
   }
+
   .board-modal-container,
   .warning-message-container {
     --board-container-padding: 32px;

@@ -770,6 +770,9 @@ export function boardComponent() {
             <form
               aria-modal="true"
               role="dialog"
+              data-iseditboardmodal={
+                initialValueObjBoardModal.id == "edit" ? "true" : "false"
+              }
               className={BoardModalStyles[`board-modal-container`]}
               onKeyDown={keyboardModalTabbingAndSpaceKey}
             >

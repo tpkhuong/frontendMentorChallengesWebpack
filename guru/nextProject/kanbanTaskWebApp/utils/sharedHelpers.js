@@ -134,6 +134,18 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
   }
 }
 
+export function fadeOutEditBoardModal({ modalStateFuncs }) {
+  // we want to run this func for close modal btn
+  // and keep changes(method we are passing to warning message modal from board modal)
+  // data-showboardmodal attr to change
+  // board-modal-selector id of element
+  // fade out edit/delete board modal
+  // wait 1.05s then unrender edit board modal
+  // fade in edit/delete btn modal
+  // work with data-iseditdeleteboardmodalshown="false" attr of edit board btn parent element
+  // edit-delete-board-modal-selector id of element
+}
+
 // export function fadeInEditDeleteBtnModal(){
 
 // }

@@ -1,7 +1,12 @@
 import React from "react";
 import EditDeleteBoardStyles from "./EditDeleteBoardBtn.module.css";
 import { BoardTaskRenderContext } from "../../Context";
-import { fadeEditDeleteBtnModal } from "./editDeleteBtnHelpers";
+import {
+  fadeEditDeleteBtnModal,
+  editOrDeleteModalShown,
+  delayedRenderOfEditDeleteModal,
+  fadeEditBoardModal,
+} from "./editDeleteBtnHelpers";
 import LogoutBtn from "./LogoutBtn";
 
 export default function EditDeleteBoardBtn({ children }) {
@@ -144,13 +149,13 @@ export default function EditDeleteBoardBtn({ children }) {
           role="dialog"
           aria-modal="true"
           id="edit-delete-board-modal-selector"
+          data-fadeineditdeletemodal="false"
+          data-iseditdeleteboardmodalshown="false"
           className={EditDeleteBoardStyles[`edit-delete-board-modal-wrapper`]}
         >
           <button
             id="edit-board-modal-btn"
             onClick={(event) => {
-              fadeEditDeleteBtnModal(event.target.parentElement);
-
               // get current board from local storage
               const currentBoard = JSON.parse(
                 localStorage.getItem("currentBoard")
@@ -159,14 +164,25 @@ export default function EditDeleteBoardBtn({ children }) {
               const boardTitle = currentBoard.title;
               // get columns property of current board
               const boardColumnsObj = currentBoard.columns;
-              setTimeout(() => {
-                document.getElementById("edit-board-name-input").focus();
-              }, 80);
-              console.log(currentBoard);
-              renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
+              // check if board selector menu is shown
+              if (
+                window.innerWidth <= 378 &&
+                event.target.parentElement.previousElementSibling.getAttribute(
+                  "data-isboardtitlebtnclick"
+                )
+              ) {
+                // if parent element previous sibling has data-isboardtitlebtnclick attr
+                // event.target.parentElement.previousElementSibling.getAttribute("data-isboardtitlebtnclick")
+                // will be truthy
+                // will change value of data-fadeineditdeletemodal attr on parent element to "false"
+                fadeEditDeleteBtnModal(event.target.parentElement);
+
+                delayedRenderOfEditDeleteModal({
+                  stateFunc:
+                    renderContextEditDeleteBtn.stateFuncsForModals
+                      .editBoardModal,
+                  elementString: "edit-board-name-input",
+                  objData: {
                     id: "edit",
                     renderBoardModal: true,
                     boardModalTitle: "Edit Board",
@@ -174,9 +190,90 @@ export default function EditDeleteBoardBtn({ children }) {
                     typeOfSubmitBtn: "saveChanges",
                     forRefocusElement: "edit-board-modal-btn",
                     columnObj: boardColumnsObj,
-                  };
-                }
-              );
+                  },
+                });
+                setTimeout(() => {
+                  fadeEditBoardModal(
+                    document.getElementById("board-modal-selector")
+                  );
+                }, 1050);
+                // document
+                //   .getElementById("board-modal-selector")
+                //   .getAttribute("data-showboardmodal") == "false"
+                //   ? document
+                //       .getElementById("board-modal-selector")
+                //       .setAttribute("data-showboardmodal", "true")
+                //   : document
+                //       .getElementById("board-modal-selector")
+                //       .setAttribute("data-showboardmodal", "false");
+                // setTimeout(() => {
+                //   document.getElementById("edit-board-name-input").focus();
+                // }, 1020);
+                // console.log(currentBoard);
+                // setTimeout(() => {
+                //   renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal(
+                //     (prevValues) => {
+                //       return {
+                //         ...prevValues,
+                //         id: "edit",
+                //         renderBoardModal: true,
+                //         boardModalTitle: "Edit Board",
+                //         boardTitleInput: boardTitle,
+                //         typeOfSubmitBtn: "saveChanges",
+                //         forRefocusElement: "edit-board-modal-btn",
+                //         columnObj: boardColumnsObj,
+                //       };
+                //     }
+                //   );
+                // }, 1010);
+
+                return;
+              }
+              // to fade in / out edit and delete btn modal
+              editOrDeleteModalShown(event.target.parentElement);
+
+              delayedRenderOfEditDeleteModal({
+                stateFunc:
+                  renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal,
+                elementString: "edit-board-name-input",
+                objData: {
+                  id: "edit",
+                  renderBoardModal: true,
+                  boardModalTitle: "Edit Board",
+                  boardTitleInput: boardTitle,
+                  typeOfSubmitBtn: "saveChanges",
+                  forRefocusElement: "edit-board-modal-btn",
+                  columnObj: boardColumnsObj,
+                },
+              });
+              setTimeout(() => {
+                fadeEditBoardModal(
+                  document.getElementById("board-modal-selector")
+                );
+              }, 1050);
+              // fadeEditBoardModal(
+              //   document.getElementById("board-modal-selector")
+              // );
+              // setTimeout(() => {
+              //   document.getElementById("edit-board-name-input").focus();
+              // }, 1020);
+              // console.log(currentBoard);
+              // setTimeout(() => {
+              //   renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal(
+              //     (prevValues) => {
+              //       return {
+              //         ...prevValues,
+              //         id: "edit",
+              //         renderBoardModal: true,
+              //         boardModalTitle: "Edit Board",
+              //         boardTitleInput: boardTitle,
+              //         typeOfSubmitBtn: "saveChanges",
+              //         forRefocusElement: "edit-board-modal-btn",
+              //         columnObj: boardColumnsObj,
+              //       };
+              //     }
+              //   );
+              // }, 1010);
             }}
             className={EditDeleteBoardStyles[`edit-board-btn`]}
           >
@@ -186,23 +283,82 @@ export default function EditDeleteBoardBtn({ children }) {
             id="delete-board-modal-btn"
             className={EditDeleteBoardStyles[`delete-board-btn`]}
             onClick={(event) => {
-              fadeEditDeleteBtnModal(event.target.parentElement);
               const currentBoardTitle = JSON.parse(
                 localStorage.getItem("currentBoard")
               ).title;
+              // check if board selector menu is shown
+              if (
+                window.innerWidth <= 378 &&
+                event.target.parentElement.previousElementSibling.getAttribute(
+                  "data-isboardtitlebtnclick"
+                )
+              ) {
+                // if parent element previous sibling has data-isboardtitlebtnclick attr
+                // event.target.parentElement.previousElementSibling.getAttribute("data-isboardtitlebtnclick")
+                // will be truthy
+                // will change value of data-fadeineditdeletemodal attr on parent element to "false"
+                fadeEditDeleteBtnModal(event.target.parentElement);
 
-              setTimeout(() => {
-                document.getElementById("delete-board-modal").focus();
-              }, 80);
-              renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
+                delayedRenderOfEditDeleteModal({
+                  stateFunc:
+                    renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard,
+                  elementString: "delete-board-modal",
+                  objData: {
                     renderDeleteBoard: true,
                     boardName: currentBoardTitle,
-                  };
-                }
-              );
+                  },
+                });
+                // setTimeout(() => {
+                //   document.getElementById("edit-board-name-input").focus();
+                // }, 1020);
+                // console.log(currentBoard);
+                // setTimeout(() => {
+                //   renderContextEditDeleteBtn.stateFuncsForModals.editBoardModal(
+                //     (prevValues) => {
+                //       return {
+                //         ...prevValues,
+                //         id: "edit",
+                //         renderBoardModal: true,
+                //         boardModalTitle: "Edit Board",
+                //         boardTitleInput: boardTitle,
+                //         typeOfSubmitBtn: "saveChanges",
+                //         forRefocusElement: "edit-board-modal-btn",
+                //         columnObj: boardColumnsObj,
+                //       };
+                //     }
+                //   );
+                // }, 1010);
+
+                return;
+              }
+              editOrDeleteModalShown(event.target.parentElement);
+
+              delayedRenderOfEditDeleteModal({
+                stateFunc:
+                  renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard,
+                elementString: "delete-board-modal",
+                objData: {
+                  renderDeleteBoard: true,
+                  boardName: currentBoardTitle,
+                },
+              });
+              /** **/
+              // fadeEditDeleteBtnModal(event.target.parentElement);
+
+              // editOrDeleteModalShown(event.target.parentElement);
+
+              // setTimeout(() => {
+              //   document.getElementById("delete-board-modal").focus();
+              // }, 80);
+              // renderContextEditDeleteBtn.stateFuncsForModals.deleteBoard(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       renderDeleteBoard: true,
+              //       boardName: currentBoardTitle,
+              //     };
+              //   }
+              // );
             }}
           >
             Delete Board

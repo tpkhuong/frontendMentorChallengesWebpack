@@ -33,18 +33,23 @@
 @media screen and (max-width: 23.4375rem) {
   /* fade modal */
   [data-isboardtitlebtnclick="true"]
-    + .edit-delete-board-modal-wrapper[data-fadeeditdeletemodal="true"] {
+    + .edit-delete-board-modal-wrapper[data-fadeineditdeletemodal="true"] {
     opacity: 1;
   }
   /* add or remove data-isboardtitlebtnclick when user click on board title btn */
   /* previous sibling element to edit-delete-board-modal-wrapper */
   [data-isboardtitlebtnclick="true"]
-    + .edit-delete-board-modal-wrapper[data-fadeeditdeletemodal="false"] {
+    + .edit-delete-board-modal-wrapper[data-fadeineditdeletemodal="false"] {
     opacity: 0;
   }
+
   .edit-delete-board-modal-wrapper {
     z-index: 2;
   }
+}
+
+.edit-delete-board-modal-wrapper[data-iseditdeleteboardmodalshown="true"] {
+  opacity: 0;
 }
 
 .edit-board-btn,

@@ -30,20 +30,64 @@ export default function BoardTitle({ children, boardTitle }) {
             const mobileMenuBtnClicked = event.target.closest("BUTTON");
 
             if (mobileMenuBtnClicked) {
+              // fade in board selector mobile menu
+              // setTimeout(() => {
+              //   document
+              //     .getElementById("boards-toggle-container-selector")
+              //     .getAttribute("data-fademenuatmobile") == "true"
+              //     ? document
+              //         .getElementById("boards-toggle-container-selector")
+              //         .setAttribute("data-fademenuatmobile", "false")
+              //     : document
+              //         .getElementById("boards-toggle-container-selector")
+              //         .getAttribute("data-fademenuatmobile", "true");
+              // }, 80);
               // add / remove attribute data-isboardtitlebtnclick
               // to launch-edit-delete-modal-btn
+              Object.is(
+                document
+                  .getElementById("launch-edit-delete-modal-btn")
+                  .getAttribute("data-isboardtitlebtnclick"),
+                null
+              )
+                ? document
+                    .getElementById("launch-edit-delete-modal-btn")
+                    .setAttribute("data-isboardtitlebtnclick", "true")
+                : document
+                    .getElementById("launch-edit-delete-modal-btn")
+                    .removeAttribute("data-isboardtitlebtnclick");
               // show mobile menu
-              alert("test deleting board for mobile,tablet, and desktop");
               const mobileMenuModal = document.getElementById(
                 "sidebar-mobile-selector"
               );
               // show board menu modal
               mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
-                ? mobileMenuModal.setAttribute("data-show-mobile-menu", "true")
-                : mobileMenuModal.setAttribute(
+                ? (mobileMenuModal.setAttribute(
                     "data-show-mobile-menu",
-                    "false"
-                  );
+                    "true"
+                  ),
+                  setTimeout(() => {
+                    document
+                      .getElementById("boards-toggle-container-selector")
+                      .getAttribute("data-fademenuatmobile") == "true"
+                      ? document
+                          .getElementById("boards-toggle-container-selector")
+                          .setAttribute("data-fademenuatmobile", "false")
+                      : null;
+                  }, 80))
+                : (setTimeout(() => {
+                    mobileMenuModal.setAttribute(
+                      "data-show-mobile-menu",
+                      "false"
+                    );
+                  }, 1050),
+                  document
+                    .getElementById("boards-toggle-container-selector")
+                    .getAttribute("data-fademenuatmobile") == "false"
+                    ? document
+                        .getElementById("boards-toggle-container-selector")
+                        .setAttribute("data-fademenuatmobile", "true")
+                    : null);
               // animate chevron icon
               document
                 .getElementById("mobile-title-btn")

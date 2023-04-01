@@ -21,9 +21,54 @@ export function tabThroughEditDeleteModal(event) {
     }
   }
 }
-
+// both fade in/out edit delete btn mdoal
+// below will run for mobile layout and user click on title btn
+// to show board selector menu
 export function fadeEditDeleteBtnModal(element) {
-  element.getAttribute("data-fadeeditdeletemodal") == "false"
-    ? element.setAttribute("data-fadeeditdeletemodal", "true")
-    : element.setAttribute("data-fadeeditdeletemodal", "false");
+  element.getAttribute("data-fadeineditdeletemodal") == "false"
+    ? element.setAttribute("data-fadeineditdeletemodal", "true")
+    : element.setAttribute("data-fadeineditdeletemodal", "false");
+}
+// below will run when user click on edit board btn
+export function editOrDeleteModalShown(element) {
+  element.getAttribute("data-iseditdeleteboardmodalshown") == "false"
+    ? element.setAttribute("data-iseditdeleteboardmodalshown", "true")
+    : element.setAttribute("data-iseditdeleteboardmodalshown", "false");
+  // Object.is(element.getAttribute("data-iseditdeleteboardmodalshown"), null)
+  //   ? element.setAttribute("data-iseditdeleteboardmodalshown", "true")
+  //   : element.removeAttribute("data-iseditdeleteboardmodalshown");
+}
+
+export function fadeEditBoardModal(element) {
+  element.getAttribute("data-showboardmodal") == "false"
+    ? element.setAttribute("data-showboardmodal", "true")
+    : element.setAttribute("data-showboardmodal", "false");
+}
+
+export function delayedRenderOfEditDeleteModal({
+  stateFunc,
+  elementString,
+  objData,
+}) {
+  setTimeout(() => {
+    document.getElementById(elementString).focus();
+  }, 80);
+  // setTimeout(() => {
+  //   document.getElementById(elementString).focus();
+  // }, 1250);
+  stateFunc((prevValues) => {
+    return {
+      ...prevValues,
+      ...objData,
+    };
+  });
+  // console.log(currentBoard);
+  // setTimeout(() => {
+  //   stateFunc((prevValues) => {
+  //     return {
+  //       ...prevValues,
+  //       ...objData,
+  //     };
+  //   });
+  // }, 1010);
 }
