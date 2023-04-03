@@ -1,5 +1,6 @@
 import React from "react";
 import CloseModalStyles from "./CloseModalBtn.module.css";
+import { fadeOutEditBoardModal } from "../../../utils/sharedHelpers";
 
 export default function CloseModalBtn({
   children,
@@ -15,7 +16,12 @@ export default function CloseModalBtn({
       className={CloseModalStyles[`close-btn`]}
       aria-label={children}
       onClick={(event) => {
+        console.log(isEditBoardModal, "isEditBoardModal");
         if (isEditBoardModal) {
+          // focus add task btn
+          document.getElementById(`${focusClickedElement}`).focus();
+
+          fadeOutEditBoardModal({ modalStateFunc: hideModalFunc });
           return;
         }
         // focus add task btn

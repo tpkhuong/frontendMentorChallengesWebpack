@@ -819,6 +819,9 @@ export function boardComponent() {
                       initialValueObjBoardModal.forRefocusElement
                     }
                     hideModalFunc={setBoardModal}
+                    isEditBoardModal={
+                      initialValueObjBoardModal.id == "edit" ? true : false
+                    }
                   >
                     {`Close ${initialValueObjBoardModal.boardModalTitle} Modal`}
                   </CloseModalBtn>
