@@ -10,11 +10,20 @@
   --dark-theme-text: hsl(0, 44.1%, 13.3%);
 }
 
+[data-showdeletemodal="true"] .delete-board-modal-container {
+  opacity: 1;
+}
+
 .delete-board-modal-bg {
   background-color: hsla(0 0% 0% / 0.4);
   position: absolute;
   inset: 0;
   /* z-index: 1; */
+}
+
+.delete-board-modal-container {
+  opacity: 0;
+  transition: opacity 1s linear;
 }
 
 @media screen and (max-width: 23.4375rem) {

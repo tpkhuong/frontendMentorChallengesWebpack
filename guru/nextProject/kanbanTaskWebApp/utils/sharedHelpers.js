@@ -156,6 +156,7 @@ export function fadeOutEditBoardModal({ modalStateFunc }) {
       };
     });
   }, 1250);
+
   const editDeleteModalLauncherBtn = document.getElementById(
     "launch-edit-delete-modal-btn"
   );

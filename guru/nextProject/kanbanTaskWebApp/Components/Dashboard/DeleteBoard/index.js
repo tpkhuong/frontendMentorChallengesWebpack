@@ -23,7 +23,10 @@ export default function DeleteBoardMessage(params) {
   return (
     <React.Fragment>
       {initialDeleteBoardValues.renderDeleteBoard && (
-        <div className={DeleteBoardStyles[`delete-board-modal-bg`]}>
+        <div
+          data-showdeletemodal="false"
+          className={DeleteBoardStyles[`delete-board-modal-bg`]}
+        >
           <div
             onKeyDown={tabThroughWarningMsgModal}
             tabIndex="-1"

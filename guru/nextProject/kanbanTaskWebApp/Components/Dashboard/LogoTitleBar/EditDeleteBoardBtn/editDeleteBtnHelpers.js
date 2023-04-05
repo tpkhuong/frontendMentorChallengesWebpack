@@ -39,10 +39,10 @@ export function editOrDeleteModalShown(element) {
   //   : element.removeAttribute("data-iseditdeleteboardmodalshown");
 }
 
-export function fadeEditBoardModal(element) {
-  element.getAttribute("data-showboardmodal") == "false"
-    ? element.setAttribute("data-showboardmodal", "true")
-    : element.setAttribute("data-showboardmodal", "false");
+export function fadeEditDeleteBoardModal(element, dataAttribute) {
+  element.getAttribute(dataAttribute) == "false"
+    ? element.setAttribute(dataAttribute, "true")
+    : element.setAttribute(dataAttribute, "false");
 }
 
 export function delayedRenderOfEditDeleteModal({

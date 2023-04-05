@@ -11,7 +11,9 @@ export function filterOutBoardObj({ boardsArray, currentIndex }) {
   );
   return boardsArrayWithoutCurrentBoard;
 }
-
+/**
+ * we want to make func that will work for board modal and delete moadl.
+ * **/
 export function renderBoardSelectorBoardTitle({
   boardSelector,
   boardTitle,

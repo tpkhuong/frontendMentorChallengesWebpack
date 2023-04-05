@@ -5,7 +5,7 @@ import {
   fadeEditDeleteBtnModal,
   editOrDeleteModalShown,
   delayedRenderOfEditDeleteModal,
-  fadeEditBoardModal,
+  fadeEditDeleteBoardModal,
 } from "./editDeleteBtnHelpers";
 import LogoutBtn from "./LogoutBtn";
 
@@ -193,8 +193,9 @@ export default function EditDeleteBoardBtn({ children }) {
                   },
                 });
                 setTimeout(() => {
-                  fadeEditBoardModal(
-                    document.getElementById("board-modal-selector")
+                  fadeEditDeleteBoardModal(
+                    document.getElementById("board-modal-selector"),
+                    "data-showboardmodal"
                   );
                 }, 1050);
                 // document
@@ -247,8 +248,9 @@ export default function EditDeleteBoardBtn({ children }) {
                 },
               });
               setTimeout(() => {
-                fadeEditBoardModal(
-                  document.getElementById("board-modal-selector")
+                fadeEditDeleteBoardModal(
+                  document.getElementById("board-modal-selector"),
+                  "data-showboardmodal"
                 );
               }, 1050);
               // fadeEditBoardModal(
@@ -308,6 +310,13 @@ export default function EditDeleteBoardBtn({ children }) {
                     boardName: currentBoardTitle,
                   },
                 });
+
+                setTimeout(() => {
+                  fadeEditDeleteBoardModal(
+                    document.getElementById("delete-board-modal").parentElement,
+                    "data-showdeletemodal"
+                  );
+                }, 1050);
                 // setTimeout(() => {
                 //   document.getElementById("edit-board-name-input").focus();
                 // }, 1020);
@@ -342,6 +351,13 @@ export default function EditDeleteBoardBtn({ children }) {
                   boardName: currentBoardTitle,
                 },
               });
+
+              setTimeout(() => {
+                fadeEditDeleteBoardModal(
+                  document.getElementById("delete-board-modal").parentElement,
+                  "data-showdeletemodal"
+                );
+              }, 1050);
               /** **/
               // fadeEditDeleteBtnModal(event.target.parentElement);
 
