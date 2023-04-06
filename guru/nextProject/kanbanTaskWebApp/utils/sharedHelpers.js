@@ -134,17 +134,25 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
   }
 }
 
-export function fadeOutEditBoardModal({ modalStateFunc }) {
+// edit board
+// board-modal-selector
+// data-showboardmodal
+
+// delete board
+// data-showdeletemodal="false"
+// id="delete-board-modal"
+export function fadeOutEditBoardModal({
+  modalStateFunc,
+  fadeAttr,
+  element,
+  stateProperty,
+}) {
   // we want to run this func for close modal btn
   // and keep changes(method we are passing to warning message modal from board modal)
   // data-showboardmodal attr to change
   // board-modal-selector id of element
-  document
-    .getElementById("board-modal-selector")
-    .getAttribute("data-showboardmodal") == "true"
-    ? document
-        .getElementById("board-modal-selector")
-        .setAttribute("data-showboardmodal", "false")
+  element.getAttribute(fadeAttr) == "true"
+    ? element.setAttribute(fadeAttr, "false")
     : null;
   // fade out edit/delete board modal
   // wait 1.05s then unrender edit board modal
@@ -152,7 +160,7 @@ export function fadeOutEditBoardModal({ modalStateFunc }) {
     modalStateFunc((prevValues) => {
       return {
         ...prevValues,
-        renderBoardModal: false,
+        [stateProperty]: false,
       };
     });
   }, 1250);

@@ -21,7 +21,12 @@ export default function CloseModalBtn({
           // focus add task btn
           document.getElementById(`${focusClickedElement}`).focus();
 
-          fadeOutEditBoardModal({ modalStateFunc: hideModalFunc });
+          fadeOutEditBoardModal({
+            modalStateFunc: hideModalFunc,
+            element: document.getElementById("board-modal-selector"),
+            fadeAttr: "data-showboardmodal",
+            stateProperty: "renderBoardModal",
+          });
           return;
         }
         // focus add task btn

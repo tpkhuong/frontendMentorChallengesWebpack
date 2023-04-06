@@ -2,7 +2,10 @@ import React from "react";
 import DeleteBoardStyles from "./DeleteBoard.module.css";
 import { tabThroughWarningMsgModal } from "../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../Context/index";
-import { renderColumnsAndAddTaskBtnForSelectedBoard } from "../../../utils/sharedHelpers";
+import {
+  renderColumnsAndAddTaskBtnForSelectedBoard,
+  fadeOutEditBoardModal,
+} from "../../../utils/sharedHelpers";
 import {
   saveDataToLocalStorage,
   filterOutBoardObj,
@@ -338,12 +341,21 @@ export default function DeleteBoardMessage(params) {
                     document.getElementById("delete-board-modal-btn").focus();
                   }, 80);
 
-                  setDeleteBoard((prevValues) => {
-                    return {
-                      ...prevValues,
-                      renderDeleteBoard: false,
-                    };
+                  fadeOutEditBoardModal({
+                    modalStateFunc: setDeleteBoard,
+                    element:
+                      document.getElementById("delete-board-modal")
+                        .parentElement,
+                    fadeAttr: "data-showdeletemodal",
+                    stateProperty: "renderDeleteBoard",
                   });
+
+                  // setDeleteBoard((prevValues) => {
+                  //   return {
+                  //     ...prevValues,
+                  //     renderDeleteBoard: false,
+                  //   };
+                  // });
                 }}
               >
                 Cancel

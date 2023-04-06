@@ -36,6 +36,7 @@ export default function EditDeleteBoardBtn({ children }) {
             setTimeout(() => {
               document.getElementById("edit-board-modal-btn").focus();
             }, 80);
+
             setEditDeleteModal((prevValues) => {
               return {
                 ...prevValues,
@@ -72,6 +73,12 @@ export default function EditDeleteBoardBtn({ children }) {
           // if initialEditDeleteModalObj.showEditDeleteModal is truthy when user click on btn hide modal
           if (initialEditDeleteModalObj.showEditDeleteModal) {
             // when at mobile size fade in sidebar menu
+            console.log(
+              document
+                .getElementById("boards-toggle-container-selector")
+                .getAttribute("data-fademenuatmobile")
+            );
+
             if (
               window.innerWidth <= 378 &&
               document
@@ -104,6 +111,7 @@ export default function EditDeleteBoardBtn({ children }) {
               }, 1070);
               return;
             }
+
             if (
               window.innerWidth <= 378 &&
               document
