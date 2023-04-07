@@ -70,6 +70,7 @@ export default function EditDeleteBoardBtn({ children }) {
             }
             return;
           }
+          alert("check opening and closing edit delete btn modal");
           // if initialEditDeleteModalObj.showEditDeleteModal is truthy when user click on btn hide modal
           if (initialEditDeleteModalObj.showEditDeleteModal) {
             // when at mobile size fade in sidebar menu
@@ -79,27 +80,46 @@ export default function EditDeleteBoardBtn({ children }) {
                 .getAttribute("data-fademenuatmobile")
             );
 
-            if (
-              window.innerWidth <= 378 &&
-              document
-                .getElementById("boards-toggle-container-selector")
-                .getAttribute("data-fademenuatmobile") == "true"
-            ) {
-              // fade out edit delete btn modal
-              console.log("fade into...");
-              fadeEditDeleteBtnModal(
-                document.getElementById("edit-delete-board-modal-selector")
-              );
-              // setTimeout(() => {}, 80);
-              setTimeout(() => {
+            if (window.innerWidth <= 378) {
+              if (
                 document
                   .getElementById("boards-toggle-container-selector")
                   .getAttribute("data-fademenuatmobile") == "true"
-                  ? document
-                      .getElementById("boards-toggle-container-selector")
-                      .setAttribute("data-fademenuatmobile", "false")
-                  : null;
+              ) {
+                // fade out edit delete btn modal
+                console.log("fade into...");
+                fadeEditDeleteBtnModal(
+                  document.getElementById("edit-delete-board-modal-selector")
+                );
+                // setTimeout(() => {}, 80);
+                setTimeout(() => {
+                  document
+                    .getElementById("boards-toggle-container-selector")
+                    .getAttribute("data-fademenuatmobile") == "true"
+                    ? document
+                        .getElementById("boards-toggle-container-selector")
+                        .setAttribute("data-fademenuatmobile", "false")
+                    : null;
 
+                  setEditDeleteModal((prevValues) => {
+                    return {
+                      ...prevValues,
+                      showEditDeleteModal: false,
+                      ariaLabel:
+                        "open edit or delete board and log out buttons modal",
+                    };
+                  });
+                }, 1070);
+                return;
+              }
+              if (
+                document
+                  .getElementById("boards-toggle-container-selector")
+                  .getAttribute("data-fademenuatmobile") == "false" ||
+                document
+                  .getElementById("boards-toggle-container-selector")
+                  .getAttribute("data-fademenuatmobile") == ""
+              ) {
                 setEditDeleteModal((prevValues) => {
                   return {
                     ...prevValues,
@@ -108,27 +128,10 @@ export default function EditDeleteBoardBtn({ children }) {
                       "open edit or delete board and log out buttons modal",
                   };
                 });
-              }, 1070);
-              return;
+                return;
+              }
             }
 
-            if (
-              window.innerWidth <= 378 &&
-              document
-                .getElementById("boards-toggle-container-selector")
-                .getAttribute("data-fademenuatmobile") == "false"
-            ) {
-              setEditDeleteModal((prevValues) => {
-                return {
-                  ...prevValues,
-                  showEditDeleteModal: false,
-                  ariaLabel:
-                    "open edit or delete board and log out buttons modal",
-                };
-              });
-              return;
-            }
-            //
             if (window.innerWidth > 378) {
               setEditDeleteModal((prevValues) => {
                 return {
@@ -139,6 +142,60 @@ export default function EditDeleteBoardBtn({ children }) {
                 };
               });
             }
+            // if (
+            //   window.innerWidth <= 378 &&
+            //   document
+            //     .getElementById("boards-toggle-container-selector")
+            //     .getAttribute("data-fademenuatmobile") == "true"
+            // ) {
+            //   // fade out edit delete btn modal
+            //   console.log("fade into...");
+            //   fadeEditDeleteBtnModal(
+            //     document.getElementById("edit-delete-board-modal-selector")
+            //   );
+            //   // setTimeout(() => {}, 80);
+            //   setTimeout(() => {
+            //     document
+            //       .getElementById("boards-toggle-container-selector")
+            //       .getAttribute("data-fademenuatmobile") == "true"
+            //       ? document
+            //           .getElementById("boards-toggle-container-selector")
+            //           .setAttribute("data-fademenuatmobile", "false")
+            //       : null;
+
+            //     setEditDeleteModal((prevValues) => {
+            //       return {
+            //         ...prevValues,
+            //         showEditDeleteModal: false,
+            //         ariaLabel:
+            //           "open edit or delete board and log out buttons modal",
+            //       };
+            //     });
+            //   }, 1070);
+            //   return;
+            // }
+
+            // if (
+            //   document
+            //     .getElementById("boards-toggle-container-selector")
+            //     .getAttribute("data-fademenuatmobile") == "false" ||
+            //   document
+            //     .getElementById("boards-toggle-container-selector")
+            //     .getAttribute("data-fademenuatmobile") == ""
+            // ) {
+            //   if (window.innerWidth <= 378) {
+            //     setEditDeleteModal((prevValues) => {
+            //       return {
+            //         ...prevValues,
+            //         showEditDeleteModal: false,
+            //         ariaLabel:
+            //           "open edit or delete board and log out buttons modal",
+            //       };
+            //     });
+            //     return;
+            //   }
+            // }
+            //
           }
         }}
       >

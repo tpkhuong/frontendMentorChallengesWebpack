@@ -23,7 +23,7 @@ export default function Sidebar({
       {/* white or dark grey */}
       <aside
         id="boards-toggle-container-selector"
-        data-fademenuatmobile="true"
+        data-fademenuatmobile=""
         role={`${isTabletSize ? "complementary" : ""}`}
         className={SidebarStyles[`boards-toggle-container`]}
       >

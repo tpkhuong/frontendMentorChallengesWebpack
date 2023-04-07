@@ -61,33 +61,80 @@ export default function BoardTitle({ children, boardTitle }) {
                 "sidebar-mobile-selector"
               );
               // show board menu modal
-              mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
-                ? (mobileMenuModal.setAttribute(
-                    "data-show-mobile-menu",
-                    "true"
-                  ),
-                  setTimeout(() => {
+              if (
+                mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
+              ) {
+                mobileMenuModal.setAttribute("data-show-mobile-menu", "true");
+
+                setTimeout(() => {
+                  if (
+                    document
+                      .getElementById("boards-toggle-container-selector")
+                      .getAttribute("data-fademenuatmobile") == "" ||
                     document
                       .getElementById("boards-toggle-container-selector")
                       .getAttribute("data-fademenuatmobile") == "true"
-                      ? document
-                          .getElementById("boards-toggle-container-selector")
-                          .setAttribute("data-fademenuatmobile", "false")
-                      : null;
-                  }, 80))
-                : (setTimeout(() => {
-                    mobileMenuModal.setAttribute(
-                      "data-show-mobile-menu",
-                      "false"
-                    );
-                  }, 1050),
-                  document
-                    .getElementById("boards-toggle-container-selector")
-                    .getAttribute("data-fademenuatmobile") == "false"
-                    ? document
-                        .getElementById("boards-toggle-container-selector")
-                        .setAttribute("data-fademenuatmobile", "true")
-                    : null);
+                  ) {
+                    document
+                      .getElementById("boards-toggle-container-selector")
+                      .setAttribute("data-fademenuatmobile", "false");
+                  }
+                }, 80);
+                return;
+              }
+
+              if (
+                mobileMenuModal.getAttribute("data-show-mobile-menu") == "true"
+              ) {
+                setTimeout(() => {
+                  mobileMenuModal.setAttribute(
+                    "data-show-mobile-menu",
+                    "false"
+                  );
+                }, 1050);
+
+                document
+                  .getElementById("boards-toggle-container-selector")
+                  .getAttribute("data-fademenuatmobile") == "false"
+                  ? document
+                      .getElementById("boards-toggle-container-selector")
+                      .setAttribute("data-fademenuatmobile", "true")
+                  : null;
+                return;
+              }
+
+              // mobileMenuModal.getAttribute("data-show-mobile-menu") == "false"
+              //   ? (mobileMenuModal.setAttribute(
+              //       "data-show-mobile-menu",
+              //       "true"
+              //     ),
+              //     setTimeout(() => {
+              //       if (
+              //         document
+              //           .getElementById("boards-toggle-container-selector")
+              //           .getAttribute("data-fademenuatmobile") == "" ||
+              //         document
+              //           .getElementById("boards-toggle-container-selector")
+              //           .getAttribute("data-fademenuatmobile") == "true"
+              //       ) {
+              //         document
+              //           .getElementById("boards-toggle-container-selector")
+              //           .setAttribute("data-fademenuatmobile", "false");
+              //       }
+              //     }, 80))
+              //   : (setTimeout(() => {
+              //       mobileMenuModal.setAttribute(
+              //         "data-show-mobile-menu",
+              //         "false"
+              //       );
+              //     }, 1050),
+              //     document
+              //       .getElementById("boards-toggle-container-selector")
+              //       .getAttribute("data-fademenuatmobile") == "false"
+              //       ? document
+              //           .getElementById("boards-toggle-container-selector")
+              //           .setAttribute("data-fademenuatmobile", "true")
+              //       : null);
               // animate chevron icon
               document
                 .getElementById("mobile-title-btn")
