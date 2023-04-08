@@ -91,6 +91,10 @@ export default function BoardTitle({ children, boardTitle }) {
                     "data-show-mobile-menu",
                     "false"
                   );
+                  // reset data-fademenuatmobile value of boards-toggle-container-selector element to empty string
+                  document
+                    .getElementById("boards-toggle-container-selector")
+                    .setAttribute("data-fademenuatmobile", "");
                 }, 1050);
 
                 document

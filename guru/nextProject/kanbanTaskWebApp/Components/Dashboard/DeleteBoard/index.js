@@ -4,7 +4,8 @@ import { tabThroughWarningMsgModal } from "../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../Context/index";
 import {
   renderColumnsAndAddTaskBtnForSelectedBoard,
-  fadeOutEditBoardModal,
+  fadeOutEditDeleteBoardModal,
+  fadeInEditDeleteBtnModal,
 } from "../../../utils/sharedHelpers";
 import {
   saveDataToLocalStorage,
@@ -341,7 +342,7 @@ export default function DeleteBoardMessage(params) {
                     document.getElementById("delete-board-modal-btn").focus();
                   }, 80);
 
-                  fadeOutEditBoardModal({
+                  fadeOutEditDeleteBoardModal({
                     modalStateFunc: setDeleteBoard,
                     element:
                       document.getElementById("delete-board-modal")
@@ -349,6 +350,10 @@ export default function DeleteBoardMessage(params) {
                     fadeAttr: "data-showdeletemodal",
                     stateProperty: "renderDeleteBoard",
                   });
+
+                  fadeInEditDeleteBtnModal(
+                    document.getElementById("launch-edit-delete-modal-btn")
+                  );
 
                   // setDeleteBoard((prevValues) => {
                   //   return {

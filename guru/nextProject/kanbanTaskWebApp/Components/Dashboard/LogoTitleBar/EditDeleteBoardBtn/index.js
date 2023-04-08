@@ -70,7 +70,7 @@ export default function EditDeleteBoardBtn({ children }) {
             }
             return;
           }
-          alert("check opening and closing edit delete btn modal");
+
           // if initialEditDeleteModalObj.showEditDeleteModal is truthy when user click on btn hide modal
           if (initialEditDeleteModalObj.showEditDeleteModal) {
             // when at mobile size fade in sidebar menu
@@ -110,8 +110,10 @@ export default function EditDeleteBoardBtn({ children }) {
                     };
                   });
                 }, 1070);
+
                 return;
               }
+
               if (
                 document
                   .getElementById("boards-toggle-container-selector")

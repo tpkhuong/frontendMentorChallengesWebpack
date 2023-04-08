@@ -141,7 +141,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
 // delete board
 // data-showdeletemodal="false"
 // id="delete-board-modal"
-export function fadeOutEditBoardModal({
+export function fadeOutEditDeleteBoardModal({
   modalStateFunc,
   fadeAttr,
   element,
@@ -163,7 +163,7 @@ export function fadeOutEditBoardModal({
         [stateProperty]: false,
       };
     });
-  }, 1250);
+  }, 1050);
 
   const editDeleteModalLauncherBtn = document.getElementById(
     "launch-edit-delete-modal-btn"
@@ -186,7 +186,7 @@ export function fadeOutEditBoardModal({
             .getElementById("edit-delete-board-modal-selector")
             .setAttribute("data-fadeineditdeletemodal", "true")
         : null;
-    }, 800);
+    }, 1080);
 
     return;
     // if (
@@ -239,7 +239,7 @@ export function fadeOutEditBoardModal({
             .getElementById("edit-delete-board-modal-selector")
             .setAttribute("data-iseditdeleteboardmodalshown", "false")
         : null;
-    }, 800);
+    }, 1080);
 
     return;
   }
@@ -249,15 +249,104 @@ export function fadeOutEditBoardModal({
   // fade in edit/delete btn modal
   // work with data-iseditdeleteboardmodalshown="false" attr of edit board btn parent element
   // edit-delete-board-modal-selector id of element
-  document
-    .getElementById("edit-delete-board-modal-selector")
-    .getAttribute("data-iseditdeleteboardmodalshown") == "true"
-    ? document
-        .getElementById("edit-delete-board-modal-selector")
-        .setAttribute("data-iseditdeleteboardmodalshown", "false")
-    : null;
+  setTimeout(() => {
+    document
+      .getElementById("edit-delete-board-modal-selector")
+      .getAttribute("data-iseditdeleteboardmodalshown") == "true"
+      ? document
+          .getElementById("edit-delete-board-modal-selector")
+          .setAttribute("data-iseditdeleteboardmodalshown", "false")
+      : null;
+  }, 1070);
 }
 
-// export function fadeInEditDeleteBtnModal(){
+export function fadeInEditDeleteBtnModal(element) {
+  // want to check if board selector modal is shown
+  // use value of data-isboardtitlebtnclick attr
+  // on element with launch-edit-delete-modal-btn id
+  if (
+    window.innerWidth <= 378 &&
+    element.getAttribute("data-isboardtitlebtnclick") == "true"
+  ) {
+    // if it is change data-fadeineditdeletemodal to "true"
+    // on element with edit-delete-board-modal-selector id
+    setTimeout(() => {
+      document
+        .getElementById("edit-delete-board-modal-selector")
+        .getAttribute("data-fadeineditdeletemodal") == "false"
+        ? document
+            .getElementById("edit-delete-board-modal-selector")
+            .setAttribute("data-fadeineditdeletemodal", "true")
+        : null;
+    }, 1080);
 
-// }
+    return;
+    // if (
+    //   element.getAttribute("data-isboardtitlebtnclick") ==
+    //   "true"
+    // ) {
+    //   // if it is change data-fadeineditdeletemodal to "true"
+    //   // on element with edit-delete-board-modal-selector id
+    //   document
+    //     .getElementById("edit-delete-board-modal-selector")
+    //     .getAttribute("data-fadeineditdeletemodal") == "false"
+    //     ? document
+    //         .getElementById("edit-delete-board-modal-selector")
+    //         .setAttribute("data-fadeineditdeletemodal", "true")
+    //     : null;
+    //   return;
+    // }
+    // // if it is not shown change data-iseditdeleteboardmodalshown to "false"
+    // // on element with edit-delete-board-modal-selector id
+    // if (
+    //   Object.is(
+    //     element.getAttribute("data-isboardtitlebtnclick"),
+    //     null
+    //   )
+    // ) {
+    //   document
+    //     .getElementById("edit-delete-board-modal-selector")
+    //     .getAttribute("data-iseditdeleteboardmodalshown") == "true"
+    //     ? document
+    //         .getElementById("edit-delete-board-modal-selector")
+    //         .setAttribute("data-iseditdeleteboardmodalshown", "false")
+    //     : null;
+    //   return;
+    // }
+  }
+
+  if (
+    window.innerWidth <= 378 &&
+    Object.is(element.getAttribute("data-isboardtitlebtnclick"), null)
+  ) {
+    // if it is not shown change data-iseditdeleteboardmodalshown to "false"
+    // on element with edit-delete-board-modal-selector id
+    setTimeout(() => {
+      document
+        .getElementById("edit-delete-board-modal-selector")
+        .getAttribute("data-iseditdeleteboardmodalshown") == "true"
+        ? document
+            .getElementById("edit-delete-board-modal-selector")
+            .setAttribute("data-iseditdeleteboardmodalshown", "false")
+        : null;
+    }, 1080);
+
+    return;
+  }
+
+  /**
+   * we get here it means we are at tablet size or larger
+   * **/
+  // fade in edit/delete btn modal
+  // work with data-iseditdeleteboardmodalshown="false" attr of edit board btn parent element
+  // edit-delete-board-modal-selector id of element
+  setTimeout(() => {
+    document
+      .getElementById("edit-delete-board-modal-selector")
+      .getAttribute("data-iseditdeleteboardmodalshown") == "true"
+      ? document
+          .getElementById("edit-delete-board-modal-selector")
+          .setAttribute("data-iseditdeleteboardmodalshown", "false")
+      : null;
+  }, 1070);
+}

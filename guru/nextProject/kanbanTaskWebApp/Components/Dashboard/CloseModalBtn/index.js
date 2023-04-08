@@ -1,6 +1,9 @@
 import React from "react";
 import CloseModalStyles from "./CloseModalBtn.module.css";
-import { fadeOutEditBoardModal } from "../../../utils/sharedHelpers";
+import {
+  fadeOutEditDeleteBoardModal,
+  fadeInEditDeleteBtnModal,
+} from "../../../utils/sharedHelpers";
 
 export default function CloseModalBtn({
   children,
@@ -21,7 +24,7 @@ export default function CloseModalBtn({
           // focus add task btn
           document.getElementById(`${focusClickedElement}`).focus();
 
-          fadeOutEditBoardModal({
+          fadeOutEditDeleteBoardModal({
             modalStateFunc: hideModalFunc,
             element: document.getElementById("board-modal-selector"),
             fadeAttr: "data-showboardmodal",
@@ -29,6 +32,10 @@ export default function CloseModalBtn({
           });
           return;
         }
+
+        fadeInEditDeleteBtnModal(
+          document.getElementById("launch-edit-delete-modal-btn")
+        );
         // focus add task btn
         document.getElementById(`${focusClickedElement}`).focus();
 

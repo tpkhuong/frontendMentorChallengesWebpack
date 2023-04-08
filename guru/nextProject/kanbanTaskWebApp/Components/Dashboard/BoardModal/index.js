@@ -5,7 +5,11 @@ import WarningMessage from "../WarningMessage/index";
 // import DeleteBoardMessage from "../DeleteBoard/index";
 import { BoardTaskRenderContext } from "../Context/index";
 import { makeObjForBoardModal, compareColumnObjs } from "./BoardModalHelpers";
-import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
+import {
+  keyboardModalTabbingAndSpaceKey,
+  fadeOutEditDeleteBoardModal,
+  fadeInEditDeleteBtnModal,
+} from "../../../utils/sharedHelpers";
 
 export function boardComponent() {
   const objForBoardComponent = {
@@ -236,7 +240,7 @@ export function boardComponent() {
             JSON.parse(localStorage.getItem("currentBoard")),
             "board after update"
           );
-          // call setStateFunc pass in false to renderBoardModal property to no render add new board modal
+          // call setStateFunc pass in false to renderBoardModal property to not render add new board modal
           setStateFunc((prevValues) => {
             return {
               ...prevValues,
@@ -636,13 +640,26 @@ export function boardComponent() {
                   stringsArray: [],
                 };
               });
-              // to not render edit board modal
-              setStateFunc((prevValues) => {
-                return {
-                  ...prevValues,
-                  renderBoardModal: false,
-                };
+              // fade out edit board modal
+              fadeOutEditDeleteBoardModal({
+                modalStateFunc: setStateFunc,
+                element: document.getElementById("board-modal-selector"),
+                fadeAttr: "data-showboardmodal",
+                stateProperty: "renderBoardModal",
               });
+              // to not render edit board modal
+              setTimeout(() => {
+                setStateFunc((prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderBoardModal: false,
+                  };
+                });
+              }, 2500);
+              // show edit delete btn modal
+              fadeInEditDeleteBtnModal(
+                document.getElementById("launch-edit-delete-modal-btn")
+              );
               // update data in local storage. updating board title in local storage
               // is handled by changeBoardTitle func
               // current board columns
