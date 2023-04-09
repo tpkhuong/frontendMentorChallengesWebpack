@@ -20,7 +20,16 @@ export default function MessageColumnsContainer({
   });
 
   const renderContextForMsgColumns = React.useContext(BoardTaskRenderContext);
-
+  // initial load
+  // edit board
+  // add new board
+  // add column for empty message component
+  /**
+   * both changing current board and deleting board is handled by changeColumnsContainerWidth func
+   * being called in renderColumnsAndAddTaskBtnForSelectedBoard
+   * **/
+  // changing current board
+  // deleting board
   renderContextForMsgColumns.setStateFuncs.msgColumnsContainer = setMsgColumns;
   console.log(initialMsgColumnsObj);
   console.log("hello this is msgcolumnscontainer");
@@ -28,7 +37,11 @@ export default function MessageColumnsContainer({
     <div
       id="message-columns"
       data-issidebarshown="true"
-      data-atleastonecolumnshown="false"
+      // we can use value of initialMsgColumnsObj.isCurrentBoardEmpty
+      // to figure out if data-atleastonecolumnshown is "true" or "false"
+      data-atleastonecolumnshown={
+        initialMsgColumnsObj.isCurrentBoardEmpty ? "false" : "true"
+      }
       className={MessageColumnsStyles[`columns-message-container`]}
     >
       {/* <TodoColumn />
@@ -42,7 +55,31 @@ export default function MessageColumnsContainer({
         <Columns columnsObjData={initialMsgColumnsObj.currentBoardColumnsObj} />
       )}
       {/* add column button height has to be around 756.2 */}
-      <button className={MessageColumnsStyles[`new-column-btn`]}>
+      <button
+        onClick={(event) => {
+          const obj = JSON.parse(localStorage.getItem("currentBoard")).columns;
+          obj.doing = [];
+          renderContextForMsgColumns.setStateFuncs.columnsContainer(
+            (prevValues) => {
+              return {
+                ...prevValues,
+                currentBoardColumnsObj: {
+                  ...obj,
+                },
+              };
+            }
+          );
+          // setMsgColumns((prevValues) => {
+          //   return {
+          //     ...prevValues,
+          //     currentBoardColumnsObj: {
+          //       ...obj,
+          //     },
+          //   };
+          // });
+        }}
+        className={MessageColumnsStyles[`new-column-btn`]}
+      >
         + New Column
       </button>
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">

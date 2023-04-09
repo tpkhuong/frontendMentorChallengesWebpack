@@ -83,7 +83,9 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
   addTaskBtn,
   columnsContainer,
   stateFuncsFromContext,
+  changeColumnsContainerWidth,
 }) {
+  console.log(changeColumnsContainerWidth);
   const isBoardEmpty =
     !Array.isArray(boardsColumnsObj.todo) &&
     !Array.isArray(boardsColumnsObj.doing) &&
@@ -106,6 +108,9 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
         };
       });
     }
+
+    // changeColumnsContainerWidth({ isBoardEmpty });
+    return;
   }
 
   if (!isBoardEmpty) {
@@ -117,7 +122,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
     if (!addTaskBtn) {
       stateFuncsFromContext.setStateFuncs.addTaskBtn(false);
     }
-
+    console.log("refactor this algorithm");
     if (!columnsContainer) {
       stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
         return {
@@ -131,9 +136,28 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
     if (columnsContainer) {
       stateFuncsFromContext.setStateFuncs.columnsContainer(boardsColumnsObj);
     }
+
+    // changeColumnsContainerWidth({ isBoardEmpty });
+    return;
   }
 }
 
+export function changeColumnsContainerWidth({ isBoardEmpty }) {
+  const msgColumnsContainer = document.getElementById("message-columns");
+  if (isBoardEmpty) {
+    // data-atleastonecolumnshown
+    msgColumnsContainer.getAttribute("data-atleastonecolumnshown") == "true"
+      ? msgColumnsContainer.setAttribute("data-atleastonecolumnshown", "false")
+      : null;
+    return;
+  }
+  if (!isBoardEmpty) {
+    msgColumnsContainer.getAttribute("data-atleastonecolumnshown") == "false"
+      ? msgColumnsContainer.setAttribute("data-atleastonecolumnshown", "true")
+      : null;
+    return;
+  }
+}
 // edit board
 // board-modal-selector
 // data-showboardmodal

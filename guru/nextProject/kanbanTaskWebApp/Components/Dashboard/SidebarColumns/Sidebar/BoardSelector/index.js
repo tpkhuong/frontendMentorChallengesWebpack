@@ -2,7 +2,10 @@ import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../../../Context/index";
-import { renderColumnsAndAddTaskBtnForSelectedBoard } from "../../../../../utils/sharedHelpers";
+import {
+  renderColumnsAndAddTaskBtnForSelectedBoard,
+  changeColumnsContainerWidth,
+} from "../../../../../utils/sharedHelpers";
 // import { taskModal } from "../../../TaskModal/index";
 // import CreateBoardBtnModalContainer from "./CreateBoardBtnModalContainer/index";
 // import { testCreateBoards } from "./boardSelectorHelpers";

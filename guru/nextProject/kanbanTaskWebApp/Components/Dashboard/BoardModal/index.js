@@ -9,6 +9,7 @@ import {
   keyboardModalTabbingAndSpaceKey,
   fadeOutEditDeleteBoardModal,
   fadeInEditDeleteBtnModal,
+  changeColumnsContainerWidth,
 } from "../../../utils/sharedHelpers";
 
 export function boardComponent() {
@@ -207,6 +208,9 @@ export function boardComponent() {
                   return buildingUp;
                 }, {}),
         };
+        // use boardColumnsContainer.childElementCount to calculate isBoardEmpty
+        const isBoardEmpty =
+          boardColumnsContainer.childElementCount === 0 ? true : false;
 
         if (user.boards.length === 0) {
           // there are no board obj in user boards array
@@ -225,6 +229,9 @@ export function boardComponent() {
           // update isSelected property of newboardobj to true
           user.boards[0].isSelected = true;
           // console.log(user, "before update");
+          changeColumnsContainerWidth({
+            isBoardEmpty,
+          });
           // update current user boards array and current board in local storage
           console.log(
             JSON.parse(localStorage.getItem("currentUser")),
@@ -240,6 +247,7 @@ export function boardComponent() {
             JSON.parse(localStorage.getItem("currentBoard")),
             "board after update"
           );
+
           // call setStateFunc pass in false to renderBoardModal property to not render add new board modal
           setStateFunc((prevValues) => {
             return {
@@ -267,6 +275,9 @@ export function boardComponent() {
           user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to false
           user.boards[user.boards.length - 1].isSelected = false;
+          changeColumnsContainerWidth({
+            isBoardEmpty,
+          });
           // console.log(user, "before update");
           console.log(
             JSON.parse(localStorage.getItem("currentUser")),
@@ -542,12 +553,26 @@ export function boardComponent() {
           );
         }
 
-        setStateFunc((prevValues) => {
-          return {
-            ...prevValues,
-            renderBoardModal: false,
-          };
+        // fade out edit board modal
+        fadeOutEditDeleteBoardModal({
+          modalStateFunc: setStateFunc,
+          element: document.getElementById("board-modal-selector"),
+          fadeAttr: "data-showboardmodal",
+          stateProperty: "renderBoardModal",
         });
+        // to not render edit board modal
+        setTimeout(() => {
+          setStateFunc((prevValues) => {
+            return {
+              ...prevValues,
+              renderBoardModal: false,
+            };
+          });
+        }, 2500);
+        // show edit delete btn modal
+        fadeInEditDeleteBtnModal(
+          document.getElementById("launch-edit-delete-modal-btn")
+        );
         // check if add task btn is rendered
         const isAddTaskBtnRendered = document.getElementById("add-task-btn");
         if (Object.is(isAddTaskBtnRendered, null)) {
@@ -568,6 +593,7 @@ export function boardComponent() {
       // if arrayColumnToRemoveWithTasks.length > 0 means user does not want to render a column with tasks in it
       // render warning message modal
       if (arrayColumnToRemoveWithTasks.length > 0) {
+        // run changeColumnsContainerWidth only when user remove columns
         setTimeout(() => {
           document.getElementById("warning-message-modal").focus();
         }, 80);
@@ -632,14 +658,6 @@ export function boardComponent() {
                   }
                 );
               }
-              // to not render warning messages component
-              setWarningMessage((prevValues) => {
-                return {
-                  ...prevValues,
-                  renderWarningMessage: false,
-                  stringsArray: [],
-                };
-              });
               // fade out edit board modal
               fadeOutEditDeleteBoardModal({
                 modalStateFunc: setStateFunc,
@@ -647,6 +665,16 @@ export function boardComponent() {
                 fadeAttr: "data-showboardmodal",
                 stateProperty: "renderBoardModal",
               });
+              // to not render warning messages component
+              setTimeout(() => {
+                setWarningMessage((prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderWarningMessage: false,
+                    stringsArray: [],
+                  };
+                });
+              }, 250);
               // to not render edit board modal
               setTimeout(() => {
                 setStateFunc((prevValues) => {

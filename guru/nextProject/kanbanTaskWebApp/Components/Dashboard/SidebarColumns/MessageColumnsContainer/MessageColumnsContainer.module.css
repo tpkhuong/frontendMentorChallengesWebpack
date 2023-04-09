@@ -60,7 +60,7 @@
   background-image: linear-gradient(
     to bottom,
     var(--color-new-column-btn-dark-top, hsl(219, 63%, 95%)),
-    var(--color-new-column-btn-dark-bottom, hsla(218 66% 95% / 0.5))
+    var(--color-new-column-btn-dark-bottom, hsl(218, 66%, 95%, 0.5))
   );
   color: var(--color-medium-grey);
   font-size: var(--heading-sm-three);
@@ -102,7 +102,7 @@
 
   .columns-message-container [data-columncontainerstyleattr],
   .columns-message-container .new-column-btn {
-    min-width: 280px;
+    min-width: revert;
     width: 280px;
   }
 

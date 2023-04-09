@@ -6,6 +6,7 @@ import {
   renderColumnsAndAddTaskBtnForSelectedBoard,
   fadeOutEditDeleteBoardModal,
   fadeInEditDeleteBtnModal,
+  changeColumnsContainerWidth,
 } from "../../../utils/sharedHelpers";
 import {
   saveDataToLocalStorage,

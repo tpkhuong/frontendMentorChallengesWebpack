@@ -1,5 +1,6 @@
 import React from "react";
 import EmptyBoardStyles from "./EmptyBoard.module.css";
+import { changeColumnsContainerWidth } from "../../../../../utils/sharedHelpers";
 
 export default function EmptyBoardMessage({ children }) {
   return (
@@ -12,6 +13,9 @@ export default function EmptyBoardMessage({ children }) {
         <p>This board is empty. Create a new column to get started.</p>
         <button
           onClick={(event) => {
+            // adding columns attr data-atleastonecolumnshown should always be "true"
+            // value/argument passed into changeColumnsContainerWidth should be false
+            changeColumnsContainerWidth({ isBoardEmpty: false });
             // const localData = JSON.parse(localStorage.getItem("currentUser"));
             // localData.boards.length = 0;
             // localStorage.setItem("currentUser", JSON.stringify(localData));
