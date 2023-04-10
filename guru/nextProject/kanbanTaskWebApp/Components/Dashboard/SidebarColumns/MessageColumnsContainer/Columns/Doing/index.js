@@ -131,42 +131,46 @@ const doingArray = [
 
 export default function DoingColumn({ children, doingColumnArray }) {
   return (
-    <div
-      data-columncontainerstyleattr=""
-      className={DoingColumnStyles[`doing-quantity-task-container`]}
-    >
-      <ColumnTitle
-        quantity={`${doingColumnArray.length}`}
-        assistiveText="doing"
-        status="doing"
-      >
-        Doing
-      </ColumnTitle>
-      {/* tasks */}
-      <ul
-        data-taskscontainerstyleattr
-        className={DoingColumnStyles[`doing-tasks-container`]}
-      >
-        {doingColumnArray.map(function buildDoingTask(obj, index) {
-          return (
-            <li key={Math.random() * index}>
-              <TaskBtn
-                completed={`${obj.subtasks.reduce(
-                  (buildingUp, currentValue) => {
-                    return currentValue.isCompleted
-                      ? buildingUp + 1
-                      : buildingUp;
-                  },
-                  0
-                )}`}
-                total={`${obj.subtasks.length}`}
-              >
-                {obj.title}
-              </TaskBtn>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <React.Fragment>
+      {doingColumnArray.length > 0 && (
+        <div
+          data-columncontainerstyleattr=""
+          className={DoingColumnStyles[`doing-quantity-task-container`]}
+        >
+          <ColumnTitle
+            quantity={`${doingColumnArray.length}`}
+            assistiveText="doing"
+            status="doing"
+          >
+            Doing
+          </ColumnTitle>
+          {/* tasks */}
+          <ul
+            data-taskscontainerstyleattr
+            className={DoingColumnStyles[`doing-tasks-container`]}
+          >
+            {doingColumnArray.map(function buildDoingTask(obj, index) {
+              return (
+                <li key={Math.random() * index}>
+                  <TaskBtn
+                    completed={`${obj.subtasks.reduce(
+                      (buildingUp, currentValue) => {
+                        return currentValue.isCompleted
+                          ? buildingUp + 1
+                          : buildingUp;
+                      },
+                      0
+                    )}`}
+                    total={`${obj.subtasks.length}`}
+                  >
+                    {obj.title}
+                  </TaskBtn>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </React.Fragment>
   );
 }

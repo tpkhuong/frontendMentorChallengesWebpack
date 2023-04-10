@@ -49,11 +49,13 @@ export default function MessageColumnsContainer({
       <TodoColumn />
       <TodoColumn />
       <TodoColumn /> */}
-      {initialMsgColumnsObj.isCurrentBoardEmpty ? (
-        <EmptyBoardMessage />
-      ) : (
-        <Columns columnsObjData={initialMsgColumnsObj.currentBoardColumnsObj} />
-      )}
+      <EmptyBoardMessage
+        emptyBoardMsgIsBoardEmpty={objOfValuesForColumns.currentBoardEmpty}
+      />
+      <Columns
+        columnsIsCurrentBoardEmpty={objOfValuesForColumns.currentBoardEmpty}
+        columnsObjData={initialMsgColumnsObj.currentBoardColumnsObj}
+      />
       {/* add column button height has to be around 756.2 */}
       <button
         onClick={(event) => {
@@ -64,7 +66,9 @@ export default function MessageColumnsContainer({
               return {
                 ...prevValues,
                 currentBoardColumnsObj: {
-                  ...obj,
+                  todo: obj.todo,
+                  doing: [],
+                  done: null,
                 },
               };
             }
@@ -82,6 +86,11 @@ export default function MessageColumnsContainer({
       >
         + New Column
       </button>
+      {/* {initialMsgColumnsObj.isCurrentBoardEmpty ? (
+      ) : (
+        
+      )} */}
+
       {/* <ColumnTitle assistiveText="Todo" quantity="8" status="todo">
         Todo
       </ColumnTitle>
