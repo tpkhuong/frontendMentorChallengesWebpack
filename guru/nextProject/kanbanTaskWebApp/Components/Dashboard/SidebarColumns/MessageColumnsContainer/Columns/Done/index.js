@@ -2,7 +2,7 @@ import React from "react";
 import DoneColumnStyles from "./Done.module.css";
 import ColumnTitle from "../ColumnTitle";
 import TaskBtn from "../TaskBtn";
-
+import { BoardTaskRenderContext } from "../../../../Context/index";
 // 155 68% 65%
 
 const doneArray = [
@@ -126,15 +126,22 @@ const doneArray = [
 ];
 
 export default function DoneColumn({ children, doneColumnArray }) {
+  const [doneArray, setDoneColumn] = React.useState(doneColumnArray);
+
+  const renderContextDoneColumn = React.useContext(BoardTaskRenderContext);
+
+  renderContextDoneColumn.setStateFuncs.doneColumn = setDoneColumn;
+
   return (
     <React.Fragment>
-      {doneColumnArray.length > 0 && (
+      {doneArray && doneArray.length >= 0 && (
         <div
+          id="done-column-selector"
           data-columncontainerstyleattr=""
           className={DoneColumnStyles[`done-quantity-task-container`]}
         >
           <ColumnTitle
-            quantity={`${doneColumnArray.length}`}
+            quantity={`${doneArray.length}`}
             assistiveText="done"
             status="done"
           >
@@ -145,7 +152,7 @@ export default function DoneColumn({ children, doneColumnArray }) {
             data-taskscontainerstyleattr
             className={DoneColumnStyles[`done-tasks-container`]}
           >
-            {doneColumnArray.map(function buildDoneTask(obj, index) {
+            {doneArray.map(function buildDoneTask(obj, index) {
               return (
                 <li key={Math.random() * index}>
                   <TaskBtn

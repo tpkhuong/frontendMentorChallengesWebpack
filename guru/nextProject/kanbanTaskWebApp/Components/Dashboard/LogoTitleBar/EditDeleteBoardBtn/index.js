@@ -228,9 +228,13 @@ export default function EditDeleteBoardBtn({ children }) {
                 localStorage.getItem("currentBoard")
               );
               // get title property of current board
-              const boardTitle = currentBoard.title;
+              const boardTitle = currentBoard
+                ? currentBoard.title
+                : "Add New Board";
               // get columns property of current board
-              const boardColumnsObj = currentBoard.columns;
+              const boardColumnsObj = currentBoard
+                ? currentBoard.columns
+                : { todo: null, doing: null, done: null };
               // check if board selector menu is shown
               if (
                 window.innerWidth <= 378 &&
@@ -352,9 +356,13 @@ export default function EditDeleteBoardBtn({ children }) {
             id="delete-board-modal-btn"
             className={EditDeleteBoardStyles[`delete-board-btn`]}
             onClick={(event) => {
-              const currentBoardTitle = JSON.parse(
+              const currentBoard = JSON.parse(
                 localStorage.getItem("currentBoard")
-              ).title;
+              );
+
+              const currentBoardTitle = currentBoard
+                ? currentBoard.title
+                : "Board do not have a title";
               // check if board selector menu is shown
               if (
                 window.innerWidth <= 378 &&

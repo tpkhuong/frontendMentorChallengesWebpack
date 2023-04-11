@@ -30,13 +30,14 @@ export default function CloseModalBtn({
             fadeAttr: "data-showboardmodal",
             stateProperty: "renderBoardModal",
           });
+
+          fadeInEditDeleteBtnModal(
+            document.getElementById("launch-edit-delete-modal-btn")
+          );
           return;
         }
 
-        fadeInEditDeleteBtnModal(
-          document.getElementById("launch-edit-delete-modal-btn")
-        );
-        // focus add task btn
+        // focus element that opened modal
         document.getElementById(`${focusClickedElement}`).focus();
 
         // hide task modal

@@ -6,6 +6,7 @@ import {
   renderColumnsAndAddTaskBtnForSelectedBoard,
   fadeOutEditDeleteBoardModal,
   fadeInEditDeleteBtnModal,
+  checkAndRenderColumnsComponent,
   changeColumnsContainerWidth,
 } from "../../../utils/sharedHelpers";
 import {
@@ -98,15 +99,26 @@ export default function DeleteBoardMessage(params) {
                     });
                     // add task btn
                     renderContextDeleteBoard.setStateFuncs.addTaskBtn(true);
-                    // message columns container
-                    renderContextDeleteBoard.setStateFuncs.msgColumnsContainer(
+                    // render empty board message
+                    renderContextDeleteBoard.setStateFuncs.emptyBoardMsg(true);
+                    // unrender columns container
+                    renderContextDeleteBoard.setStateFuncs.columnsContainer(
                       (prevValues) => {
                         return {
                           ...prevValues,
-                          isCurrentBoardEmpty: true,
+                          columnsIsCurrentBoardEmpty: true,
                         };
                       }
                     );
+                    // message columns container
+                    // renderContextDeleteBoard.setStateFuncs.msgColumnsContainer(
+                    //   (prevValues) => {
+                    //     return {
+                    //       ...prevValues,
+                    //       isCurrentBoardEmpty: true,
+                    //     };
+                    //   }
+                    // );
                     // update current user boards property
                     currentUser.boards = modifiedBoardsArray;
                     saveDataToLocalStorage({
@@ -152,6 +164,7 @@ export default function DeleteBoardMessage(params) {
                       addTaskBtn,
                       columnsContainer,
                       stateFuncsFromContext: renderContextDeleteBoard,
+                      checkAndRenderColumnsComponent,
                     });
                     // update isSelected property
                     onlyObjInBoardsArray.isSelected = true;
@@ -210,6 +223,7 @@ export default function DeleteBoardMessage(params) {
                         addTaskBtn,
                         columnsContainer,
                         stateFuncsFromContext: renderContextDeleteBoard,
+                        checkAndRenderColumnsComponent,
                       });
                       // update data in local storage
                       currentUser.boards = modifiedBoardsArray;
@@ -260,6 +274,7 @@ export default function DeleteBoardMessage(params) {
                       addTaskBtn,
                       columnsContainer,
                       stateFuncsFromContext: renderContextDeleteBoard,
+                      checkAndRenderColumnsComponent,
                     });
                     // update current user boards property
                     currentUser.boards = modifiedBoardsArray;

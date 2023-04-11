@@ -50,10 +50,10 @@ export default function MessageColumnsContainer({
       <TodoColumn />
       <TodoColumn /> */}
       <EmptyBoardMessage
-        emptyBoardMsgIsBoardEmpty={objOfValuesForColumns.currentBoardEmpty}
+        emptyBoardMsgIsBoardEmpty={initialMsgColumnsObj.isCurrentBoardEmpty}
       />
       <Columns
-        columnsIsCurrentBoardEmpty={objOfValuesForColumns.currentBoardEmpty}
+        columnsIsCurrentBoardEmpty={initialMsgColumnsObj.isCurrentBoardEmpty}
         columnsObjData={initialMsgColumnsObj.currentBoardColumnsObj}
       />
       {/* add column button height has to be around 756.2 */}
@@ -61,18 +61,18 @@ export default function MessageColumnsContainer({
         onClick={(event) => {
           const obj = JSON.parse(localStorage.getItem("currentBoard")).columns;
           obj.doing = [];
-          renderContextForMsgColumns.setStateFuncs.columnsContainer(
-            (prevValues) => {
-              return {
-                ...prevValues,
-                currentBoardColumnsObj: {
-                  todo: obj.todo,
-                  doing: [],
-                  done: null,
-                },
-              };
-            }
-          );
+          // renderContextForMsgColumns.setStateFuncs.columnsContainer(
+          //   (prevValues) => {
+          //     return {
+          //       ...prevValues,
+          //       currentBoardColumnsObj: {
+          //         todo: obj.todo,
+          //         doing: [],
+          //         done: null,
+          //       },
+          //     };
+          //   }
+          // );
           // setMsgColumns((prevValues) => {
           //   return {
           //     ...prevValues,

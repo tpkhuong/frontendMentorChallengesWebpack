@@ -14,8 +14,10 @@ export default function Columns({
     BoardTaskRenderContext
   );
   console.log(columnsObjData, "columnsObjData");
-  const [initialColumnsValueObj, setStatusColumn] =
-    React.useState(columnsObjData);
+  const [initialColumnsValueObj, setStatusColumn] = React.useState({
+    columnsIsCurrentBoardEmpty,
+    columnsObjData,
+  });
 
   renderContextColumnsComponent.setStateFuncs.columnsContainer =
     setStatusColumn;
@@ -27,7 +29,7 @@ export default function Columns({
   console.log(initialColumnsValueObj, "initialColumnsValueObj");
   return (
     <React.Fragment>
-      {!columnsIsCurrentBoardEmpty ? (
+      {!initialColumnsValueObj.columnsIsCurrentBoardEmpty ? (
         <section
           id="columns-container-selector"
           className={ColumnsStyles[`column-container`]}
@@ -36,9 +38,15 @@ export default function Columns({
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns
           </h2>
-          <TodoColumn todoColumnArray={columnsObjData.todo} />
-          <DoingColumn doingColumnArray={columnsObjData.doing} />
-          <DoneColumn doneColumnArray={columnsObjData.done} />
+          <TodoColumn
+            todoColumnArray={initialColumnsValueObj.columnsObjData.todo}
+          />
+          <DoingColumn
+            doingColumnArray={initialColumnsValueObj.columnsObjData.doing}
+          />
+          <DoneColumn
+            doneColumnArray={initialColumnsValueObj.columnsObjData.done}
+          />
           {/* {!!initialColumnsValueObj.todo && (
           )}
           {!!initialColumnsValueObj.doing && (

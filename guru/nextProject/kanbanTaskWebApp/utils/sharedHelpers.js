@@ -84,6 +84,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
   columnsContainer,
   stateFuncsFromContext,
   changeColumnsContainerWidth,
+  checkAndRenderColumnsComponent,
 }) {
   console.log(changeColumnsContainerWidth);
   const isBoardEmpty =
@@ -100,13 +101,24 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
       stateFuncsFromContext.setStateFuncs.addTaskBtn(true);
     }
     // columns container
+    // in boardSelector we are checking if the element with id columns-container-selector is rendered
+
     if (columnsContainer) {
-      stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+      // render empty board message
+      stateFuncsFromContext.setStateFuncs.emptyBoardMsg(true);
+      // unrender columns component
+      stateFuncsFromContext.setStateFuncs.columnsContainer((prevValues) => {
         return {
           ...prevValues,
-          isCurrentBoardEmpty: true,
+          columnsIsCurrentBoardEmpty: true,
         };
       });
+      // stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+      //   return {
+      //     ...prevValues,
+      //     isCurrentBoardEmpty: true,
+      //   };
+      // });
     }
 
     // changeColumnsContainerWidth({ isBoardEmpty });
@@ -122,24 +134,78 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
     if (!addTaskBtn) {
       stateFuncsFromContext.setStateFuncs.addTaskBtn(false);
     }
-    console.log("refactor this algorithm");
+
     if (!columnsContainer) {
-      stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+      // unrender empty board message
+      stateFuncsFromContext.setStateFuncs.emptyBoardMsg(true);
+      // render columns container
+      stateFuncsFromContext.setStateFuncs.columnsContainer((prevValues) => {
         return {
           ...prevValues,
-          isCurrentBoardEmpty: false,
-          currentBoardColumnsObj: boardsColumnsObj,
+          columnsIsCurrentBoardEmpty: false,
+          columnsObjData: boardsColumnsObj,
         };
       });
+      // stateFuncsFromContext.setStateFuncs.msgColumnsContainer((prevValues) => {
+      //   return {
+      //     ...prevValues,
+      //     isCurrentBoardEmpty: false,
+      //     currentBoardColumnsObj: boardsColumnsObj,
+      //   };
+      // });
     }
 
     if (columnsContainer) {
-      stateFuncsFromContext.setStateFuncs.columnsContainer(boardsColumnsObj);
+      // when we get here it means element with id columns-container-selector is rendered
+      // we want to call stateFuncs of todo, doing and done
+      // properties in boardsColumnsObj will either be an [] or null
+
+      checkAndRenderColumnsComponent({
+        boardsColumnsObj,
+        columnStateFunc: stateFuncsFromContext.setStateFuncs,
+      });
+
+      // // todo column
+      // Array.isArray(boardsColumnsObj.todo)
+      //   ? stateFuncsFromContext.setStateFuncs.todoColumn(boardsColumnsObj.todo)
+      //   : null;
+      // // doing column
+      // Array.isArray(boardsColumnsObj.doing)
+      //   ? stateFuncsFromContext.setStateFuncs.doingColumn(
+      //       boardsColumnsObj.doing
+      //     )
+      //   : null;
+      // // done column
+      // Array.isArray(boardsColumnsObj.done)
+      //   ? stateFuncsFromContext.setStateFuncs.doneColumn(boardsColumnsObj.done)
+      //   : null;
     }
 
     // changeColumnsContainerWidth({ isBoardEmpty });
     return;
   }
+}
+
+export function checkAndRenderColumnsComponent({
+  boardsColumnsObj,
+  columnStateFunc,
+}) {
+  // when we get here it means element with id columns-container-selector is rendered
+  // we want to call stateFuncs of todo, doing and done
+  // properties in boardsColumnsObj will either be an [] or null
+
+  // todo column
+  Array.isArray(boardsColumnsObj.todo)
+    ? columnStateFunc.todoColumn(boardsColumnsObj.todo)
+    : null;
+  // doing column
+  Array.isArray(boardsColumnsObj.doing)
+    ? columnStateFunc.doingColumn(boardsColumnsObj.doing)
+    : null;
+  // done column
+  Array.isArray(boardsColumnsObj.done)
+    ? columnStateFunc.doneColumn(boardsColumnsObj.done)
+    : null;
 }
 
 export function changeColumnsContainerWidth({ isBoardEmpty }) {

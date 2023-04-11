@@ -4,6 +4,7 @@ import { useMediaQuery } from "../../../../../utils/sharedHelpers";
 import { BoardTaskRenderContext } from "../../../Context/index";
 import {
   renderColumnsAndAddTaskBtnForSelectedBoard,
+  checkAndRenderColumnsComponent,
   changeColumnsContainerWidth,
 } from "../../../../../utils/sharedHelpers";
 // import { taskModal } from "../../../TaskModal/index";
@@ -148,6 +149,7 @@ export default function BoardSelector({
                 renderContextForCreateBoardModalBtn.setStateFuncs.boardTitleComp(
                   newBoardTitle
                 );
+
                 // .setStateFuncs.columnsContainer
                 // .setStateFuncs.addTaskBtn
                 renderColumnsAndAddTaskBtnForSelectedBoard({
@@ -155,6 +157,7 @@ export default function BoardSelector({
                   addTaskBtn,
                   columnsContainer,
                   stateFuncsFromContext: renderContextForCreateBoardModalBtn,
+                  checkAndRenderColumnsComponent,
                 });
                 // if (isBoardEmpty) {
                 //   // check if add task btn and columns container are rendered

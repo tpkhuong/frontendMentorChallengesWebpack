@@ -10,6 +10,7 @@ import {
   fadeOutEditDeleteBoardModal,
   fadeInEditDeleteBtnModal,
   changeColumnsContainerWidth,
+  checkAndRenderColumnsComponent,
 } from "../../../utils/sharedHelpers";
 
 export function boardComponent() {
@@ -261,15 +262,26 @@ export function boardComponent() {
           // boardSelector passing user boards array
           renderContextObj.setStateFuncs.boardSelector(user.boards);
           // msgColumnsContainer passing newBoardObj.columns
-          renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
-            // when we re-render messagecolumnscontainer, we also render columns component
-            // passing the columns obj to columns component
+          console.log(newBoardObj.columns, "newBoardObj.columns");
+          // unrender empty board message
+          renderContextObj.setStateFuncs.emptyBoardMsg(false);
+          // render columns container
+          renderContextObj.setStateFuncs.columnsContainer((prevValues) => {
             return {
               ...prevValues,
-              isCurrentBoardEmpty: false,
-              currentBoardColumnsObj: newBoardObj.columns,
+              columnsIsCurrentBoardEmpty: false,
+              columnsObjData: newBoardObj.columns,
             };
           });
+          // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          //   // when we re-render messagecolumnscontainer, we also render columns component
+          //   // passing the columns obj to columns component
+          //   return {
+          //     ...prevValues,
+          //     isCurrentBoardEmpty: false,
+          //     currentBoardColumnsObj: newBoardObj.columns,
+          //   };
+          // });
         } else {
           // push newBoardObj into current user boards array
           user.boards.push(newBoardObj);
@@ -358,30 +370,48 @@ export function boardComponent() {
       renderContextObj,
       makeObjForBoardModal,
       compareColumnObjs,
+      checkAndRenderColumnsComponent,
     }) {
       const userBoardInfo = JSON.parse(localStorage.getItem("currentUser"));
-      const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
+
+      const currentBoard = !!JSON.parse(localStorage.getItem("currentBoard"))
+        ? JSON.parse(localStorage.getItem("currentBoard"))
+        : {
+            title: "Add New Board",
+            index: 0,
+            isSelected: true,
+            columns: {
+              todo: null,
+              doing: null,
+              done: null,
+            },
+          };
+
+      userBoardInfo.boards.length == 0
+        ? userBoardInfo.boards.push(currentBoard)
+        : null;
       // target board name input
       const boardNameInputElement = document.getElementById(
         "edit-board-name-input"
       );
       // target board title
-      const boardTitleElement =
-        window.innerWidth <= 378
-          ? document.getElementById("mobile-title-btn")
-          : document.getElementById("tablet-desktop-title-notbtn");
+      // const boardTitleElement =
+      //   window.innerWidth <= 378
+      //     ? document.getElementById("mobile-title-btn")
+      //     : document.getElementById("tablet-desktop-title-notbtn");
       // target selected board btn container board-btn-selector-ul-container by use index property of current board in local storage
       // will match index of li of ul container
       // id="tablet-desktop-title-notbtn"
       // id="mobile-title-btn"
-      const boardSelectorBtn = document.getElementById(
-        "board-btn-selector-ul-container"
-      ).children[currentBoard.index].firstElementChild.children[1];
-      const changeBoardTitle = ({
-        titleInput,
-        boardTitleElement,
-        boardSelectorBtn,
-      }) => {
+      const boardSelectorBtn =
+        document.getElementById("board-btn-selector-ul-container").childNodes
+          .length > 0
+          ? document.getElementById("board-btn-selector-ul-container").children[
+              currentBoard.index
+            ].firstElementChild.children[1]
+          : null;
+
+      const changeBoardTitle = ({ titleInput, boardSelectorBtn }) => {
         if (titleInput === "") {
           // boardTitleElement.innerText = currentBoard.title;
           // boardSelectorBtn.innerText = currentBoard.title;
@@ -393,7 +423,9 @@ export function boardComponent() {
 
         if (titleInput && titleInput !== currentBoard.title) {
           // boardTitleElement.innerText = titleInput;
-          boardSelectorBtn.innerText = titleInput;
+          !!boardSelectorBtn
+            ? (boardSelectorBtn.innerText = titleInput)
+            : "Add New Board";
           currentBoard.title = titleInput;
           userBoardInfo.boards[currentBoard.index].title = titleInput;
 
@@ -406,7 +438,7 @@ export function boardComponent() {
        * **/
 
       // when properties todo,doing and done in original column are all null
-      // and user does add new column in edit board modal. WE DONT
+      // and user does add new column in edit board modal. we want to add at least one column.
       // call renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj:{todo:[],doing:null,done:null}
 
       const findOutIfValuesInBothObjFalsy = ({ obj, originalObj }) => {
@@ -432,17 +464,26 @@ export function boardComponent() {
 
         changeBoardTitle({
           titleInput: boardNameInputElement.value,
-          boardTitleElement,
           boardSelectorBtn,
         });
-
-        renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+        // unrender empty board message
+        renderContextObj.setStateFuncs.emptyBoardMsg(false);
+        // render columns container
+        renderContextObj.setStateFuncs.columnsContainer((prevValues) => {
           return {
             ...prevValues,
-            isCurrentBoardEmpty: false,
-            currentBoardColumnsObj: { todo: [], doing: null, done: null },
+            columnsIsCurrentBoardEmpty: false,
+            columnsObjData: { todo: [], doing: null, done: null },
           };
         });
+
+        // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+        //   return {
+        //     ...prevValues,
+        //     isCurrentBoardEmpty: false,
+        //     currentBoardColumnsObj: { todo: [], doing: null, done: null },
+        //   };
+        // });
         // render add task btn
         renderContextObj.setStateFuncs.addTaskBtn(false);
 
@@ -468,6 +509,8 @@ export function boardComponent() {
         return;
       }
 
+      console.log("outside isValuesInBothObjsFalsy");
+      return;
       /**
        * we get here it means we will render at least one status column
        * **/
@@ -507,7 +550,6 @@ export function boardComponent() {
 
         changeBoardTitle({
           titleInput: boardNameInputElement.value,
-          boardTitleElement,
           boardSelectorBtn,
         });
         console.log("arrayColumnToRemoveWithTasks length is 0");
@@ -530,14 +572,24 @@ export function boardComponent() {
         if (
           Object.is(document.getElementById("columns-container-selector"), null)
         ) {
-          // if columns container is not rendered run mgcolumnscontainer set func;
-          renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          // unrender empty board message
+          renderContextObj.setStateFuncs.emptyBoardMsg(false);
+          // render columns container
+          renderContextObj.setStateFuncs.columnsContainer((prevValues) => {
             return {
               ...prevValues,
-              isCurrentBoardEmpty: false,
-              currentBoardColumnsObj: copiedOriginalColumnsObj,
+              columnsIsCurrentBoardEmpty: false,
+              columnsObjData: copiedOriginalColumnsObj,
             };
           });
+          // if columns container is not rendered run mgcolumnscontainer set func;
+          // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          //   return {
+          //     ...prevValues,
+          //     isCurrentBoardEmpty: false,
+          //     currentBoardColumnsObj: copiedOriginalColumnsObj,
+          //   };
+          // });
         }
 
         if (
@@ -548,9 +600,13 @@ export function boardComponent() {
         ) {
           // if columns container is rendered Object.is(document.getElementById("columns-container-selector"),null) will be false
           // run columnsContainer set func;
-          renderContextObj.setStateFuncs.columnsContainer(
-            copiedOriginalColumnsObj
-          );
+          checkAndRenderColumnsComponent({
+            boardsColumnsObj: copiedOriginalColumnsObj,
+            columnStateFunc: renderContextObj.setStateFuncs,
+          });
+          // renderContextObj.setStateFuncs.columnsContainer(
+          //   copiedOriginalColumnsObj
+          // );
         }
 
         // fade out edit board modal
@@ -620,7 +676,6 @@ export function boardComponent() {
               // run changeBoardTitle, renderContextObj.setStateFuncs.msgColumnsContainer, setStateFunc focus edit board btn
               changeBoardTitle({
                 titleInput: boardNameInputElement.value,
-                boardTitleElement,
                 boardSelectorBtn,
               });
               // render columns component. since columns component is already rendered
@@ -635,9 +690,13 @@ export function boardComponent() {
               //   }
               // );
               // console.log(obj);
-              renderContextObj.setStateFuncs.columnsContainer(
-                copiedOriginalObj
-              );
+              checkAndRenderColumnsComponent({
+                boardsColumnsObj: copiedOriginalObj,
+                columnStateFunc: renderContextObj.setStateFuncs,
+              });
+              // renderContextObj.setStateFuncs.columnsContainer(
+              //   copiedOriginalObj
+              // );
               // for add task btn. we know when the values in copiedOriginalObj are all null
               // current board is empty
               const checkValuesForNull = Object.values(copiedOriginalObj).every(
@@ -648,15 +707,25 @@ export function boardComponent() {
               console.log(checkValuesForNull);
               if (checkValuesForNull) {
                 renderContextObj.setStateFuncs.addTaskBtn(true);
-
-                renderContextObj.setStateFuncs.msgColumnsContainer(
+                // render empty board message
+                renderContextObj.setStateFuncs.emptyBoardMsg(true);
+                // unrender columns container
+                renderContextObj.setStateFuncs.columnsContainer(
                   (prevValues) => {
                     return {
                       ...prevValues,
-                      isCurrentBoardEmpty: true,
+                      columnsIsCurrentBoardEmpty: true,
                     };
                   }
                 );
+                // renderContextObj.setStateFuncs.msgColumnsContainer(
+                //   (prevValues) => {
+                //     return {
+                //       ...prevValues,
+                //       isCurrentBoardEmpty: true,
+                //     };
+                //   }
+                // );
               }
               // fade out edit board modal
               fadeOutEditDeleteBoardModal({
@@ -848,6 +917,7 @@ export function boardComponent() {
                       renderContextObj: renderContextForBoardModal,
                       makeObjForBoardModal,
                       compareColumnObjs,
+                      checkAndRenderColumnsComponent,
                     });
                     return;
                   }
