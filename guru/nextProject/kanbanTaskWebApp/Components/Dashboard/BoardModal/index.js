@@ -372,12 +372,13 @@ export function boardComponent() {
       compareColumnObjs,
       checkAndRenderColumnsComponent,
     }) {
+      console.log(obj, originalObj, "obj, originalObj");
       const userBoardInfo = JSON.parse(localStorage.getItem("currentUser"));
 
       const currentBoard = !!JSON.parse(localStorage.getItem("currentBoard"))
         ? JSON.parse(localStorage.getItem("currentBoard"))
         : {
-            title: "Add New Board",
+            title: "Board needs a name",
             index: 0,
             isSelected: true,
             columns: {
@@ -403,13 +404,26 @@ export function boardComponent() {
       // will match index of li of ul container
       // id="tablet-desktop-title-notbtn"
       // id="mobile-title-btn"
-      const boardSelectorBtn =
-        document.getElementById("board-btn-selector-ul-container").childNodes
-          .length > 0
-          ? document.getElementById("board-btn-selector-ul-container").children[
-              currentBoard.index
-            ].firstElementChild.children[1]
-          : null;
+      // call board selector here
+
+      document.getElementById("board-btn-selector-ul-container").childNodes
+        .length == 0
+        ? renderContextObj.setStateFuncs.boardSelector(userBoardInfo.boards)
+        : null;
+
+      const boardSelectorBtn = !!document.getElementById(
+        "board-btn-selector-ul-container"
+      ).children[currentBoard.index]
+        ? document.getElementById("board-btn-selector-ul-container").children[
+            currentBoard.index
+          ].firstElementChild.children[1]
+        : null;
+      // document.getElementById("board-btn-selector-ul-container").childNodes
+      //   .length > 0
+      //   ? document.getElementById("board-btn-selector-ul-container").children[
+      //       currentBoard.index
+      //     ].firstElementChild.children[1]
+      //   : null;
 
       const changeBoardTitle = ({ titleInput, boardSelectorBtn }) => {
         if (titleInput === "") {
@@ -421,11 +435,38 @@ export function boardComponent() {
 
         if (titleInput && titleInput === currentBoard.title) return;
 
+        // when user click on edit board and user does not have any board obj in boards array
+        if (!boardSelectorBtn) {
+          if (
+            titleInput === "" ||
+            (titleInput && titleInput !== currentBoard.title)
+          ) {
+            console.log("hello friend");
+            renderContextObj.setStateFuncs.boardTitleComp("Board needs a name");
+            return;
+          }
+        }
+        // if (titleInput === "" && !boardSelectorBtn || ) {
+        //   renderContextObj.setStateFuncs.boardTitleComp("Board needs a name");
+        //   return;
+        // }
+
+        // if (
+        //   titleInput &&
+        //   titleInput !== currentBoard.title &&
+        //   !boardSelectorBtn
+        // ) {
+        //   renderContextObj.setStateFuncs.boardTitleComp("Board needs a name");
+        //   return;
+        // }
+
         if (titleInput && titleInput !== currentBoard.title) {
+          console.log("changing title");
           // boardTitleElement.innerText = titleInput;
-          !!boardSelectorBtn
-            ? (boardSelectorBtn.innerText = titleInput)
-            : "Add New Board";
+          // !!boardSelectorBtn
+          //   ? (boardSelectorBtn.innerText = titleInput)
+          //   : "Add New Board";
+          boardSelectorBtn.innerText = titleInput;
           currentBoard.title = titleInput;
           userBoardInfo.boards[currentBoard.index].title = titleInput;
 
@@ -458,9 +499,9 @@ export function boardComponent() {
       });
 
       if (isValuesInBothObjsFalsy) {
-        setTimeout(() => {
-          boardNameInputElement.focus();
-        }, 80);
+        // setTimeout(() => {
+        //   boardNameInputElement.focus();
+        // }, 80);
 
         changeBoardTitle({
           titleInput: boardNameInputElement.value,
@@ -476,7 +517,7 @@ export function boardComponent() {
             columnsObjData: { todo: [], doing: null, done: null },
           };
         });
-
+        changeColumnsContainerWidth({ isBoardEmpty: false });
         // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
         //   return {
         //     ...prevValues,
@@ -487,12 +528,28 @@ export function boardComponent() {
         // render add task btn
         renderContextObj.setStateFuncs.addTaskBtn(false);
 
-        setStateFunc((prevValues) => {
-          return {
-            ...prevValues,
-            renderBoardModal: false,
-          };
+        // fade out edit board modal
+        fadeOutEditDeleteBoardModal({
+          modalStateFunc: setStateFunc,
+          element: document.getElementById("board-modal-selector"),
+          fadeAttr: "data-showboardmodal",
+          stateProperty: "renderBoardModal",
         });
+        // to not render edit board modal
+        setTimeout(() => {
+          // focus edit board modal btn
+          document.getElementById("edit-board-modal-btn").focus();
+          setStateFunc((prevValues) => {
+            return {
+              ...prevValues,
+              renderBoardModal: false,
+            };
+          });
+        }, 2500);
+        // show edit delete btn modal
+        fadeInEditDeleteBtnModal(
+          document.getElementById("launch-edit-delete-modal-btn")
+        );
         // update data in local storage. updating board title in local storage
         // is handled by changeBoardTitle func
         // const copiedCurrentBoard = { ...currentBoard };
@@ -509,8 +566,6 @@ export function boardComponent() {
         return;
       }
 
-      console.log("outside isValuesInBothObjsFalsy");
-      return;
       /**
        * we get here it means we will render at least one status column
        * **/
@@ -535,6 +590,79 @@ export function boardComponent() {
       // if length is 0 run changeboardtitle func
       // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: copiedOriginalColumnsObj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
+        // render / unrender component if user is not added a new column
+        if (document.getElementById("columns-container-selector")) {
+          const objOfTitles = [
+            ...document.getElementById("message-columns").childNodes[0]
+              .childNodes,
+          ].reduce(function findTitle(buildingUp, currentValue) {
+            if (
+              currentValue.tagName == "DIV" &&
+              currentValue.getAttribute("id").includes("-column-selector")
+            ) {
+              // id edit-board-columns-container-selector
+              const strOfTitle =
+                currentValue.childNodes[0].childNodes[1].textContent.toLowerCase();
+              buildingUp[strOfTitle] = {
+                isRendered: true,
+              };
+              // buildingUp.push(
+              //   currentValue.childNodes[0].childNodes[1].textContent.toLowerCase()
+              // );
+              return buildingUp;
+            }
+            return buildingUp;
+          }, {});
+
+          // we want to check the columns elements rendered
+          // and match those columns with the columns the user want to render
+          // based on the board column btn of edit board modal
+          const columnELementMatchPropertyOfColumnsObj = [
+            ...document.getElementById("edit-board-columns-container-selector")
+              .childNodes,
+          ].every(function lookForMatch(listItem, index) {
+            if (!objOfTitles[listItem.firstElementChild.textContent])
+              return false;
+
+            if (objOfTitles[listItem.firstElementChild.textContent]) {
+              return objOfTitles[listItem.firstElementChild.textContent]
+                .isRendered;
+            }
+          });
+
+          if (columnELementMatchPropertyOfColumnsObj) {
+            // we get here the columns rendered matches the column the user want to render
+            // based on the selected column in edit board modal
+            changeBoardTitle({
+              titleInput: boardNameInputElement.value,
+              boardSelectorBtn,
+            });
+            // fade out edit board modal
+            fadeOutEditDeleteBoardModal({
+              modalStateFunc: setStateFunc,
+              element: document.getElementById("board-modal-selector"),
+              fadeAttr: "data-showboardmodal",
+              stateProperty: "renderBoardModal",
+            });
+            // to not render edit board modal
+            setTimeout(() => {
+              // focus edit board modal btn
+              document.getElementById("edit-board-modal-btn").focus();
+              setStateFunc((prevValues) => {
+                return {
+                  ...prevValues,
+                  renderBoardModal: false,
+                };
+              });
+            }, 2500);
+            // show edit delete btn modal
+            fadeInEditDeleteBtnModal(
+              document.getElementById("launch-edit-delete-modal-btn")
+            );
+            return;
+          }
+        }
+        // we get here user made changes to the column user want to render
         const copiedOriginalColumnsObj = Object.assign({}, originalObj);
         // loop through obj that is used for adding columns
         for (let key in obj) {
