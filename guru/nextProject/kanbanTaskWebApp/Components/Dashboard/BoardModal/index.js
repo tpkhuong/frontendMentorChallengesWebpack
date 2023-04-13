@@ -405,7 +405,8 @@ export function boardComponent() {
       // id="tablet-desktop-title-notbtn"
       // id="mobile-title-btn"
       // call board selector here
-
+      // if we call .setStateFuncs.boardSelector after const boardSelectorBtn
+      // we will get boardSelectorBtn is undefined
       document.getElementById("board-btn-selector-ul-container").childNodes
         .length == 0
         ? renderContextObj.setStateFuncs.boardSelector(userBoardInfo.boards)
@@ -497,7 +498,17 @@ export function boardComponent() {
         obj,
         originalObj,
       });
-
+      // edit modal: board title input didnt change from the value in title of current board in local storage that we pulled from mongo database
+      // there is also the case where currentBoard of currentUser is null
+      // if that happends currentBoard of this func will be
+      // title: "Board needs a name",
+      //       index: 0,
+      //       isSelected: true,
+      //       columns: {
+      //         todo: null,
+      //         doing: null,
+      //         done: null,
+      //       },
       if (isValuesInBothObjsFalsy) {
         // setTimeout(() => {
         //   boardNameInputElement.focus();
@@ -525,8 +536,12 @@ export function boardComponent() {
         //     currentBoardColumnsObj: { todo: [], doing: null, done: null },
         //   };
         // });
-        // render add task btn
-        renderContextObj.setStateFuncs.addTaskBtn(false);
+        // check if add task btn is rendered
+        const isAddTaskBtnRendered = document.getElementById("add-task-btn");
+        if (Object.is(isAddTaskBtnRendered, null)) {
+          // if add task btn is not rendered isAddTaskBtnRendered will be null
+          renderContextObj.setStateFuncs.addTaskBtn(false);
+        }
 
         // fade out edit board modal
         fadeOutEditDeleteBoardModal({
@@ -585,58 +600,133 @@ export function boardComponent() {
         }
         return buildingUp;
       }, []);
+
+      changeBoardTitle({
+        titleInput: boardNameInputElement.value,
+        boardSelectorBtn,
+      });
       console.log(arrayColumnToRemoveWithTasks, "arrayColumnToRemoveWithTasks");
       // check length of arrayColumnToRemoveWithTasks array
       // if length is 0 run changeboardtitle func
       // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: copiedOriginalColumnsObj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
+        // we get here user made changes to the column user want to render
+        const copiedOriginalColumnsObj = Object.assign({}, originalObj);
+        // loop through obj that is used for adding columns
+        for (let key in obj) {
+          if (obj[key] && !copiedOriginalColumnsObj[key]) {
+            copiedOriginalColumnsObj[key] = [];
+          }
+          if (!obj[key] && copiedOriginalColumnsObj[key]) {
+            copiedOriginalColumnsObj[key] = null;
+          }
+        }
+        // check if columns container is rendered
+        if (
+          Object.is(document.getElementById("columns-container-selector"), null)
+        ) {
+          console.log("columns-container-selector is not rendered");
+          // unrender empty board message
+          renderContextObj.setStateFuncs.emptyBoardMsg(false);
+          // render columns container
+          renderContextObj.setStateFuncs.columnsContainer((prevValues) => {
+            return {
+              ...prevValues,
+              columnsIsCurrentBoardEmpty: false,
+              columnsObjData: copiedOriginalColumnsObj,
+            };
+          });
+          // if columns container is not rendered run mgcolumnscontainer set func;
+          // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
+          //   return {
+          //     ...prevValues,
+          //     isCurrentBoardEmpty: false,
+          //     currentBoardColumnsObj: copiedOriginalColumnsObj,
+          //   };
+          // });
+        }
         // render / unrender component if user is not added a new column
-        if (document.getElementById("columns-container-selector")) {
-          const objOfTitles = [
-            ...document.getElementById("message-columns").childNodes[0]
-              .childNodes,
-          ].reduce(function findTitle(buildingUp, currentValue) {
-            if (
-              currentValue.tagName == "DIV" &&
-              currentValue.getAttribute("id").includes("-column-selector")
-            ) {
-              // id edit-board-columns-container-selector
-              const strOfTitle =
-                currentValue.childNodes[0].childNodes[1].textContent.toLowerCase();
-              buildingUp[strOfTitle] = {
-                isRendered: true,
-              };
-              // buildingUp.push(
-              //   currentValue.childNodes[0].childNodes[1].textContent.toLowerCase()
-              // );
+        if (
+          !Object.is(
+            document.getElementById("columns-container-selector"),
+            null
+          )
+        ) {
+          console.log("columns-container-selector is rendered");
+
+          // const objOfTitles = [
+          //   ...document.getElementById("message-columns").childNodes[0]
+          //     .childNodes,
+          // ].reduce(function findTitle(buildingUp, currentValue) {
+          //   if (
+          //     currentValue.tagName == "DIV" &&
+          //     currentValue.getAttribute("id").includes("-column-selector")
+          //   ) {
+          //     // id edit-board-columns-container-selector
+          //     const strOfTitle =
+          //       currentValue.childNodes[0].childNodes[1].textContent.toLowerCase();
+          //     buildingUp[strOfTitle] = {
+          //       isRendered: true,
+          //     };
+          //     // buildingUp.push(
+          //     //   currentValue.childNodes[0].childNodes[1].textContent.toLowerCase()
+          //     // );
+          //     return buildingUp;
+          //   }
+          //   return buildingUp;
+          // }, {});
+
+          const objOfTitles = Object.entries(originalObj).reduce(
+            function findTitle(buildingUp, currentValue) {
+              if (Array.isArray(currentValue[1])) {
+                buildingUp[currentValue[0]] = {
+                  isRendered: true,
+                };
+              }
+
+              if (!Array.is(currentValue[1])) {
+                buildingUp[currentValue[0]] = {
+                  isRendered: false,
+                };
+              }
+
               return buildingUp;
-            }
-            return buildingUp;
-          }, {});
+            },
+            {}
+          );
 
           // we want to check the columns elements rendered
           // and match those columns with the columns the user want to render
           // based on the board column btn of edit board modal
-          const columnELementMatchPropertyOfColumnsObj = [
-            ...document.getElementById("edit-board-columns-container-selector")
-              .childNodes,
-          ].every(function lookForMatch(listItem, index) {
-            if (!objOfTitles[listItem.firstElementChild.textContent])
-              return false;
-
-            if (objOfTitles[listItem.firstElementChild.textContent]) {
-              return objOfTitles[listItem.firstElementChild.textContent]
-                .isRendered;
-            }
+          console.log("test this algorithm");
+          // const columnELementMatchPropertyOfColumnsObj = [
+          //   ...document.getElementById("edit-board-columns-container-selector")
+          //     .childNodes,
+          // ].every(function lookForMatch(listItem, index) {
+          //   if (objOfTitles[listItem.firstElementChild.textContent]) {
+          //     return objOfTitles[listItem.firstElementChild.textContent]
+          //       .isRendered;
+          //   }
+          //   return false;
+          // });
+          console.log(
+            columnELementMatchPropertyOfColumnsObj,
+            "columnELementMatchPropertyOfColumnsObj"
+          );
+          const columnELementMatchPropertyOfColumnsObj = Object.entries(
+            obj
+          ).every(function lookForMatch(subarray) {
+            return objOfTitles[subarray[0]] === subarray[1];
           });
 
           if (columnELementMatchPropertyOfColumnsObj) {
+            console.log("This is it");
             // we get here the columns rendered matches the column the user want to render
             // based on the selected column in edit board modal
-            changeBoardTitle({
-              titleInput: boardNameInputElement.value,
-              boardSelectorBtn,
-            });
+            // changeBoardTitle({
+            //   titleInput: boardNameInputElement.value,
+            //   boardSelectorBtn,
+            // });
             // fade out edit board modal
             fadeOutEditDeleteBoardModal({
               modalStateFunc: setStateFunc,
@@ -659,30 +749,132 @@ export function boardComponent() {
             fadeInEditDeleteBtnModal(
               document.getElementById("launch-edit-delete-modal-btn")
             );
+            // dont have to change data in local storage
             return;
           }
-        }
-        // we get here user made changes to the column user want to render
-        const copiedOriginalColumnsObj = Object.assign({}, originalObj);
-        // loop through obj that is used for adding columns
-        for (let key in obj) {
-          if (obj[key] && !copiedOriginalColumnsObj[key]) {
-            copiedOriginalColumnsObj[key] = [];
+          // getting here means. columns element is rendered but user didnt add tasks to it
+          // user clicked edit board and want to render different column element
+          if (!columnELementMatchPropertyOfColumnsObj) {
+            console.log("where are we");
+            // if values in obj are all falsy render only todo column
+            // and all status columns elements are rendered
+            const renderOnlyTodoColumn = Object.values(obj).every(
+              function allFalsy(value) {
+                return !value;
+              }
+            );
+
+            if (
+              renderOnlyTodoColumn &&
+              document.getElementById("columns-container-selector")
+                .childElementCount == 4
+            ) {
+              renderContextObj.setStateFuncs.todoColumn([]);
+              renderContextObj.setStateFuncs.doingColumn(false);
+              renderContextObj.setStateFuncs.doneColumn(false);
+
+              // fade out edit board modal
+              fadeOutEditDeleteBoardModal({
+                modalStateFunc: setStateFunc,
+                element: document.getElementById("board-modal-selector"),
+                fadeAttr: "data-showboardmodal",
+                stateProperty: "renderBoardModal",
+              });
+              // to not render edit board modal
+              setTimeout(() => {
+                document.getElementById("edit-board-modal-btn").focus();
+                setStateFunc((prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderBoardModal: false,
+                  };
+                });
+              }, 2500);
+              // show edit delete btn modal
+              fadeInEditDeleteBtnModal(
+                document.getElementById("launch-edit-delete-modal-btn")
+              );
+              return;
+            }
+            // loop through obj which will be {todo: true,doing:false,done:true} etc
+            // use document.getElementById(`${subarray[0]}-column-selector`) to select column element
+            // if value in obj is true and document.getElementById(`${subarray[0]}-column-selector`) returns null
+            // render that column element
+            // if value in obj is false and document.getElementById(`${subarray[0]}-column-selector`) is truthy
+            // dont render that column element
+            Object.entries(obj).forEach(function checkColumnBtnsAndElements(
+              subarray,
+              index
+            ) {
+              // if user want to render a column
+              if (
+                subarray[1] &&
+                Object.is(
+                  document.getElementById(`${subarray[0]}-column-selector`),
+                  null
+                )
+              ) {
+                renderContextObj.setStateFuncs[`${subarray[0]}Column`]([]);
+              }
+              // if user does not want to render a column
+              if (
+                !subarray[1] &&
+                !Object.is(
+                  document.getElementById(`${subarray[0]}-column-selector`),
+                  null
+                )
+              ) {
+                renderContextObj.setStateFuncs[`${subarray[0]}Column`](false);
+              }
+            });
           }
         }
+        // check if add task btn is rendered for when document.getElementById("columns-container-selector") is null
+        const isAddTaskBtnRendered = document.getElementById("add-task-btn");
+        if (Object.is(isAddTaskBtnRendered, null)) {
+          // if add task btn is not rendered isAddTaskBtnRendered will be null
+          renderContextObj.setStateFuncs.addTaskBtn(false);
+        }
+        console.log("arrayColumnToRemoveWithTasks length is 0");
+        console.log(obj);
+        console.log(copiedOriginalColumnsObj);
+        // fade out edit board modal
+        fadeOutEditDeleteBoardModal({
+          modalStateFunc: setStateFunc,
+          element: document.getElementById("board-modal-selector"),
+          fadeAttr: "data-showboardmodal",
+          stateProperty: "renderBoardModal",
+        });
+        // to not render edit board modal
+        setTimeout(() => {
+          document.getElementById("edit-board-modal-btn").focus();
+          setStateFunc((prevValues) => {
+            return {
+              ...prevValues,
+              renderBoardModal: false,
+            };
+          });
+        }, 2500);
+        // show edit delete btn modal
+        fadeInEditDeleteBtnModal(
+          document.getElementById("launch-edit-delete-modal-btn")
+        );
+
+        // update data in local storage. updating board title in local storage
+        // is handled by changeBoardTitle func
+        currentBoard.columns = copiedOriginalColumnsObj;
+        userBoardInfo.boards[currentBoard.index].columns =
+          copiedOriginalColumnsObj;
+        // current board columns
+        // update board obj in current user boards array
+        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+        localStorage.setItem("currentUser", JSON.stringify(userBoardInfo));
+        return;
 
         setTimeout(() => {
           // focus edit board modal btn
           document.getElementById("edit-board-modal-btn").focus();
         }, 80);
-
-        changeBoardTitle({
-          titleInput: boardNameInputElement.value,
-          boardSelectorBtn,
-        });
-        console.log("arrayColumnToRemoveWithTasks length is 0");
-        console.log(obj);
-        console.log(copiedOriginalColumnsObj);
 
         // render columns component. since columns component is already rendered
         // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
@@ -736,43 +928,6 @@ export function boardComponent() {
           //   copiedOriginalColumnsObj
           // );
         }
-
-        // fade out edit board modal
-        fadeOutEditDeleteBoardModal({
-          modalStateFunc: setStateFunc,
-          element: document.getElementById("board-modal-selector"),
-          fadeAttr: "data-showboardmodal",
-          stateProperty: "renderBoardModal",
-        });
-        // to not render edit board modal
-        setTimeout(() => {
-          setStateFunc((prevValues) => {
-            return {
-              ...prevValues,
-              renderBoardModal: false,
-            };
-          });
-        }, 2500);
-        // show edit delete btn modal
-        fadeInEditDeleteBtnModal(
-          document.getElementById("launch-edit-delete-modal-btn")
-        );
-        // check if add task btn is rendered
-        const isAddTaskBtnRendered = document.getElementById("add-task-btn");
-        if (Object.is(isAddTaskBtnRendered, null)) {
-          // if add task btn is not rendered isAddTaskBtnRendered will be null
-          renderContextObj.setStateFuncs.addTaskBtn(false);
-        }
-        // update data in local storage. updating board title in local storage
-        // is handled by changeBoardTitle func
-        currentBoard.columns = copiedOriginalColumnsObj;
-        userBoardInfo.boards[currentBoard.index].columns =
-          copiedOriginalColumnsObj;
-        // current board columns
-        // update board obj in current user boards array
-        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
-        localStorage.setItem("currentUser", JSON.stringify(userBoardInfo));
-        return;
       }
       // if arrayColumnToRemoveWithTasks.length > 0 means user does not want to render a column with tasks in it
       // render warning message modal

@@ -197,15 +197,15 @@ export function checkAndRenderColumnsComponent({
   // todo column
   Array.isArray(boardsColumnsObj.todo)
     ? columnStateFunc.todoColumn(boardsColumnsObj.todo)
-    : null;
+    : columnStateFunc.todoColumn(false);
   // doing column
   Array.isArray(boardsColumnsObj.doing)
     ? columnStateFunc.doingColumn(boardsColumnsObj.doing)
-    : null;
+    : columnStateFunc.doingColumn(false);
   // done column
   Array.isArray(boardsColumnsObj.done)
     ? columnStateFunc.doneColumn(boardsColumnsObj.done)
-    : null;
+    : columnStateFunc.doneColumn(false);
 }
 
 export function changeColumnsContainerWidth({ isBoardEmpty }) {
