@@ -86,6 +86,7 @@ export default function DeleteBoardMessage(params) {
                   const userBoardsArray = currentUser.boards;
                   // length is 1. render board selector, board title, add task btn, and mgscolumnscontainer for empty board
                   if (userBoardsArray.length == 1) {
+                    changeColumnsContainerWidth({ isBoardEmpty: true });
                     // // title
                     // renderContextDeleteBoard.setStateFuncs.boardTitleComp(
                     //   "Add New Board"
@@ -97,6 +98,8 @@ export default function DeleteBoardMessage(params) {
                       boardTitle: "Add New Board",
                       stateFuncsInContext: renderContextDeleteBoard,
                     });
+                    // remove new column btn
+                    changeColumnsContainerWidth({ isBoardEmpty: true });
                     // add task btn
                     renderContextDeleteBoard.setStateFuncs.addTaskBtn(true);
                     // render empty board message
@@ -125,26 +128,44 @@ export default function DeleteBoardMessage(params) {
                       user: currentUser,
                       board: null,
                     });
-                    // focus create new board btn
-                    setTimeout(() => {
-                      document
-                        .getElementById("mobile-tab-refocus-selector")
-                        .focus();
-                    }, 80);
-                    // localStorage.setItem(
-                    //   "currentUser",
-                    //   JSON.stringify(currentUser)
-                    // );
-                    // update current board in local storage to be null
-                    // localStorage.setItem("currentBoard", JSON.stringify(null));
                     /**
-                     * does not matter which board is being deleted we want focus one of the board selector btn
-                     * or create new board btn
+                     * focus delete btn in edit delete btn modal
                      * **/
-                    removeRendersOfDeleteMessageAndBtn({
-                      setDeleteBoard,
-                      renderContextDeleteBoard,
+
+                    fadeOutEditDeleteBoardModal({
+                      modalStateFunc: setDeleteBoard,
+                      element:
+                        document.getElementById("delete-board-modal")
+                          .parentElement,
+                      fadeAttr: "data-showdeletemodal",
+                      stateProperty: "renderDeleteBoard",
+                      time: 2500,
                     });
+
+                    fadeInEditDeleteBtnModal(
+                      document.getElementById("launch-edit-delete-modal-btn")
+                    );
+
+                    // focus create new board btn
+                    // setTimeout(() => {
+                    //   document
+                    //     .getElementById("mobile-tab-refocus-selector")
+                    //     .focus();
+                    // }, 80);
+                    // // localStorage.setItem(
+                    // //   "currentUser",
+                    // //   JSON.stringify(currentUser)
+                    // // );
+                    // // update current board in local storage to be null
+                    // // localStorage.setItem("currentBoard", JSON.stringify(null));
+                    // /**
+                    //  * does not matter which board is being deleted we want focus one of the board selector btn
+                    //  * or create new board btn
+                    //  * **/
+                    // removeRendersOfDeleteMessageAndBtn({
+                    //   setDeleteBoard,
+                    //   renderContextDeleteBoard,
+                    // });
                     return;
                   }
                   // if length is 2 filter out current board then update local storage and render correct components
@@ -164,6 +185,7 @@ export default function DeleteBoardMessage(params) {
                       addTaskBtn,
                       columnsContainer,
                       stateFuncsFromContext: renderContextDeleteBoard,
+                      changeColumnsContainerWidth,
                       checkAndRenderColumnsComponent,
                     });
                     // update isSelected property
@@ -175,20 +197,38 @@ export default function DeleteBoardMessage(params) {
                       user: currentUser,
                       board: onlyObjInBoardsArray,
                     });
-                    // focus board selector btn at index 0
-                    setTimeout(() => {
-                      document
-                        .getElementById("board-btn-selector-ul-container")
-                        .children[0].firstElementChild.focus();
-                    }, 80);
                     /**
-                     * does not matter which board is being deleted we want focus one of the board selector btn
-                     * or create new board btn
+                     * focus delete btn in edit delete btn modal
                      * **/
-                    removeRendersOfDeleteMessageAndBtn({
-                      setDeleteBoard,
-                      renderContextDeleteBoard,
+
+                    fadeOutEditDeleteBoardModal({
+                      modalStateFunc: setDeleteBoard,
+                      element:
+                        document.getElementById("delete-board-modal")
+                          .parentElement,
+                      fadeAttr: "data-showdeletemodal",
+                      stateProperty: "renderDeleteBoard",
+                      time: 2500,
                     });
+
+                    fadeInEditDeleteBtnModal(
+                      document.getElementById("launch-edit-delete-modal-btn")
+                    );
+
+                    // focus board selector btn at index 0
+                    // setTimeout(() => {
+                    //   document
+                    //     .getElementById("board-btn-selector-ul-container")
+                    //     .children[0].firstElementChild.focus();
+                    // }, 80);
+                    // /**
+                    //  * does not matter which board is being deleted we want focus one of the board selector btn
+                    //  * or create new board btn
+                    //  * **/
+                    // removeRendersOfDeleteMessageAndBtn({
+                    //   setDeleteBoard,
+                    //   renderContextDeleteBoard,
+                    // });
                     return;
                   }
                   /**
@@ -223,6 +263,7 @@ export default function DeleteBoardMessage(params) {
                         addTaskBtn,
                         columnsContainer,
                         stateFuncsFromContext: renderContextDeleteBoard,
+                        changeColumnsContainerWidth,
                         checkAndRenderColumnsComponent,
                       });
                       // update data in local storage
@@ -231,21 +272,38 @@ export default function DeleteBoardMessage(params) {
                         user: currentUser,
                         board: renderDataFromThisObj,
                       });
+                      /**
+                       * focus delete btn in edit delete btn modal
+                       * **/
+
+                      fadeOutEditDeleteBoardModal({
+                        modalStateFunc: setDeleteBoard,
+                        element:
+                          document.getElementById("delete-board-modal")
+                            .parentElement,
+                        fadeAttr: "data-showdeletemodal",
+                        stateProperty: "renderDeleteBoard",
+                        time: 2500,
+                      });
+
+                      fadeInEditDeleteBtnModal(
+                        document.getElementById("launch-edit-delete-modal-btn")
+                      );
                       // get index value in current board obj
                       // use that index to select board selector btn
-                      setTimeout(() => {
-                        document
-                          .getElementById("board-btn-selector-ul-container")
-                          .children[currentIndexMinusOne].firstElementChild();
-                      }, 80);
-                      /**
-                       * does not matter which board is being deleted we want focus one of the board selector btn
-                       * or create new board btn
-                       * **/
-                      removeRendersOfDeleteMessageAndBtn({
-                        setDeleteBoard,
-                        renderContextDeleteBoard,
-                      });
+                      // setTimeout(() => {
+                      //   document
+                      //     .getElementById("board-btn-selector-ul-container")
+                      //     .children[currentIndexMinusOne].firstElementChild();
+                      // }, 80);
+                      // /**
+                      //  * does not matter which board is being deleted we want focus one of the board selector btn
+                      //  * or create new board btn
+                      //  * **/
+                      // removeRendersOfDeleteMessageAndBtn({
+                      //   setDeleteBoard,
+                      //   renderContextDeleteBoard,
+                      // });
                       return;
                     }
                     // else we are not removing last board/obj of boards array
@@ -274,6 +332,7 @@ export default function DeleteBoardMessage(params) {
                       addTaskBtn,
                       columnsContainer,
                       stateFuncsFromContext: renderContextDeleteBoard,
+                      changeColumnsContainerWidth,
                       checkAndRenderColumnsComponent,
                     });
                     // update current user boards property
@@ -283,22 +342,38 @@ export default function DeleteBoardMessage(params) {
                       user: currentUser,
                       board: objForRenderFuncs,
                     });
-                    // focus board selector at indexOfCurrentBoard
-                    setTimeout(() => {
-                      document
-                        .getElementById("board-btn-selector-ul-container")
-                        .children[
-                          indexOfCurrentBoard
-                        ].firstElementChild.focus();
-                    }, 80);
                     /**
-                     * does not matter which board is being deleted we want focus one of the board selector btn
-                     * or create new board btn
+                     * focus delete btn in edit delete btn modal instead
                      * **/
-                    removeRendersOfDeleteMessageAndBtn({
-                      setDeleteBoard,
-                      renderContextDeleteBoard,
+                    fadeOutEditDeleteBoardModal({
+                      modalStateFunc: setDeleteBoard,
+                      element:
+                        document.getElementById("delete-board-modal")
+                          .parentElement,
+                      fadeAttr: "data-showdeletemodal",
+                      stateProperty: "renderDeleteBoard",
+                      time: 2500,
                     });
+
+                    fadeInEditDeleteBtnModal(
+                      document.getElementById("launch-edit-delete-modal-btn")
+                    );
+                    // focus board selector at indexOfCurrentBoard
+                    // setTimeout(() => {
+                    //   document
+                    //     .getElementById("board-btn-selector-ul-container")
+                    //     .children[
+                    //       indexOfCurrentBoard
+                    //     ].firstElementChild.focus();
+                    // }, 80);
+                    // /**
+                    //  * does not matter which board is being deleted we want focus one of the board selector btn
+                    //  * or create new board btn
+                    //  * **/
+                    // removeRendersOfDeleteMessageAndBtn({
+                    //   setDeleteBoard,
+                    //   renderContextDeleteBoard,
+                    // });
                   }
 
                   // if index of current board in local storage is greater than 0 less than length - 1
@@ -365,6 +440,7 @@ export default function DeleteBoardMessage(params) {
                         .parentElement,
                     fadeAttr: "data-showdeletemodal",
                     stateProperty: "renderDeleteBoard",
+                    time: 2500,
                   });
 
                   fadeInEditDeleteBtnModal(

@@ -549,17 +549,19 @@ export function boardComponent() {
           element: document.getElementById("board-modal-selector"),
           fadeAttr: "data-showboardmodal",
           stateProperty: "renderBoardModal",
+          time: 2500,
         });
         // to not render edit board modal
         setTimeout(() => {
           // focus edit board modal btn
           document.getElementById("edit-board-modal-btn").focus();
-          setStateFunc((prevValues) => {
-            return {
-              ...prevValues,
-              renderBoardModal: false,
-            };
-          });
+          // handled in fadeOutEditDeleteBoardModal
+          // setStateFunc((prevValues) => {
+          //   return {
+          //     ...prevValues,
+          //     renderBoardModal: false,
+          //   };
+          // });
         }, 2500);
         // show edit delete btn modal
         fadeInEditDeleteBtnModal(
@@ -601,15 +603,15 @@ export function boardComponent() {
         return buildingUp;
       }, []);
 
-      changeBoardTitle({
-        titleInput: boardNameInputElement.value,
-        boardSelectorBtn,
-      });
       console.log(arrayColumnToRemoveWithTasks, "arrayColumnToRemoveWithTasks");
       // check length of arrayColumnToRemoveWithTasks array
       // if length is 0 run changeboardtitle func
       // renderContextObj.setStateFuncs.msgColumnsContainer isCurrentBoardEmpty:false currentBoardColumnsObj: copiedOriginalColumnsObj, setStateFunc
       if (arrayColumnToRemoveWithTasks.length === 0) {
+        changeBoardTitle({
+          titleInput: boardNameInputElement.value,
+          boardSelectorBtn,
+        });
         // we get here user made changes to the column user want to render
         const copiedOriginalColumnsObj = Object.assign({}, originalObj);
         // loop through obj that is used for adding columns
@@ -684,7 +686,7 @@ export function boardComponent() {
                 };
               }
 
-              if (!Array.is(currentValue[1])) {
+              if (!Array.isArray(currentValue[1])) {
                 buildingUp[currentValue[0]] = {
                   isRendered: false,
                 };
@@ -698,7 +700,7 @@ export function boardComponent() {
           // we want to check the columns elements rendered
           // and match those columns with the columns the user want to render
           // based on the board column btn of edit board modal
-          console.log("test this algorithm");
+
           // const columnELementMatchPropertyOfColumnsObj = [
           //   ...document.getElementById("edit-board-columns-container-selector")
           //     .childNodes,
@@ -716,7 +718,7 @@ export function boardComponent() {
           const columnELementMatchPropertyOfColumnsObj = Object.entries(
             obj
           ).every(function lookForMatch(subarray) {
-            return objOfTitles[subarray[0]] === subarray[1];
+            return objOfTitles[subarray[0]].isRendered === subarray[1];
           });
 
           if (columnELementMatchPropertyOfColumnsObj) {
@@ -733,17 +735,19 @@ export function boardComponent() {
               element: document.getElementById("board-modal-selector"),
               fadeAttr: "data-showboardmodal",
               stateProperty: "renderBoardModal",
+              time: 2500,
             });
             // to not render edit board modal
             setTimeout(() => {
               // focus edit board modal btn
               document.getElementById("edit-board-modal-btn").focus();
-              setStateFunc((prevValues) => {
-                return {
-                  ...prevValues,
-                  renderBoardModal: false,
-                };
-              });
+              // handled in fadeOutEditDeleteBoardModal
+              // setStateFunc((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     renderBoardModal: false,
+              //   };
+              // });
             }, 2500);
             // show edit delete btn modal
             fadeInEditDeleteBtnModal(
@@ -779,23 +783,50 @@ export function boardComponent() {
                 element: document.getElementById("board-modal-selector"),
                 fadeAttr: "data-showboardmodal",
                 stateProperty: "renderBoardModal",
+                time: 2500,
               });
               // to not render edit board modal
               setTimeout(() => {
                 document.getElementById("edit-board-modal-btn").focus();
-                setStateFunc((prevValues) => {
-                  return {
-                    ...prevValues,
-                    renderBoardModal: false,
-                  };
-                });
+                // handled in fadeOutEditDeleteBoardModal
+                // setStateFunc((prevValues) => {
+                //   return {
+                //     ...prevValues,
+                //     renderBoardModal: false,
+                //   };
+                // });
               }, 2500);
               // show edit delete btn modal
               fadeInEditDeleteBtnModal(
                 document.getElementById("launch-edit-delete-modal-btn")
               );
+
+              // update data in local storage. updating board title in local storage
+              // is handled by changeBoardTitle func
+              currentBoard.columns = { todo: [], doing: null, done: null };
+              userBoardInfo.boards[currentBoard.index].columns = {
+                todo: [],
+                doing: null,
+                done: null,
+              };
+              // current board columns
+              // update board obj in current user boards array
+              localStorage.setItem(
+                "currentBoard",
+                JSON.stringify(currentBoard)
+              );
+
+              localStorage.setItem(
+                "currentUser",
+                JSON.stringify(userBoardInfo)
+              );
               return;
             }
+            /**
+             * render columns component. since columns component is already rendered
+             * if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
+             * **/
+
             // loop through obj which will be {todo: true,doing:false,done:true} etc
             // use document.getElementById(`${subarray[0]}-column-selector`) to select column element
             // if value in obj is true and document.getElementById(`${subarray[0]}-column-selector`) returns null
@@ -844,16 +875,18 @@ export function boardComponent() {
           element: document.getElementById("board-modal-selector"),
           fadeAttr: "data-showboardmodal",
           stateProperty: "renderBoardModal",
+          time: 2500,
         });
         // to not render edit board modal
         setTimeout(() => {
           document.getElementById("edit-board-modal-btn").focus();
-          setStateFunc((prevValues) => {
-            return {
-              ...prevValues,
-              renderBoardModal: false,
-            };
-          });
+          // handled in fadeOutEditDeleteBoardModal
+          // setStateFunc((prevValues) => {
+          //   return {
+          //     ...prevValues,
+          //     renderBoardModal: false,
+          //   };
+          // });
         }, 2500);
         // show edit delete btn modal
         fadeInEditDeleteBtnModal(
@@ -870,68 +903,15 @@ export function boardComponent() {
         localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
         localStorage.setItem("currentUser", JSON.stringify(userBoardInfo));
         return;
-
-        setTimeout(() => {
-          // focus edit board modal btn
-          document.getElementById("edit-board-modal-btn").focus();
-        }, 80);
-
-        // render columns component. since columns component is already rendered
-        // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
-        // renderContextObj.setStateFuncs.msgColumnsContainer(
-        //   (prevValues) => {
-        //     return {
-        //       ...prevValues,
-        //       isChange: true,
-        //       currentBoardColumnsObj: copiedOriginalColumnsObj,
-        //     };
-        //   }
-        // );
-        // console.log(obj);
-        // check if columns container is rendered
-        if (
-          Object.is(document.getElementById("columns-container-selector"), null)
-        ) {
-          // unrender empty board message
-          renderContextObj.setStateFuncs.emptyBoardMsg(false);
-          // render columns container
-          renderContextObj.setStateFuncs.columnsContainer((prevValues) => {
-            return {
-              ...prevValues,
-              columnsIsCurrentBoardEmpty: false,
-              columnsObjData: copiedOriginalColumnsObj,
-            };
-          });
-          // if columns container is not rendered run mgcolumnscontainer set func;
-          // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
-          //   return {
-          //     ...prevValues,
-          //     isCurrentBoardEmpty: false,
-          //     currentBoardColumnsObj: copiedOriginalColumnsObj,
-          //   };
-          // });
-        }
-
-        if (
-          !Object.is(
-            document.getElementById("columns-container-selector"),
-            null
-          )
-        ) {
-          // if columns container is rendered Object.is(document.getElementById("columns-container-selector"),null) will be false
-          // run columnsContainer set func;
-          checkAndRenderColumnsComponent({
-            boardsColumnsObj: copiedOriginalColumnsObj,
-            columnStateFunc: renderContextObj.setStateFuncs,
-          });
-          // renderContextObj.setStateFuncs.columnsContainer(
-          //   copiedOriginalColumnsObj
-          // );
-        }
       }
       // if arrayColumnToRemoveWithTasks.length > 0 means user does not want to render a column with tasks in it
       // render warning message modal
       if (arrayColumnToRemoveWithTasks.length > 0) {
+        /**
+         * COME BACK TO THIS!!!!!
+         * MORE TEST OF THIS ALGORITHM LATER
+         * COME BACK TO THIS!!!!!
+         * **/
         // run changeColumnsContainerWidth only when user remove columns
         setTimeout(() => {
           document.getElementById("warning-message-modal").focus();
@@ -961,22 +941,7 @@ export function boardComponent() {
                 titleInput: boardNameInputElement.value,
                 boardSelectorBtn,
               });
-              // render columns component. since columns component is already rendered
-              // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
-              // renderContextObj.setStateFuncs.msgColumnsContainer(
-              //   (prevValues) => {
-              //     return {
-              //       ...prevValues,
-              //       isChange: true,
-              //       currentBoardColumnsObj: copiedOriginalObj,
-              //     };
-              //   }
-              // );
-              // console.log(obj);
-              checkAndRenderColumnsComponent({
-                boardsColumnsObj: copiedOriginalObj,
-                columnStateFunc: renderContextObj.setStateFuncs,
-              });
+
               // renderContextObj.setStateFuncs.columnsContainer(
               //   copiedOriginalObj
               // );
@@ -989,6 +954,8 @@ export function boardComponent() {
               );
               console.log(checkValuesForNull);
               if (checkValuesForNull) {
+                // change width and remove + new column btn
+                changeColumnsContainerWidth({ isBoardEmpty: true });
                 renderContextObj.setStateFuncs.addTaskBtn(true);
                 // render empty board message
                 renderContextObj.setStateFuncs.emptyBoardMsg(true);
@@ -1010,15 +977,55 @@ export function boardComponent() {
                 //   }
                 // );
               }
+              // render columns component. since columns component is already rendered
+              // if we want to re-render it we have to changes its state not its parent state(msgcolumnscontainer)
+              // renderContextObj.setStateFuncs.msgColumnsContainer(
+              //   (prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       isChange: true,
+              //       currentBoardColumnsObj: copiedOriginalObj,
+              //     };
+              //   }
+              // );
+              if (!checkValuesForNull) {
+                // console.log(obj);
+                checkAndRenderColumnsComponent({
+                  boardsColumnsObj: copiedOriginalObj,
+                  columnStateFunc: renderContextObj.setStateFuncs,
+                });
+              }
+              // fade out warning message modal
+
+              document
+                .getElementById("warning-message-modal")
+                .getAttribute("data-keepchanges") == "false"
+                ? !document
+                    .getElementById("warning-message-modal")
+                    .setAttribute("data-keepchanges", "true")
+                : null;
+
               // fade out edit board modal
               fadeOutEditDeleteBoardModal({
                 modalStateFunc: setStateFunc,
                 element: document.getElementById("board-modal-selector"),
                 fadeAttr: "data-showboardmodal",
                 stateProperty: "renderBoardModal",
+                time: 2500,
               });
-              // to not render warning messages component
+
+              // setTimeout(() => {
+              //   setWarningMessage((prevValues) => {
+              //     return {
+              //       ...prevValues,
+              //       renderWarningMessage: false,
+              //       stringsArray: [],
+              //     };
+              //   });
+              // }, 250);
+
               setTimeout(() => {
+                // to not render warning messages component
                 setWarningMessage((prevValues) => {
                   return {
                     ...prevValues,
@@ -1026,15 +1033,13 @@ export function boardComponent() {
                     stringsArray: [],
                   };
                 });
-              }, 250);
-              // to not render edit board modal
-              setTimeout(() => {
-                setStateFunc((prevValues) => {
-                  return {
-                    ...prevValues,
-                    renderBoardModal: false,
-                  };
-                });
+                // to not render edit board modal handle in fadeOutEditDeleteBoardModal
+                // setStateFunc((prevValues) => {
+                //   return {
+                //     ...prevValues,
+                //     renderBoardModal: false,
+                //   };
+                // });
               }, 2500);
               // show edit delete btn modal
               fadeInEditDeleteBtnModal(

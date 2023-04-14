@@ -29,7 +29,12 @@
   background-color: var(--goback-btn-hover-dark, var(--goback-btn-hover-light));
 }
 
+.warning-message-container[data-keepchanges="true"] {
+  opacity: 0;
+}
+
 .warning-message-container {
+  transition: opacity 1s linear;
   --warning-container-padding: 24px;
   --warning-inline: 16px;
   position: absolute;

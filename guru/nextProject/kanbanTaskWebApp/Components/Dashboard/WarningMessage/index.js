@@ -20,6 +20,7 @@ export default function WarningMessage({ children }) {
           tabIndex="-1"
           id="warning-message-modal"
           aria-modal="true"
+          data-keepchanges="false"
           role="dialog"
           className={WarningMsgStyles[`warning-message-container`]}
           onKeyDown={tabThroughWarningMsgModal}

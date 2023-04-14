@@ -157,6 +157,7 @@ export default function BoardSelector({
                   addTaskBtn,
                   columnsContainer,
                   stateFuncsFromContext: renderContextForCreateBoardModalBtn,
+                  changeColumnsContainerWidth,
                   checkAndRenderColumnsComponent,
                 });
                 // if (isBoardEmpty) {

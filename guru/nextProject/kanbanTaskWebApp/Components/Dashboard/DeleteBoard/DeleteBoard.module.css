@@ -14,6 +14,11 @@
   opacity: 1;
 }
 
+.board-selected {
+  font-weight: 600;
+  color: var(--dark-theme-red, red);
+}
+
 .delete-board-modal-bg {
   background-color: hsla(0 0% 0% / 0.4);
   position: absolute;

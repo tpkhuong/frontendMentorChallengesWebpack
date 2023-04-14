@@ -94,7 +94,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
 
   if (isBoardEmpty) {
     // check if add task btn and columns container are rendered
-    // if ther are call set state for add task btn and msgcolumnscontainer pass value boolean true
+    // if there are call set state for add task btn and msgcolumnscontainer pass value boolean true
     // because board is empty
     // add task btn
     if (addTaskBtn) {
@@ -121,7 +121,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
       // });
     }
 
-    // changeColumnsContainerWidth({ isBoardEmpty });
+    changeColumnsContainerWidth({ isBoardEmpty });
     return;
   }
 
@@ -137,7 +137,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
 
     if (!columnsContainer) {
       // unrender empty board message
-      stateFuncsFromContext.setStateFuncs.emptyBoardMsg(true);
+      stateFuncsFromContext.setStateFuncs.emptyBoardMsg(false);
       // render columns container
       stateFuncsFromContext.setStateFuncs.columnsContainer((prevValues) => {
         return {
@@ -181,7 +181,7 @@ export function renderColumnsAndAddTaskBtnForSelectedBoard({
       //   : null;
     }
 
-    // changeColumnsContainerWidth({ isBoardEmpty });
+    changeColumnsContainerWidth({ isBoardEmpty });
     return;
   }
 }
@@ -236,6 +236,7 @@ export function fadeOutEditDeleteBoardModal({
   fadeAttr,
   element,
   stateProperty,
+  time,
 }) {
   // we want to run this func for close modal btn
   // and keep changes(method we are passing to warning message modal from board modal)
@@ -246,14 +247,17 @@ export function fadeOutEditDeleteBoardModal({
     : null;
   // fade out edit/delete board modal
   // wait 1.05s then unrender edit board modal
-  setTimeout(() => {
-    modalStateFunc((prevValues) => {
-      return {
-        ...prevValues,
-        [stateProperty]: false,
-      };
-    });
-  }, 1050);
+  setTimeout(
+    () => {
+      modalStateFunc((prevValues) => {
+        return {
+          ...prevValues,
+          [stateProperty]: false,
+        };
+      });
+    },
+    time ? time : 1050
+  );
 
   const editDeleteModalLauncherBtn = document.getElementById(
     "launch-edit-delete-modal-btn"
@@ -347,7 +351,7 @@ export function fadeOutEditDeleteBoardModal({
           .getElementById("edit-delete-board-modal-selector")
           .setAttribute("data-iseditdeleteboardmodalshown", "false")
       : null;
-  }, 1070);
+  }, 1080);
 }
 
 export function fadeInEditDeleteBtnModal(element) {
