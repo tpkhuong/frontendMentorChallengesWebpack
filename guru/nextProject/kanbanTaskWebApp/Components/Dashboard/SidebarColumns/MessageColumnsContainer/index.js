@@ -59,28 +59,31 @@ export default function MessageColumnsContainer({
       {/* add column button height has to be around 756.2 */}
       <button
         onClick={(event) => {
-          const obj = JSON.parse(localStorage.getItem("currentBoard")).columns;
-          obj.doing = [];
-          // renderContextForMsgColumns.setStateFuncs.columnsContainer(
-          //   (prevValues) => {
-          //     return {
-          //       ...prevValues,
-          //       currentBoardColumnsObj: {
-          //         todo: obj.todo,
-          //         doing: [],
-          //         done: null,
-          //       },
-          //     };
-          //   }
-          // );
-          // setMsgColumns((prevValues) => {
-          //   return {
-          //     ...prevValues,
-          //     currentBoardColumnsObj: {
-          //       ...obj,
-          //     },
-          //   };
-          // });
+          const columnsObjFromLocalStorage = JSON.parse(
+            localStorage.getItem("currentBoard")
+          ).columns;
+          // take columns obj of currentBoard convert to array
+          const convertObjIntoArray = Object.entries(
+            columnsObjFromLocalStorage
+          );
+          // check if every value in currentBoard.columns obj is an array
+          const isAllValuesArray = convertObjIntoArray.every(
+            function lookForArray(subarray) {
+              return Object.is(Array.isArray(subarray[1]), true);
+            }
+          );
+          // if all values in columns obj is array we return do nothing
+          if (isAllValuesArray) {
+            return;
+          }
+          // if values in columns obj are not array
+          if (!isAllValuesArray) {
+            // find which column is not rendered and render that column
+            // find first property that is false and turn to true
+            // make copy of array then convert array in to obj
+            // call column stateFunc with property value of true of converted array into obj
+            return;
+          }
         }}
         className={MessageColumnsStyles[`new-column-btn`]}
       >

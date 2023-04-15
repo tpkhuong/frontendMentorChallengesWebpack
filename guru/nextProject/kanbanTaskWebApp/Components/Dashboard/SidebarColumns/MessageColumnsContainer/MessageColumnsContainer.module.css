@@ -18,6 +18,8 @@
   display: flex;
   overflow: scroll;
   gap: 24px;
+  transform-style: preserve-3d;
+  perspective: 500px;
   /* min-height: 748px;
 
   gap: 24px; */
@@ -49,10 +51,14 @@
 .new-column-btn:hover,
 .new-column-btn:focus {
   color: var(--color-purple);
+  box-shadow: 0px 0px 17px 4px var(--color-purple-secondary);
+  transform: translate3d(0px, 5px, 5px);
 }
 
 .new-column-btn {
   display: none;
+  transition: transform 1s ease-in;
+  transform: translate3d(0px, 0px, 0px);
   /* background-color: var(
     --color-new-column-btn-dark,
     var(--color-new-column-light)
@@ -76,7 +82,7 @@
   /* columns container */
   [data-atleastonecolumnshown="true"][data-issidebarshown="true"].columns-message-container {
     /* declaring max-width because this is a flex item. its parent has display flex declared */
-    max-width: 506px;
+    max-width: 548px;
   }
 
   [data-atleastonecolumnshown="true"][data-issidebarshown="false"].columns-message-container {

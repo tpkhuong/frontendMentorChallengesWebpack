@@ -157,7 +157,11 @@ export function boardComponent() {
       });
     },
     // create new
-    createNewBoard: function ({ setStateFunc, renderContextObj }) {
+    createNewBoard: function ({
+      setStateFunc,
+      renderContextObj,
+      changeColumnsContainerWidth,
+    }) {
       // target board name input
       const boardNameInput = document.getElementById("add-board-name-input");
       if (boardNameInput.value === "") {
@@ -210,8 +214,8 @@ export function boardComponent() {
                 }, {}),
         };
         // use boardColumnsContainer.childElementCount to calculate isBoardEmpty
-        const isBoardEmpty =
-          boardColumnsContainer.childElementCount === 0 ? true : false;
+        // const isBoardEmpty =
+        //   boardColumnsContainer.childElementCount === 0 ? true : false;
 
         if (user.boards.length === 0) {
           // there are no board obj in user boards array
@@ -229,10 +233,7 @@ export function boardComponent() {
           user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to true
           user.boards[0].isSelected = true;
-          // console.log(user, "before update");
-          changeColumnsContainerWidth({
-            isBoardEmpty,
-          });
+
           // update current user boards array and current board in local storage
           console.log(
             JSON.parse(localStorage.getItem("currentUser")),
@@ -273,6 +274,11 @@ export function boardComponent() {
               columnsObjData: newBoardObj.columns,
             };
           });
+
+          // console.log(user, "before update");
+          changeColumnsContainerWidth({
+            isBoardEmpty: false,
+          });
           // renderContextObj.setStateFuncs.msgColumnsContainer((prevValues) => {
           //   // when we re-render messagecolumnscontainer, we also render columns component
           //   // passing the columns obj to columns component
@@ -283,13 +289,16 @@ export function boardComponent() {
           //   };
           // });
         } else {
+          /**
+           * dont need to run changeColumnsContainerWidth({isBoardEmpty})
+           * because when users.boards array length is greater than(>) 0 and
+           * user click on create new board the new created board will not be selected.
+           * we will add a selector btn to board selector.
+           * **/
           // push newBoardObj into current user boards array
           user.boards.push(newBoardObj);
           // update isSelected property of newboardobj to false
           user.boards[user.boards.length - 1].isSelected = false;
-          changeColumnsContainerWidth({
-            isBoardEmpty,
-          });
           // console.log(user, "before update");
           console.log(
             JSON.parse(localStorage.getItem("currentUser")),
@@ -371,6 +380,7 @@ export function boardComponent() {
       makeObjForBoardModal,
       compareColumnObjs,
       checkAndRenderColumnsComponent,
+      changeColumnsContainerWidth,
     }) {
       console.log(obj, originalObj, "obj, originalObj");
       const userBoardInfo = JSON.parse(localStorage.getItem("currentUser"));
@@ -1206,6 +1216,7 @@ export function boardComponent() {
                       makeObjForBoardModal,
                       compareColumnObjs,
                       checkAndRenderColumnsComponent,
+                      changeColumnsContainerWidth,
                     });
                     return;
                   }
