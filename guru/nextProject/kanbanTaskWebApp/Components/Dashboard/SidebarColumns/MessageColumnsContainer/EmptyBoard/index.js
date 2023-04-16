@@ -28,9 +28,11 @@ export default function EmptyBoardMessage({
             <button
               onClick={(event) => {
                 const user = JSON.parse(localStorage.getItem("currentUser"));
-                const columnsObjFromLocalStorage = JSON.parse(
+                const currentBoard = JSON.parse(
                   localStorage.getItem("currentBoard")
-                ).columns;
+                );
+
+                const columnsObjFromLocalStorage = currentBoard.columns;
                 // take columns obj of currentBoard convert to array
                 const convertObjIntoArray = Object.entries(
                   columnsObjFromLocalStorage
@@ -42,6 +44,24 @@ export default function EmptyBoardMessage({
                   }
                 );
                 if (isAllValuesNull) {
+                  // save data to local storage
+                  const currentBoardIndex = currentBoard.index;
+                  user.boards[currentBoardIndex].columns = {
+                    todo: [],
+                    doing: null,
+                    done: null,
+                  };
+
+                  currentBoard.columns = {
+                    todo: [],
+                    doing: null,
+                    done: null,
+                  };
+
+                  saveDataToLocalStorage({
+                    user,
+                    board: currentBoard,
+                  });
                   // call .setStateFuncs.addTaskBtn with value false
                   renderContextEmptyBoardMsg.setStateFuncs.addTaskBtn(false);
                   // call .setStateFuncs.emptyBoardMsg with value of false
@@ -60,22 +80,7 @@ export default function EmptyBoardMessage({
                       };
                     }
                   );
-                  // save data to local storage
-                  const currentBoardIndex = columnsObjFromLocalStorage.index;
-                  user.boards[currentBoardIndex].columns = {
-                    todo: [],
-                    doing: null,
-                    done: null,
-                  };
-                  columnsObjFromLocalStorage.columns = {
-                    todo: [],
-                    doing: null,
-                    done: null,
-                  };
-                  saveDataToLocalStorage({
-                    user,
-                    board: columnsObjFromLocalStorage,
-                  });
+
                   // call changeColumnsContainerWidth isBoardEmpty false
                   // adding columns attr data-atleastonecolumnshown should always be "true"
                   // value/argument passed into changeColumnsContainerWidth should be false

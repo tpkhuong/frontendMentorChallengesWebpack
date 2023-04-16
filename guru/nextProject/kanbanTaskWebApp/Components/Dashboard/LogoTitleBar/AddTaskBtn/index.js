@@ -4,18 +4,13 @@ import AddTaskBtnStyles from "./AddTaskBtn.module.css";
 // import AddTaskModal from "./AddTaskModal/index";
 import { BoardTaskRenderContext } from "../../Context/index";
 import { useMediaQuery } from "../../../../utils/sharedHelpers";
-import { taskModalComponent } from "../../TaskModal";
-import { boardComponent } from "../../BoardModal";
-
-const TaskModal = taskModalComponent();
-const BoardModal = boardComponent();
 
 export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
   console.log(typeof isCurrentBoardEmpty, isCurrentBoardEmpty);
   const isScreenLargerThanTabletSize = useMediaQuery("min", 768);
   // const [renderAddTaskBtn, setAddTaskBtn] = React.useState(isCurrentBoardEmpty);
   const [renderAddTaskBtn, setAddTaskBtn] = React.useState(isCurrentBoardEmpty);
-  const [renderAddTaskModal, setTaskModal] = React.useState(false);
+  // const [renderAddTaskModal, setTaskModal] = React.useState(false);
 
   const renderContextForAddTaskBtn = React.useContext(BoardTaskRenderContext);
   console.log(renderAddTaskBtn, "renderAddTaskBtn");
@@ -45,54 +40,54 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                 onClick={(event) => {
                   console.log("hello");
                   // focus first input of ask task modal
-                  // setTimeout(() => {
-                  //   document.getElementById("add-task-title").focus();
-                  // }, 80);
-
-                  // renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
-                  //   (prevValues) => {
-                  //     return {
-                  //       ...prevValues,
-                  //       id: "add",
-                  //       renderTaskModal: true,
-                  //       refocusElementTaskModal: "add-task-btn",
-                  //       modalTitle: "Add New Task",
-                  //       titleInput: "",
-                  //       descriptionInput: "",
-                  //       statusInput: "Todo",
-                  //       subtasksArray: [
-                  //         { placeholder: "", text: "", isEmptyAttr: "" },
-                  //         { placeholder: "", text: "", isEmptyAttr: "" },
-                  //       ],
-                  //     };
-                  //   }
-                  // );
-
                   setTimeout(() => {
-                    document.getElementById("add-board-name-input").focus();
+                    document.getElementById("add-task-title").focus();
                   }, 80);
 
-                  // setTaskModal(true);
-                  // showAddTaskModal(renderAddTaskModal, setTaskModal);
-
-                  // test out board modal
-                  renderContextForAddTaskBtn.stateFuncsForModals.addNewBoardModal(
+                  renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
                     (prevValues) => {
                       return {
                         ...prevValues,
                         id: "add",
-                        renderBoardModal: true,
-                        boardModalTitle: "Add New Board",
-                        typeOfSubmitBtn: "createNewBoard",
-                        forRefocusElement: "add-task-btn",
-                        columnObj: {
-                          todo: null,
-                          doing: null,
-                          done: null,
-                        },
+                        renderTaskModal: true,
+                        refocusElementTaskModal: "add-task-btn",
+                        modalTitle: "Add New Task",
+                        titleInput: "",
+                        descriptionInput: "",
+                        statusInput: "Todo",
+                        subtasksArray: [
+                          { placeholder: "", text: "", isEmptyAttr: "" },
+                          { placeholder: "", text: "", isEmptyAttr: "" },
+                        ],
                       };
                     }
                   );
+
+                  // setTimeout(() => {
+                  //   document.getElementById("add-board-name-input").focus();
+                  // }, 80);
+
+                  // // setTaskModal(true);
+                  // // showAddTaskModal(renderAddTaskModal, setTaskModal);
+
+                  // // test out board modal
+                  // renderContextForAddTaskBtn.stateFuncsForModals.addNewBoardModal(
+                  //   (prevValues) => {
+                  //     return {
+                  //       ...prevValues,
+                  //       id: "add",
+                  //       renderBoardModal: true,
+                  //       boardModalTitle: "Add New Board",
+                  //       typeOfSubmitBtn: "createNewBoard",
+                  //       forRefocusElement: "add-task-btn",
+                  //       columnObj: {
+                  //         todo: null,
+                  //         doing: null,
+                  //         done: null,
+                  //       },
+                  //     };
+                  //   }
+                  // );
                   // renderContextForAddTaskBtn.stateFuncsForModals.editBoardModal(
                   //   (prevValues) => {
                   //     return {
@@ -144,52 +139,52 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
               onClick={(event) => {
                 console.log("hello");
                 // focus first input of ask task modal
-                // setTimeout(() => {
-                //   document.getElementById("add-task-title").focus();
-                // }, 80);
-
-                // setTaskModal(true);
-                // showAddTaskModal(renderAddTaskModal, setTaskModal);
-                // renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
-                //   (prevValues) => {
-                //     return {
-                //       ...prevValues,
-                //       id: "add",
-                //       renderTaskModal: true,
-                //       refocusElementTaskModal: "add-task-btn",
-                //       modalTitle: "Add New Task",
-                //       titleInput: "",
-                //       descriptionInput: "",
-                //       subtasksArray: [
-                //         { placeholder: "", text: "", isEmptyAttr: "" },
-                //         { placeholder: "", text: "", isEmptyAttr: "" },
-                //       ],
-                //     };
-                //   }
-                // );
-
                 setTimeout(() => {
-                  document.getElementById("add-board-name-input").focus();
+                  document.getElementById("add-task-title").focus();
                 }, 80);
 
-                // test out board modal
-                renderContextForAddTaskBtn.stateFuncsForModals.addNewBoardModal(
+                // setTaskModal(true);
+                showAddTaskModal(renderAddTaskModal, setTaskModal);
+                renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
                   (prevValues) => {
                     return {
                       ...prevValues,
                       id: "add",
-                      renderBoardModal: true,
-                      boardModalTitle: "Add New Board",
-                      typeOfSubmitBtn: "createNewBoard",
-                      forRefocusElement: "mobile-tab-refocus-selector",
-                      columnObj: {
-                        todo: null,
-                        doing: null,
-                        done: null,
-                      },
+                      renderTaskModal: true,
+                      refocusElementTaskModal: "add-task-btn",
+                      modalTitle: "Add New Task",
+                      titleInput: "",
+                      descriptionInput: "",
+                      subtasksArray: [
+                        { placeholder: "", text: "", isEmptyAttr: "" },
+                        { placeholder: "", text: "", isEmptyAttr: "" },
+                      ],
                     };
                   }
                 );
+
+                // setTimeout(() => {
+                //   document.getElementById("add-board-name-input").focus();
+                // }, 80);
+
+                // // test out board modal
+                // renderContextForAddTaskBtn.stateFuncsForModals.addNewBoardModal(
+                //   (prevValues) => {
+                //     return {
+                //       ...prevValues,
+                //       id: "add",
+                //       renderBoardModal: true,
+                //       boardModalTitle: "Add New Board",
+                //       typeOfSubmitBtn: "createNewBoard",
+                //       forRefocusElement: "mobile-tab-refocus-selector",
+                //       columnObj: {
+                //         todo: null,
+                //         doing: null,
+                //         done: null,
+                //       },
+                //     };
+                //   }
+                // );
                 // renderContextForAddTaskBtn.stateFuncsForModals.editBoardModal(
                 //   (prevValues) => {
                 //     return {

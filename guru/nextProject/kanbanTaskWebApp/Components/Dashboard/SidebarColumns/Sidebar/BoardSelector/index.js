@@ -1,6 +1,7 @@
 import React from "react";
 import BoardSelectorStyles from "./BoardSelector.module.css";
 import { useMediaQuery } from "../../../../../utils/sharedHelpers";
+import ViewTask from "../../../ViewTask/index";
 import { BoardTaskRenderContext } from "../../../Context/index";
 import {
   renderColumnsAndAddTaskBtnForSelectedBoard,
@@ -88,6 +89,7 @@ export default function BoardSelector({
   return (
     <div className={BoardSelectorStyles[`boards-selector-container`]}>
       {/* number of boards */}
+      <ViewTask />
       <span className={BoardSelectorStyles[`boards-quantity`]}>
         <span>ALL BOARDS</span>
         <span>({initialValuesArray.length})</span>

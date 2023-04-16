@@ -4,6 +4,7 @@ import CloseModalBtn from "../CloseModalBtn/index";
 import StatusMenu from "../StatusMenu/index";
 import { BoardTaskRenderContext } from "../Context/index";
 import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
+import ViewTask from "../ViewTask";
 
 const AddNewTaskModalSubtasks = SubtasksComponent();
 const EditTaskModalSubtasks = SubtasksComponent();

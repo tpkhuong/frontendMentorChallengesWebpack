@@ -32,7 +32,6 @@
 
   --color-secondary-text-color: var(--color-medium-grey);
   --modals-description-both: var(--color-medium-grey);
-  --color-completed-task: hsl(231, 5%, 50%);
   --toggle-icon: var(--color-medium-grey);
 
   --color-linkedin: hsl(210, 90%, 40%);

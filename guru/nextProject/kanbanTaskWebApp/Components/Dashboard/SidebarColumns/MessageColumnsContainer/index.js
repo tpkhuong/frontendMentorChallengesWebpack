@@ -4,6 +4,7 @@ import ShowSidebarBtn from "./ShowSidebar/index";
 import EmptyBoardMessage from "./EmptyBoard/index";
 import Columns from "./Columns";
 import { BoardTaskRenderContext } from "../../Context/index";
+import { saveDataToLocalStorage } from "../../DeleteBoard/deleteBoardHelpers";
 import TodoColumn from "./Columns/Todo";
 // import ColumnTitle from "./Columns/ColumnTitle/index";
 import TaskBtn from "./Columns/TaskBtn/index";
@@ -59,9 +60,10 @@ export default function MessageColumnsContainer({
       {/* add column button height has to be around 756.2 */}
       <button
         onClick={(event) => {
-          const columnsObjFromLocalStorage = JSON.parse(
-            localStorage.getItem("currentBoard")
-          ).columns;
+          const user = JSON.parse(localStorage.getItem("currentUser"));
+          const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
+
+          const columnsObjFromLocalStorage = currentBoard.columns;
           // take columns obj of currentBoard convert to array
           const convertObjIntoArray = Object.entries(
             columnsObjFromLocalStorage
@@ -78,11 +80,43 @@ export default function MessageColumnsContainer({
           }
           // if values in columns obj are not array
           if (!isAllValuesArray) {
+            var index = 0;
             // find which column is not rendered and render that column
-            // find first property that is false and turn to true
-            // make copy of array then convert array in to obj
-            // call column stateFunc with property value of true of converted array into obj
-            return;
+            while (index < convertObjIntoArray.length) {
+              const subarray = convertObjIntoArray[index];
+              if (Object.is(subarray[1], null)) {
+                // find first property that is false and turn to array
+                convertObjIntoArray[index][1] = [];
+                // convert array into obj
+                const convertArrayToObjForLocalStorage =
+                  convertObjIntoArray.reduce(function makeObj(
+                    buildingUp,
+                    currentValue
+                  ) {
+                    const [key, value] = currentValue;
+                    buildingUp[key] = value;
+                    return buildingUp;
+                  },
+                  {});
+                // save to local storage
+                user.boards[currentBoard.index].columns =
+                  convertArrayToObjForLocalStorage;
+
+                currentBoard.columns = convertArrayToObjForLocalStorage;
+
+                saveDataToLocalStorage({
+                  user,
+                  board: currentBoard,
+                });
+                // use value at convertObjIntoArray[index][0] it will be either string todo,doing, or done
+                // call column stateFunc with property value of true of converted array into obj
+                renderContextForMsgColumns.setStateFuncs[
+                  `${subarray[0]}Column`
+                ]([]);
+                return;
+              }
+              index += 1;
+            }
           }
         }}
         className={MessageColumnsStyles[`new-column-btn`]}

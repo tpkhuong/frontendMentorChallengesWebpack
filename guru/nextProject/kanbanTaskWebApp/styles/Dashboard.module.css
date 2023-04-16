@@ -38,6 +38,8 @@
   /* --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%); */
 
   /* --status-drop-down-box-shadow-light: 0px 0px 10px 3px hsla(0 0% 0% / 0.2); */
+  /* view task */
+  --color-subtask-bg-in-views-light: var(--color-light-bg);
 }
 
 .dashboard[data-apptheme="dark"] {
@@ -82,6 +84,8 @@
   --createboard-hover-new-column-taskbtn-dark: var(--color-purple-secondary);
   /* --toggle-bg-dark: var(--color-purple-secondary);
   --toggle-icon-container-bg-dark: var(--color-dark-bg); */
+  /* view task */
+  --color-subtask-bg-in-views-dark: var(--color-dark-bg);
 }
 
 @media screen and (max-width: 23.4375rem) {
