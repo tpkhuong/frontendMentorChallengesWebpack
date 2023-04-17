@@ -1,4 +1,21 @@
 /* light/dark */
+[data-apptheme="light"] .view-task-modal-bg {
+  --subtask-modal-checkedbox-light-bg: var(--color-neutral-white);
+  --subtask-title-content-light-fg: var(--color-neutral-black);
+  --subtask-label-light-fg: var(--color-medium-grey);
+  /* --subtasks-modal-btn-hover-light: hsl(242, 48%, 89%); */
+  /* view task */
+  --color-subtask-bg-in-views-light: var(--color-light-bg);
+}
+
+[data-apptheme="dark"] .view-task-modal-bg {
+  --subtask-modal-checkedbox-dark-bg: var(--color-dark-grey);
+  --subtask-title-content-dark-fg: var(--color-neutral-white);
+  --subtask-label-dark-fg: var(--color-neutral-white);
+  /* --subtasks-hover-dark: hsl(240, 23%, 29%); */
+  /* view task */
+  --color-subtask-bg-in-views-dark: var(--color-dark-bg);
+}
 /* modal bg */
 /* title */
 /* subtasks label */
