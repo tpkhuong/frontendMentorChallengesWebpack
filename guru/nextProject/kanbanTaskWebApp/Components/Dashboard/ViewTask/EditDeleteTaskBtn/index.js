@@ -2,18 +2,58 @@ import React from "react";
 import EditDeleteTaskStyles from "./EditDeleteTaskBtn.module.css";
 
 export default function EditDeleteTaskBtnAndModal({ children }) {
+  const [editDeleteTaskModalObj, setEditDeleteTaskModal] = React.useState({
+    renderEditDeleteBtn,
+    ariaLabelContent: "open edit and delete task buttons modal",
+  });
   return (
     <React.Fragment>
-      <button>
+      <button
+        id="launch-edit-delete-task-modal-btn"
+        className={EditDeleteTaskStyles[`edit-delete-task-modal-btn`]}
+        aria-label={editDeleteTaskModalObj.ariaLabelContent}
+        onClick={(event) => {
+          if (!editDeleteTaskModalObj.renderEditDeleteBtn) {
+            setEditDeleteTaskModal((prevValues) => {
+              return {
+                ...prevValues,
+                renderEditDeleteBtn: true,
+                ariaLabelContent: "close edit and delete task buttons modal",
+              };
+            });
+            return;
+          }
+
+          if (editDeleteTaskModalObj.renderEditDeleteBtn) {
+            setEditDeleteTaskModal((prevValues) => {
+              return {
+                ...prevValues,
+                renderEditDeleteBtn: false,
+                ariaLabelContent: "open edit and delete task buttons modal",
+              };
+            });
+            return;
+          }
+        }}
+      >
         {/* edit delete task modal */}
-        <div
-          role="dialog"
-          aria-modal="true"
-          className={EditDeleteTaskStyles[`edit-delete-task-btns-container`]}
-        >
-          <button type="button"></button>
-          <button type="button"></button>
-        </div>
+        <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
+          <g fill="#828FA3" fillRule="evenodd">
+            <circle cx="2.308" cy="2.308" r="2.308" />
+            <circle cx="2.308" cy="10" r="2.308" />
+            <circle cx="2.308" cy="17.692" r="2.308" />
+          </g>
+        </svg>
+        {editDeleteTaskModalObj.renderEditDeleteBtn && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            className={EditDeleteTaskStyles[`edit-delete-task-btns-container`]}
+          >
+            <button type="button">Edit Task</button>
+            <button type="button">Delete Task</button>
+          </div>
+        )}
       </button>
     </React.Fragment>
   );

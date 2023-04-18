@@ -5,6 +5,7 @@ import MessageColumnsContainer from "./MessageColumnsContainer/index";
 import DeleteBoardMessage from "../DeleteBoard";
 import { taskModalComponent } from "../TaskModal/index";
 import { boardComponent } from "../BoardModal/index";
+import ViewTask from "../ViewTask/index";
 // import { boardComponent } from "../BoardModal/index";
 
 // const AddBoardModal = boardComponent();
@@ -37,6 +38,7 @@ export default function SidebarColumns({ children, valuesForBoardsColumns }) {
         />
       </div>
       <TaskModal />
+      <ViewTask />
       <BoardModal />
       <DeleteBoardMessage />
       {/* reason we see console.log(initialValueObjBoardMoal); twice in browser console. Below are the initial render of board modal */}

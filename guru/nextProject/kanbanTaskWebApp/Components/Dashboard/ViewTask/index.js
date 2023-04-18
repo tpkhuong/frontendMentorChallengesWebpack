@@ -19,8 +19,8 @@ export default function ViewTask({ children }) {
         aria-modal="trhe"
         role="dialog"
         aria-labelledby="view-task-modal-title"
+        className={ViewTaskStyles[`view-task-modal`]}
       >
-        <Subtask />
         {/* title and edit/delete btn */}
         <div className={ViewTaskStyles[`title-edit-delete-btn-container`]}>
           <h2
@@ -40,10 +40,10 @@ export default function ViewTask({ children }) {
         {/* subtasks */}
         <span className={ViewTaskStyles[`subtask-label`]}>
           <span>Subtasks</span>
-          <span>(</span>
+          <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
           <span>2</span>
-          of
-          <span>3</span>
+          <span className={ViewTaskStyles[`margin-inline-start`]}>of</span>
+          <span className={ViewTaskStyles[`margin-inline-start`]}>3</span>
           <span>)</span>
         </span>
         <ul role="group">
@@ -59,6 +59,7 @@ export default function ViewTask({ children }) {
         {/* subtasks bg: light theme: light grey */}
         {/* subtasks bg: dark theme: very dark grey */}
         {/* current status */}
+        <StatusMenu>Current Status</StatusMenu>
       </div>
     </div>
   );
