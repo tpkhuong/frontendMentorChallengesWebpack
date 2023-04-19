@@ -156,6 +156,8 @@ export default function DoneColumn({ children, doneColumnArray }) {
               return (
                 <li key={Math.random() * index}>
                   <TaskBtn
+                    position={index}
+                    status={obj.status}
                     completed={`${obj.subtasks.reduce(
                       (buildingUp, currentValue) => {
                         return currentValue.isCompleted

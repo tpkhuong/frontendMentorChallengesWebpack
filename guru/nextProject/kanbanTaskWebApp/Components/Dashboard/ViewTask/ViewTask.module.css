@@ -38,7 +38,7 @@
 
   position: absolute;
   inset: 0;
-  margin-block: auto;
+  margin: auto;
   left: var(--inline-space);
   right: var(--inline-space);
 
@@ -111,9 +111,10 @@
 
 .subtask-checkbox-container {
   display: flex;
-  padding-block: 12px;
-  padding-inline-start: 12px;
+  padding: 12px;
   border-radius: 4px;
+  gap: 16px;
+  width: 100%;
 
   align-items: center;
   background-color: var(
@@ -154,15 +155,53 @@
   display: none;
 }
 
-[aria-checked="true"] .subtask-content {
+.subtask-content {
+  display: flex;
+  flex-wrap: wrap;
+  /* position: relative; */
+  /* display: block; */
+}
+
+[aria-checked="true"] .subtask-content,
+[aria-checked="true"] .sentence-spacer::before {
   color: var(
     --subtask-checked-content-light-fg,
     var(--subtask-checked-content-dark-fg)
   );
-  position: relative;
+
+  /* display: flex;
+  flex-wrap: wrap; */
+  /* position: relative; */
   /* display: block; */
 }
 
+[aria-checked="true"] .single-word,
+[aria-checked="true"] .sentence-spacer {
+  position: relative;
+}
+
+[aria-checked="true"] .single-word::before,
+[aria-checked="true"] .sentence-spacer::before {
+  content: "";
+  display: inline-block;
+  background-color: currentColor;
+
+  position: absolute;
+  inset: 0;
+  height: 1px;
+  margin-block: auto;
+}
+/* 
+[aria-checked="true"] .sentence-spacer::before {
+  background-color: red;
+} */
+
+.sentence-spacer {
+  width: 4px;
+  display: inline-block;
+}
+
+/* 
 [aria-checked="true"] .subtask-content::before {
   content: "";
   display: block;
@@ -174,7 +213,7 @@
   inset: 0;
 
   margin-block: auto;
-}
+} */
 
 /* aria-checked false theme */
 /* aria-checked true checked icon and main purple bg */

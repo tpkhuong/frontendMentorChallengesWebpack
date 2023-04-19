@@ -34,6 +34,19 @@ export default function Columns({
           id="columns-container-selector"
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
+          onClick={(event) => {
+            // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            const currentBoard = JSON.parse(
+              localStorage.getItem("currentBoard")
+            );
+
+            const clickedTask = event.target.closest("BUTTON");
+            const btnStatus = clickedTask.getAttribute("data-typeofstatus");
+            const position = clickedTask.getAttribute("data-orderindex");
+
+            const currentTask = currentBoard.columns[btnStatus][position];
+            console.log(currentTask);
+          }}
         >
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns

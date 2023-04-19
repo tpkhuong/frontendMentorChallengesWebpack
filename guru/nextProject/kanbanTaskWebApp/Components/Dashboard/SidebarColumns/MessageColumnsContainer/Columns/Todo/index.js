@@ -248,6 +248,8 @@ export default function TodoColumn({ children, todoColumnArray }) {
               return (
                 <li key={Math.random() * index}>
                   <TaskBtn
+                    position={index}
+                    status={obj.status}
                     completed={`${obj.subtasks.reduce(
                       (buildingUp, currentValue) => {
                         return currentValue.isCompleted

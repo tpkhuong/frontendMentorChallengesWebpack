@@ -1,0 +1,47 @@
+/* mobile */
+.edit-delete-task-modal-btn {
+  background-color: transparent;
+  position: relative;
+  width: 17px;
+}
+
+.edit-delete-task-btns-container {
+  position: absolute;
+  border-radius: 4px;
+  padding: 16px;
+  max-width: 192px;
+  top: 32px;
+  right: 5px;
+  left: -150px;
+
+  background-color: var(
+    --subtask-modal-checkedbox-light-bg,
+    var(--subtask-modal-checkedbox-dark-bg)
+  );
+
+  box-shadow: var(
+    --edit-delete-modals-box-shadow-dark,
+    0px 0px 10px 3px hsla(0 0% 0% / 0.2)
+  );
+}
+
+.edit-delete-task-btns-container button:nth-of-type(2) {
+  margin-block: 16px;
+}
+
+.edit-delete-task-btns-container button {
+  background-color: transparent;
+  font-size: var(--heading-sm-four);
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+}
+
+.edit-task-btn,
+.close-task-modal-btn {
+  color: var(--color-medium-grey);
+}
+
+.delete-task-btn {
+  color: red;
+}

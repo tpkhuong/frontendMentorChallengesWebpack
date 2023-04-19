@@ -16,7 +16,7 @@ export default function ViewTask({ children }) {
   return (
     <div className={ViewTaskStyles[`view-task-modal-bg`]}>
       <div
-        aria-modal="trhe"
+        aria-modal="true"
         role="dialog"
         aria-labelledby="view-task-modal-title"
         className={ViewTaskStyles[`view-task-modal`]}
@@ -30,6 +30,8 @@ export default function ViewTask({ children }) {
             Research pricing points of various competitors and trial different
             business models
           </h2>
+          {/* edit/delete btn */}
+          <EditDeleteTaskBtnAndModal />
         </div>
         {/* description */}
         <p className={ViewTaskStyles[`description`]}>
@@ -59,13 +61,15 @@ export default function ViewTask({ children }) {
         {/* subtasks bg: light theme: light grey */}
         {/* subtasks bg: dark theme: very dark grey */}
         {/* current status */}
-        <StatusMenu>Current Status</StatusMenu>
+        <StatusMenu statusValueFromEditModal="Doing">Current Status</StatusMenu>
       </div>
     </div>
   );
 }
 
 function Subtask({ children, content }) {
+  const arrayOfWords = content.split(" ");
+
   return (
     <button
       role="checkbox"
@@ -77,7 +81,7 @@ function Subtask({ children, content }) {
         <svg width="10" height="8" xmlns="http://www.w3.org/2000/svg">
           <path
             stroke="#FFF"
-            stroke-width="2"
+            strokeWidth="2"
             fill="none"
             d="m1.276 3.066 2.756 2.756 5-5"
           />
@@ -85,7 +89,20 @@ function Subtask({ children, content }) {
         {/* <img src="/assets/icon-check.svg" alt="white checked icon" /> */}
       </div>
       {/* title */}
-      <span className={ViewTaskStyles[`subtask-content`]}>{content}</span>
+      {/* <span className={ViewTaskStyles[`subtask-content`]}>{content}</span> */}
+      <p className={ViewTaskStyles[`subtask-content`]}>
+        {/* {content} */}
+        {arrayOfWords.map(function buildSentence(word, index, list) {
+          return (
+            <React.Fragment key={Math.random() * index + 1}>
+              <span className={ViewTaskStyles[`single-word`]}>{word}</span>
+              {index + 1 == list.length ? null : (
+                <span className={ViewTaskStyles[`sentence-spacer`]}></span>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </p>
     </button>
   );
 }

@@ -3,8 +3,8 @@ import EditDeleteTaskStyles from "./EditDeleteTaskBtn.module.css";
 
 export default function EditDeleteTaskBtnAndModal({ children }) {
   const [editDeleteTaskModalObj, setEditDeleteTaskModal] = React.useState({
-    renderEditDeleteBtn,
-    ariaLabelContent: "open edit and delete task buttons modal",
+    renderEditDeleteBtn: false,
+    ariaLabelContent: "open edit, delete task and close buttons modal",
   });
   return (
     <React.Fragment>
@@ -18,7 +18,8 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
               return {
                 ...prevValues,
                 renderEditDeleteBtn: true,
-                ariaLabelContent: "close edit and delete task buttons modal",
+                ariaLabelContent:
+                  "close edit, delete task and close buttons modal.",
               };
             });
             return;
@@ -29,7 +30,8 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
               return {
                 ...prevValues,
                 renderEditDeleteBtn: false,
-                ariaLabelContent: "open edit and delete task buttons modal",
+                ariaLabelContent:
+                  "open edit, delete task and close buttons modal.",
               };
             });
             return;
@@ -50,8 +52,24 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
             aria-modal="true"
             className={EditDeleteTaskStyles[`edit-delete-task-btns-container`]}
           >
-            <button type="button">Edit Task</button>
-            <button type="button">Delete Task</button>
+            <button
+              className={EditDeleteTaskStyles[`edit-task-btn`]}
+              type="button"
+            >
+              Edit Task
+            </button>
+            <button
+              className={EditDeleteTaskStyles[`delete-task-btn`]}
+              type="button"
+            >
+              Delete Task
+            </button>
+            <button
+              className={EditDeleteTaskStyles[`close-task-modal-btn`]}
+              type="button"
+            >
+              Close
+            </button>
           </div>
         )}
       </button>
