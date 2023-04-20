@@ -40,12 +40,39 @@ export default function Columns({
               localStorage.getItem("currentBoard")
             );
 
-            const clickedTask = event.target.closest("BUTTON");
-            const btnStatus = clickedTask.getAttribute("data-typeofstatus");
-            const position = clickedTask.getAttribute("data-orderindex");
+            if (event.target.closest("BUTTON")) {
+              const clickedTask = event.target.closest("BUTTON");
+              const btnStatus = clickedTask.getAttribute("data-typeofstatus");
+              const position = clickedTask.getAttribute("data-orderindex");
 
-            const currentTask = currentBoard.columns[btnStatus][position];
-            console.log(currentTask);
+              const currentTask = currentBoard.columns[btnStatus][position];
+              const {
+                title,
+                description,
+                status,
+                isSelected,
+                index,
+                subtasks,
+              } = currentTask;
+
+              localStorage.setItem("currentTask", JSON.stringify(currentTask));
+
+              // call viewTask stateFunc
+              renderContextColumnsComponent.stateFuncsForModals.viewTask(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderViewTask: true,
+                    title,
+                    description,
+                    status,
+                    isSelected,
+                    index,
+                    subtasks,
+                  };
+                }
+              );
+            }
           }}
         >
           <h2 className="visually-hidden" id="status-column-title">

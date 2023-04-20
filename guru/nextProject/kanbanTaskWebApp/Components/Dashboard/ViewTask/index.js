@@ -2,6 +2,7 @@ import React from "react";
 import ViewTaskStyles from "./ViewTask.module.css";
 import StatusMenu from "../StatusMenu/index";
 import EditDeleteTaskBtnAndModal from "./EditDeleteTaskBtn/index";
+import { BoardTaskRenderContext } from "../Context/index";
 
 const strArray = [
   "Research competitor pricing and business models",
@@ -13,67 +14,100 @@ export default function ViewTask({ children }) {
   // when user click on a task btn to render view task we will
   // get task data from currentBoard in local storage
   // then make a "currentTask" and save it to local storage
+  const [initialTaskValuesObj, setViewTask] = React.useState({
+    renderViewTask: false,
+    title: "",
+    description: "",
+    status: "",
+    isSelected: "",
+    index: null,
+    subtasks: null,
+  });
+
+  const renderContextViewTask = React.useContext(BoardTaskRenderContext);
+
+  renderContextViewTask.stateFuncsForModals.viewTask = setViewTask;
+
   return (
-    <div className={ViewTaskStyles[`view-task-modal-bg`]}>
-      <div
-        aria-modal="true"
-        role="dialog"
-        aria-labelledby="view-task-modal-title"
-        className={ViewTaskStyles[`view-task-modal`]}
-      >
-        {/* title and edit/delete btn */}
-        <div className={ViewTaskStyles[`title-edit-delete-btn-container`]}>
-          <h2
-            id="view-task-modal-title"
-            className={ViewTaskStyles[`subtask-title`]}
+    <React.Fragment>
+      {initialTaskValuesObj.renderViewTask && (
+        <div className={ViewTaskStyles[`view-task-modal-bg`]}>
+          <div
+            aria-modal="true"
+            role="dialog"
+            aria-labelledby="view-task-modal-title"
+            className={ViewTaskStyles[`view-task-modal`]}
           >
-            Research pricing points of various competitors and trial different
-            business models
-          </h2>
-          {/* edit/delete btn */}
-          <EditDeleteTaskBtnAndModal />
+            {/* title and edit/delete btn */}
+            <div className={ViewTaskStyles[`title-edit-delete-btn-container`]}>
+              <h2
+                id="view-task-modal-title"
+                className={ViewTaskStyles[`subtask-title`]}
+              >
+                {initialTaskValuesObj.title}
+              </h2>
+              {/* edit/delete btn */}
+              <EditDeleteTaskBtnAndModal />
+            </div>
+            {/* description */}
+            <p className={ViewTaskStyles[`description`]}>
+              {initialTaskValuesObj.description}
+            </p>
+            {/* subtasks */}
+            <span className={ViewTaskStyles[`subtask-label`]}>
+              <span>Subtasks</span>
+              <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
+              <span>{`${initialTaskValuesObj.subtasks.reduce(
+                (buildingUp, currentValue) => {
+                  if (currentValue.isCompleted) {
+                    buildingUp += 1;
+                  }
+                  return buildingUp;
+                },
+                0
+              )}`}</span>
+              <span className={ViewTaskStyles[`margin-inline-start`]}>of</span>
+              <span className={ViewTaskStyles[`margin-inline-start`]}>
+                {initialTaskValuesObj.subtasks.length}
+              </span>
+              <span>)</span>
+            </span>
+            <ul role="group">
+              {/* ul role=group */}
+              {initialTaskValuesObj.subtasks.map(function makeSubtask(
+                obj,
+                index
+              ) {
+                return (
+                  <li key={Math.random() * index}>
+                    <Subtask
+                      isCompleted={obj.isCompleted}
+                      content={obj.title}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+            {/* subtasks bg: light theme: light grey */}
+            {/* subtasks bg: dark theme: very dark grey */}
+            {/* current status */}
+            <StatusMenu statusValueFromEditModal={initialTaskValuesObj.status}>
+              Current Status
+            </StatusMenu>
+          </div>
         </div>
-        {/* description */}
-        <p className={ViewTaskStyles[`description`]}>
-          We know what we're planning to build for version one. Now we need to
-          finalise the first pricing model we'll use. Keep iterating the
-          subtasks until we have a coherent proposition.
-        </p>
-        {/* subtasks */}
-        <span className={ViewTaskStyles[`subtask-label`]}>
-          <span>Subtasks</span>
-          <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
-          <span>2</span>
-          <span className={ViewTaskStyles[`margin-inline-start`]}>of</span>
-          <span className={ViewTaskStyles[`margin-inline-start`]}>3</span>
-          <span>)</span>
-        </span>
-        <ul role="group">
-          {/* ul role=group */}
-          {strArray.map(function makeSubtask(str, index) {
-            return (
-              <li key={Math.random() * index}>
-                <Subtask content={str} />
-              </li>
-            );
-          })}
-        </ul>
-        {/* subtasks bg: light theme: light grey */}
-        {/* subtasks bg: dark theme: very dark grey */}
-        {/* current status */}
-        <StatusMenu statusValueFromEditModal="Doing">Current Status</StatusMenu>
-      </div>
-    </div>
+      )}
+    </React.Fragment>
   );
 }
 
-function Subtask({ children, content }) {
+function Subtask({ children, content, isCompleted }) {
   const arrayOfWords = content.split(" ");
 
   return (
     <button
       role="checkbox"
-      aria-checked="false"
+      aria-checked={`${isCompleted}`}
       className={ViewTaskStyles[`subtask-checkbox-container`]}
     >
       {/* checkbox */}

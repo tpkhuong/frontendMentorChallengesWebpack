@@ -56,6 +56,12 @@
 
 /* title */
 
+.title-edit-delete-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .subtask-checkbox-container[aria-checked="false"]:hover,
 .subtask-checkbox-container[aria-checked="false"]:focus {
   background-color: var(

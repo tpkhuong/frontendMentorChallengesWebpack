@@ -6,13 +6,36 @@
   --task-btn-dark-bg: var(--color-dark-grey);
 }
 
+.task-btn[data-typeofstatus="todo"]:hover,
+.task-btn[data-typeofstatus="todo"]:focus {
+  box-shadow: var(--task-btn-shadow) hsl(193, 75%, 59%);
+}
+
+.task-btn[data-typeofstatus="doing"]:hover,
+.task-btn[data-typeofstatus="doing"]:focus {
+  box-shadow: var(--task-btn-shadow) hsl(248, 83%, 70%);
+}
+
+.task-btn[data-typeofstatus="done"]:hover,
+.task-btn[data-typeofstatus="done"]:focus {
+  box-shadow: var(--task-btn-shadow) hsl(155, 68%, 65%);
+}
+
+.task-btn[data-typeofstatus]:hover,
+.task-btn[data-typeofstatus]:focus {
+  transform: translate3d(0px, 0px, 5px);
+}
+
 .task-btn {
+  --task-btn-shadow: 0px 0px 17px 4px;
+  transition: transform 0.5s ease-in, box-shadow 0.5s ease-in;
   background-color: var(--task-btn-dark-bg, var(--color-neutral-white));
   display: block;
   padding-block: 23px;
   padding-inline: 16px;
-  box-shadow: 0px 3px 16px 0px
-    var(--task-btn-box-shadow-light, var(--color-neutral-black));
+  box-shadow: 0px 0px 0px 0px transparent;
+  transform: translate3d(0px, 0px, 0px);
+
   border-radius: 8px;
   text-align: left;
 
@@ -32,4 +55,16 @@
   gap: 5px;
   /* justify-content: center; */
   margin-block-start: 8px;
+}
+
+.circle[data-statusbtncolor="todo"] {
+  background-color: hsl(193, 75%, 59%);
+}
+
+.circle[data-statusbtncolor="doing"] {
+  background-color: hsl(248, 83%, 70%);
+}
+
+.circle[data-statusbtncolor="done"] {
+  background-color: hsl(155, 68%, 65%);
 }

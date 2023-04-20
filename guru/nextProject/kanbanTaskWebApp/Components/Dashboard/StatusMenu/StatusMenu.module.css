@@ -49,6 +49,10 @@
   color: var(--status-value-dark);
 }
 
+.status-name {
+  text-transform: capitalize;
+}
+
 /* modal */
 
 ul.status-menu-container {

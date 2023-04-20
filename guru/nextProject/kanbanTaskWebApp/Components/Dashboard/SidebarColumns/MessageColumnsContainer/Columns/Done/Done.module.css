@@ -1,0 +1,5 @@
+.done-quantity-task-container,
+.done-tasks-container,
+.done-tasks-container li {
+  transform-style: preserve-3d;
+}

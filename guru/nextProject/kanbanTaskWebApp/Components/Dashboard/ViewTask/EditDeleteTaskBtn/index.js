@@ -1,11 +1,16 @@
 import React from "react";
 import EditDeleteTaskStyles from "./EditDeleteTaskBtn.module.css";
+import { BoardTaskRenderContext } from "../../Context/index";
 
 export default function EditDeleteTaskBtnAndModal({ children }) {
   const [editDeleteTaskModalObj, setEditDeleteTaskModal] = React.useState({
     renderEditDeleteBtn: false,
     ariaLabelContent: "open edit, delete task and close buttons modal",
   });
+
+  const renderContextEditDeleteTaskBtn = React.useContext(
+    BoardTaskRenderContext
+  );
   return (
     <React.Fragment>
       <button
@@ -65,6 +70,21 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
               Delete Task
             </button>
             <button
+              onClick={(event) => {
+                renderContextEditDeleteTaskBtn.stateFuncsForModals.viewTask(
+                  (prevValues) => {
+                    return {
+                      renderViewTask: false,
+                      title: "",
+                      description: "",
+                      status: "",
+                      isSelected: "",
+                      index: null,
+                      subtasks: null,
+                    };
+                  }
+                );
+              }}
               className={EditDeleteTaskStyles[`close-task-modal-btn`]}
               type="button"
             >

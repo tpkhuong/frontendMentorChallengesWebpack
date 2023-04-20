@@ -1,5 +1,11 @@
 /* mobile */
 
+.todo-quantity-task-container,
+.todo-tasks-container,
+.todo-tasks-container li {
+  transform-style: preserve-3d;
+}
+
 .todo-tasks-container {
   /* margin-block-start: 24px; */
   /* list-style: none; */

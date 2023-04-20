@@ -42,7 +42,9 @@ export default function StatusMenu({ children, statusValueFromEditModal }) {
           }
         }}
       >
-        <span>{initialStatusValues.valueOfStatusBtn}</span>
+        <span className={StatusMenuStyles[`status-name`]}>
+          {initialStatusValues.valueOfStatusBtn}
+        </span>
         <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
           <path stroke="#635FC7" strokeWidth="2" fill="none" d="m1 1 4 4 4-4" />
         </svg>

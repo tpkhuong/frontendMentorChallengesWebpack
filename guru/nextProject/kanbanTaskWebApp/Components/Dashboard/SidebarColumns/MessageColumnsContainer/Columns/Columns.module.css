@@ -3,6 +3,7 @@
 .column-container {
   display: flex;
   gap: 24px;
+  transform-style: preserve-3d;
 
   /* min-height: 748px; */
   /* overflow: scroll; */
