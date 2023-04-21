@@ -250,7 +250,9 @@ export function taskModalComponent() {
                     //         "true"
                     //       )
                     //   : null;
-
+                    const currentStatusElement =
+                      document.getElementById("current-status");
+                    console.log(currentStatusElement);
                     if (isAllAccepted) {
                       // run func based on taskModalValues.id
 
@@ -269,12 +271,107 @@ export function taskModalComponent() {
                       //     : null;
 
                       // we enter here means all inputs are not empty string
-                      setTaskModal((prevValues) => {
-                        return {
-                          ...prevValues,
-                          renderTaskModal: false,
+                      // run algorithm based on id
+                      // user clicked on "create task" btn
+                      if (taskModalValues.id == "add") {
+                        const currentUser = JSON.parse(
+                          localStorage.getItem("currentUser")
+                        );
+                        // currentBoard in local storage
+                        const currentBoard = JSON.parse(
+                          localStorage.getItem("currentBoard")
+                        );
+                        const columns = currentBoard.columns;
+                        // find status of task
+                        const currentStatusElement =
+                          document.getElementById("current-status");
+                        const status =
+                          currentStatusElement.firstElementChild.textContent.toLowerCase();
+                        // get length of status array to be used for new task index
+                        const taskIndex = Array.isArray(columns[status])
+                          ? columns[status].length
+                          : 0;
+                        // get values from inputs
+                        // add-subtasks-listitem-container
+                        // make subtask obj(s)
+                        const subtaskListitems = Array.from(
+                          document.getElementById(
+                            "add-subtasks-listitem-container"
+                          ).children
+                        );
+                        const arrayOfSubtaskObjs = subtaskListitems.reduce(
+                          function buildSubtask(buildingUp, currentValue) {
+                            // each currentValue is a li element
+                            const inputValue =
+                              currentValue.firstElementChild.childNodes[1]
+                                .value;
+
+                            buildingUp.push({
+                              title: inputValue,
+                              isCompleted: false,
+                            });
+                            return buildingUp;
+                          },
+                          []
+                        );
+                        // add-task-title
+                        const titleInput =
+                          document.getElementById("add-task-title").value;
+                        // add-task-description
+                        const descriptionInput = document.getElementById(
+                          "add-task-description"
+                        ).value;
+                        // make task obj
+                        const taskObj = {
+                          title: titleInput,
+                          description: descriptionInput,
+                          status,
+                          isSelected: false,
+                          index: taskIndex,
+                          subtasks: arrayOfSubtaskObjs,
                         };
-                      });
+                        // when user is adding new task and value of that status in the columns obj
+                        // is null. Push the new task obj into an array and assign that array to the status property
+                        // in columns obj
+                        if (Object.is(Array.isArray(columns[status]), false)) {
+                          columns[status] = [taskObj];
+                        } else {
+                          columns[status].push(taskObj);
+                        }
+
+                        // update data in local storage
+                        currentBoard.columns = columns;
+                        currentUser.boards[currentBoard.index] = currentBoard;
+                        localStorage.setItem(
+                          "currentUser",
+                          JSON.stringify(currentUser)
+                        );
+                        localStorage.setItem(
+                          "currentBoard",
+                          JSON.stringify(currentBoard)
+                        );
+                        // focus add new task btn
+                        setTimeout(() => {
+                          document.getElementById("add-task-btn").focus();
+                        }, 80);
+                        console.log(currentBoard.columns);
+                        // unrender add new task modal
+                        setTaskModal((prevValues) => {
+                          return {
+                            ...prevValues,
+                            renderTaskModal: false,
+                          };
+                        });
+                        // render correct status column
+                        renderContextForTaskModal.setStateFuncs[
+                          `${status}Column`
+                        ](currentBoard.columns[status]);
+                        return;
+                      }
+                      // user clicked on "save changes" btn
+                      if (taskModalValues.id == "edit") {
+                        return;
+                      }
                     }
                   }}
                 >

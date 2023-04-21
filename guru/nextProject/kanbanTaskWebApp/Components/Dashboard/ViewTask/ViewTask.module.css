@@ -207,6 +207,24 @@
   display: inline-block;
 }
 
+/* save btn */
+
+.save-btn:hover,
+.save-btn:focus {
+  background-color: var(--color-purple-secondary);
+}
+
+.save-btn {
+  font-size: var(--heading-reg-xx-sm);
+  font-weight: 600;
+  color: var(--color-neutral-white);
+  background-color: var(--color-purple);
+  width: 100%;
+  border-radius: 100vw;
+  padding-block: 8px;
+  margin-block-start: 24px;
+}
+
 /* 
 [aria-checked="true"] .subtask-content::before {
   content: "";

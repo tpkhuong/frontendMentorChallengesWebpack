@@ -2,7 +2,10 @@
 .edit-delete-task-modal-btn {
   background-color: transparent;
   position: relative;
-  width: 17px;
+  flex-basis: 23px;
+  /* width: 17px; */
+  /* flex-shrink: 0; */
+  padding: 1px;
 }
 
 .edit-delete-task-btns-container {

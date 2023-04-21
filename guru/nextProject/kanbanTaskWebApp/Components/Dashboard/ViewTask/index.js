@@ -94,6 +94,15 @@ export default function ViewTask({ children }) {
             <StatusMenu statusValueFromEditModal={initialTaskValuesObj.status}>
               Current Status
             </StatusMenu>
+            <button
+              onClick={(event) => {
+                console.log(event.target);
+              }}
+              type="button"
+              className={ViewTaskStyles[`save-btn`]}
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       )}
@@ -109,6 +118,16 @@ function Subtask({ children, content, isCompleted }) {
       role="checkbox"
       aria-checked={`${isCompleted}`}
       className={ViewTaskStyles[`subtask-checkbox-container`]}
+      onClick={(event) => {
+        const btnClicked = event.target.closest("BUTTON");
+        if (btnClicked) {
+          let subtaskStatus = btnClicked.getAttribute("aria-checked");
+
+          subtaskStatus == "false"
+            ? btnClicked.setAttribute("aria-checked", "true")
+            : btnClicked.setAttribute("aria-checked", "false");
+        }
+      }}
     >
       {/* checkbox */}
       <div className={ViewTaskStyles[`subtask-checkedbox`]}>

@@ -31,7 +31,8 @@ export default function EmptyBoardMessage({
                 const currentBoard = JSON.parse(
                   localStorage.getItem("currentBoard")
                 );
-
+                // if currentUser current board array is empty return
+                if (user.boards.length === 0) return;
                 const columnsObjFromLocalStorage = currentBoard.columns;
                 // take columns obj of currentBoard convert to array
                 const convertObjIntoArray = Object.entries(
