@@ -54,6 +54,10 @@
   );
 }
 
+.view-task-modal-title {
+  position: relative;
+}
+
 /* title */
 
 .title-edit-delete-btn-container {

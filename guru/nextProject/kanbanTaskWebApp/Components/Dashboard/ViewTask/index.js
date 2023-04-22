@@ -57,7 +57,7 @@ export default function ViewTask({ children }) {
             <span className={ViewTaskStyles[`subtask-label`]}>
               <span>Subtasks</span>
               <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
-              <span>{`${initialTaskValuesObj.subtasks.reduce(
+              <span id="subtask-completed">{`${initialTaskValuesObj.subtasks.reduce(
                 (buildingUp, currentValue) => {
                   if (currentValue.isCompleted) {
                     buildingUp += 1;
@@ -81,6 +81,7 @@ export default function ViewTask({ children }) {
                 return (
                   <li key={Math.random() * index}>
                     <Subtask
+                      listitemIndex={index}
                       isCompleted={obj.isCompleted}
                       content={obj.title}
                     />
@@ -91,11 +92,17 @@ export default function ViewTask({ children }) {
             {/* subtasks bg: light theme: light grey */}
             {/* subtasks bg: dark theme: very dark grey */}
             {/* current status */}
-            <StatusMenu statusValueFromEditModal={initialTaskValuesObj.status}>
+            <StatusMenu
+              isViewTask={true}
+              statusValueFromEditModal={initialTaskValuesObj.status}
+            >
               Current Status
             </StatusMenu>
+            {/* having save changes adding another step for user */}
             <button
               onClick={(event) => {
+                // only call column component setStateFunc when user change current status of task
+
                 console.log(event.target);
               }}
               type="button"
@@ -110,22 +117,86 @@ export default function ViewTask({ children }) {
   );
 }
 
-function Subtask({ children, content, isCompleted }) {
+function Subtask({ children, content, isCompleted, listitemIndex }) {
   const arrayOfWords = content.split(" ");
 
   return (
     <button
       role="checkbox"
+      data-viewtasksubtaskindex={listitemIndex}
       aria-checked={`${isCompleted}`}
       className={ViewTaskStyles[`subtask-checkbox-container`]}
       onClick={(event) => {
+        // todo-column-selector
         const btnClicked = event.target.closest("BUTTON");
         if (btnClicked) {
+          const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+          const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
+          const currentTask = JSON.parse(localStorage.getItem("currentTask"));
+
+          const taskStatus = currentTask.status;
+          const taskIndex = currentTask.index;
+          const subtaskIndex = Number(
+            btnClicked.getAttribute("data-viewtasksubtaskindex")
+          );
+
+          const subtaskDigitElement = document.getElementById(
+            `${taskStatus}-column-selector`
+          ).childNodes[1].childNodes[taskIndex].firstElementChild.childNodes[1]
+            .firstElementChild;
+
           let subtaskStatus = btnClicked.getAttribute("aria-checked");
 
-          subtaskStatus == "false"
-            ? btnClicked.setAttribute("aria-checked", "true")
-            : btnClicked.setAttribute("aria-checked", "false");
+          let completedSubtaskDigitTaskBtn = Number(
+            subtaskDigitElement.textContent
+          );
+
+          let subtaskCompletedNumForm = Number(
+            document.getElementById("subtask-completed").textContent
+          );
+
+          // update subtask obj of currentTask for local storage
+          // based on subtaskStatus
+          // user subtaskIndex to access subtask obj of currentTask
+          let subtaskObj = currentTask.subtasks[subtaskIndex];
+          if (subtaskStatus == "false") {
+            btnClicked.setAttribute("aria-checked", "true");
+            // updating the subtaskObj of currentTask obj will update the correct isCompleted property of subtask user clicked
+            // dont need to update currentTask
+            subtaskObj.isCompleted = true;
+            // add one to subtask display
+            subtaskCompletedNumForm += 1;
+            completedSubtaskDigitTaskBtn += 1;
+            // update digit display
+            document.getElementById(
+              "subtask-completed"
+            ).textContent = `${subtaskCompletedNumForm}`;
+            subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+          }
+
+          if (subtaskStatus == "true") {
+            btnClicked.setAttribute("aria-checked", "false");
+            // updating the subtaskObj of currentTask obj will update the correct isCompleted property of subtask user clicked
+            // dont need to update currentTask
+
+            subtaskObj.isCompleted = false;
+
+            // subtract one from subtask display
+            subtaskCompletedNumForm -= 1;
+            completedSubtaskDigitTaskBtn -= 1;
+            // update digit display
+            document.getElementById(
+              "subtask-completed"
+            ).textContent = `${subtaskCompletedNumForm}`;
+            subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+          }
+          // update current task in currentBoard then ipdate currentUser with currentBoard
+          currentBoard.columns[taskStatus][taskIndex] = currentTask;
+          currentUser.boards[currentBoard.index] = currentBoard;
+          // update local storage
+          localStorage.setItem("currentTask", JSON.stringify(currentTask));
+          localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+          localStorage.setItem("currentUser", JSON.stringify(currentUser));
         }
       }}
     >

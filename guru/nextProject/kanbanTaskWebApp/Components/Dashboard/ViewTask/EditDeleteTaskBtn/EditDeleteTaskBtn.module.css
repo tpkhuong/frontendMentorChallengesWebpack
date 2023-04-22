@@ -1,7 +1,6 @@
 /* mobile */
 .edit-delete-task-modal-btn {
   background-color: transparent;
-  position: relative;
   flex-basis: 23px;
   /* width: 17px; */
   /* flex-shrink: 0; */
@@ -13,9 +12,8 @@
   border-radius: 4px;
   padding: 16px;
   max-width: 192px;
-  top: 32px;
-  right: 5px;
-  left: -150px;
+  top: 86px;
+  right: 25px;
 
   background-color: var(
     --subtask-modal-checkedbox-light-bg,

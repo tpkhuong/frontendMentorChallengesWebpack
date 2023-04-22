@@ -51,48 +51,50 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
             <circle cx="2.308" cy="17.692" r="2.308" />
           </g>
         </svg>
-        {editDeleteTaskModalObj.renderEditDeleteBtn && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            className={EditDeleteTaskStyles[`edit-delete-task-btns-container`]}
-          >
-            <button
-              className={EditDeleteTaskStyles[`edit-task-btn`]}
-              type="button"
-            >
-              Edit Task
-            </button>
-            <button
-              className={EditDeleteTaskStyles[`delete-task-btn`]}
-              type="button"
-            >
-              Delete Task
-            </button>
-            <button
-              onClick={(event) => {
-                renderContextEditDeleteTaskBtn.stateFuncsForModals.viewTask(
-                  (prevValues) => {
-                    return {
-                      renderViewTask: false,
-                      title: "",
-                      description: "",
-                      status: "",
-                      isSelected: "",
-                      index: null,
-                      subtasks: null,
-                    };
-                  }
-                );
-              }}
-              className={EditDeleteTaskStyles[`close-task-modal-btn`]}
-              type="button"
-            >
-              Close
-            </button>
-          </div>
-        )}
       </button>
+      {editDeleteTaskModalObj.renderEditDeleteBtn && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className={EditDeleteTaskStyles[`edit-delete-task-btns-container`]}
+        >
+          <button
+            className={EditDeleteTaskStyles[`edit-task-btn`]}
+            type="button"
+          >
+            Edit Task
+          </button>
+          <button
+            className={EditDeleteTaskStyles[`delete-task-btn`]}
+            type="button"
+          >
+            Delete Task
+          </button>
+          <button
+            onClick={(event) => {
+              renderContextEditDeleteTaskBtn.stateFuncsForModals.viewTask(
+                (prevValues) => {
+                  return {
+                    renderViewTask: false,
+                    title: "",
+                    description: "",
+                    status: "",
+                    isSelected: "",
+                    index: null,
+                    subtasks: null,
+                  };
+                }
+              );
+              // remove currentTask in localStorage
+              localStorage.removeItem("currentTask");
+            }}
+            className={EditDeleteTaskStyles[`close-task-modal-btn`]}
+            type="button"
+          >
+            Close
+          </button>
+        </div>
+      )}
     </React.Fragment>
   );
 }
