@@ -69,10 +69,9 @@ export default function StatusMenu({
               // assign content of btn clicked to current status btn
               // hide modal
               const btnContent = statusBtnClicked.innerText;
-              const statusElementValue = btnContent.toLowerCase();
               // focus current status btn
               document.getElementById("current-status").focus();
-
+              const statusElement = btnContent.toLowerCase();
               setStatusMenu((prevValues) => {
                 return {
                   ...prevValues,
@@ -81,43 +80,57 @@ export default function StatusMenu({
                 };
               });
               // algorithm for when user click on status menu button while view task modal is rendered
-              alert("test this algorithm");
+
               if (isViewTask) {
                 const user = JSON.parse(localStorage.getItem("currentUser"));
                 const board = JSON.parse(localStorage.getItem("currentBoard"));
                 const task = JSON.parse(localStorage.getItem("currentTask"));
-                // only run algorithm when status of task in local storage !== to statusElementValue
-                if (statusElementValue !== task.status) {
-                  // change status property of currentTask in local storage
-                  task.status = statusElementValue;
+                // only run algorithm when status of task in local storage !== to newStatus
+                if (statusElement !== task.status) {
+                  const previousStatus = task.status;
+                  const newStatus = statusElement;
+
+                  console.log("where are we status menu");
                   // want current board columns obj
                   // want status array.
                   // one using status property in current task obj. remove task obj from status array using status value
                   // from currentTask in local storage
                   const removeTaskFromArray =
-                    board.columns[task.status].length > 0
-                      ? board.columns[task.status].filter(function removeTask(
-                          taskObj,
-                          index
-                        ) {
-                          return index !== task.index;
-                        })
+                    board.columns[previousStatus].length > 0
+                      ? board.columns[previousStatus].filter(
+                          function removeTask(taskObj, index) {
+                            return index !== task.index;
+                          }
+                        )
                       : [];
-                  // one using statusElementValue. add task obj to status array using statusElementValue
-                  // update correct status arrays
-                  const addingTaskToArray =
-                    board.columns[statusElementValue].push(task);
+                  console.log(removeTaskFromArray);
                   // update arrays in columns obj of current board
-                  board.columns[task.status] = removeTaskFromArray;
-                  board.columns[statusElementValue] = addingTaskToArray;
+                  board.columns[previousStatus] = removeTaskFromArray;
+                  // change status property of currentTask in local storage
+                  task.status = newStatus;
+                  // one using newStatus. add task obj to status array using newStatus
+                  // update correct status arrays
+                  board.columns[newStatus].push(task);
+                  console.log(previousStatus, "previousStatus");
+                  console.log(task.status, "task.status");
+                  console.log(board, "board");
                   // update user
                   user.boards[board.index] = board;
+                  console.log(user, "user");
                   // save to local storage
-                  localStorage.setItem("currentUser", user);
-                  localStorage.setItem("currentBoard", board);
-                  localStorage.setItem("currentTask", task);
-
+                  localStorage.setItem("currentUser", JSON.stringify(user));
+                  localStorage.setItem("currentBoard", JSON.stringify(board));
+                  localStorage.setItem("currentTask", JSON.stringify(task));
                   // render correct column component
+                  // .setStateFuncs.todoColumn
+                  renderContextForStatusMenu.setStateFuncs[
+                    `${previousStatus}Column`
+                  ](board.columns[previousStatus]);
+
+                  renderContextForStatusMenu.setStateFuncs[
+                    `${newStatus}Column`
+                  ](board.columns[newStatus]);
+
                   return;
                 }
               }

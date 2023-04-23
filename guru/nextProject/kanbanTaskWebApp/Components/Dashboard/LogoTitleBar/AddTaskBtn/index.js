@@ -144,7 +144,7 @@ export default function AddTaskBtn({ children, isCurrentBoardEmpty }) {
                 }, 80);
 
                 // setTaskModal(true);
-                showAddTaskModal(renderAddTaskModal, setTaskModal);
+                // showAddTaskModal(renderAddTaskModal, setTaskModal);
                 renderContextForAddTaskBtn.stateFuncsForModals.addTaskModal(
                   (prevValues) => {
                     return {

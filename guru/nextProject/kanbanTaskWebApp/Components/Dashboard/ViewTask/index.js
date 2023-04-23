@@ -172,6 +172,8 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
               "subtask-completed"
             ).textContent = `${subtaskCompletedNumForm}`;
             subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+            // check if completed == total here
+            // run isTasksCompletedZero then isStatusOfTaskDoing
           }
 
           if (subtaskStatus == "true") {
@@ -189,6 +191,8 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
               "subtask-completed"
             ).textContent = `${subtaskCompletedNumForm}`;
             subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+            // check for zero of total here
+            // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
           }
           // update current task in currentBoard then ipdate currentUser with currentBoard
           currentBoard.columns[taskStatus][taskIndex] = currentTask;
@@ -230,4 +234,3 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
     </button>
   );
 }
-// 216 15 57
