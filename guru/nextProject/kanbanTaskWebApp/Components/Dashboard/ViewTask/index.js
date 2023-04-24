@@ -84,6 +84,7 @@ export default function ViewTask({ children }) {
                       listitemIndex={index}
                       isCompleted={obj.isCompleted}
                       content={obj.title}
+                      renderContext={renderContextViewTask}
                     />
                   </li>
                 );
@@ -117,7 +118,13 @@ export default function ViewTask({ children }) {
   );
 }
 
-function Subtask({ children, content, isCompleted, listitemIndex }) {
+function Subtask({
+  children,
+  content,
+  isCompleted,
+  listitemIndex,
+  renderContext,
+}) {
   const arrayOfWords = content.split(" ");
 
   return (
@@ -147,14 +154,14 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
 
           let subtaskStatus = btnClicked.getAttribute("aria-checked");
 
-          let completedSubtaskDigitTaskBtn = Number(
-            subtaskDigitElement.textContent
-          );
+          // let completedSubtaskDigitTaskBtn = Number(
+          //   subtaskDigitElement.textContent
+          // );
 
           let subtaskCompletedNumForm = Number(
             document.getElementById("subtask-completed").textContent
           );
-
+          const previousSubtasksCompleted = subtaskCompletedNumForm;
           // update subtask obj of currentTask for local storage
           // based on subtaskStatus
           // user subtaskIndex to access subtask obj of currentTask
@@ -166,12 +173,12 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
             subtaskObj.isCompleted = true;
             // add one to subtask display
             subtaskCompletedNumForm += 1;
-            completedSubtaskDigitTaskBtn += 1;
+            // completedSubtaskDigitTaskBtn += 1;
             // update digit display
             document.getElementById(
               "subtask-completed"
             ).textContent = `${subtaskCompletedNumForm}`;
-            subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+            subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check if completed == total here
             // run isTasksCompletedZero then isStatusOfTaskDoing
           }
@@ -185,12 +192,12 @@ function Subtask({ children, content, isCompleted, listitemIndex }) {
 
             // subtract one from subtask display
             subtaskCompletedNumForm -= 1;
-            completedSubtaskDigitTaskBtn -= 1;
+            // completedSubtaskDigitTaskBtn -= 1;
             // update digit display
             document.getElementById(
               "subtask-completed"
             ).textContent = `${subtaskCompletedNumForm}`;
-            subtaskDigitElement.textContent = `${completedSubtaskDigitTaskBtn}`;
+            subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check for zero of total here
             // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
           }
