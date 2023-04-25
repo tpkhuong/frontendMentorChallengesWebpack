@@ -3,6 +3,12 @@ import ViewTaskStyles from "./ViewTask.module.css";
 import StatusMenu from "../StatusMenu/index";
 import EditDeleteTaskBtnAndModal from "./EditDeleteTaskBtn/index";
 import { BoardTaskRenderContext } from "../Context/index";
+import {
+  isTasksCompletedZero,
+  isStatusOfTaskDoing,
+  doesTasksCompletedMatchTotal,
+  bindObjToFunc,
+} from "./viewTaskHelpers";
 
 const strArray = [
   "Research competitor pricing and business models",
@@ -180,7 +186,25 @@ function Subtask({
             ).textContent = `${subtaskCompletedNumForm}`;
             subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check if completed == total here
-            // run isTasksCompletedZero then isStatusOfTaskDoing
+            // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
+            console.log("rework this algorithm");
+            doesTasksCompletedMatchTotal({
+              previousSubtasksCompleted,
+              newSubtasksCompleted: subtaskCompletedNumForm,
+              totalCompleted: currentTask.subtasks.length,
+              renderContext,
+              bindObjToFunc,
+              boardData: { currentUser, currentBoard, currentTask },
+            });
+
+            isStatusOfTaskDoing({
+              previousSubtasksCompleted,
+              newSubtasksCompleted: subtaskCompletedNumForm,
+              totalCompleted: currentTask.subtasks.length,
+              renderContext,
+              bindObjToFunc,
+              boardData: { currentUser, currentBoard, currentTask },
+            });
           }
 
           if (subtaskStatus == "true") {
@@ -199,10 +223,29 @@ function Subtask({
             ).textContent = `${subtaskCompletedNumForm}`;
             subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check for zero of total here
-            // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
+            // run isTasksCompletedZero then isStatusOfTaskDoing
+            isTasksCompletedZero({
+              previousSubtasksCompleted,
+              newSubtasksCompleted: subtaskCompletedNumForm,
+              renderContext,
+              bindObjToFunc,
+              boardData: { currentUser, currentBoard, currentTask },
+            });
+
+            isStatusOfTaskDoing({
+              previousSubtasksCompleted,
+              newSubtasksCompleted: subtaskCompletedNumForm,
+              totalCompleted: currentTask.subtasks.length,
+              renderContext,
+              bindObjToFunc,
+              boardData: { currentUser, currentBoard, currentTask },
+            });
           }
           // update current task in currentBoard then ipdate currentUser with currentBoard
-          currentBoard.columns[taskStatus][taskIndex] = currentTask;
+          console.log("before we save data to local storage");
+          // update columns of current board in these funcs
+          // isTasksCompletedZero, isStatusOfTaskDoing, doesTasksCompletedMatchTotal,
+          // currentBoard.columns[taskStatus][taskIndex] = currentTask;
           currentUser.boards[currentBoard.index] = currentBoard;
           // update local storage
           localStorage.setItem("currentTask", JSON.stringify(currentTask));
