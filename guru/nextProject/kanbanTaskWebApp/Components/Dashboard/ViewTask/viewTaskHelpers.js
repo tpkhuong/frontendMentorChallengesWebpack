@@ -16,8 +16,11 @@ export function isTasksCompletedZero({
     // remove currentTask from doing column
     // add currentTask to todo column
     currentBoard.columns.doing = currentBoard.columns.doing.filter(removeTask);
-
+    console.log(currentTask, "currentTask");
+    // update currentTask index
+    currentTask.index = currentBoard.columns.todo.length;
     currentBoard.columns.todo.push(currentTask);
+    console.log("currentBoard", currentBoard);
     // render columns
     renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
     renderContext.setStateFuncs.doingColumn(currentBoard.columns.doing);
@@ -44,7 +47,9 @@ export function isStatusOfTaskDoing({
   const isSecondBetweenNumbers =
     newSubtasksCompleted > 0 && newSubtasksCompleted < totalCompleted;
 
-  if (isFirstBetweenNumbers && isSecondBetweenNumbers) return;
+  if (isFirstBetweenNumbers && isSecondBetweenNumbers) {
+    return;
+  }
   /**
    * break
    * **/
@@ -56,26 +61,34 @@ export function isStatusOfTaskDoing({
    * but then it runs isStatusOfTaskDoing because isFirstBetweenNumbers && isSecondBetweenNumbers returns false
    * which changes currentTask.status back to "doing" when it should be "done"
    * **/
-  currentTask.status = "doing";
   if (previousSubtasksCompleted === 0) {
     // working with todo and doing columns
+    currentTask.status = "doing";
 
     currentBoard.columns.todo = currentBoard.columns.todo.filter(removeTask);
-
+    console.log(currentTask, "currentTask");
+    // update currentTask index
+    currentTask.index = currentBoard.columns.doing.length;
     currentBoard.columns.doing.push(currentTask);
+    console.log("currentBoard", currentBoard);
     // render columns
     renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
     renderContext.setStateFuncs.doingColumn(currentBoard.columns.doing);
     return;
   }
+  console.log("look at current Board");
   // or === to total
   // if user click on subtask to change it to uncomplete and the status of currentTask is done
   if (previousSubtasksCompleted === totalCompleted) {
     console.log(currentBoard.columns, "columns");
+    currentTask.status = "doing";
     // working with doing and done columns
     currentBoard.columns.done = currentBoard.columns.done.filter(removeTask);
-
+    console.log(currentTask, "currentTask");
+    // update currentTask index
+    currentTask.index = currentBoard.columns.doing.length;
     currentBoard.columns.doing.push(currentTask);
+    console.log("currentBoard", currentBoard);
     // render columns
     renderContext.setStateFuncs.doingColumn(currentBoard.columns.doing);
     renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
@@ -109,14 +122,24 @@ export function doesTasksCompletedMatchTotal({
     // remove currentTask from doing column
     // add currentTask to done column
     currentBoard.columns.doing = currentBoard.columns.doing.filter(removeTask);
-
+    console.log("update the index of current task when the status changes");
+    console.log(currentTask, "currentTask");
+    // update currentTask index
+    currentTask.index = currentBoard.columns.done.length;
     currentBoard.columns.done.push(currentTask);
+    console.log("currentBoard", currentBoard);
     // console.log(currentBoard.columns);
     // render columns
     renderContext.setStateFuncs.doingColumn(currentBoard.columns.doing);
     renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
   }
   return;
+}
+
+export function removeItem(list, itemIndex) {
+  return list.filter(function deleteItem(obj, index) {
+    return itemIndex !== index;
+  });
 }
 
 export function bindObjToFunc(obj, index) {

@@ -7,7 +7,7 @@ import {
   isTasksCompletedZero,
   isStatusOfTaskDoing,
   doesTasksCompletedMatchTotal,
-  bindObjToFunc,
+  removeItem,
 } from "./viewTaskHelpers";
 
 const strArray = [
@@ -187,24 +187,56 @@ function Subtask({
             subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check if completed == total here
             // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
-            console.log("rework this algorithm");
-            doesTasksCompletedMatchTotal({
-              previousSubtasksCompleted,
-              newSubtasksCompleted: subtaskCompletedNumForm,
-              totalCompleted: currentTask.subtasks.length,
-              renderContext,
-              bindObjToFunc,
-              boardData: { currentUser, currentBoard, currentTask },
-            });
+            // check length of subtasks
+            if (currentTask.subtasks.length == 1) {
+              // going from todo to done
+              const modifiedArray = removeItem(
+                currentBoard.columns.todo,
+                currentTask.index
+              );
+              currentBoard.columns.todo = modifiedArray;
+              // update currentTask status
+              currentTask.status = "done";
+              // update currentTask index because we are adding it to another column array
+              currentTask.index = currentBoard.columns.done.length;
+              // update status drop down menu
+              renderContext.setStateFuncs.statusMenu((prevValues) => {
+                return {
+                  ...prevValues,
+                  valueOfStatusBtn: "Done",
+                };
+              });
+              currentBoard.columns.done.push(currentTask);
 
-            isStatusOfTaskDoing({
-              previousSubtasksCompleted,
-              newSubtasksCompleted: subtaskCompletedNumForm,
-              totalCompleted: currentTask.subtasks.length,
-              renderContext,
-              bindObjToFunc,
-              boardData: { currentUser, currentBoard, currentTask },
-            });
+              renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
+              renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
+            }
+            /**
+             * 0 to 1 todo to doing
+             * **/
+            /**
+             * status does not change doing
+             * **/
+            /**
+             * doing to done
+             * **/
+            // doesTasksCompletedMatchTotal({
+            //   previousSubtasksCompleted,
+            //   newSubtasksCompleted: subtaskCompletedNumForm,
+            //   totalCompleted: currentTask.subtasks.length,
+            //   renderContext,
+            //   bindObjToFunc,
+            //   boardData: { currentUser, currentBoard, currentTask },
+            // });
+
+            // isStatusOfTaskDoing({
+            //   previousSubtasksCompleted,
+            //   newSubtasksCompleted: subtaskCompletedNumForm,
+            //   totalCompleted: currentTask.subtasks.length,
+            //   renderContext,
+            //   bindObjToFunc,
+            //   boardData: { currentUser, currentBoard, currentTask },
+            // });
           }
 
           if (subtaskStatus == "true") {
@@ -224,25 +256,63 @@ function Subtask({
             subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
             // check for zero of total here
             // run isTasksCompletedZero then isStatusOfTaskDoing
-            isTasksCompletedZero({
-              previousSubtasksCompleted,
-              newSubtasksCompleted: subtaskCompletedNumForm,
-              renderContext,
-              bindObjToFunc,
-              boardData: { currentUser, currentBoard, currentTask },
-            });
+            // isTasksCompletedZero({
+            //   previousSubtasksCompleted,
+            //   newSubtasksCompleted: subtaskCompletedNumForm,
+            //   renderContext,
+            //   bindObjToFunc,
+            //   boardData: { currentUser, currentBoard, currentTask },
+            // });
+            // check length of subtasks
+            if (currentTask.subtasks.length == 1) {
+              // going from done to todo
+              const filteredArray = removeItem(
+                currentBoard.columns.done,
+                currentTask.index
+              );
+              currentBoard.columns.done = filteredArray;
+              // update currentTask status
+              currentTask.status = "todo";
+              // update currentTask index because we are adding it to another column array
+              currentTask.index = currentBoard.columns.todo.length;
+              currentBoard.columns.todo.push(currentTask);
+              // update status drop down menu
+              renderContext.setStateFuncs.statusMenu((prevValues) => {
+                return {
+                  ...prevValues,
+                  valueOfStatusBtn: "Todo",
+                };
+              });
+              console.log(currentBoard, "currentBoard");
+              console.log(currentTask, "currentTask");
 
-            isStatusOfTaskDoing({
-              previousSubtasksCompleted,
-              newSubtasksCompleted: subtaskCompletedNumForm,
-              totalCompleted: currentTask.subtasks.length,
-              renderContext,
-              bindObjToFunc,
-              boardData: { currentUser, currentBoard, currentTask },
-            });
+              renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
+              renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
+            }
+            /**
+             * done to doing
+             * **/
+            /**
+             * doing status does not change
+             * **/
+            /**
+             * doing to todo
+             * **/
+            // isStatusOfTaskDoing({
+            //   previousSubtasksCompleted,
+            //   newSubtasksCompleted: subtaskCompletedNumForm,
+            //   totalCompleted: currentTask.subtasks.length,
+            //   renderContext,
+            //   bindObjToFunc,
+            //   boardData: { currentUser, currentBoard, currentTask },
+            // });
           }
           // update current task in currentBoard then ipdate currentUser with currentBoard
+          // console.log(currentBoard.columns, "columns");
           console.log("before we save data to local storage");
+          console.log(currentTask, "currentTask");
+          console.log("currentUser", currentUser);
+          console.log("currentBoard", currentBoard);
           // update columns of current board in these funcs
           // isTasksCompletedZero, isStatusOfTaskDoing, doesTasksCompletedMatchTotal,
           // currentBoard.columns[taskStatus][taskIndex] = currentTask;

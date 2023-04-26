@@ -18,6 +18,8 @@ export default function StatusMenu({
 
   const renderContextForStatusMenu = React.useContext(BoardTaskRenderContext);
 
+  renderContextForStatusMenu.setStateFuncs.statusMenu = setStatusMenu;
+
   return (
     <div className={StatusMenuStyles[`statusbar-container`]}>
       <span className={StatusMenuStyles[`label`]}>{children}</span>
