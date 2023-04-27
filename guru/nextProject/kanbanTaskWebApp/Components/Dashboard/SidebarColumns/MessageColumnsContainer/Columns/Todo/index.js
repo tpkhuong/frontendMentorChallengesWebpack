@@ -245,6 +245,7 @@ export default function TodoColumn({ children, todoColumnArray }) {
             className={TodoColumnStyles[`todo-tasks-container`]}
           >
             {todoArray.map(function buildTodoTask(obj, index) {
+              console.log(obj);
               return (
                 <li key={Math.random() * index}>
                   <TaskBtn
@@ -252,9 +253,13 @@ export default function TodoColumn({ children, todoColumnArray }) {
                     status={obj.status}
                     completed={`${obj.subtasks.reduce(
                       (buildingUp, currentValue) => {
-                        return currentValue.isCompleted
+                        console.log("buildingUp", buildingUp);
+                        console.log("currentValue", currentValue);
+                        console.log("this is todo column");
+                        buildingUp = currentValue.isCompleted
                           ? buildingUp + 1
                           : buildingUp;
+                        return buildingUp;
                       },
                       0
                     )}`}

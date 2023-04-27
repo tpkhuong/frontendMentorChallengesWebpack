@@ -8,6 +8,8 @@ export default function TaskBtn({
   status,
   position,
 }) {
+  console.log(completed, "completed");
+  console.log(status, "status");
   return (
     <button
       data-orderindex={position}

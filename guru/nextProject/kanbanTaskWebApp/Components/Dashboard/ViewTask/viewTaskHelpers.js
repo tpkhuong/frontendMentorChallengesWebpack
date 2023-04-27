@@ -146,6 +146,47 @@ export function bindObjToFunc(obj, index) {
   return this.index !== index;
 }
 
+export function changeCurrentTaskStatusAndRenderColumns({
+  previousSubtasksCompleted,
+  newSubtasksCompleted,
+  changeFrom,
+  changeTo,
+  renderContext,
+  removeItem,
+  currentBoard,
+  currentTask,
+}) {
+  const lowerCaseChangeTo = changeTo.toLowerCase();
+
+  const filteredArray = removeItem(
+    currentBoard.columns[changeFrom],
+    currentTask.index
+  );
+  currentBoard.columns[changeFrom] = filteredArray;
+  // update currentTask status
+  currentTask.status = `${lowerCaseChangeTo}`;
+  // update currentTask index because we are adding it to another column array
+  currentTask.index = currentBoard.columns[lowerCaseChangeTo].length;
+  currentBoard.columns[changeTo].push(currentTask);
+  // update status drop down menu
+  renderContext.setStateFuncs.statusMenu((prevValues) => {
+    return {
+      ...prevValues,
+      valueOfStatusBtn: `${changeTo}`,
+    };
+  });
+  // add currentTask to correct column
+  currentBoard.columns[`${changeTo}`].push(currentTask);
+  // render columns
+  renderContext.setStateFuncs[`${changeFrom}Column`](
+    currentBoard.columns[changeFrom]
+  );
+
+  renderContext.setStateFuncs[`${lowerCaseChangeTo}Column`](
+    currentBoard.columns[lowerCaseChangeTo]
+  );
+}
+
 // 216 15 57
 /**
  * algorithm for isStatusOfTaskDoing

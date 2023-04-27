@@ -370,6 +370,17 @@ export function taskModalComponent() {
                       }
                       // user clicked on "save changes" btn
                       if (taskModalValues.id == "edit") {
+                        /**
+                         * working with currentTask in local storage
+                         * **/
+                        // we want to update or not update status of currentTask
+                        // for when user add subtasks or delete subtasks
+                        // adding subtasks: make separate array of subtasks objs
+                        // removing subtasks: make copy of subtasks array
+                        // remove subtasks from copied array
+                        // then concat copied array and array of newly added subtasks objs
+                        // count number of isCompleted subtasks
+                        // based on number of isCompleted compare it to length of subtasks
                         return;
                       }
                     }
