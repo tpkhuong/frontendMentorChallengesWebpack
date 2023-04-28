@@ -162,6 +162,10 @@ export function changeCurrentTaskStatusAndRenderColumns({
     currentBoard.columns[changeFrom],
     currentTask.index
   );
+  // update index of each obj
+  filteredArray.forEach((obj, index) => {
+    obj.index = index;
+  });
   currentBoard.columns[changeFrom] = filteredArray;
   // update currentTask status
   currentTask.status = `${lowerCaseChangeTo}`;
@@ -184,6 +188,43 @@ export function changeCurrentTaskStatusAndRenderColumns({
 
   renderContext.setStateFuncs[`${lowerCaseChangeTo}Column`](
     currentBoard.columns[lowerCaseChangeTo]
+  );
+}
+
+export function whenTaskHasOneSubtask({
+  initialStatus,
+  newStatus,
+  currentBoard,
+  currentTask,
+  removeItem,
+  renderContext,
+}) {
+  //removing item from current status column
+  const modifiedArray = removeItem(
+    currentBoard.columns[initialStatus],
+    currentTask.index
+  );
+  // update current status array
+  currentBoard.columns[initialStatus] = modifiedArray;
+  // update currentTask status
+  currentTask.status = newStatus.toLowerCase();
+  // update currentTask index because we are adding it to another column array
+  currentTask.index = currentBoard.columns[newStatus.toLowerCase()].length;
+  // update status drop down menu
+  renderContext.setStateFuncs.statusMenu((prevValues) => {
+    return {
+      ...prevValues,
+      valueOfStatusBtn: newStatus,
+    };
+  });
+  // add currentTask to new status column array
+  currentBoard.columns[newStatus].push(currentTask);
+  // render columns
+  renderContext.setStateFuncs[`${initialStatus}Column`](
+    currentBoard.columns[initialStatus]
+  );
+  renderContext.setStateFuncs[`${newStatus.toLowerCase()}Column`](
+    currentBoard.columns[newStatus.toLowerCase()]
   );
 }
 

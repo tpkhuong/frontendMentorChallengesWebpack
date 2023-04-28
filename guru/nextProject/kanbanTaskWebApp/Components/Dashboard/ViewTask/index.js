@@ -210,6 +210,10 @@ function Subtask({
                 currentBoard.columns.todo,
                 currentTask.index
               );
+              // dont have to update index of obj item in modifiedArray
+              // because there should be only one item and its index will be 0
+              // when status of task changes from "todo" to "done"
+              // and "done" to "todo"
               currentBoard.columns.todo = modifiedArray;
               // update currentTask status
               currentTask.status = "done";
@@ -269,15 +273,16 @@ function Subtask({
                   currentBoard.columns.doing
                 );
               }
-              // if (
-              //   previousSubtasksCompleted !== 0 &&
-              //   subtaskCompletedNumForm !== currentTask.subtasks.length
-              // ) {
-              //   /**
-              //    * status does not change it is doing
-              //    * **/
-              //   // change the status of the
-              // }
+              if (
+                previousSubtasksCompleted !== 0 &&
+                subtaskCompletedNumForm !== currentTask.subtasks.length
+              ) {
+                /**
+                 * status does not change it is doing
+                 * update the completed digit of TaskBtn of currentTask
+                 * **/
+                subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+              }
               if (
                 previousSubtasksCompleted > 0 &&
                 subtaskCompletedNumForm == currentTask.subtasks.length
@@ -430,9 +435,16 @@ function Subtask({
                 );
               }
             }
-            /**
-             * doing status does not change
-             * **/
+            if (
+              previousSubtasksCompleted !== currentTask.subtasks.length &&
+              subtaskCompletedNumForm !== 0
+            ) {
+              /**
+               * status does not change it is doing
+               * update the completed digit of TaskBtn of currentTask
+               * **/
+              subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+            }
             if (
               previousSubtasksCompleted < currentTask.subtasks.length &&
               subtaskCompletedNumForm == 0
