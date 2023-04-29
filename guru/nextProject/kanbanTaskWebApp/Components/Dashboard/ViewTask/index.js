@@ -7,6 +7,8 @@ import {
   isTasksCompletedZero,
   isStatusOfTaskDoing,
   doesTasksCompletedMatchTotal,
+  changeCurrentTaskStatusAndRenderColumns,
+  whenTaskHasOneSubtask,
   removeItem,
 } from "./viewTaskHelpers";
 
@@ -39,8 +41,11 @@ export default function ViewTask({ children }) {
       {initialTaskValuesObj.renderViewTask && (
         <div className={ViewTaskStyles[`view-task-modal-bg`]}>
           <div
+            data-fadeoutviewtask="false"
+            data-hideviewtask="false"
             aria-modal="true"
             role="dialog"
+            id="view-task-modal-selector"
             aria-labelledby="view-task-modal-title"
             className={ViewTaskStyles[`view-task-modal`]}
           >
@@ -205,73 +210,89 @@ function Subtask({
             // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
-              // going from todo to done
-              const modifiedArray = removeItem(
-                currentBoard.columns.todo,
-                currentTask.index
-              );
-              // dont have to update index of obj item in modifiedArray
-              // because there should be only one item and its index will be 0
-              // when status of task changes from "todo" to "done"
-              // and "done" to "todo"
-              currentBoard.columns.todo = modifiedArray;
-              // update currentTask status
-              currentTask.status = "done";
-              // update currentTask index because we are adding it to another column array
-              currentTask.index = currentBoard.columns.done.length;
-              // update status drop down menu
-              renderContext.setStateFuncs.statusMenu((prevValues) => {
-                return {
-                  ...prevValues,
-                  valueOfStatusBtn: "Done",
-                };
+              whenTaskHasOneSubtask({
+                initialStatus: "todo",
+                newStatus: "Done",
+                currentBoard,
+                currentTask,
+                removeItem,
+                renderContext,
               });
-              currentBoard.columns.done.push(currentTask);
+              // going from todo to done
+              // const modifiedArray = removeItem(
+              //   currentBoard.columns.todo,
+              //   currentTask.index
+              // );
+              // // dont have to update index of obj item in modifiedArray
+              // // because there should be only one item and its index will be 0
+              // // when status of task changes from "todo" to "done"
+              // // and "done" to "todo"
+              // currentBoard.columns.todo = modifiedArray;
+              // // update currentTask status
+              // currentTask.status = "done";
+              // // update currentTask index because we are adding it to another column array
+              // currentTask.index = currentBoard.columns.done.length;
+              // // update status drop down menu
+              // renderContext.setStateFuncs.statusMenu((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     valueOfStatusBtn: "Done",
+              //   };
+              // });
+              // currentBoard.columns.done.push(currentTask);
 
-              renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
-              renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
+              // renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
+              // renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
             }
             if (currentTask.subtasks.length > 1) {
               if (previousSubtasksCompleted == 0) {
                 /**
                  * 0 to 1 todo to doing
                  * **/
-                const modArray = removeItem(
-                  currentBoard.columns.todo,
-                  currentTask.index
-                );
-                console.log(modArray, "modArray");
-                // update index of each obj
-                modArray.forEach((obj, index) => {
-                  obj.index = index;
+                changeCurrentTaskStatusAndRenderColumns({
+                  changeFrom: "todo",
+                  changeTo: "Doing",
+                  renderContext,
+                  removeItem,
+                  currentBoard,
+                  currentTask,
                 });
-                currentBoard.columns.todo = modArray;
-                // update currentTask status
-                currentTask.status = "doing";
-                // update currentTask index because we are adding it to another column array
-                currentTask.index = currentBoard.columns.doing.length;
-                // update status drop down menu
-                renderContext.setStateFuncs.statusMenu((prevValues) => {
-                  return {
-                    ...prevValues,
-                    valueOfStatusBtn: "Doing",
-                  };
-                });
-                currentBoard.columns.doing.push(currentTask);
-                // render columns
-                console.log(
-                  currentBoard.columns.todo,
-                  "currentBoard.columns.todo"
-                );
-                console.log(currentBoard, "currentBoard");
-                console.log(currentTask, "currentTask");
-                renderContext.setStateFuncs.todoColumn(
-                  currentBoard.columns.todo
-                );
+                // const modArray = removeItem(
+                //   currentBoard.columns.todo,
+                //   currentTask.index
+                // );
+                // console.log(modArray, "modArray");
+                // // update index of each obj
+                // modArray.forEach((obj, index) => {
+                //   obj.index = index;
+                // });
+                // currentBoard.columns.todo = modArray;
+                // // update currentTask status
+                // currentTask.status = "doing";
+                // // update currentTask index because we are adding it to another column array
+                // currentTask.index = currentBoard.columns.doing.length;
+                // // update status drop down menu
+                // renderContext.setStateFuncs.statusMenu((prevValues) => {
+                //   return {
+                //     ...prevValues,
+                //     valueOfStatusBtn: "Doing",
+                //   };
+                // });
+                // currentBoard.columns.doing.push(currentTask);
+                // // render columns
+                // console.log(
+                //   currentBoard.columns.todo,
+                //   "currentBoard.columns.todo"
+                // );
+                // console.log(currentBoard, "currentBoard");
+                // console.log(currentTask, "currentTask");
+                // renderContext.setStateFuncs.todoColumn(
+                //   currentBoard.columns.todo
+                // );
 
-                renderContext.setStateFuncs.doingColumn(
-                  currentBoard.columns.doing
-                );
+                // renderContext.setStateFuncs.doingColumn(
+                //   currentBoard.columns.doing
+                // );
               }
               if (
                 previousSubtasksCompleted !== 0 &&
@@ -290,37 +311,46 @@ function Subtask({
                 /**
                  * doing to done
                  * **/
-                const filteredArray = removeItem(
-                  currentBoard.columns.doing,
-                  currentTask.index
-                );
-                // update index of each obj
-                filteredArray.forEach((obj, index) => {
-                  obj.index = index;
+                changeCurrentTaskStatusAndRenderColumns({
+                  changeFrom: "doing",
+                  changeTo: "Done",
+                  renderContext,
+                  removeItem,
+                  currentBoard,
+                  currentTask,
                 });
-                currentBoard.columns.doing = filteredArray;
-                // update currentTask status
-                currentTask.status = "done";
-                // update currentTask index because we are adding it to another column array
-                currentTask.index = currentBoard.columns.done.length;
-                // update status drop down menu
-                renderContext.setStateFuncs.statusMenu((prevValues) => {
-                  return {
-                    ...prevValues,
-                    valueOfStatusBtn: "Done",
-                  };
-                });
-                currentBoard.columns.done.push(currentTask);
-                // render columns
-                console.log(currentBoard, "currentBoard");
-                console.log(currentTask, "currentTask");
-                renderContext.setStateFuncs.doingColumn(
-                  currentBoard.columns.doing
-                );
 
-                renderContext.setStateFuncs.doneColumn(
-                  currentBoard.columns.done
-                );
+                // const filteredArray = removeItem(
+                //   currentBoard.columns.doing,
+                //   currentTask.index
+                // );
+                // // update index of each obj
+                // filteredArray.forEach((obj, index) => {
+                //   obj.index = index;
+                // });
+                // currentBoard.columns.doing = filteredArray;
+                // // update currentTask status
+                // currentTask.status = "done";
+                // // update currentTask index because we are adding it to another column array
+                // currentTask.index = currentBoard.columns.done.length;
+                // // update status drop down menu
+                // renderContext.setStateFuncs.statusMenu((prevValues) => {
+                //   return {
+                //     ...prevValues,
+                //     valueOfStatusBtn: "Done",
+                //   };
+                // });
+                // currentBoard.columns.done.push(currentTask);
+                // // render columns
+                // console.log(currentBoard, "currentBoard");
+                // console.log(currentTask, "currentTask");
+                // renderContext.setStateFuncs.doingColumn(
+                //   currentBoard.columns.doing
+                // );
+
+                // renderContext.setStateFuncs.doneColumn(
+                //   currentBoard.columns.done
+                // );
               }
             }
             // doesTasksCompletedMatchTotal({
@@ -370,69 +400,85 @@ function Subtask({
 
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
-              // going from done to todo
-              const filteredArray = removeItem(
-                currentBoard.columns.done,
-                currentTask.index
-              );
-              // update index of each obj
-              // filteredArray.forEach((obj, index) => {
-              //   obj.index = index;
-              // });
-              currentBoard.columns.done = filteredArray;
-              // update currentTask status
-              currentTask.status = "todo";
-              // update currentTask index because we are adding it to another column array
-              currentTask.index = currentBoard.columns.todo.length;
-              currentBoard.columns.todo.push(currentTask);
-              // update status drop down menu
-              renderContext.setStateFuncs.statusMenu((prevValues) => {
-                return {
-                  ...prevValues,
-                  valueOfStatusBtn: "Todo",
-                };
+              whenTaskHasOneSubtask({
+                initialStatus: "done",
+                newStatus: "Todo",
+                currentBoard,
+                currentTask,
+                removeItem,
+                renderContext,
               });
-              console.log(currentBoard, "currentBoard");
-              console.log(currentTask, "currentTask");
-              // render columns
-              renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
-              renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
+              // // going from done to todo
+              // const filteredArray = removeItem(
+              //   currentBoard.columns.done,
+              //   currentTask.index
+              // );
+              // // update index of each obj
+              // // filteredArray.forEach((obj, index) => {
+              // //   obj.index = index;
+              // // });
+              // currentBoard.columns.done = filteredArray;
+              // // update currentTask status
+              // currentTask.status = "todo";
+              // // update currentTask index because we are adding it to another column array
+              // currentTask.index = currentBoard.columns.todo.length;
+              // currentBoard.columns.todo.push(currentTask);
+              // // update status drop down menu
+              // renderContext.setStateFuncs.statusMenu((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     valueOfStatusBtn: "Todo",
+              //   };
+              // });
+              // console.log(currentBoard, "currentBoard");
+              // console.log(currentTask, "currentTask");
+              // // render columns
+              // renderContext.setStateFuncs.doneColumn(currentBoard.columns.done);
+              // renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
             }
             if (currentTask.subtasks.length > 1) {
               if (previousSubtasksCompleted == currentTask.subtasks.length) {
                 /**
                  * done to doing
                  * **/
-                const arrayWithoutCurrentTask = removeItem(
-                  currentBoard.columns.done,
-                  currentTask.index
-                );
-                // update index of each obj
-                arrayWithoutCurrentTask.forEach((obj, index) => {
-                  obj.index = index;
+                changeCurrentTaskStatusAndRenderColumns({
+                  changeFrom: "done",
+                  changeTo: "Doing",
+                  renderContext,
+                  removeItem,
+                  currentBoard,
+                  currentTask,
                 });
-                currentBoard.columns.done = arrayWithoutCurrentTask;
-                // update currentTask status
-                currentTask.status = "doing";
-                // update currentTask index because we are adding it to another column array
-                currentTask.index = currentBoard.columns.doing.length;
-                currentBoard.columns.doing.push(currentTask);
-                // update status drop down menu
-                renderContext.setStateFuncs.statusMenu((prevValues) => {
-                  return {
-                    ...prevValues,
-                    valueOfStatusBtn: "Doing",
-                  };
-                });
-                console.log(currentBoard, "currentBoard");
-                console.log(currentUser, "currentUser");
-                // render columns
-                renderContext.setStateFuncs.doneColumn(
-                  currentBoard.columns.done
-                );
-                renderContext.setStateFuncs.doingColumn(
-                  currentBoard.columns.doing
-                );
+                // const arrayWithoutCurrentTask = removeItem(
+                //   currentBoard.columns.done,
+                //   currentTask.index
+                // );
+                // // update index of each obj
+                // arrayWithoutCurrentTask.forEach((obj, index) => {
+                //   obj.index = index;
+                // });
+                // currentBoard.columns.done = arrayWithoutCurrentTask;
+                // // update currentTask status
+                // currentTask.status = "doing";
+                // // update currentTask index because we are adding it to another column array
+                // currentTask.index = currentBoard.columns.doing.length;
+                // currentBoard.columns.doing.push(currentTask);
+                // // update status drop down menu
+                // renderContext.setStateFuncs.statusMenu((prevValues) => {
+                //   return {
+                //     ...prevValues,
+                //     valueOfStatusBtn: "Doing",
+                //   };
+                // });
+                // console.log(currentBoard, "currentBoard");
+                // console.log(currentUser, "currentUser");
+                // // render columns
+                // renderContext.setStateFuncs.doneColumn(
+                //   currentBoard.columns.done
+                // );
+                // renderContext.setStateFuncs.doingColumn(
+                //   currentBoard.columns.doing
+                // );
               }
             }
             if (
@@ -452,32 +498,40 @@ function Subtask({
               /**
                * doing to todo
                * **/
-              const arrayWithCurrentTaskRemoved = removeItem(
-                currentBoard.columns.doing,
-                currentTask.index
-              );
-              // update index of each obj
-              arrayWithCurrentTaskRemoved.forEach((obj, index) => {
-                obj.index = index;
+              changeCurrentTaskStatusAndRenderColumns({
+                changeFrom: "doing",
+                changeTo: "Todo",
+                renderContext,
+                removeItem,
+                currentBoard,
+                currentTask,
               });
-              currentBoard.columns.doing = arrayWithCurrentTaskRemoved;
-              // update currentTask status
-              currentTask.status = "todo";
-              // update currentTask index because we are adding it to another column array
-              currentTask.index = currentBoard.columns.todo.length;
-              currentBoard.columns.todo.push(currentTask);
-              // update status drop down menu
-              renderContext.setStateFuncs.statusMenu((prevValues) => {
-                return {
-                  ...prevValues,
-                  valueOfStatusBtn: "Todo",
-                };
-              });
-              // render columns
-              renderContext.setStateFuncs.doingColumn(
-                currentBoard.columns.doing
-              );
-              renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
+              // const arrayWithCurrentTaskRemoved = removeItem(
+              //   currentBoard.columns.doing,
+              //   currentTask.index
+              // );
+              // // update index of each obj
+              // arrayWithCurrentTaskRemoved.forEach((obj, index) => {
+              //   obj.index = index;
+              // });
+              // currentBoard.columns.doing = arrayWithCurrentTaskRemoved;
+              // // update currentTask status
+              // currentTask.status = "todo";
+              // // update currentTask index because we are adding it to another column array
+              // currentTask.index = currentBoard.columns.todo.length;
+              // currentBoard.columns.todo.push(currentTask);
+              // // update status drop down menu
+              // renderContext.setStateFuncs.statusMenu((prevValues) => {
+              //   return {
+              //     ...prevValues,
+              //     valueOfStatusBtn: "Todo",
+              //   };
+              // });
+              // // render columns
+              // renderContext.setStateFuncs.doingColumn(
+              //   currentBoard.columns.doing
+              // );
+              // renderContext.setStateFuncs.todoColumn(currentBoard.columns.todo);
             }
             // isStatusOfTaskDoing({
             //   previousSubtasksCompleted,

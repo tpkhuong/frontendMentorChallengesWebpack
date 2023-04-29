@@ -65,6 +65,52 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
             Edit Task
           </button>
           <button
+            id="delete-task-btn-selector"
+            onClick={(event) => {
+              // data-fadeoutviewtask
+              // data-hideviewtask
+              // delete-task-modal-selector
+              // hide view task
+              document
+                .getElementById("view-task-modal-selector")
+                .getAttribute("data-fadeoutviewtask") == "false"
+                ? document
+                    .getElementById("view-task-modal-selector")
+                    .setAttribute("data-fadeoutviewtask", "true")
+                : null;
+
+              setTimeout(() => {
+                // view task
+                document
+                  .getElementById("view-task-modal-selector")
+                  .getAttribute("data-hideviewtask") == "false"
+                  ? document
+                      .getElementById("view-task-modal-selector")
+                      .getAttribute("data-hideviewtask", "true")
+                  : null;
+                // delete task modal
+                document
+                  .getElementById("delete-task-modal-selector")
+                  .getAttribute("data-isdeletetaskshown") == "false"
+                  ? document
+                      .getElementById("delete-task-modal-selector")
+                      .setAttribute("data-isdeletetaskshown", "true")
+                  : null;
+                // focus delete task modal
+                document.getElementById("delete-task-modal-selector").focus();
+              }, 800);
+
+              // render delete task modal
+              renderContextEditDeleteTaskBtn.stateFuncsForModals.deleteTask(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderDelateTask: true,
+                    taskSelected: "This is the task we are deleting.",
+                  };
+                }
+              );
+            }}
             className={EditDeleteTaskStyles[`delete-task-btn`]}
             type="button"
           >

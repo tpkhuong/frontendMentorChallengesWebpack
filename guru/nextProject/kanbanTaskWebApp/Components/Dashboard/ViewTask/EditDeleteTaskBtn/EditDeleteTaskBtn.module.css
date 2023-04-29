@@ -9,11 +9,12 @@
 
 .edit-delete-task-btns-container {
   position: absolute;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 16px;
   max-width: 192px;
   top: 86px;
   right: 25px;
+  z-index: 1;
 
   background-color: var(
     --subtask-modal-checkedbox-light-bg,

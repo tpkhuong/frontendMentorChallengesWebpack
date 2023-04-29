@@ -1,0 +1,112 @@
+/* mobile */
+[data-apptheme="light"] .delete-task-modal-bg {
+  --task-cancel-btn-hover-light: hsl(242, 48%, 89%);
+}
+
+[data-apptheme="dark"] .delete-task-modal-bg {
+  --task-cancel-btn-hover-dark: var(--color-neutral-white);
+  --task-dark-theme-red: hsl(0, 90.1%, 68.2%);
+  --task-dark-theme-text: hsl(0, 44.1%, 13.3%);
+}
+
+.delete-task-modal[data-isdeletetaskshown="true"] {
+  opacity: 1;
+}
+
+.delete-task-modal-bg {
+  position: absolute;
+  /* background-color: hsla(0 0% 0% / 0.4); */
+  inset: 0;
+}
+
+.task-selected {
+  font-weight: 600;
+  color: var(--task-dark-theme-red, red);
+}
+
+.delete-task-modal {
+  transition: opacity 0.75s ease-in;
+  opacity: 0;
+  --delete-task-modal-padding: 24px;
+  --delete-task-inline: 16px;
+  position: absolute;
+  max-width: 480px;
+  height: min-content;
+  inset: 0;
+  margin: auto;
+  background-color: var(--edit-delete-modals-bg, var(--color-neutral-white));
+  padding: var(--delete-task-modal-padding);
+
+  border-radius: 8px;
+  margin: auto;
+  left: var(--delete-task-inline);
+  right: var(--delete-task-inline);
+}
+
+.title {
+  color: var(--color-red);
+  font-size: var(--font-size-24px);
+}
+
+.description {
+  color: var(--color-medium-grey);
+  margin-block: 24px;
+}
+
+.buttons-container {
+  margin-block-start: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buttons-container button {
+  padding-block: 10px;
+  border-radius: 100vw;
+  font-weight: 600;
+}
+
+.delete-task-btn {
+  color: var(--task-dark-theme-text, var(--color-neutral-white));
+  background-color: var(--color-red);
+}
+
+.delete-task-btn:hover,
+.delete-task-btn:focus {
+  background-color: var(--color-red-hover);
+  color: hsl(0, 44.1%, 13.3%);
+}
+
+.cancel-btn {
+  color: var(--color-purple);
+  background-color: var(
+    --addsubtask-addcolumn-cancel-btn-light-bg,
+    var(--addsubtask-addcolumn-cancel-btn-dark-bg)
+  );
+}
+
+.cancel-delete-btn:hover,
+.cancel-delete-btn:focus {
+  background-color: var(
+    --task-cancel-btn-hover-dark,
+    var(--task-cancel-btn-hover-light)
+  );
+}
+
+/* tablet */
+
+@media screen and (min-width: 48rem) {
+  .delete-task-modal {
+    --delete-task-modal-padding: 32px;
+    padding-block-end: 40px;
+  }
+
+  .buttons-container {
+    flex-direction: row;
+  }
+
+  .buttons-container button {
+    flex-basis: 200px;
+  }
+}
+/* desktop */

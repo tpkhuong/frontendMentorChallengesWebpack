@@ -20,6 +20,14 @@
 }
 /* modal bg */
 
+.view-task-modal[data-fadeoutviewtask="true"] {
+  opacity: 0;
+}
+
+.view-task-modal[data-hideviewtask="true"] {
+  display: 0;
+}
+
 .margin-inline-start {
   margin-inline-start: 3px;
 }
@@ -31,8 +39,9 @@
 }
 
 .view-task-modal {
+  transition: opacity 0.75s ease-in;
   --inline-space: 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   max-width: 480px;
   height: min-content;
 

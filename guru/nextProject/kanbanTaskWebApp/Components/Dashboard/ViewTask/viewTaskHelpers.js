@@ -171,16 +171,15 @@ export function changeCurrentTaskStatusAndRenderColumns({
   currentTask.status = `${lowerCaseChangeTo}`;
   // update currentTask index because we are adding it to another column array
   currentTask.index = currentBoard.columns[lowerCaseChangeTo].length;
-  currentBoard.columns[changeTo].push(currentTask);
   // update status drop down menu
   renderContext.setStateFuncs.statusMenu((prevValues) => {
     return {
       ...prevValues,
-      valueOfStatusBtn: `${changeTo}`,
+      valueOfStatusBtn: `${lowerCaseChangeTo}`,
     };
   });
   // add currentTask to correct column
-  currentBoard.columns[`${changeTo}`].push(currentTask);
+  currentBoard.columns[lowerCaseChangeTo].push(currentTask);
   // render columns
   renderContext.setStateFuncs[`${changeFrom}Column`](
     currentBoard.columns[changeFrom]
@@ -218,7 +217,7 @@ export function whenTaskHasOneSubtask({
     };
   });
   // add currentTask to new status column array
-  currentBoard.columns[newStatus].push(currentTask);
+  currentBoard.columns[newStatus.toLowerCase()].push(currentTask);
   // render columns
   renderContext.setStateFuncs[`${initialStatus}Column`](
     currentBoard.columns[initialStatus]
