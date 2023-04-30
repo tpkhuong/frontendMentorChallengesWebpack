@@ -33,7 +33,86 @@ export default function DeleteTask({ children }) {
               task and its subtasks? This action cannot be reversed.
             </p>
             <div className={DeleteTaskStyles[`buttons-container`]}>
-              <button className={DeleteTaskStyles[`delete-task-btn`]}>
+              <button
+                onClick={(event) => {
+                  // get data from local storage
+                  const user = JSON.parse(localStorage.getItem("currentUser"));
+                  const board = JSON.parse(
+                    localStorage.getItem("currentBoard")
+                  );
+                  const task = JSON.parse(localStorage.getItem("currentTask"));
+                  // current Task status
+                  const taskStatus = task.status;
+                  // current Task index
+                  const taskIndex = task.index;
+                  const initialLengthOfColumn =
+                    board.columns[taskStatus].length;
+                  // when column array has only one item
+                  if (board.columns[taskStatus].length === 1) {
+                    // set empty array to column array of task that was deleted
+                    board.columns[taskStatus] = [];
+                    // render column component
+                    renderContextDeleteTask.setStateFuncs[
+                      `${taskStatus}Column`
+                    ](board.columns[taskStatus]);
+                    // update columns of currentboard of currentuser
+                    user.boards[board.index].columns = board.columns;
+                    // render column component
+                    renderContextDeleteTask.setStateFuncs[
+                      `${taskStatus}Column`
+                    ]([]);
+                    // add-task-btn
+                    setTimeout(() => {
+                      document.getElementById("add-task-btn").focus();
+                    }, 80);
+                  }
+                  //   // when column array has two items
+                  //   if (board.columns[taskStatus].length === 2) {
+                  //     // set index of only item in column array to 0
+                  //     board.columns[taskStatus][0].index = 0;
+                  //   }
+                  // when column array has more than two items
+                  console.log("test our delete task algorithm");
+                  if (board.columns[taskStatus].length >= 2) {
+                    // filter out current task item from columns array
+                    const filteredArray = board.columns[taskStatus].filter(
+                      (obj, index) => {
+                        return obj.index !== taskIndex;
+                      }
+                    );
+                    // update index of objs in filteredArray
+                    filteredArray.forEach((obj, index) => {
+                      obj.index = index;
+                    });
+                    board.columns[taskStatus] = filteredArray;
+                    // render column component
+                    renderContextDeleteTask.setStateFuncs[
+                      `${taskStatus}Column`
+                    ](board.columns[taskStatus]);
+                    const arrayOfListitems = document.getElementById(
+                      `${taskStatus}-column-selector`
+                    ).childNodes[1].childNodes;
+                    // since we are updating the index of each obj in filteredArray
+                    // algorithm below will work
+                    const indexOfElementToFocus =
+                      taskIndex == initialLengthOfColumn
+                        ? taskIndex - 1
+                        : taskIndex;
+                    // listitem.firstElementChild
+                    setTimeout(() => {
+                      arrayOfListitems[
+                        indexOfElementToFocus
+                      ].firstElementChild.focus();
+                    }, 80);
+                  }
+                  // update currentUser and currentBoard in local storage
+                  localStorage.setItem("currentUser", JSON.stringify(user));
+                  localStorage.setItem("currentBoard", JSON.stringify(board));
+                  // remove currentTask from localStorage
+                  localStorage.removeItem("currentTask");
+                }}
+                className={DeleteTaskStyles[`delete-task-btn`]}
+              >
                 Delete
               </button>
               <button
