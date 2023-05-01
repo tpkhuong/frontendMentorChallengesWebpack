@@ -370,6 +370,11 @@ export function taskModalComponent() {
                       }
                       // user clicked on "save changes" btn
                       if (taskModalValues.id == "edit") {
+                        // check when user add a new or remove subtask
+                        // is it saved to local storage
+                        // when user click on add subtask create subtask obj,
+                        // set isCompleted to false
+                        // work with currentTask substasks array
                         /**
                          * working with currentTask in local storage
                          * **/

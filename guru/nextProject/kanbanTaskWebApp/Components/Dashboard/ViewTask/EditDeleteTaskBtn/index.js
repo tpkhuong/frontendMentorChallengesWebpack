@@ -106,7 +106,9 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
                   return {
                     ...prevValues,
                     renderDelateTask: true,
-                    taskSelected: "This is the task we are deleting.",
+                    taskSelected: `${
+                      JSON.parse(localStorage.getItem("currentTask")).title
+                    }`,
                   };
                 }
               );

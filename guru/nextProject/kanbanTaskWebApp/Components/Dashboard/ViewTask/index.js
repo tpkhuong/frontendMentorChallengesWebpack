@@ -148,6 +148,15 @@ function Subtask({
         // todo-column-selector
         const btnClicked = event.target.closest("BUTTON");
         if (btnClicked) {
+          alert(
+            "check status of current task before we update when user check/uncheck a subtask"
+          );
+          alert(
+            "take a look at view task algorithm when user change status of current task then check/uncheck a subtask of current task"
+          );
+          alert(
+            "current when this happens our algorithm will create another task btn with data of current task"
+          );
           const currentUser = JSON.parse(localStorage.getItem("currentUser"));
           const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
           const currentTask = JSON.parse(localStorage.getItem("currentTask"));

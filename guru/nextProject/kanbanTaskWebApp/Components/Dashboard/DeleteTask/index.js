@@ -85,6 +85,7 @@ export default function DeleteTask({ children }) {
                       obj.index = index;
                     });
                     board.columns[taskStatus] = filteredArray;
+                    user.boards[board.index].columns = board.columns;
                     // render column component
                     renderContextDeleteTask.setStateFuncs[
                       `${taskStatus}Column`
@@ -95,16 +96,60 @@ export default function DeleteTask({ children }) {
                     // since we are updating the index of each obj in filteredArray
                     // algorithm below will work
                     const indexOfElementToFocus =
-                      taskIndex == initialLengthOfColumn
+                      taskIndex == initialLengthOfColumn - 1
                         ? taskIndex - 1
                         : taskIndex;
-                    // listitem.firstElementChild
+
                     setTimeout(() => {
                       arrayOfListitems[
                         indexOfElementToFocus
                       ].firstElementChild.focus();
                     }, 80);
+                    // // when length of filteredArray == 1
+                    // if (filteredArray.length == 1) {
+                    //   // select only button of the status column
+                    //   setTimeout(() => {
+                    //     arrayOfListitems[0].firstElementChild.focus();
+                    //   }, 80);
+                    // } else {
+                    //   // since we are updating the index of each obj in filteredArray
+                    //   // algorithm below will work
+                    //   const indexOfElementToFocus =
+                    //     taskIndex == initialLengthOfColumn - 1
+                    //       ? taskIndex - 1
+                    //       : taskIndex;
+                    //   //   console.log(
+                    //   //     indexOfElementToFocus,
+                    //   //     "indexOfElementToFocus"
+                    //   //   );
+
+                    //   //   console.log(arrayOfListitems, "arrayOfListitems");
+
+                    //   // listitem.firstElementChild
+                    // }
                   }
+                  // unrender view task and delete task modals
+                  //   renderContextDeleteTask.stateFuncsForModals.viewTask(
+                  //     (prevValues) => {
+                  //       return {
+                  //         ...prevValues,
+                  //         renderViewTask: false,
+                  //         title: "",
+                  //         description: "",
+                  //         status: "",
+                  //         isSelected: "",
+                  //         index: null,
+                  //         subtasks: null,
+                  //       };
+                  //     }
+                  //   );
+                  //   setDeleteTask((prevValues) => {
+                  //     return {
+                  //       ...prevValues,
+                  //       renderDelateTask: false,
+                  //       taskSelected: "Placeholder",
+                  //     };
+                  //   });
                   // update currentUser and currentBoard in local storage
                   localStorage.setItem("currentUser", JSON.stringify(user));
                   localStorage.setItem("currentBoard", JSON.stringify(board));
