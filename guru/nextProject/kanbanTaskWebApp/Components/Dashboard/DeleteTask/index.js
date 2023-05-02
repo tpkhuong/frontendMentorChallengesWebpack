@@ -72,7 +72,7 @@ export default function DeleteTask({ children }) {
                   //     board.columns[taskStatus][0].index = 0;
                   //   }
                   // when column array has more than two items
-                  console.log("test our delete task algorithm");
+
                   if (board.columns[taskStatus].length >= 2) {
                     // filter out current task item from columns array
                     const filteredArray = board.columns[taskStatus].filter(
@@ -129,27 +129,27 @@ export default function DeleteTask({ children }) {
                     // }
                   }
                   // unrender view task and delete task modals
-                  //   renderContextDeleteTask.stateFuncsForModals.viewTask(
-                  //     (prevValues) => {
-                  //       return {
-                  //         ...prevValues,
-                  //         renderViewTask: false,
-                  //         title: "",
-                  //         description: "",
-                  //         status: "",
-                  //         isSelected: "",
-                  //         index: null,
-                  //         subtasks: null,
-                  //       };
-                  //     }
-                  //   );
-                  //   setDeleteTask((prevValues) => {
-                  //     return {
-                  //       ...prevValues,
-                  //       renderDelateTask: false,
-                  //       taskSelected: "Placeholder",
-                  //     };
-                  //   });
+                  renderContextDeleteTask.stateFuncsForModals.viewTask(
+                    (prevValues) => {
+                      return {
+                        ...prevValues,
+                        renderViewTask: false,
+                        title: "",
+                        description: "",
+                        status: "",
+                        isSelected: "",
+                        index: null,
+                        subtasks: null,
+                      };
+                    }
+                  );
+                  setDeleteTask((prevValues) => {
+                    return {
+                      ...prevValues,
+                      renderDelateTask: false,
+                      taskSelected: "Placeholder",
+                    };
+                  });
                   // update currentUser and currentBoard in local storage
                   localStorage.setItem("currentUser", JSON.stringify(user));
                   localStorage.setItem("currentBoard", JSON.stringify(board));

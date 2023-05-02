@@ -7,6 +7,8 @@ import {
   isTasksCompletedZero,
   isStatusOfTaskDoing,
   doesTasksCompletedMatchTotal,
+  countNumberOfCompletedSubtasks,
+  compareCompletedSubtasksToLengthOfArray,
   changeCurrentTaskStatusAndRenderColumns,
   whenTaskHasOneSubtask,
   removeItem,
@@ -148,15 +150,15 @@ function Subtask({
         // todo-column-selector
         const btnClicked = event.target.closest("BUTTON");
         if (btnClicked) {
-          alert(
-            "check status of current task before we update when user check/uncheck a subtask"
-          );
-          alert(
-            "take a look at view task algorithm when user change status of current task then check/uncheck a subtask of current task"
-          );
-          alert(
-            "current when this happens our algorithm will create another task btn with data of current task"
-          );
+          // alert(
+          //   "check status of current task before we update when user check/uncheck a subtask"
+          // );
+          // alert(
+          //   "take a look at view task algorithm when user change status of current task then check/uncheck a subtask of current task"
+          // );
+          // alert(
+          //   "current when this happens our algorithm will create another task btn with data of current task"
+          // );
           const currentUser = JSON.parse(localStorage.getItem("currentUser"));
           const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
           const currentTask = JSON.parse(localStorage.getItem("currentTask"));
@@ -182,6 +184,18 @@ function Subtask({
             document.getElementById("subtask-completed").textContent
           );
           const previousSubtasksCompleted = subtaskCompletedNumForm;
+          // run algorithm to check if total completed matches the current task status
+          // get total completed of current task
+
+          const completedTotal = countNumberOfCompletedSubtasks({
+            subtasksArray: currentTask.subtasks,
+          });
+
+          const isTaskStatusCorrect = compareCompletedSubtasksToLengthOfArray({
+            totalCompleted: completedTotal,
+            lengthOfSubtasksArray: currentTask.subtasks.length,
+            status: currentTask.status,
+          });
           // update subtask obj of currentTask for local storage
           // based on subtaskStatus
           // user subtaskIndex to access subtask obj of currentTask
@@ -219,14 +233,22 @@ function Subtask({
             // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
-              whenTaskHasOneSubtask({
-                initialStatus: "todo",
-                newStatus: "Done",
-                currentBoard,
-                currentTask,
-                removeItem,
-                renderContext,
-              });
+              if (isTaskStatusCorrect) {
+                // if isTaskStatusCorrect is true
+                // we want to update current task status
+                whenTaskHasOneSubtask({
+                  initialStatus: "todo",
+                  newStatus: "Done",
+                  currentBoard,
+                  currentTask,
+                  removeItem,
+                  renderContext,
+                });
+              } else {
+                // if isTaskStatusCorrect is false
+                // status does not change since user already changed the status
+                subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+              }
               // going from todo to done
               // const modifiedArray = removeItem(
               //   currentBoard.columns.todo,
@@ -255,17 +277,23 @@ function Subtask({
             }
             if (currentTask.subtasks.length > 1) {
               if (previousSubtasksCompleted == 0) {
-                /**
-                 * 0 to 1 todo to doing
-                 * **/
-                changeCurrentTaskStatusAndRenderColumns({
-                  changeFrom: "todo",
-                  changeTo: "Doing",
-                  renderContext,
-                  removeItem,
-                  currentBoard,
-                  currentTask,
-                });
+                if (isTaskStatusCorrect) {
+                  /**
+                   * 0 to 1 todo to doing
+                   * **/
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "todo",
+                    changeTo: "Doing",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+                } else {
+                  // if isTaskStatusCorrect is false
+                  // status does not change since user already changed the status
+                  subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+                }
                 // const modArray = removeItem(
                 //   currentBoard.columns.todo,
                 //   currentTask.index
@@ -317,17 +345,23 @@ function Subtask({
                 previousSubtasksCompleted > 0 &&
                 subtaskCompletedNumForm == currentTask.subtasks.length
               ) {
-                /**
-                 * doing to done
-                 * **/
-                changeCurrentTaskStatusAndRenderColumns({
-                  changeFrom: "doing",
-                  changeTo: "Done",
-                  renderContext,
-                  removeItem,
-                  currentBoard,
-                  currentTask,
-                });
+                if (isTaskStatusCorrect) {
+                  /**
+                   * doing to done
+                   * **/
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "doing",
+                    changeTo: "Done",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+                } else {
+                  // if isTaskStatusCorrect is false
+                  // status does not change since user already changed the status
+                  subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+                }
 
                 // const filteredArray = removeItem(
                 //   currentBoard.columns.doing,
@@ -409,14 +443,21 @@ function Subtask({
 
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
-              whenTaskHasOneSubtask({
-                initialStatus: "done",
-                newStatus: "Todo",
-                currentBoard,
-                currentTask,
-                removeItem,
-                renderContext,
-              });
+              if (isTaskStatusCorrect) {
+                whenTaskHasOneSubtask({
+                  initialStatus: "done",
+                  newStatus: "Todo",
+                  currentBoard,
+                  currentTask,
+                  removeItem,
+                  renderContext,
+                });
+              } else {
+                // if isTaskStatusCorrect is false
+                // status does not change since user already changed the status
+                subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+              }
+
               // // going from done to todo
               // const filteredArray = removeItem(
               //   currentBoard.columns.done,
@@ -447,17 +488,24 @@ function Subtask({
             }
             if (currentTask.subtasks.length > 1) {
               if (previousSubtasksCompleted == currentTask.subtasks.length) {
-                /**
-                 * done to doing
-                 * **/
-                changeCurrentTaskStatusAndRenderColumns({
-                  changeFrom: "done",
-                  changeTo: "Doing",
-                  renderContext,
-                  removeItem,
-                  currentBoard,
-                  currentTask,
-                });
+                if (isTaskStatusCorrect) {
+                  /**
+                   * done to doing
+                   * **/
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "done",
+                    changeTo: "Doing",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+                } else {
+                  // if isTaskStatusCorrect is false
+                  // status does not change since user already changed the status
+                  subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+                }
+
                 // const arrayWithoutCurrentTask = removeItem(
                 //   currentBoard.columns.done,
                 //   currentTask.index
@@ -504,17 +552,23 @@ function Subtask({
               previousSubtasksCompleted < currentTask.subtasks.length &&
               subtaskCompletedNumForm == 0
             ) {
-              /**
-               * doing to todo
-               * **/
-              changeCurrentTaskStatusAndRenderColumns({
-                changeFrom: "doing",
-                changeTo: "Todo",
-                renderContext,
-                removeItem,
-                currentBoard,
-                currentTask,
-              });
+              if (isTaskStatusCorrect) {
+                /**
+                 * doing to todo
+                 * **/
+                changeCurrentTaskStatusAndRenderColumns({
+                  changeFrom: "doing",
+                  changeTo: "Todo",
+                  renderContext,
+                  removeItem,
+                  currentBoard,
+                  currentTask,
+                });
+              } else {
+                // if isTaskStatusCorrect is false
+                // status does not change since user already changed the status
+                subtaskDigitElement.textContent = `${subtaskCompletedNumForm}`;
+              }
               // const arrayWithCurrentTaskRemoved = removeItem(
               //   currentBoard.columns.doing,
               //   currentTask.index

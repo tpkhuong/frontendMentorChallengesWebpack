@@ -226,6 +226,47 @@ export function whenTaskHasOneSubtask({
     currentBoard.columns[newStatus.toLowerCase()]
   );
 }
+alert(
+  "test out algorithms countNumberOfCompletedSubtasks and compareCompletedSubtasksToLengthOfArray in View Task"
+);
+export function countNumberOfCompletedSubtasks({ subtasksArray }) {
+  // compare number return from this function to length of subtasksArray
+  return subtasksArray.reduce(function countingIsCompleted(
+    buildingUp,
+    currentValue
+  ) {
+    if (currentValue.isCompleted) {
+      buildingUp = buildingUp + 1;
+    }
+    return buildingUp;
+  },
+  0);
+}
+
+export function compareCompletedSubtasksToLengthOfArray({
+  totalCompleted,
+  lengthOfSubtasksArray,
+  status,
+}) {
+  /**
+   * if any of the if statements returns true
+   * we want to run whenTaskHasOneSubtask or changeCurrentTaskStatusAndRenderColumns
+   * when any of if statements returns false we want to update UI without rendering or
+   * updating data in local storage
+   * **/
+  // if totalCompleted === 0 should be "todo"
+  if (totalCompleted === 0) {
+    return status == "todo";
+  }
+  // if totalCompleted is between 0 and lengthOfSubtasksArray should be "doing"
+  if (totalCompleted > 0 && totalCompleted < lengthOfSubtasksArray) {
+    return status == "doing";
+  }
+  // if totalCompleted == lengthOfSubtasksArray should be "done"
+  if (totalCompleted == lengthOfSubtasksArray) {
+    return status == "done";
+  }
+}
 
 // 216 15 57
 /**
