@@ -11,6 +11,7 @@ export default function CloseModalBtn({
   focusClickedElement,
   hideModalFunc,
   isEditBoardModal,
+  isEditTaskModal,
 }) {
   return (
     <button
@@ -36,7 +37,11 @@ export default function CloseModalBtn({
           );
           return;
         }
-
+        // close btn of edit task modal
+        if (isEditTaskModal) {
+          console.log("this is edit task modal");
+          return;
+        }
         // focus element that opened modal
         document.getElementById(`${focusClickedElement}`).focus();
 

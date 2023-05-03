@@ -61,6 +61,84 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
           <button
             className={EditDeleteTaskStyles[`edit-task-btn`]}
             type="button"
+            id="edit-task-btn-selector"
+            onClick={(event) => {
+              // get data from local storage
+              const currentUser = JSON.parse(
+                localStorage.getItem("currentUser")
+              );
+
+              const currentBoard = JSON.parse(
+                localStorage.getItem("currentBoard")
+              );
+
+              const currentTask = JSON.parse(
+                localStorage.getItem("currentTask")
+              );
+              // make subtasks array for subtasks component
+              // using data from currentTask.subtasks
+              const subtasksArrayForEditTask = currentTask.subtasks.map(
+                function makeSubtasksArray(obj, index) {
+                  return {
+                    placeholder: "",
+                    text: obj.title,
+                    isEmptyAttr: "",
+                  };
+                }
+              );
+              console.log("test out edit task modal btn algorithm");
+              // focus edit-task-modal-selector modal
+              // or focus edit-task-title
+              // fade view task
+              // fade in edit task modal
+              document
+                .getElementById("view-task-modal-selector")
+                .getAttribute("data-fadeoutviewtask") == "false"
+                ? document
+                    .getElementById("view-task-modal-selector")
+                    .setAttribute("data-fadeoutviewtask", "true")
+                : null;
+
+              setTimeout(() => {
+                // display none on view task
+                document
+                  .getElementById("view-task-modal-selector")
+                  .getAttribute("data-hideviewtask") == "false"
+                  ? document
+                      .getElementById("view-task-modal-selector")
+                      .setAttribute("data-hideviewtask", "true")
+                  : null;
+
+                // edit task modal
+                document
+                  .getElementById("edit-task-modal-selector")
+                  .getAttribute("data-fadeedittaskmodal") == "false"
+                  ? document
+                      .getElementById("edit-task-modal-selector")
+                      .setAttribute("data-fadeedittaskmodal", "true")
+                  : null;
+
+                // focus edit task modal title input
+                document.getElementById("edit-task-modal-selector").focus();
+                // document.getElementById("edit-task-title").focus();
+              }, 800);
+              // render edit task modal
+              renderContextEditDeleteTaskBtn.stateFuncsForModals.editTaskModal(
+                (prevValues) => {
+                  return {
+                    ...prevValues,
+                    renderTaskModal: true,
+                    id: "edit",
+                    refocusElementTaskModal: "edit-task-btn-selector",
+                    modalTitle: "Edit Task",
+                    titleInput: currentTask.title,
+                    statusInput: currentTask.status,
+                    descriptionInput: currentTask.description,
+                    subtasksArray: subtasksArrayForEditTask,
+                  };
+                }
+              );
+            }}
           >
             Edit Task
           </button>
@@ -86,7 +164,7 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
                   .getAttribute("data-hideviewtask") == "false"
                   ? document
                       .getElementById("view-task-modal-selector")
-                      .getAttribute("data-hideviewtask", "true")
+                      .setAttribute("data-hideviewtask", "true")
                   : null;
                 // delete task modal
                 document
@@ -118,7 +196,7 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
           >
             Delete Task
           </button>
-          <button
+          {/* <button
             onClick={(event) => {
               renderContextEditDeleteTaskBtn.stateFuncsForModals.viewTask(
                 (prevValues) => {
@@ -140,7 +218,7 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
             type="button"
           >
             Close
-          </button>
+          </button> */}
         </div>
       )}
     </React.Fragment>

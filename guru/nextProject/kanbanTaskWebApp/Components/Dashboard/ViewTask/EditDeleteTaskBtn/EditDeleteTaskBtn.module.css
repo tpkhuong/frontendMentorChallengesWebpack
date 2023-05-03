@@ -28,7 +28,7 @@
 }
 
 .edit-delete-task-btns-container button:nth-of-type(2) {
-  margin-block: 16px;
+  margin-block-start: 16px;
 }
 
 .edit-delete-task-btns-container button {
@@ -39,8 +39,7 @@
   text-align: left;
 }
 
-.edit-task-btn,
-.close-task-modal-btn {
+.edit-task-btn {
   color: var(--color-medium-grey);
 }
 

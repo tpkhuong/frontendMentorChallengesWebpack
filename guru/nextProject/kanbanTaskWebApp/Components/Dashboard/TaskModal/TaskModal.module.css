@@ -10,11 +10,24 @@
   --subtasks-hover-dark: hsl(240, 23%, 29%);
 }
 
+.modal-bg[data-isedittaskmodal="true"] {
+  background-color: transparent;
+}
+
 .modal-bg {
   position: absolute;
   inset: 0;
   background-color: hsla(0 0% 0% / 0.4);
   z-index: 2;
+}
+
+[data-isedittaskmodal="true"] .task-modal[data-fadeedittaskmodal="true"] {
+  opacity: 1;
+}
+
+[data-isedittaskmodal="true"] .task-modal {
+  opacity: 0;
+  transition: opacity 0.75s ease-in;
 }
 
 .task-modal {

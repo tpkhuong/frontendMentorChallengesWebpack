@@ -69,13 +69,19 @@ export function taskModalComponent() {
     return (
       <React.Fragment>
         {taskModalValues.renderTaskModal ? (
-          <div className={TaskModalStyles[`modal-bg`]}>
+          <div
+            data-isedittaskmodal={
+              taskModalValues.id == "edit" ? "true" : "false"
+            }
+            className={TaskModalStyles[`modal-bg`]}
+          >
             <form
               role="dialog"
               id={`${taskModalValues.id}-task-modal-selector`}
               aria-modal="true"
               className={TaskModalStyles[`task-modal`]}
               onKeyDown={keyboardModalTabbingAndSpaceKey}
+              data-fadeedittaskmodal="false"
             >
               <fieldset className={TaskModalStyles[`task-fieldset`]}>
                 <div className={TaskModalStyles[`title-close-btn-container`]}>
@@ -88,6 +94,9 @@ export function taskModalComponent() {
                       taskModalValues.refocusElementTaskModal
                     }
                     hideModalFunc={setTaskModal}
+                    isEditTaskModal={
+                      taskModalValues.id == "edit" ? true : false
+                    }
                   >
                     {`Close ${taskModalValues.modalTitle} Modal`}
                   </CloseModalBtn>

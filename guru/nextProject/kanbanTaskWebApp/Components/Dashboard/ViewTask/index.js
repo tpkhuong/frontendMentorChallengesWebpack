@@ -43,6 +43,7 @@ export default function ViewTask({ children }) {
       {initialTaskValuesObj.renderViewTask && (
         <div className={ViewTaskStyles[`view-task-modal-bg`]}>
           <div
+            tabIndex="-1"
             data-fadeoutviewtask="false"
             data-hideviewtask="false"
             aria-modal="true"
@@ -113,16 +114,38 @@ export default function ViewTask({ children }) {
               Current Status
             </StatusMenu>
             {/* having save changes adding another step for user */}
+            {/* only call column component setStateFunc when user change current status of task */}
+            {/* make it a close btn instead */}
             <button
               onClick={(event) => {
-                // only call column component setStateFunc when user change current status of task
-
-                console.log(event.target);
+                const task = JSON.parse(localStorage.getItem("currentTask"));
+                // focus task btn of current task
+                const focusTaskBtn = document.getElementById(
+                  `${task.status}-column-selector`
+                ).childNodes[1].childNodes[task.index].firstElementChild;
+                setTimeout(() => {
+                  focusTaskBtn.focus();
+                }, 80);
+                renderContextViewTask.stateFuncsForModals.viewTask(
+                  (prevValues) => {
+                    return {
+                      renderViewTask: false,
+                      title: "",
+                      description: "",
+                      status: "",
+                      isSelected: "",
+                      index: null,
+                      subtasks: null,
+                    };
+                  }
+                );
+                // remove currentTask in localStorage
+                localStorage.removeItem("currentTask");
               }}
               type="button"
-              className={ViewTaskStyles[`save-btn`]}
+              className={ViewTaskStyles[`close-btn`]}
             >
-              Save Changes
+              Close
             </button>
           </div>
         </div>

@@ -226,9 +226,7 @@ export function whenTaskHasOneSubtask({
     currentBoard.columns[newStatus.toLowerCase()]
   );
 }
-alert(
-  "test out algorithms countNumberOfCompletedSubtasks and compareCompletedSubtasksToLengthOfArray in View Task"
-);
+
 export function countNumberOfCompletedSubtasks({ subtasksArray }) {
   // compare number return from this function to length of subtasksArray
   return subtasksArray.reduce(function countingIsCompleted(

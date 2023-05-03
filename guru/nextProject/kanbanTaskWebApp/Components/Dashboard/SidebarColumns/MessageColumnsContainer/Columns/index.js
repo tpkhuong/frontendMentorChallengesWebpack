@@ -72,6 +72,10 @@ export default function Columns({
                   };
                 }
               );
+              // focus view task modal
+              setTimeout(() => {
+                document.getElementById("view-task-modal-selector").focus();
+              }, 80);
             }
           }}
         >

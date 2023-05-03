@@ -25,7 +25,7 @@
 }
 
 .view-task-modal[data-hideviewtask="true"] {
-  display: 0;
+  display: none;
 }
 
 .margin-inline-start {
@@ -220,14 +220,14 @@
   display: inline-block;
 }
 
-/* save btn */
+/* close btn */
 
-.save-btn:hover,
-.save-btn:focus {
+.close-btn:hover,
+.close-btn:focus {
   background-color: var(--color-purple-secondary);
 }
 
-.save-btn {
+.close-btn {
   font-size: var(--heading-reg-xx-sm);
   font-weight: 600;
   color: var(--color-neutral-white);
