@@ -62,6 +62,8 @@
       --bg-dark-desktop,
       url("/assets/blob-bg-desktop.svg")
     );
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
   @supports (display: grid) {

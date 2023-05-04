@@ -6,6 +6,7 @@ export default function StatusMenu({
   children,
   statusValueFromEditModal,
   isViewTask,
+  whichTaskModal,
 }) {
   // const [valueOfStatusBtn, setStatusBtn] = React.useState("Todo");
   // const [isStatusMenuShown, setStatusMenu] = React.useState(false);
@@ -25,7 +26,7 @@ export default function StatusMenu({
       <span className={StatusMenuStyles[`label`]}>{children}</span>
       <button
         aria-label="open status menu"
-        id="current-status"
+        id={`${whichTaskModal}-current-status`}
         className={StatusMenuStyles[`current-status-btn`]}
         data-showmodal={`${initialStatusValues.isStatusMenuShown}`}
         type="button"
@@ -72,7 +73,8 @@ export default function StatusMenu({
               // hide modal
               const btnContent = statusBtnClicked.innerText;
               // focus current status btn
-              document.getElementById("current-status").focus();
+              statusBtnClicked.parentElement.parentElement.previousElementSibling.focus();
+              // document.getElementById("current-status").focus();
               const statusElement = btnContent.toLowerCase();
               setStatusMenu((prevValues) => {
                 return {

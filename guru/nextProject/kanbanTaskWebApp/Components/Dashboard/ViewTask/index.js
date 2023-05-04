@@ -64,7 +64,10 @@ export default function ViewTask({ children }) {
               <EditDeleteTaskBtnAndModal />
             </div>
             {/* description */}
-            <p className={ViewTaskStyles[`description`]}>
+            <p
+              id="view-task-modal-description"
+              className={ViewTaskStyles[`description`]}
+            >
               {initialTaskValuesObj.description}
             </p>
             {/* subtasks */}
@@ -81,7 +84,10 @@ export default function ViewTask({ children }) {
                 0
               )}`}</span>
               <span className={ViewTaskStyles[`margin-inline-start`]}>of</span>
-              <span className={ViewTaskStyles[`margin-inline-start`]}>
+              <span
+                id="view-task-subtasks-total"
+                className={ViewTaskStyles[`margin-inline-start`]}
+              >
                 {initialTaskValuesObj.subtasks.length}
               </span>
               <span>)</span>
@@ -109,6 +115,7 @@ export default function ViewTask({ children }) {
             {/* current status */}
             <StatusMenu
               isViewTask={true}
+              whichTaskModal="view"
               statusValueFromEditModal={initialTaskValuesObj.status}
             >
               Current Status

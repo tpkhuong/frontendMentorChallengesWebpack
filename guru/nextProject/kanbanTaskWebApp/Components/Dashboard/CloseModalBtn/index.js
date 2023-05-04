@@ -3,6 +3,7 @@ import CloseModalStyles from "./CloseModalBtn.module.css";
 import {
   fadeOutEditDeleteBoardModal,
   fadeInEditDeleteBtnModal,
+  fadeOutEditTaskFadeInViewTask,
 } from "../../../utils/sharedHelpers";
 
 export default function CloseModalBtn({
@@ -20,7 +21,6 @@ export default function CloseModalBtn({
       className={CloseModalStyles[`close-btn`]}
       aria-label={children}
       onClick={(event) => {
-        console.log(isEditBoardModal, "isEditBoardModal");
         if (isEditBoardModal) {
           // focus add task btn
           document.getElementById(`${focusClickedElement}`).focus();
@@ -39,7 +39,54 @@ export default function CloseModalBtn({
         }
         // close btn of edit task modal
         if (isEditTaskModal) {
-          console.log("this is edit task modal");
+          fadeOutEditTaskFadeInViewTask(hideModalFunc);
+          // fade edit task modal
+          // document.getElementById("edit-task-modal-selector");
+          // document
+          //   .getElementById("edit-task-modal-selector")
+          //   .getAttribute("data-fadeedittaskmodal") == "true"
+          //   ? document
+          //       .getElementById("edit-task-modal-selector")
+          //       .setAttribute("data-fadeedittaskmodal", "false")
+          //   : null;
+          // // change display of view task modal to another value besides none
+          // document
+          //   .getElementById("view-task-modal-selector")
+          //   .getAttribute("data-hideviewtask") == "true"
+          //   ? document
+          //       .getElementById("view-task-modal-selector")
+          //       .setAttribute("data-hideviewtask", "false")
+          //   : null;
+          // // unrender edit task modal
+          // setTimeout(() => {
+          //   // edit task modal
+          //   hideModalFunc((prevValues) => {
+          //     return {
+          //       renderTaskModal: false,
+          //       id: "",
+          //       refocusElementTaskModal: "",
+          //       modalTitle: "",
+          //       titleInput: "",
+          //       statusInput: "",
+          //       descriptionInput: "",
+          //       subtasksArray: [
+          //         { placeholder: "", text: "", isEmptyAttr: "" },
+          //         { placeholder: "", text: "", isEmptyAttr: "" },
+          //       ],
+          //     };
+          //   });
+          //   // show view task modal
+          //   document
+          //     .getElementById("view-task-modal-selector")
+          //     .getAttribute("data-fadeoutviewtask") == "true"
+          //     ? document
+          //         .getElementById("view-task-modal-selector")
+          //         .setAttribute("data-fadeoutviewtask", "false")
+          //     : null;
+          //   // focus delete task btn
+          //   document.getElementById("edit-task-btn-selector").focus();
+          // }, 800);
+
           return;
         }
         // focus element that opened modal

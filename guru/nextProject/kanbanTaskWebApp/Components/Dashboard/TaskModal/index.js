@@ -3,7 +3,10 @@ import TaskModalStyles from "./TaskModal.module.css";
 import CloseModalBtn from "../CloseModalBtn/index";
 import StatusMenu from "../StatusMenu/index";
 import { BoardTaskRenderContext } from "../Context/index";
-import { keyboardModalTabbingAndSpaceKey } from "../../../utils/sharedHelpers";
+import {
+  keyboardModalTabbingAndSpaceKey,
+  fadeOutEditTaskFadeInViewTask,
+} from "../../../utils/sharedHelpers";
 import ViewTask from "../ViewTask";
 
 const AddNewTaskModalSubtasks = SubtasksComponent();
@@ -77,6 +80,7 @@ export function taskModalComponent() {
           >
             <form
               role="dialog"
+              tabIndex="-1"
               id={`${taskModalValues.id}-task-modal-selector`}
               aria-modal="true"
               className={TaskModalStyles[`task-modal`]}
@@ -160,6 +164,7 @@ export function taskModalComponent() {
                 {/* status */}
                 <StatusMenu
                   statusValueFromEditModal={taskModalValues.statusInput}
+                  whichTaskModal={taskModalValues.id == "edit" ? "edit" : "add"}
                 >
                   Status
                 </StatusMenu>
@@ -259,10 +264,21 @@ export function taskModalComponent() {
                     //         "true"
                     //       )
                     //   : null;
-                    const currentStatusElement =
-                      document.getElementById("current-status");
-                    console.log(currentStatusElement);
+                    // const currentStatusElement =
+                    //   document.getElementById("current-status");
+                    // console.log(currentStatusElement);
                     if (isAllAccepted) {
+                      const currentUser = JSON.parse(
+                        localStorage.getItem("currentUser")
+                      );
+                      // currentBoard in local storage
+                      const currentBoard = JSON.parse(
+                        localStorage.getItem("currentBoard")
+                      );
+                      // currentTask in local storage
+                      const currentTask = JSON.parse(
+                        localStorage.getItem("currentTask")
+                      );
                       // run func based on taskModalValues.id
 
                       //   document
@@ -283,17 +299,11 @@ export function taskModalComponent() {
                       // run algorithm based on id
                       // user clicked on "create task" btn
                       if (taskModalValues.id == "add") {
-                        const currentUser = JSON.parse(
-                          localStorage.getItem("currentUser")
-                        );
-                        // currentBoard in local storage
-                        const currentBoard = JSON.parse(
-                          localStorage.getItem("currentBoard")
-                        );
                         const columns = currentBoard.columns;
+                        // using document.getElementById("current-status") is fine here since only add new task will be rendered
                         // find status of task
                         const currentStatusElement =
-                          document.getElementById("current-status");
+                          document.getElementById("add-current-status");
                         const status =
                           currentStatusElement.firstElementChild.textContent.toLowerCase();
                         // get length of status array to be used for new task index
@@ -351,14 +361,7 @@ export function taskModalComponent() {
                         // update data in local storage
                         currentBoard.columns = columns;
                         currentUser.boards[currentBoard.index] = currentBoard;
-                        localStorage.setItem(
-                          "currentUser",
-                          JSON.stringify(currentUser)
-                        );
-                        localStorage.setItem(
-                          "currentBoard",
-                          JSON.stringify(currentBoard)
-                        );
+
                         // focus add new task btn
                         setTimeout(() => {
                           document.getElementById("add-task-btn").focus();
@@ -395,8 +398,81 @@ export function taskModalComponent() {
                         // then concat copied array and array of newly added subtasks objs
                         // count number of isCompleted subtasks
                         // based on number of isCompleted compare it to length of subtasks
+                        /**
+                         * component that might have to be updated
+                         * task btn of current task
+                         * view task modal of current task
+                         * **/
+                        /**
+                         * when user change status of current task in edit task modal
+                         * render correct columns component with updated data
+                         * and update content of view task modal based on what user changed
+                         * **/
+                        /**
+                         * ******** work on ********
+                         * take algorithm of subtasks section of view task modal and convert to component
+                         * we can call setStateFunc to update changes to subtasks
+                         * ******** work on ********
+                         * **/
+                        // Only change inputs when user changes the value of those inputs
+                        // title
+                        // -task-title
+                        // -task-description
+                        if (
+                          document.getElementById("edit-task-title").value !=
+                          currentTask.title
+                        ) {
+                          // view-task-modal-title
+                          // view-task-modal-description
+                        }
+                        // descriptions
+                        // subtasks
+                        // status
+                        const editModalStatusElement = document.getElementById(
+                          "edit-current-status"
+                        ).firstElementChild;
+
+                        if (
+                          editModalStatusElement.textContent.toLowerCase() !=
+                          currentTask.status
+                        ) {
+                          fadeOutEditTaskFadeInViewTask(setTaskModal);
+                          // update current status element of view task modal
+                          const viewModalStatusElement =
+                            document.getElementById(
+                              "view-current-status"
+                            ).firstElementChild;
+
+                          viewModalStatusElement.textContent =
+                            editModalStatusElement.textContent;
+                          // update data in local storage
+                          // update current task status
+
+                          // render correct column components
+                          renderContextForTaskModal.setStateFuncs[
+                            `${editModalStatusElement.textContent.toLowerCase()}Column`
+                          ]([]);
+                          renderContextForTaskModal.setStateFuncs[
+                            `${currentTask.status}Column`
+                          ]([]);
+                        }
                         return;
                       }
+                      // update data in local storage
+                      localStorage.setItem(
+                        "currentUser",
+                        JSON.stringify(currentUser)
+                      );
+
+                      localStorage.setItem(
+                        "currentBoard",
+                        JSON.stringify(currentBoard)
+                      );
+
+                      localStorage.setItem(
+                        "currentTask",
+                        JSON.stringify(currentTask)
+                      );
                     }
                   }}
                 >

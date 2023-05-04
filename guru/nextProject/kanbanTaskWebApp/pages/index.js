@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import { ThemeWrapper } from "../Components/Home/ThemeWrapper/index";
+// import { ThemeWrapper } from "../Components/Home/ThemeWrapper/index";
+import ThemeWrapper from "../Components/Home/ThemeWrapper/index";
 
 export default function Home({ children, ...props }) {
   return (
