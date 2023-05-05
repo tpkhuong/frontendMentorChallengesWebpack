@@ -71,7 +71,8 @@ export default function ViewTask({ children }) {
               {initialTaskValuesObj.description}
             </p>
             {/* subtasks */}
-            <span className={ViewTaskStyles[`subtask-label`]}>
+            <SubtasksList subtasksArray={initialTaskValuesObj.subtasks} />
+            {/* <span className={ViewTaskStyles[`subtask-label`]}>
               <span>Subtasks</span>
               <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
               <span id="subtask-completed">{`${initialTaskValuesObj.subtasks.reduce(
@@ -91,9 +92,9 @@ export default function ViewTask({ children }) {
                 {initialTaskValuesObj.subtasks.length}
               </span>
               <span>)</span>
-            </span>
-            <ul role="group">
-              {/* ul role=group */}
+            </span> */}
+            {/* ul role=group */}
+            {/* <ul role="group">
               {initialTaskValuesObj.subtasks.map(function makeSubtask(
                 obj,
                 index
@@ -109,7 +110,7 @@ export default function ViewTask({ children }) {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
             {/* subtasks bg: light theme: light grey */}
             {/* subtasks bg: dark theme: very dark grey */}
             {/* current status */}
@@ -161,6 +162,56 @@ export default function ViewTask({ children }) {
   );
 }
 
+function SubtasksList({ subtasksArray }) {
+  const [listOfSubtasks, setSubtasks] = React.useState(subtasksArray);
+
+  const renderContextSubtasksList = React.useContext(BoardTaskRenderContext);
+
+  renderContextSubtasksList.setStateFuncs.subtasksList = setSubtasks;
+
+  return (
+    <React.Fragment>
+      {/* subtasks */}
+      <span className={ViewTaskStyles[`subtask-label`]}>
+        <span>Subtasks</span>
+        <span className={ViewTaskStyles[`margin-inline-start`]}>(</span>
+        <span id="subtask-completed">{`${listOfSubtasks.reduce(
+          (buildingUp, currentValue) => {
+            if (currentValue.isCompleted) {
+              buildingUp += 1;
+            }
+            return buildingUp;
+          },
+          0
+        )}`}</span>
+        <span className={ViewTaskStyles[`margin-inline-start`]}>of</span>
+        <span
+          id="view-task-subtasks-total"
+          className={ViewTaskStyles[`margin-inline-start`]}
+        >
+          {listOfSubtasks.length}
+        </span>
+        <span>)</span>
+      </span>
+      <ul role="group">
+        {/* ul role=group */}
+        {listOfSubtasks.map(function makeSubtask(obj, index) {
+          return (
+            <li key={Math.random() * index}>
+              <Subtask
+                listitemIndex={index}
+                isCompleted={obj.isCompleted}
+                content={obj.title}
+                renderContext={renderContextSubtasksList}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+}
+
 function Subtask({
   children,
   content,
@@ -180,6 +231,9 @@ function Subtask({
         // todo-column-selector
         const btnClicked = event.target.closest("BUTTON");
         if (btnClicked) {
+          /**
+           * thinking we dont need to change algorithm when user click on a subtasks btn
+           * **/
           // alert(
           //   "check status of current task before we update when user check/uncheck a subtask"
           // );

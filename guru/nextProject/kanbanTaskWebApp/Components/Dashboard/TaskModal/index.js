@@ -378,10 +378,44 @@ export function taskModalComponent() {
                         renderContextForTaskModal.setStateFuncs[
                           `${status}Column`
                         ](currentBoard.columns[status]);
-                        return;
                       }
                       // user clicked on "save changes" btn
                       if (taskModalValues.id == "edit") {
+                        const editModalStatusElement = document.getElementById(
+                          "edit-current-status"
+                        ).firstElementChild;
+
+                        const statusNotEqualToEachOther = (
+                          statusElementOfEdit,
+                          currentStatus
+                        ) => {
+                          return (
+                            statusElementOfEdit.textContent.toLowerCase() !=
+                            currentStatus
+                          );
+                        };
+
+                        const statusEqualToEachOther = (
+                          statusElementOfEdit,
+                          currentStatus
+                        ) => {
+                          return (
+                            statusElementOfEdit.textContent.toLowerCase() ==
+                            currentStatus
+                          );
+                        };
+
+                        const updateUserBoardTask = ({
+                          user,
+                          board,
+                          task,
+                          propertyString,
+                          inputValue,
+                        }) => {
+                          task[propertyString] = inputValue;
+                          board.columns[task.status][task.index] = task;
+                          user.boards[board.index] = board;
+                        };
                         // check when user add a new or remove subtask
                         // is it saved to local storage
                         // when user click on add subtask create subtask obj,
@@ -408,10 +442,13 @@ export function taskModalComponent() {
                          * render correct columns component with updated data
                          * and update content of view task modal based on what user changed
                          * **/
+                        // updating task btn we will call column component of previous status and new status
+                        fadeOutEditTaskFadeInViewTask(setTaskModal);
                         /**
                          * ******** work on ********
                          * take algorithm of subtasks section of view task modal and convert to component
                          * we can call setStateFunc to update changes to subtasks
+                         * document.getElementById("todo-column-selector").childNodes[1].childNodes[taskindex].firstElementChild.childNodes[1].childNodes[2]
                          * ******** work on ********
                          * **/
                         // Only change inputs when user changes the value of those inputs
@@ -422,21 +459,81 @@ export function taskModalComponent() {
                           document.getElementById("edit-task-title").value !=
                           currentTask.title
                         ) {
+                          // updating view task modal title
                           // view-task-modal-title
-                          // view-task-modal-description
+                          document.getElementById(
+                            "view-task-modal-title"
+                          ).textContent =
+                            document.getElementById("edit-task-title").value;
+                          // update title of task btn of column component when status of edit task modal does equal to current task status
+                          if (
+                            statusEqualToEachOther(
+                              editModalStatusElement,
+                              currentTask.status
+                            )
+                          ) {
+                            const taskBtnTitleElement = document.getElementById(
+                              `${currentTask.status}-column-selector`
+                            ).childNodes[1].childNodes[currentTask.index]
+                              .firstElementChild.firstElementChild;
+
+                            taskBtnTitleElement.textContent =
+                              document.getElementById("edit-task-title").value;
+                          }
+                          // update title property of current task
+                          updateUserBoardTask({
+                            user: currentUser,
+                            board: currentBoard,
+                            task: currentTask,
+                            propertyString: "title",
+                            inputValue:
+                              document.getElementById("edit-task-title").value,
+                          });
                         }
-                        // descriptions
+                        // description
+                        if (
+                          document.getElementById("edit-task-description")
+                            .value != currentTask.description
+                        ) {
+                          // update view task modal description
+                          // view-task-modal-description
+                          document.getElementById(
+                            "view-task-modal-description"
+                          ).textContent = document.getElementById(
+                            "edit-task-description"
+                          ).value;
+                          // update title property of current task
+                          updateUserBoardTask({
+                            user: currentUser,
+                            board: currentBoard,
+                            task: currentTask,
+                            propertyString: "description",
+                            inputValue: document.getElementById(
+                              "edit-task-description"
+                            ).value,
+                          });
+                        }
                         // subtasks
+                        // get length currentTask subtasks array
+                        // get childNodes length of ul with id=edit-subtasks-listitem-container
+                        // const taskBtnSubtasksTotalElement =
+                        //   document.getElementById(
+                        //     `${currentTask.status}-column-selector`
+                        //   ).childNodes[1].childNodes[taskindex]
+                        //     .firstElementChild.childNodes[1].childNodes[2];
+                        // when number of subtasks in edit task modal equal to (==) number of subtasks of view task modal
+                        // compare text of subtasks
+                        // when number of subtasks in edit task modal not equal to (!=) number of subtasks of view task modal
+                        //
                         // status
-                        const editModalStatusElement = document.getElementById(
-                          "edit-current-status"
-                        ).firstElementChild;
 
                         if (
-                          editModalStatusElement.textContent.toLowerCase() !=
-                          currentTask.status
+                          statusNotEqualToEachOther(
+                            editModalStatusElement,
+                            currentTask.status
+                          )
                         ) {
-                          fadeOutEditTaskFadeInViewTask(setTaskModal);
+                          const previousStatus = currentTask.status;
                           // update current status element of view task modal
                           const viewModalStatusElement =
                             document.getElementById(
@@ -445,18 +542,50 @@ export function taskModalComponent() {
 
                           viewModalStatusElement.textContent =
                             editModalStatusElement.textContent;
-                          // update data in local storage
-                          // update current task status
+                          // // update current task status
+                          // currentTask.status =
+                          //   editModalStatusElement.textContent.toLowerCase();
+                          // update data
+                          const filteredArray = currentBoard.columns[
+                            previousStatus
+                          ].filter(function removeItem(obj, index) {
+                            return obj.index != currentTask.index;
+                          });
+                          // update index of obj in filteredArray
+                          filteredArray.forEach((obj, index) => {
+                            obj.index = index;
+                          });
+
+                          currentBoard.columns[previousStatus] = filteredArray;
+                          // update currentTask status and index add task to correct column component
+                          currentTask.status =
+                            editModalStatusElement.textContent.toLowerCase();
+
+                          currentTask.index =
+                            currentBoard.columns[
+                              editModalStatusElement.textContent.toLowerCase()
+                            ].length;
+
+                          // push task to correct column array
+                          currentBoard.columns[
+                            editModalStatusElement.textContent.toLowerCase()
+                          ].push(currentTask);
+
+                          currentUser.boards[currentBoard.index] = currentBoard;
 
                           // render correct column components
                           renderContextForTaskModal.setStateFuncs[
                             `${editModalStatusElement.textContent.toLowerCase()}Column`
-                          ]([]);
+                          ](
+                            currentBoard.columns[
+                              editModalStatusElement.textContent.toLowerCase()
+                            ]
+                          );
+
                           renderContextForTaskModal.setStateFuncs[
-                            `${currentTask.status}Column`
-                          ]([]);
+                            `${previousStatus}Column`
+                          ](currentBoard.columns[previousStatus]);
                         }
-                        return;
                       }
                       // update data in local storage
                       localStorage.setItem(
