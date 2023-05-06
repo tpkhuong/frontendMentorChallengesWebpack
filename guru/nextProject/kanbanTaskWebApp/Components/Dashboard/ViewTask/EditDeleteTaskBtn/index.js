@@ -75,6 +75,11 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
               const currentTask = JSON.parse(
                 localStorage.getItem("currentTask")
               );
+              // save subtasks of current task to local storage for edit task modal
+              localStorage.setItem(
+                "subtasksForEditTaskModal",
+                JSON.stringify(currentTask.subtasks)
+              );
               // make subtasks array for subtasks component
               // using data from currentTask.subtasks
               const subtasksArrayForEditTask = currentTask.subtasks.map(
@@ -86,7 +91,7 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
                   };
                 }
               );
-              console.log("test out edit task modal btn algorithm");
+
               // focus edit-task-modal-selector modal
               // or focus edit-task-title
               // fade view task

@@ -6,6 +6,7 @@ import { BoardTaskRenderContext } from "../Context/index";
 import {
   keyboardModalTabbingAndSpaceKey,
   fadeOutEditTaskFadeInViewTask,
+  debounce,
 } from "../../../utils/sharedHelpers";
 import ViewTask from "../ViewTask";
 
@@ -524,9 +525,18 @@ export function taskModalComponent() {
                         // when number of subtasks in edit task modal equal to (==) number of subtasks of view task modal
                         // compare text of subtasks
                         // when number of subtasks in edit task modal not equal to (!=) number of subtasks of view task modal
-                        //
+                        /**
+                         * ********
+                         * always render subtask component for edit task modal
+                         * in the rare case user remove subtasks which will remove subtasks obj with property isCompleted
+                         * then add subtasks with same text but different value for isCompleted
+                         * ********
+                         * **/
                         // status
-
+                        /**
+                         * focus here: when user type in subtasks of edit task modal, remove a subtask or add a subtask
+                         * our algorithm will update the data in local storage of this item subtasksForEditTaskModal
+                         * **/
                         if (
                           statusNotEqualToEachOther(
                             editModalStatusElement,
@@ -667,9 +677,20 @@ function SubtasksComponent() {
   //   { placeholder: `${arrayOfStrings[0]}`, text: "" },
   //   { placeholder: `${arrayOfStrings[1]}`, text: "" },
   // ];
+  const waitToExecute = debounce(function (event, index) {
+    const subtasksArray = JSON.parse(
+      localStorage.getItem("subtasksForEditTaskModal")
+    );
+    // get subtask obj in array
+    subtasksArray[index].title = event.target.value;
 
+    localStorage.setItem(
+      "subtasksForEditTaskModal",
+      JSON.stringify(subtasksArray)
+    );
+  }, 800);
   const methodObjs = {
-    add: function addSubtask(event, setStateFunc) {
+    add: function addSubtask(event, setStateFunc, removeBtn, typeOfModal) {
       // only allow 8 subtasks
       // when length of arrayOfObjForSubtasks is less than 8 add subtasks
       if (objForComponent.arrayOfObjForSubtasks.length < 8) {
@@ -756,11 +777,28 @@ function SubtasksComponent() {
             arrayOfObjForSubtasks: [...objForComponent.arrayOfObjForSubtasks],
           };
         });
+        // for edit task modal
+        if (typeOfModal == "edit") {
+          const subtasksArray = JSON.parse(
+            localStorage.getItem("subtasksForEditTaskModal")
+          );
 
+          subtasksArray.push({ title: "", isCompleted: false });
+
+          localStorage.setItem(
+            "subtasksForEditTaskModal",
+            JSON.stringify(subtasksArray)
+          );
+        }
         return;
       }
     },
-    remove: function removeSubtask(event, setStateFunc, removeBtn) {
+    remove: function removeSubtask(
+      event,
+      setStateFunc,
+      removeBtn,
+      typeOfModal
+    ) {
       // check length of arrayOfObjForSubtasks
       // only remove subtasks if length is > 1
       if (objForComponent.arrayOfObjForSubtasks.length > 1) {
@@ -787,6 +825,7 @@ function SubtasksComponent() {
           }
         );
         // filter out obj that matches Number(removeBtn.getAttribute("data-subtaskclosebtnindex"))
+
         const arrayWithRemovedObj =
           objForComponent.arrayOfObjForSubtasks.filter(function removeItem(
             obj,
@@ -809,6 +848,32 @@ function SubtasksComponent() {
             arrayOfObjForSubtasks: [...objForComponent.arrayOfObjForSubtasks],
           };
         });
+        // for edit task modal
+        if (typeOfModal == "edit") {
+          const subtasksArray = JSON.parse(
+            localStorage.getItem("subtasksForEditTaskModal")
+          );
+
+          const modifiedArray = subtasksArray.filter(function removeObj(
+            obj,
+            index
+          ) {
+            return (
+              Number(removeBtn.getAttribute("data-subtaskclosebtnindex")) !=
+              index
+            );
+          });
+          // update index of each obj
+
+          modifiedArray.forEach((obj, index) => {
+            obj.index = index;
+          });
+
+          localStorage.setItem(
+            "subtasksForEditTaskModal",
+            JSON.stringify(modifiedArray)
+          );
+        }
       }
     },
   };
@@ -891,7 +956,8 @@ function SubtasksComponent() {
             methodObjs[clickedBtn.getAttribute("data-typeofbtn")](
               event,
               setSubtasks,
-              clickedBtn
+              clickedBtn,
+              typeOfModal
             );
             return;
           }
@@ -901,6 +967,7 @@ function SubtasksComponent() {
         <ul
           id={`${typeOfModal}-subtasks-listitem-container`}
           data-issavechangescreatebtnclicked="false"
+          // onChange={waitToExecute}
           onChange={(event) => {
             //   want to update the text property of obj in arrayOfObjForSubtasks that
             //   matches subtask-1 after taking number of subtask-1 and minus 1 from it
@@ -912,6 +979,10 @@ function SubtasksComponent() {
             //   update text property. when our subtask component re-render the value of text property in obj
             //   will be assign to value of input
             objInArrayOfObjForSubtasks.text = event.target.value;
+            // for edit task modal
+            if (typeOfModal == "edit") {
+              waitToExecute(event, indexNumber);
+            }
           }}
           className={TaskModalStyles[`subtasks-container`]}
         >
