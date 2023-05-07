@@ -517,6 +517,11 @@ export function taskModalComponent() {
                         // subtasks
                         // get length currentTask subtasks array
                         // get childNodes length of ul with id=edit-subtasks-listitem-container
+                        // const taskBtnSubtasksCompletedElement =
+                        //   document.getElementById(
+                        //     `${currentTask.status}-column-selector`
+                        //   ).childNodes[1].childNodes[taskindex]
+                        //     .firstElementChild.childNodes[1].childNodes[0];
                         // const taskBtnSubtasksTotalElement =
                         //   document.getElementById(
                         //     `${currentTask.status}-column-selector`
@@ -533,10 +538,29 @@ export function taskModalComponent() {
                          * ********
                          * **/
                         // status
-                        /**
-                         * focus here: when user type in subtasks of edit task modal, remove a subtask or add a subtask
-                         * our algorithm will update the data in local storage of this item subtasksForEditTaskModal
-                         * **/
+                        const objOfSubtasksData = JSON.parse(
+                          localStorage.getItem("subtasksForEditTaskModal")
+                        );
+
+                        if (objOfSubtasksData.isThereChangeToSubtasks) {
+                          // want to update the subtasks completed digit and subtasks total digit
+                          // of task btn when there is a change
+                          // loop through subtasks array and count number of isCompleted
+                          // update subtasks array of currentTask in local storage
+                          currentTask.subtasks =
+                            objOfSubtasksData.arrayOfSubtasksObj;
+
+                          currentBoard.columns[currentTask.status][
+                            currentTask.index
+                          ].subtasks = objOfSubtasksData.arrayOfSubtasksObj;
+
+                          currentUser.boards[currentBoard.index] = currentBoard;
+                          // re-render subtasks component if isThereChangeToSubtasks is truthy
+                          renderContextForTaskModal.setStateFuncs.subtasksList(
+                            objOfSubtasksData.arrayOfSubtasksObj
+                          );
+                        }
+
                         if (
                           statusNotEqualToEachOther(
                             editModalStatusElement,
@@ -678,16 +702,20 @@ function SubtasksComponent() {
   //   { placeholder: `${arrayOfStrings[1]}`, text: "" },
   // ];
   const waitToExecute = debounce(function (event, index) {
-    const subtasksArray = JSON.parse(
+    const dataObj = JSON.parse(
       localStorage.getItem("subtasksForEditTaskModal")
     );
+    // check if user made changes
+    !dataObj.isThereChangeToSubtasks
+      ? (dataObj.isThereChangeToSubtasks = true)
+      : null;
+
+    const subtasksArray = dataObj.arrayOfSubtasksObj;
+
     // get subtask obj in array
     subtasksArray[index].title = event.target.value;
 
-    localStorage.setItem(
-      "subtasksForEditTaskModal",
-      JSON.stringify(subtasksArray)
-    );
+    localStorage.setItem("subtasksForEditTaskModal", JSON.stringify(dataObj));
   }, 800);
   const methodObjs = {
     add: function addSubtask(event, setStateFunc, removeBtn, typeOfModal) {
@@ -779,15 +807,23 @@ function SubtasksComponent() {
         });
         // for edit task modal
         if (typeOfModal == "edit") {
-          const subtasksArray = JSON.parse(
+          const objForSubtasks = JSON.parse(
             localStorage.getItem("subtasksForEditTaskModal")
           );
+          // check if user made changes
+          !objForSubtasks.isThereChangeToSubtasks
+            ? (objForSubtasks.isThereChangeToSubtasks = true)
+            : null;
+
+          const subtasksArray = objForSubtasks.arrayOfSubtasksObj;
 
           subtasksArray.push({ title: "", isCompleted: false });
 
+          objForSubtasks.arrayOfSubtasksObj = subtasksArray;
+
           localStorage.setItem(
             "subtasksForEditTaskModal",
-            JSON.stringify(subtasksArray)
+            JSON.stringify(objForSubtasks)
           );
         }
         return;
@@ -850,9 +886,15 @@ function SubtasksComponent() {
         });
         // for edit task modal
         if (typeOfModal == "edit") {
-          const subtasksArray = JSON.parse(
+          const objData = JSON.parse(
             localStorage.getItem("subtasksForEditTaskModal")
           );
+          // check if user made changes
+          !objData.isThereChangeToSubtasks
+            ? (objData.isThereChangeToSubtasks = true)
+            : null;
+
+          const subtasksArray = objData.arrayOfSubtasksObj;
 
           const modifiedArray = subtasksArray.filter(function removeObj(
             obj,
@@ -863,15 +905,12 @@ function SubtasksComponent() {
               index
             );
           });
-          // update index of each obj
 
-          modifiedArray.forEach((obj, index) => {
-            obj.index = index;
-          });
+          objData.arrayOfSubtasksObj = modifiedArray;
 
           localStorage.setItem(
             "subtasksForEditTaskModal",
-            JSON.stringify(modifiedArray)
+            JSON.stringify(objData)
           );
         }
       }
@@ -899,6 +938,7 @@ function SubtasksComponent() {
       lengthOfArray: arrayFromEditModal.length,
       arrayOfObjForSubtasks: arrayFromEditModal,
     });
+
     console.log(taskModalStateValue, "taskModalStateValue");
     React.useEffect(() => {
       objForComponent.arrayOfObjForSubtasks = arrayFromEditModal;
@@ -1077,3 +1117,28 @@ function isThereAnEmptySubtask(parentContainerChildNodes) {
 
   return isSubtaskInputEmptyMsgShown;
 }
+
+function recursiveCounter(list, index = 0) {
+  if (index == list.length) {
+    return 0;
+  }
+
+  // get obj
+  const obj = list[index];
+
+  if (obj.isCompleted) {
+    return recursiveCounter(list, index + 1) + 1;
+  }
+  return recursiveCounter(list, index + 1);
+}
+
+const arr = [
+  { title: "hello", isCompleted: true },
+  { title: "hello2", isCompleted: false },
+  { title: "hello3", isCompleted: false },
+  { title: "hello4", isCompleted: true },
+  { title: "hello5", isCompleted: true },
+  { title: "hello6", isCompleted: false },
+  { title: "hello7", isCompleted: true },
+  { title: "hello8", isCompleted: false },
+];

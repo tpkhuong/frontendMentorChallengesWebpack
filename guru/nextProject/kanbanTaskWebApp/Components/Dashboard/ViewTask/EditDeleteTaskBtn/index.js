@@ -78,7 +78,10 @@ export default function EditDeleteTaskBtnAndModal({ children }) {
               // save subtasks of current task to local storage for edit task modal
               localStorage.setItem(
                 "subtasksForEditTaskModal",
-                JSON.stringify(currentTask.subtasks)
+                JSON.stringify({
+                  isThereChangeToSubtasks: false,
+                  arrayOfSubtasksObj: currentTask.subtasks,
+                })
               );
               // make subtasks array for subtasks component
               // using data from currentTask.subtasks
