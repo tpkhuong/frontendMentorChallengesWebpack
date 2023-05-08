@@ -546,6 +546,25 @@ export function taskModalComponent() {
                           // want to update the subtasks completed digit and subtasks total digit
                           // of task btn when there is a change
                           // loop through subtasks array and count number of isCompleted
+                          // subtasks completed digit
+                          const taskBtnSubtasksCompletedElement =
+                            document.getElementById(
+                              `${currentTask.status}-column-selector`
+                            ).childNodes[1].childNodes[taskindex]
+                              .firstElementChild.childNodes[1].childNodes[0];
+                          const numOfCompleted = recursiveCounter(
+                            objOfSubtasksData.arrayOfSubtasksObj
+                          );
+                          taskBtnSubtasksCompletedElement.textContent =
+                            numOfCompleted;
+                          // total digit
+                          const taskBtnSubtasksTotalElement =
+                            document.getElementById(
+                              `${currentTask.status}-column-selector`
+                            ).childNodes[1].childNodes[taskindex]
+                              .firstElementChild.childNodes[1].childNodes[2];
+                          taskBtnSubtasksTotalElement.textContent =
+                            objOfSubtasksData.arrayOfSubtasksObj.length;
                           // update subtasks array of currentTask in local storage
                           currentTask.subtasks =
                             objOfSubtasksData.arrayOfSubtasksObj;
