@@ -246,6 +246,15 @@ export function compareCompletedSubtasksToLengthOfArray({
   lengthOfSubtasksArray,
   status,
 }) {
+  // when the current task has two subtasks, one completed and one not and the status is doing
+  // then user remove one of the subtasks
+  if (
+    totalCompleted === 0 &&
+    lengthOfSubtasksArray === 1 &&
+    status === "doing"
+  ) {
+    return status == "doing";
+  }
   /**
    * if any of the if statements returns true
    * we want to run whenTaskHasOneSubtask or changeCurrentTaskStatusAndRenderColumns

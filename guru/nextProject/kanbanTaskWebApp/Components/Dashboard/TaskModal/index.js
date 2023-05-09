@@ -550,19 +550,22 @@ export function taskModalComponent() {
                           const taskBtnSubtasksCompletedElement =
                             document.getElementById(
                               `${currentTask.status}-column-selector`
-                            ).childNodes[1].childNodes[taskindex]
+                            ).childNodes[1].childNodes[currentTask.index]
                               .firstElementChild.childNodes[1].childNodes[0];
+
                           const numOfCompleted = recursiveCounter(
                             objOfSubtasksData.arrayOfSubtasksObj
                           );
+
                           taskBtnSubtasksCompletedElement.textContent =
                             numOfCompleted;
                           // total digit
                           const taskBtnSubtasksTotalElement =
                             document.getElementById(
                               `${currentTask.status}-column-selector`
-                            ).childNodes[1].childNodes[taskindex]
+                            ).childNodes[1].childNodes[currentTask.index]
                               .firstElementChild.childNodes[1].childNodes[2];
+
                           taskBtnSubtasksTotalElement.textContent =
                             objOfSubtasksData.arrayOfSubtasksObj.length;
                           // update subtasks array of currentTask in local storage

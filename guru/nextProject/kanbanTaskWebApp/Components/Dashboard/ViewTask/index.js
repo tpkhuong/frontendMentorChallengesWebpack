@@ -317,17 +317,47 @@ function Subtask({
             // run doesTasksCompletedMatchTotal then isStatusOfTaskDoing
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
+              console.log("isTaskStatusCorrect", isTaskStatusCorrect);
               if (isTaskStatusCorrect) {
                 // if isTaskStatusCorrect is true
-                // we want to update current task status
-                whenTaskHasOneSubtask({
-                  initialStatus: "todo",
-                  newStatus: "Done",
-                  currentBoard,
-                  currentTask,
-                  removeItem,
-                  renderContext,
-                });
+                // check the status of currentTask
+                if (currentTask.status == "doing") {
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "doing",
+                    changeTo: "Done",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+                  // whenTaskHasOneSubtask({
+                  //   initialStatus: "doing",
+                  //   newStatus: "Done",
+                  //   currentBoard,
+                  //   currentTask,
+                  //   removeItem,
+                  //   renderContext,
+                  // });
+                } else {
+                  // we want to update current task status
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "doing",
+                    changeTo: "Done",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+
+                  // whenTaskHasOneSubtask({
+                  //   initialStatus: "todo",
+                  //   newStatus: "Done",
+                  //   currentBoard,
+                  //   currentTask,
+                  //   removeItem,
+                  //   renderContext,
+                  // });
+                }
               } else {
                 // if isTaskStatusCorrect is false
                 // status does not change since user already changed the status
@@ -527,15 +557,47 @@ function Subtask({
 
             // check length of subtasks
             if (currentTask.subtasks.length == 1) {
+              console.log("isTaskStatusCorrect", isTaskStatusCorrect);
               if (isTaskStatusCorrect) {
-                whenTaskHasOneSubtask({
-                  initialStatus: "done",
-                  newStatus: "Todo",
-                  currentBoard,
-                  currentTask,
-                  removeItem,
-                  renderContext,
-                });
+                // check the status of currentTask
+                if (currentTask.status == "doing") {
+                  console.log("doing one subtasks");
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "doing",
+                    changeTo: "Todo",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+
+                  // whenTaskHasOneSubtask({
+                  //   initialStatus: "doing",
+                  //   newStatus: "Todo",
+                  //   currentBoard,
+                  //   currentTask,
+                  //   removeItem,
+                  //   renderContext,
+                  // });
+                } else {
+                  changeCurrentTaskStatusAndRenderColumns({
+                    changeFrom: "doing",
+                    changeTo: "Todo",
+                    renderContext,
+                    removeItem,
+                    currentBoard,
+                    currentTask,
+                  });
+
+                  // whenTaskHasOneSubtask({
+                  //   initialStatus: "done",
+                  //   newStatus: "Todo",
+                  //   currentBoard,
+                  //   currentTask,
+                  //   removeItem,
+                  //   renderContext,
+                  // });
+                }
               } else {
                 // if isTaskStatusCorrect is false
                 // status does not change since user already changed the status
