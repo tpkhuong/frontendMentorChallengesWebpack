@@ -39,7 +39,25 @@ export default function Columns({
             const currentBoard = JSON.parse(
               localStorage.getItem("currentBoard")
             );
-
+            // one solution for keyboard enter/space bar
+            // when user first hit enter/space key on task btn
+            // select that task
+            /**
+             * *******
+             * **/
+            // we want to keep track of when user/how many time user hit enter/space key on task btn
+            // hit enter/space then hitting enter/space render view task modal with data of task
+            // when user click selected task again render view task modal with data of task clicked
+            // similar algorithm for touch devices
+            /**
+             * for a mouse thinking about using mouseup instead of click listener
+             * keep track of dragging event
+             * if there is no drag render view task modal
+             * if there is a drag event run drag algorithm
+             * **/
+            /**
+             * *******
+             * **/
             if (event.target.closest("BUTTON")) {
               const clickedTask = event.target.closest("BUTTON");
               const btnStatus = clickedTask.getAttribute("data-typeofstatus");

@@ -15,6 +15,10 @@ export default function TaskBtn({
       data-orderindex={position}
       data-typeofstatus={status}
       className={TaskBtnStyles[`task-btn`]}
+      draggable="true"
+      onDrag={(event) => {
+        console.log(event.target, "this is drag");
+      }}
     >
       <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
       <div className={TaskBtnStyles[`subtasks-container`]}>

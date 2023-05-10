@@ -8,6 +8,17 @@
   /* min-height: 748px; */
   /* overflow: scroll; */
 }
+
+@media screen and (max-width: 23.625rem) {
+  /* selecting the todo, doing or done columns container element */
+  /* scroll-snap-type: x mandatory; is declared on parent element of element with class .column-container */
+  /* the element is in the messageColumnsContainer component with calls columns-message-container */
+  .column-container,
+  .column-container > [id*="-column-selector"] {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+}
 /* tablet */
 
 @media screen and (min-width: 48rem) {

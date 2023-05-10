@@ -25,6 +25,18 @@
   gap: 24px; */
 }
 
+/* just for mobile scroll-snap */
+
+@media screen and (max-width: 23.625rem) {
+  .columns-message-container {
+    scroll-snap-type: x mandatory;
+  }
+  .new-column-btn {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+}
+
 .columns-message-container [data-columncontainerstyleattr],
 .columns-message-container .new-column-btn {
   min-width: 343px;
