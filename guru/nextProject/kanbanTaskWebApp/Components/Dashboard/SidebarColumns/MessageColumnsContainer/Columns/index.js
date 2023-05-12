@@ -34,68 +34,74 @@ export default function Columns({
           id="columns-container-selector"
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
-          onClick={(event) => {
-            // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-            const currentBoard = JSON.parse(
-              localStorage.getItem("currentBoard")
-            );
-            // one solution for keyboard enter/space bar
-            // when user first hit enter/space key on task btn
-            // select that task
-            /**
-             * *******
-             * **/
-            // we want to keep track of when user/how many time user hit enter/space key on task btn
-            // hit enter/space then hitting enter/space render view task modal with data of task
-            // when user click selected task again render view task modal with data of task clicked
-            // similar algorithm for touch devices
-            /**
-             * for a mouse thinking about using mouseup instead of click listener
-             * keep track of dragging event
-             * if there is no drag render view task modal
-             * if there is a drag event run drag algorithm
-             * **/
-            /**
-             * *******
-             * **/
-            if (event.target.closest("BUTTON")) {
-              const clickedTask = event.target.closest("BUTTON");
-              const btnStatus = clickedTask.getAttribute("data-typeofstatus");
-              const position = clickedTask.getAttribute("data-orderindex");
+          /**
+           * uncomment this later
+           * **/
+          // onClick={(event) => {
+          //   // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+          //   const currentBoard = JSON.parse(
+          //     localStorage.getItem("currentBoard")
+          //   );
+          //   // one solution for keyboard enter/space bar
+          //   // when user first hit enter/space key on task btn
+          //   // select that task
+          //   /**
+          //    * *******
+          //    * **/
+          //   // we want to keep track of when user/how many time user hit enter/space key on task btn
+          //   // hit enter/space then hitting enter/space render view task modal with data of task
+          //   // when user click selected task again render view task modal with data of task clicked
+          //   // similar algorithm for touch devices
+          //   /**
+          //    * for a mouse thinking about using mouseup instead of click listener
+          //    * keep track of dragging event
+          //    * if there is no drag render view task modal
+          //    * if there is a drag event run drag algorithm
+          //    * **/
+          //   /**
+          //    * *******
+          //    * **/
+          //   if (event.target.closest("BUTTON")) {
+          //     const clickedTask = event.target.closest("BUTTON");
+          //     const btnStatus = clickedTask.getAttribute("data-typeofstatus");
+          //     const position = clickedTask.getAttribute("data-orderindex");
 
-              const currentTask = currentBoard.columns[btnStatus][position];
-              const {
-                title,
-                description,
-                status,
-                isSelected,
-                index,
-                subtasks,
-              } = currentTask;
+          //     const currentTask = currentBoard.columns[btnStatus][position];
+          //     const {
+          //       title,
+          //       description,
+          //       status,
+          //       isSelected,
+          //       index,
+          //       subtasks,
+          //     } = currentTask;
 
-              localStorage.setItem("currentTask", JSON.stringify(currentTask));
+          //     localStorage.setItem("currentTask", JSON.stringify(currentTask));
 
-              // call viewTask stateFunc
-              renderContextColumnsComponent.stateFuncsForModals.viewTask(
-                (prevValues) => {
-                  return {
-                    ...prevValues,
-                    renderViewTask: true,
-                    title,
-                    description,
-                    status,
-                    isSelected,
-                    index,
-                    subtasks,
-                  };
-                }
-              );
-              // focus view task modal
-              setTimeout(() => {
-                document.getElementById("view-task-modal-selector").focus();
-              }, 80);
-            }
-          }}
+          //     // call viewTask stateFunc
+          //     renderContextColumnsComponent.stateFuncsForModals.viewTask(
+          //       (prevValues) => {
+          //         return {
+          //           ...prevValues,
+          //           renderViewTask: true,
+          //           title,
+          //           description,
+          //           status,
+          //           isSelected,
+          //           index,
+          //           subtasks,
+          //         };
+          //       }
+          //     );
+          //     // focus view task modal
+          //     setTimeout(() => {
+          //       document.getElementById("view-task-modal-selector").focus();
+          //     }, 80);
+          //   }
+          // }}
+          /**
+           * uncomment this later
+           * **/
         >
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns

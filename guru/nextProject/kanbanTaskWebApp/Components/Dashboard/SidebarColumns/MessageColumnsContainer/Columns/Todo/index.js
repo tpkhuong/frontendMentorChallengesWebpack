@@ -223,7 +223,25 @@ export default function TodoColumn({ children, todoColumnArray }) {
   const renderContextTodoColumn = React.useContext(BoardTaskRenderContext);
 
   renderContextTodoColumn.setStateFuncs.todoColumn = setTodoColumn;
-
+  /**
+   * another idea for mouse event have a variable keep track of how long the user is holding down left click
+   * mousedown will start timer mouseup will check timer
+   * mouseup does not fire when left mouse btn is held down and user drag item
+   * **/
+  // thinking of adding mouseup, keyup and touch to task btn container
+  // for each column component
+  // for mouseup algorithm we will have a variable that keep track of
+  // drag event. when drag event variable is true we dont render view task
+  // when drag event variable is false we render view task
+  // in our drag event algorithm we will set drag event variable to true
+  // when user drag task btn
+  // keyup and touch will have similar algorithm
+  // when keyup or touch fires on a task btn
+  // first time we select that task for drag and drop
+  // second time keyup or touch fires on the same task btn that was selected
+  // render view task
+  // also keep track of selected task btn position when task btn is placed
+  // at a new position then we render view task modal
   return (
     <React.Fragment>
       {todoArray && todoArray.length >= 0 && (
@@ -231,6 +249,30 @@ export default function TodoColumn({ children, todoColumnArray }) {
           id="todo-column-selector"
           data-columncontainerstyleattr=""
           className={TodoColumnStyles[`todo-quantity-task-container`]}
+          onMouseDown={(event) => {
+            // get status and position of target that activate mousedown
+            const btnClick = event.target.closest("BUTTON");
+            if (btnClick) {
+              console.log(event.target);
+            }
+            // const time = new Date().getMilliseconds();
+            // localStorage.setItem(
+            //   "timeUserPressedLeftClick",
+            //   JSON.stringify(time)
+            // );
+          }}
+          onMouseUp={(event) => {
+            // get status and position of target that activate mouseup
+            // when both equal each other render view task modal
+            // because ondrag will only fire when user drag item
+            console.log(event.target);
+            const btnClick = event.target.closest("BUTTON");
+            // if (btnClick) {
+            // }
+            // console.log(
+            //   JSON.parse(localStorage.getItem("timeUserPressedLeftClick"))
+            // );
+          }}
         >
           <ColumnTitle
             quantity={`${todoArray.length}`}

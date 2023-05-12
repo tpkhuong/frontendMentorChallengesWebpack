@@ -8,6 +8,7 @@ export default function TaskBtn({
   status,
   position,
 }) {
+  // apply drag event to each task btns
   console.log(completed, "completed");
   console.log(status, "status");
   return (
@@ -17,7 +18,7 @@ export default function TaskBtn({
       className={TaskBtnStyles[`task-btn`]}
       draggable="true"
       onDrag={(event) => {
-        console.log(event.target, "this is drag");
+        console.log("this is drag");
       }}
     >
       <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
