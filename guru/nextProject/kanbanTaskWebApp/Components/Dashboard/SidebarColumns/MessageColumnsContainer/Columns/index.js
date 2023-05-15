@@ -103,6 +103,31 @@ export default function Columns({
            * uncomment this later
            * **/
         >
+          {/* have a button here with visually hidden that will give instructions on what happens when user hit enter or space key*/}
+          {/* on a task btn when user navigate to that button using keyboard*/}
+          <div className={ColumnsStyles[`assistive-text-container`]}>
+            <button
+              className={ColumnsStyles[`assistive-text-focus-btn`]}
+              aria-describedby=""
+            ></button>
+            <div className={ColumnsStyles[`descrition-container`]} id="">
+              <p className={ColumnsStyles[`assistive-description`]}>
+                Drag and Drop Instructions
+              </p>
+              <p className={ColumnsStyles[`assistive-description`]}>
+                Pressing space key or enter key while focus is on a Task button
+                will select that button for drag and drop
+              </p>
+              <p className={ColumnsStyles[`assistive-description`]}>
+                If the space key or enter key is pressed and the Task button is
+                selected for drag and drop will open a modal.
+              </p>
+              <p className={ColumnsStyles[`assistive-description`]}>
+                The modal will have the title, description, subtasks and current
+                status of the selected Task.
+              </p>
+            </div>
+          </div>
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns
           </h2>
