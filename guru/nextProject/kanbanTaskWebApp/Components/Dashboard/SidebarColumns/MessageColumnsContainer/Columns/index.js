@@ -1,6 +1,10 @@
 import React from "react";
 import ColumnsStyles from "./Columns.module.css";
 import { BoardTaskRenderContext } from "../../../Context/index";
+import {
+  selectTaskBtn,
+  applyTabIndexToClickedTaskBtn,
+} from "./columnsHelpers.js";
 import TodoColumn from "./Todo";
 import DoingColumn from "./Doing";
 import DoneColumn from "./Done";
@@ -34,6 +38,17 @@ export default function Columns({
           id="columns-container-selector"
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
+          onKeyDown={(event) => {
+            selectTaskBtn({ event });
+          }}
+          onMouseDown={(event) => {
+            selectTaskBtn({ event });
+            applyTabIndexToClickedTaskBtn({ event });
+          }}
+          onTouchStart={(event) => {
+            selectTaskBtn({ event });
+            applyTabIndexToClickedTaskBtn({ event });
+          }}
           /**
            * uncomment this later
            * **/
@@ -103,30 +118,32 @@ export default function Columns({
            * uncomment this later
            * **/
         >
-          {/* have a button here with visually hidden that will give instructions on what happens when user hit enter or space key*/}
-          {/* on a task btn when user navigate to that button using keyboard*/}
           <div className={ColumnsStyles[`assistive-text-container`]}>
-            <button
+            <p className={ColumnsStyles[`assistive-description`]}>
+              Drag and Drop Instructions
+            </p>
+            <p className={ColumnsStyles[`assistive-description`]}>
+              Pressing space key or enter key while focus is on a Task button
+              will select that button for drag and drop
+            </p>
+            <p className={ColumnsStyles[`assistive-description`]}>
+              If the space key or enter key is pressed and the Task button is
+              selected for drag and drop will open a modal.
+            </p>
+            <p className={ColumnsStyles[`assistive-description`]}>
+              The modal will have the title, description, subtasks and current
+              status of the selected Task.
+            </p>
+            {/* <button
               className={ColumnsStyles[`assistive-text-focus-btn`]}
-              aria-describedby=""
+              aria-describedby="keyboard-assistive-text"
             ></button>
-            <div className={ColumnsStyles[`descrition-container`]} id="">
-              <p className={ColumnsStyles[`assistive-description`]}>
-                Drag and Drop Instructions
-              </p>
-              <p className={ColumnsStyles[`assistive-description`]}>
-                Pressing space key or enter key while focus is on a Task button
-                will select that button for drag and drop
-              </p>
-              <p className={ColumnsStyles[`assistive-description`]}>
-                If the space key or enter key is pressed and the Task button is
-                selected for drag and drop will open a modal.
-              </p>
-              <p className={ColumnsStyles[`assistive-description`]}>
-                The modal will have the title, description, subtasks and current
-                status of the selected Task.
-              </p>
-            </div>
+            <div
+              className={ColumnsStyles[`descrition-container`]}
+              id="keyboard-assistive-text"
+            >
+              
+            </div> */}
           </div>
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns

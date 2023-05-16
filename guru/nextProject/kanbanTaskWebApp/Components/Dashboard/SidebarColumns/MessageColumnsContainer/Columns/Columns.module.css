@@ -9,6 +9,19 @@
   /* overflow: scroll; */
 }
 
+/* assistive text container */
+
+.assistive-text-container {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
 @media screen and (max-width: 23.625rem) {
   /* selecting the todo, doing or done columns container element */
   /* scroll-snap-type: x mandatory; is declared on parent element of element with class .column-container */
