@@ -1,10 +1,7 @@
 import React from "react";
 import ColumnsStyles from "./Columns.module.css";
 import { BoardTaskRenderContext } from "../../../Context/index";
-import {
-  selectTaskBtn,
-  applyTabIndexToClickedTaskBtn,
-} from "./columnsHelpers.js";
+import { mousedownOnTaskBtn } from "./columnsHelpers.js";
 import TodoColumn from "./Todo";
 import DoingColumn from "./Doing";
 import DoneColumn from "./Done";
@@ -14,6 +11,39 @@ export default function Columns({
   columnsIsCurrentBoardEmpty,
   columnsObjData,
 }) {
+  // obj methods for keyboard
+  const keyboardMethods = {
+    Enter: function ({ event }) {
+      console.log("enter", event);
+    },
+    Space: function ({ event }) {
+      console.log("space", event);
+    },
+    ArrowLeft: function ({ event }) {
+      console.log("arrowleft", event);
+    },
+    ArrowUp: function ({ event }) {
+      console.log("arrowup", event);
+    },
+    ArrowRight: function ({ event }) {
+      console.log("arrowright", event);
+    },
+    ArrowDown: function ({ event }) {
+      console.log("arrowdown", event);
+    },
+    PageUp: function ({ event }) {
+      console.log("pageup", event);
+    },
+    PageDown: function ({ event }) {
+      console.log("pagedown", event);
+    },
+    Home: function ({ event }) {
+      console.log("home", event);
+    },
+    End: function ({ event }) {
+      console.log("end", event);
+    },
+  };
   const renderContextColumnsComponent = React.useContext(
     BoardTaskRenderContext
   );
@@ -39,15 +69,20 @@ export default function Columns({
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
           onKeyDown={(event) => {
-            selectTaskBtn({ event });
+            // only keydown will select
+            // selectTaskBtn({ event });
+            if (keyboardMethods[event.code]) {
+              keyboardMethods[event.code]({ event });
+            }
           }}
           onMouseDown={(event) => {
-            selectTaskBtn({ event });
-            applyTabIndexToClickedTaskBtn({ event });
+            mousedownOnTaskBtn({ event });
+            // selectTaskBtn({ event });
+            // applyTabIndexToClickedTaskBtn({ event });
           }}
           onTouchStart={(event) => {
-            selectTaskBtn({ event });
-            applyTabIndexToClickedTaskBtn({ event });
+            // selectTaskBtn({ event });
+            // applyTabIndexToClickedTaskBtn({ event });
           }}
           /**
            * uncomment this later
@@ -120,15 +155,15 @@ export default function Columns({
         >
           <div className={ColumnsStyles[`assistive-text-container`]}>
             <p className={ColumnsStyles[`assistive-description`]}>
-              Drag and Drop Instructions
+              Drag and Drop and open view modal Instructions.
             </p>
             <p className={ColumnsStyles[`assistive-description`]}>
-              Pressing space key or enter key while focus is on a Task button
-              will select that button for drag and drop
+              Pressing space key while focus is on a Task button will select
+              that button for drag and drop.
             </p>
             <p className={ColumnsStyles[`assistive-description`]}>
-              If the space key or enter key is pressed and the Task button is
-              selected for drag and drop will open a modal.
+              Pressing enter key while focus is on a Task button will open a
+              modal.
             </p>
             <p className={ColumnsStyles[`assistive-description`]}>
               The modal will have the title, description, subtasks and current

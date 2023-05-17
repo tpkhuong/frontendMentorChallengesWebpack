@@ -7,15 +7,18 @@ export default function TaskBtn({
   total,
   status,
   position,
+  selected,
+  tab,
 }) {
   // apply drag event to each task btns
   console.log(completed, "completed");
   console.log(status, "status");
   return (
     <React.Fragment>
-      {position == 0 ? (
+      {selected ? (
         <button
-          tabIndex="0"
+          tabIndex={tab}
+          id="drag-drop-selected"
           data-orderindex={position}
           data-typeofstatus={status}
           className={TaskBtnStyles[`task-btn`]}
@@ -36,7 +39,7 @@ export default function TaskBtn({
         </button>
       ) : (
         <button
-          tabIndex="-1"
+          tabIndex={tab}
           data-orderindex={position}
           data-typeofstatus={status}
           className={TaskBtnStyles[`task-btn`]}

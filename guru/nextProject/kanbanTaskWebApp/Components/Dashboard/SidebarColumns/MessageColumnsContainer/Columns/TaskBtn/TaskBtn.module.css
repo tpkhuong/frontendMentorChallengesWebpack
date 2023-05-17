@@ -28,6 +28,7 @@
 
 .task-btn[id="drag-drop-selected"][tabIndex="0"] {
   box-shadow: var(--task-btn-shadow) var(--color-purple-secondary);
+  transform: rotateZ(3deg);
 }
 
 .task-btn {

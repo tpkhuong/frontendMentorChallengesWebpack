@@ -346,6 +346,7 @@ export function taskModalComponent() {
                           title: titleInput,
                           description: descriptionInput,
                           status,
+                          tabIndex: taskIndex == 0 ? "0" : "-1",
                           isSelected: false,
                           index: taskIndex,
                           subtasks: arrayOfSubtaskObjs,
@@ -613,7 +614,11 @@ export function taskModalComponent() {
                           });
 
                           currentBoard.columns[previousStatus] = filteredArray;
-                          // update currentTask status and index add task to correct column component
+                          // when status change we want to update tabIndex
+                          // previousStatus column the first item in that array column will have tabindex "0"
+                          currentBoard.columns[previousStatus][0].tabIndex =
+                            "0";
+
                           currentTask.status =
                             editModalStatusElement.textContent.toLowerCase();
 
@@ -621,6 +626,19 @@ export function taskModalComponent() {
                             currentBoard.columns[
                               editModalStatusElement.textContent.toLowerCase()
                             ].length;
+
+                          // newStatus column its first item will have tabindex "-1"
+                          // update currentTask status and index add task to correct column component
+
+                          if (
+                            currentBoard.columns[
+                              editModalStatusElement.textContent.toLowerCase()
+                            ].length > 1
+                          ) {
+                            currentBoard.columns[
+                              editModalStatusElement.textContent.toLowerCase()
+                            ][0].tabIndex = "-1";
+                          }
 
                           // push task to correct column array
                           currentBoard.columns[

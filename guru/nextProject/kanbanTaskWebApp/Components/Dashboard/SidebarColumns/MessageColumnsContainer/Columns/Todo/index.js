@@ -249,30 +249,30 @@ export default function TodoColumn({ children, todoColumnArray }) {
           id="todo-column-selector"
           data-columncontainerstyleattr=""
           className={TodoColumnStyles[`todo-quantity-task-container`]}
-          onMouseDown={(event) => {
-            // get status and position of target that activate mousedown
-            const btnClick = event.target.closest("BUTTON");
-            if (btnClick) {
-              console.log(event.target);
-            }
-            // const time = new Date().getMilliseconds();
-            // localStorage.setItem(
-            //   "timeUserPressedLeftClick",
-            //   JSON.stringify(time)
-            // );
-          }}
-          onMouseUp={(event) => {
-            // get status and position of target that activate mouseup
-            // when both equal each other render view task modal
-            // because ondrag will only fire when user drag item
-            console.log(event.target);
-            const btnClick = event.target.closest("BUTTON");
-            // if (btnClick) {
-            // }
-            // console.log(
-            //   JSON.parse(localStorage.getItem("timeUserPressedLeftClick"))
-            // );
-          }}
+          // onMouseDown={(event) => {
+          //   // get status and position of target that activate mousedown
+          //   const btnClick = event.target.closest("BUTTON");
+          //   if (btnClick) {
+          //     console.log(event.target);
+          //   }
+          //   // const time = new Date().getMilliseconds();
+          //   // localStorage.setItem(
+          //   //   "timeUserPressedLeftClick",
+          //   //   JSON.stringify(time)
+          //   // );
+          // }}
+          // onMouseUp={(event) => {
+          //   // get status and position of target that activate mouseup
+          //   // when both equal each other render view task modal
+          //   // because ondrag will only fire when user drag item
+          //   console.log(event.target);
+          //   const btnClick = event.target.closest("BUTTON");
+          //   // if (btnClick) {
+          //   // }
+          //   // console.log(
+          //   //   JSON.parse(localStorage.getItem("timeUserPressedLeftClick"))
+          //   // );
+          // }}
         >
           <ColumnTitle
             quantity={`${todoArray.length}`}
@@ -291,6 +291,8 @@ export default function TodoColumn({ children, todoColumnArray }) {
               return (
                 <li key={Math.random() * index}>
                   <TaskBtn
+                    selected={obj.isSelected}
+                    tab={obj.tabIndex}
                     position={index}
                     status={obj.status}
                     completed={`${obj.subtasks.reduce(

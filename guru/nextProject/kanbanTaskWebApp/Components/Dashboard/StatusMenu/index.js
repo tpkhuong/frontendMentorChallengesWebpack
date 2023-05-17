@@ -107,6 +107,7 @@ export default function StatusMenu({
                           }
                         )
                       : [];
+
                   console.log(removeTaskFromArray);
 
                   // update arrays in columns obj of current board
@@ -120,11 +121,15 @@ export default function StatusMenu({
                     board.columns[previousStatus].forEach((obj, index) => {
                       obj.index = index;
                     });
+                    board.columns[previousStatus][0].tabIndex = "0";
                   }
                   // update current Task index to match length of new status columns array
                   task.index = board.columns[newStatus].length;
                   // change status property of currentTask in local storage
                   task.status = newStatus;
+                  if (board.columns[newStatus].length > 0) {
+                    board.columns[newStatus][0].tabIndex = "-1";
+                  }
                   // one using newStatus. add task obj to status array using newStatus
                   // update correct status arrays
                   board.columns[newStatus].push(task);
