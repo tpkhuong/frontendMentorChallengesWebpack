@@ -1,7 +1,7 @@
 export function mousedownOnTaskBtn({ event }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));
-  const task = JSON.parse(localStorage.getItem("currentTask"));
+
   const clickedBtn = event.target.closest("BUTTON");
   if (clickedBtn) {
     // check if there is a currently selected task btn for drag and drop
@@ -11,67 +11,275 @@ export function mousedownOnTaskBtn({ event }) {
     const currentFocusedElement = document.activeElement;
     // get status of clicked task btn
     const statusOfClickedBtn = clickedBtn.getAttribute("data-typeofstatus");
+    // order index of click btn
+    const orderIndexOfClickedBtn = Number(
+      clickedBtn.getAttribute("data-orderindex")
+    );
     // check if current focus element is a task btn
     const isTaskBtn = currentFocusedElement.getAttribute("data-typeofstatus");
+    const statusOfCurrentFocusedTaskBtn = isTaskBtn;
+    // order index of focused element
+    const orderIndexOfFocusedBtn = Number(
+      currentFocusedElement.getAttribute("data-orderindex")
+    );
+
+    const isTabIndexZeroAssignedToTaskBtn = document.querySelector(
+      "#columns-container-selector [tabindex='0']"
+    );
+    // isTabIndexZeroAssignedToTaskBtn
+    const statusOfTaskBtnWithTabIndexZero =
+      isTabIndexZeroAssignedToTaskBtn.getAttribute("data-typeofstatus");
+
+    const orderIndexOfTaskBtnWithTabIndexZero = Number(
+      isTabIndexZeroAssignedToTaskBtn.getAttribute("data-orderindex")
+    );
 
     if (!currentlyDragDropSelected) {
       //   console.log(clickedBtn);
       //   console.log(currentFocusedElement);
-      if (
-        isTaskBtn &&
-        isTaskBtn == statusOfClickedBtn &&
-        currentFocusedElement == clickedBtn
-      ) {
-        console.log("same btn clicked");
-        return;
+      if (!isTaskBtn) {
+        // with our changed algorithm, doesn't matter the status of the task btn clicked or the current task btn
+        // that has tabindex "0" we want to change the tabindex of the clicked task btn to "0"
+        // the task btn that has tabindex "0" chnage it to "-1"
+        if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+        // swap tabindex and update tabindex in local storage
+        swapTabIndex({
+          previousSelected: isTabIndexZeroAssignedToTaskBtn,
+          selected: clickedBtn,
+        });
+
+        localStorageSwapIndex({
+          previousSelected:
+            board.columns[statusOfTaskBtnWithTabIndexZero][
+              orderIndexOfTaskBtnWithTabIndexZero
+            ],
+          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+        });
+        // // when the focused element is not a task btn
+        // // check if the clicked btn tabIndex is "0"
+        // if (
+        //   clickedBtn.getAttribute("tabIndex") == "0" &&
+        //   clickedBtn.getAttribute("data-orderindex") != "0"
+        // ) {
+        //   clickedBtn.focus();
+        //   return;
+        // }
+
+        // if (
+        //   clickedBtn.getAttribute("tabIndex") == "0" &&
+        //   clickedBtn.getAttribute("data-orderindex") == "0"
+        // ) {
+        // }
+
+        // if (clickedBtn.getAttribute("tabIndex") == "-1") {
+        //   // task btn with tabIndex = "0"
+        //   // console.log(statusOfClickedBtn);
+        //   // console.log(
+        //   //   Number(
+        //   //     document
+        //   //       .querySelector(
+        //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+        //   //       )
+        //   //       .getAttribute("data-orderindex")
+        //   //   )
+        //   // );
+        //   // console.log(
+        //   //   document.querySelector(
+        //   //     `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+        //   //   )
+        //   // );
+        //   swapTabIndex({
+        //     previousSelected: document.querySelector(
+        //       `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
+        //     ),
+        //     selected: clickedBtn,
+        //   });
+
+        //   localStorageSwapIndex({
+        //     previousSelected:
+        //       board.columns[statusOfClickedBtn][
+        //         Number(
+        //           document
+        //             .querySelector(
+        //               `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+        //             )
+        //             .getAttribute("data-orderindex")
+        //         )
+        //       ],
+        //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+        //   });
+
+        //   // board.columns[statusOfClickedBtn][
+        //   //   Number(
+        //   //     document
+        //   //       .querySelector(
+        //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+        //   //       )
+        //   //       .getAttribute("data-orderindex")
+        //   //   )
+        //   // ].tabIndex = "-1";
+
+        //   // document
+        //   //   .querySelector(
+        //   //     `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
+        //   //   )
+        //   //   .setAttribute("tabIndex", "-1");
+
+        //   // clickedBtn.setAttribute("tabIndex", "0");
+        //   // // update tabIndex of clicked Btn obj in local storage
+        //   // board.columns[statusOfClickedBtn][orderIndexOfClickedBtn].tabIndex =
+        //   //   "0";
+
+        //   clickedBtn.focus();
+        // }
       }
+      // current focused element is a task btn
+      if (isTaskBtn) {
+        if (clickedBtn == currentFocusedElement) return;
+        // we know the current focused element is a task btn we can swap tabindex and update tabindex in local storage
+        // swap tabindex and update tabindex in local storage
+        swapTabIndex({
+          previousSelected: currentFocusedElement,
+          selected: clickedBtn,
+        });
 
-      if (
-        isTaskBtn &&
-        isTaskBtn == statusOfClickedBtn &&
-        currentFocusedElement != clickedBtn
-      ) {
-        console.log("different btn clicked");
-        // assign tabindex "0" to clicked btn
-        // assign tabindex "-1" to document.activeElement
-        clickedBtn.setAttribute("tabindex", "0");
-        currentFocusedElement.setAttribute("tabindex", "-1");
+        localStorageSwapIndex({
+          previousSelected:
+            board.columns[statusOfCurrentFocusedTaskBtn][
+              orderIndexOfFocusedBtn
+            ],
+          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+        });
       }
+      // if (
+      //   isTaskBtn &&
+      //   isTaskBtn == statusOfClickedBtn &&
+      //   currentFocusedElement == clickedBtn
+      // ) {
+      //   console.log("same btn clicked");
+      //   return;
+      // }
 
-      if (isTaskBtn && isTaskBtn != statusOfClickedBtn) {
-        console.log(clickedBtn);
-        console.log(currentFocusedElement);
-        const previousStatus = isTaskBtn;
-        //   const clickedBtnStatus = statusOfClickedBtn;
+      // if (
+      //   isTaskBtn &&
+      //   isTaskBtn == statusOfClickedBtn &&
+      //   currentFocusedElement != clickedBtn
+      // ) {
+      //   console.log("different btn clicked");
 
-        if (clickedBtn.getAttribute("tabIndex") == "-1") {
-          clickedBtn.setAttribute("tabIndex", "0");
+      //   swapTabIndex({
+      //     previousSelected: currentFocusedElement,
+      //     selected: clickedBtn,
+      //   });
 
-          clickedBtn.parentElement.parentElement.childNodes[0].firstElementChild.setAttribute(
-            "tabIndex",
-            "-1"
-          );
-          clickedBtn.focus();
-        }
+      //   localStorageSwapIndex({
+      //     previousSelected:
+      //       board.columns[statusOfClickedBtn][orderIndexOfFocusedBtn],
+      //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //   });
 
-        if (
-          currentFocusedElement.parentElement.parentElement.childElementCount ==
-          1
-        ) {
-          return;
-        }
+      //   // currentFocusedElement.setAttribute("tabindex", "-1");
+      //   // // update tabIndex of current focus task btn obj in local storage
+      //   // board.columns[statusOfClickedBtn][orderIndexOfFocusedBtn].tabIndex =
+      //   //   "-1";
+      //   // // assign tabindex "0" to clicked btn
+      //   // // assign tabindex "-1" to document.activeElement
+      //   // clickedBtn.setAttribute("tabindex", "0");
+      //   // // update tabIndex of clicked Btn obj in local storage
+      //   // board.columns[statusOfClickedBtn][orderIndexOfClickedBtn].tabIndex =
+      //   //   "0";
+      // }
 
-        if (
-          currentFocusedElement.parentElement.parentElement.childElementCount >
-          1
-        ) {
-          currentFocusedElement.setAttribute("tabIndex", "-1");
-          currentFocusedElement.parentElement.parentElement.childNodes[0].firstElementChild.setAttribute(
-            "tabIndex",
-            "0"
-          );
-        }
-      }
+      // if (isTaskBtn && isTaskBtn != statusOfClickedBtn) {
+      //   console.log(clickedBtn);
+      //   console.log(currentFocusedElement);
+      //   const previousStatus = isTaskBtn;
+      //   // const clickedBtnStatus = statusOfClickedBtn;
+
+      //   if (clickedBtn.getAttribute("tabIndex") == "-1") {
+      //     swapTabIndex({
+      //       previousSelected:
+      //         clickedBtn.parentElement.parentElement.childNodes[0]
+      //           .firstElementChild,
+      //       selected: clickedBtn,
+      //     });
+
+      //     localStorageSwapIndex({
+      //       previousSelected: board.columns[statusOfClickedBtn][0],
+      //       selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //     });
+
+      //     // clickedBtn.parentElement.parentElement.childNodes[0].firstElementChild.setAttribute(
+      //     //   "tabIndex",
+      //     //   "-1"
+      //     // );
+
+      //     // board.columns[statusOfClickedBtn][0].tabIndex = "-1";
+
+      //     // clickedBtn.setAttribute("tabIndex", "0");
+
+      //     // board.columns[statusOfClickedBtn][orderIndexOfClickedBtn].tabIndex =
+      //     //   "0";
+
+      //     clickedBtn.focus();
+      //   }
+
+      //   if (
+      //     currentFocusedElement.parentElement.parentElement.childElementCount ==
+      //     1
+      //   ) {
+      //     localStorage.setItem("currentBoard", JSON.stringify(board));
+      //     user.boards[board.index] = board;
+      //     localStorage.setItem("currentUser", JSON.stringify(user));
+      //     clickedBtn.focus();
+      //     return;
+      //   }
+
+      //   if (
+      //     currentFocusedElement.parentElement.parentElement.childElementCount >
+      //     1
+      //   ) {
+      //     if (
+      //       currentFocusedElement.getAttribute("tabIndex") == "0" &&
+      //       orderIndexOfFocusedBtn == 0
+      //     ) {
+      //       localStorage.setItem("currentBoard", JSON.stringify(board));
+      //       user.boards[board.index] = board;
+      //       localStorage.setItem("currentUser", JSON.stringify(user));
+      //       clickedBtn.focus();
+      //       return;
+      //     }
+
+      //     swapTabIndex({
+      //       previousSelected: currentFocusedElement,
+      //       selected:
+      //         currentFocusedElement.parentElement.parentElement.childNodes[0]
+      //           .firstElementChild,
+      //     });
+
+      //     localStorageSwapIndex({
+      //       previousSelected: board.columns[isTaskBtn][orderIndexOfFocusedBtn],
+      //       selected: board.columns[isTaskBtn][0],
+      //     });
+
+      //     // currentFocusedElement.setAttribute("tabIndex", "-1");
+
+      //     // board.columns[isTaskBtn][orderIndexOfFocusedBtn].tabIndex = "-1";
+
+      //     // currentFocusedElement.parentElement.parentElement.childNodes[0].firstElementChild.setAttribute(
+      //     //   "tabIndex",
+      //     //   "0"
+      //     // );
+
+      //     // board.columns[isTaskBtn][0].tabIndex = "0";
+      //   }
+      // }
+      console.log("before we save to local storage");
+      localStorage.setItem("currentBoard", JSON.stringify(board));
+      user.boards[board.index] = board;
+
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
       clickedBtn.focus();
 
       return;
@@ -192,8 +400,17 @@ export function applyTabIndexToClickedTaskBtn({ event }) {
 function swapTabIndex({ previousSelected, selected }) {
   // change tabindex of that element from '0' to '-1'
   previousSelected.setAttribute("tabIndex", "-1");
+
   // assign tabindex '0' to clicked task btn
   selected.setAttribute("tabIndex", "0");
+}
+
+function localStorageSwapIndex({ previousSelected, selected }) {
+  // update tabIndex of current focus task btn obj in local storage
+  previousSelected.tabIndex = "-1";
+
+  // update tabIndex of clicked Btn obj in local storage
+  selected.tabIndex = "0";
 }
 
 function swapDragDropSelected({ previousSelected, selected }) {

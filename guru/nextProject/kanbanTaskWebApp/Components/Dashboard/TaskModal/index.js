@@ -346,7 +346,7 @@ export function taskModalComponent() {
                           title: titleInput,
                           description: descriptionInput,
                           status,
-                          tabIndex: taskIndex == 0 ? "0" : "-1",
+                          tabIndex: calculateTabIndex(),
                           isSelected: false,
                           index: taskIndex,
                           subtasks: arrayOfSubtaskObjs,
@@ -614,10 +614,12 @@ export function taskModalComponent() {
                           });
 
                           currentBoard.columns[previousStatus] = filteredArray;
+                          // different algorithm tabindex of edit task will not change
                           // when status change we want to update tabIndex
                           // previousStatus column the first item in that array column will have tabindex "0"
-                          currentBoard.columns[previousStatus][0].tabIndex =
-                            "0";
+                          // currentBoard.columns[previousStatus][0].tabIndex =
+                          //   "0";
+                          // different algorithm tabindex of edit task will not change
 
                           currentTask.status =
                             editModalStatusElement.textContent.toLowerCase();
@@ -627,18 +629,20 @@ export function taskModalComponent() {
                               editModalStatusElement.textContent.toLowerCase()
                             ].length;
 
+                          // different algorithm tabindex of edit task will not change
                           // newStatus column its first item will have tabindex "-1"
                           // update currentTask status and index add task to correct column component
 
-                          if (
-                            currentBoard.columns[
-                              editModalStatusElement.textContent.toLowerCase()
-                            ].length > 1
-                          ) {
-                            currentBoard.columns[
-                              editModalStatusElement.textContent.toLowerCase()
-                            ][0].tabIndex = "-1";
-                          }
+                          // if (
+                          //   currentBoard.columns[
+                          //     editModalStatusElement.textContent.toLowerCase()
+                          //   ].length > 1
+                          // ) {
+                          //   currentBoard.columns[
+                          //     editModalStatusElement.textContent.toLowerCase()
+                          //   ][0].tabIndex = "-1";
+                          // }
+                          // different algorithm tabindex of edit task will not change
 
                           // push task to correct column array
                           currentBoard.columns[
@@ -1170,6 +1174,20 @@ function recursiveCounter(list, index = 0) {
     return recursiveCounter(list, index + 1) + 1;
   }
   return recursiveCounter(list, index + 1);
+}
+
+function calculateTabIndex() {
+  // columns-container-selector id of parent container of todo, doing, and done columns
+  // if there is a task btn with tabindex of "0" return "-1"
+  const isTabIndexZeroAppliedToTaskBtn = document.querySelector(
+    "#columns-container-selector [tabindex='0']"
+  );
+
+  if (isTabIndexZeroAppliedToTaskBtn) {
+    return "-1";
+  }
+  // else return "0"
+  return "0";
 }
 
 const arr = [
