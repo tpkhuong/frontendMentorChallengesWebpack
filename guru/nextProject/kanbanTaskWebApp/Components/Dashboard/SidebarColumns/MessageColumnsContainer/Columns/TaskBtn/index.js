@@ -1,5 +1,6 @@
 import React from "react";
 import TaskBtnStyles from "./TaskBtn.module.css";
+import { VscOpenPreview } from "react-icons/vsc";
 
 export default function TaskBtn({
   children,
@@ -28,13 +29,25 @@ export default function TaskBtn({
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
-          <div className={TaskBtnStyles[`subtasks-container`]}>
-            <span className={TaskBtnStyles[`subtasks-completed`]}>
-              {completed}
-            </span>
-            <span>of</span>
-            <span className={TaskBtnStyles[`subtasks-total`]}>{total}</span>
-            <span>subtasks</span>
+          <div className={TaskBtnStyles[`subtasks-icon-container`]}>
+            <div className={TaskBtnStyles[`subtasks-container`]}>
+              <span className={TaskBtnStyles[`subtasks-completed`]}>
+                {completed}
+              </span>
+              <span>of</span>
+              <span className={TaskBtnStyles[`subtasks-total`]}>{total}</span>
+              <span>subtasks</span>
+            </div>
+            {/* open view icon */}
+            <a
+              id="view-icon-selector"
+              role="button"
+              tabIndex={tab}
+              className={TaskBtnStyles[`open-view-icon-btn`]}
+              aria-label="open view modal"
+            >
+              <VscOpenPreview />
+            </a>
           </div>
         </button>
       ) : (
@@ -49,13 +62,25 @@ export default function TaskBtn({
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
-          <div className={TaskBtnStyles[`subtasks-container`]}>
-            <span className={TaskBtnStyles[`subtasks-completed`]}>
-              {completed}
-            </span>
-            <span>of</span>
-            <span className={TaskBtnStyles[`subtasks-total`]}>{total}</span>
-            <span>subtasks</span>
+          <div className={TaskBtnStyles[`subtasks-icon-container`]}>
+            <div className={TaskBtnStyles[`subtasks-container`]}>
+              <span className={TaskBtnStyles[`subtasks-completed`]}>
+                {completed}
+              </span>
+              <span>of</span>
+              <span className={TaskBtnStyles[`subtasks-total`]}>{total}</span>
+              <span>subtasks</span>
+            </div>
+            {/* open view icon */}
+            <a
+              tabIndex={tab}
+              id="view-icon-selector"
+              role="button"
+              className={TaskBtnStyles[`open-view-icon-btn`]}
+              aria-label="open view modal"
+            >
+              <VscOpenPreview />
+            </a>
           </div>
         </button>
       )}

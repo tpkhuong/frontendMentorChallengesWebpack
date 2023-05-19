@@ -130,7 +130,10 @@ export default function ViewTask({ children }) {
                 // focus task btn of current task
                 const focusTaskBtn = document.getElementById(
                   `${task.status}-column-selector`
-                ).childNodes[1].childNodes[task.index].firstElementChild;
+                ).childNodes[1].childNodes[task.index].firstElementChild
+                  .childNodes[1].childNodes[1];
+
+                console.log(focusTaskBtn);
                 setTimeout(() => {
                   focusTaskBtn.focus();
                 }, 80);

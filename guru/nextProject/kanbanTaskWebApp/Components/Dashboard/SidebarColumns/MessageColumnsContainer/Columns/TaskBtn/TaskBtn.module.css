@@ -7,22 +7,30 @@
 }
 
 .task-btn[data-typeofstatus="todo"]:hover,
-.task-btn[data-typeofstatus="todo"]:focus {
+.task-btn[data-typeofstatus="todo"]:focus,
+.task-btn[data-typeofstatus="todo"]:focus-within,
+.task-btn[data-typeofstatus="todo"]:focus-within {
   box-shadow: var(--task-btn-shadow) hsl(193, 75%, 59%);
 }
 
 .task-btn[data-typeofstatus="doing"]:hover,
-.task-btn[data-typeofstatus="doing"]:focus {
+.task-btn[data-typeofstatus="doing"]:focus,
+.task-btn[data-typeofstatus="doing"]:focus-within,
+.task-btn[data-typeofstatus="doing"]:focus-within {
   box-shadow: var(--task-btn-shadow) hsl(248, 83%, 70%);
 }
 
 .task-btn[data-typeofstatus="done"]:hover,
-.task-btn[data-typeofstatus="done"]:focus {
+.task-btn[data-typeofstatus="done"]:focus,
+.task-btn[data-typeofstatus="done"]:focus-within,
+.task-btn[data-typeofstatus="done"]:focus-within {
   box-shadow: var(--task-btn-shadow) hsl(155, 68%, 65%);
 }
 
 .task-btn[data-typeofstatus]:hover,
-.task-btn[data-typeofstatus]:focus {
+.task-btn[data-typeofstatus]:focus,
+.task-btn[data-typeofstatus]:focus-within,
+.task-btn[data-typeofstatus]:focus-within {
   transform: translate3d(0px, 0px, 5px);
 }
 
@@ -52,6 +60,13 @@
   color: var(--fg, var(--color-neutral-black));
 }
 
+.subtasks-icon-container {
+  margin-block-start: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .subtasks-container {
   color: var(--color-medium-grey);
   font-size: var(--heading-reg-xxx-sm);
@@ -59,7 +74,10 @@
   display: flex;
   gap: 5px;
   /* justify-content: center; */
-  margin-block-start: 8px;
+}
+
+.open-view-icon-btn svg {
+  width: 24px;
 }
 
 .circle[data-statusbtncolor="todo"] {

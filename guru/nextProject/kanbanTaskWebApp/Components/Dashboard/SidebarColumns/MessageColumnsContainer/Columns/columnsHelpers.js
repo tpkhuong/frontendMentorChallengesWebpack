@@ -1,6 +1,21 @@
-export function mousedownOnTaskBtn({ event }) {
+export function mousedownOnTaskBtn({ event, renderContextColumnsComponent }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));
+
+  // if target is <a> of svg icon render view modal
+  if (
+    event.target.closest("A") &&
+    event.target.closest("A").getAttribute("role") == "button" &&
+    event.target.closest("A").getAttribute("aria-label") == "open view modal"
+  ) {
+    // render view modal
+    openViewModal({
+      currentBoard: board,
+      clickedIcon: event.target.closest("A"),
+      renderContextColumnsComponent,
+    });
+    return;
+  }
 
   const clickedBtn = event.target.closest("BUTTON");
   if (clickedBtn) {
@@ -289,10 +304,45 @@ export function mousedownOnTaskBtn({ event }) {
   }
 }
 
-export function touchstartOnTaskBtn({ event }) {
-  // check if there is a currently selected task btn for drag and drop
+export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const board = JSON.parse(localStorage.getItem("currentBoard"));
+
   const currentlyDragDropSelected =
     document.getElementById("drag-drop-selected");
+  // if target is <a> of svg icon render view modal
+  if (
+    event.target.closest("A") &&
+    event.target.closest("A").getAttribute("role") == "button" &&
+    event.target.closest("A").getAttribute("aria-label") == "open view modal"
+  ) {
+    // render view modal
+    openViewModal({
+      currentBoard: board,
+      clickedIcon: event.target.closest("A"),
+      renderContextColumnsComponent,
+    });
+    return;
+  }
+
+  if (!currentlyDragDropSelected) {
+    if (
+      document.activeElement.getAttribute("data-typeofstatus") &&
+      event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+    ) {
+      // we want to apply id of "drag-drop-selected" to task btn
+      // to select it
+      console.log("this is task btn");
+    }
+  }
+  // another idea
+  // instead of using touchmove we can use touchstart and touchend
+  // to select a task btn. a touchstart on a focused task btn / task btn with tabindex "0"
+  // will select that task btn
+  // once a user select a task btn to be drag/drop
+  // the first touchstart will let the user see where the task btn will go
+  // another touchstart on the selected task btn at the new placement will confirm the new position
+  // check if there is a currently selected task btn for drag and drop
 }
 
 export function selectTaskBtnAndApplyTabIndexMouse({ event }) {
@@ -400,9 +450,12 @@ export function applyTabIndexToClickedTaskBtn({ event }) {
 function swapTabIndex({ previousSelected, selected }) {
   // change tabindex of that element from '0' to '-1'
   previousSelected.setAttribute("tabIndex", "-1");
-
+  // change tabindex of open view icon
+  previousSelected.childNodes[1].childNodes[1].setAttribute("tabIndex", "-1");
   // assign tabindex '0' to clicked task btn
   selected.setAttribute("tabIndex", "0");
+  // change tabindex of open view icon
+  selected.childNodes[1].childNodes[1].setAttribute("tabIndex", "0");
 }
 
 function localStorageSwapIndex({ previousSelected, selected }) {
@@ -420,3 +473,125 @@ function swapDragDropSelected({ previousSelected, selected }) {
   // then apply id="drag-drop-selected" to clicked task btn
   selected.setAttribute("id", "drag-drop-selected");
 }
+
+function openViewModal({
+  clickedIcon,
+  currentBoard,
+  renderContextColumnsComponent,
+}) {
+  // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  // const currentBoard = JSON.parse(
+  //   localStorage.getItem("currentBoard")
+  // );
+  // one solution for keyboard enter/space bar
+  // when user first hit enter/space key on task btn
+  // select that task
+  /**
+   * *******
+   * **/
+  // we want to keep track of when user/how many time user hit enter/space key on task btn
+  // hit enter/space then hitting enter/space render view task modal with data of task
+  // when user click selected task again render view task modal with data of task clicked
+  // similar algorithm for touch devices
+  /**
+   * for a mouse thinking about using mouseup instead of click listener
+   * keep track of dragging event
+   * if there is no drag render view task modal
+   * if there is a drag event run drag algorithm
+   * **/
+  /**
+   * *******
+   * **/
+  const clickedTask = clickedIcon.closest("BUTTON");
+  const btnStatus = clickedTask.getAttribute("data-typeofstatus");
+  const position = clickedTask.getAttribute("data-orderindex");
+
+  const currentTask = currentBoard.columns[btnStatus][position];
+  const { title, description, status, isSelected, index, subtasks } =
+    currentTask;
+
+  localStorage.setItem("currentTask", JSON.stringify(currentTask));
+
+  // call viewTask stateFunc
+  renderContextColumnsComponent.stateFuncsForModals.viewTask((prevValues) => {
+    return {
+      ...prevValues,
+      renderViewTask: true,
+      title,
+      description,
+      status,
+      isSelected,
+      index,
+      subtasks,
+    };
+  });
+  // focus view task modal
+  setTimeout(() => {
+    document.getElementById("view-task-modal-selector").focus();
+  }, 80);
+  // if (event.target.closest("BUTTON")) {
+  // }
+}
+
+// onClick={(event) => {
+//             // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+//             const currentBoard = JSON.parse(
+//               localStorage.getItem("currentBoard")
+//             );
+//             // one solution for keyboard enter/space bar
+//             // when user first hit enter/space key on task btn
+//             // select that task
+//             /**
+//              * *******
+//              * **/
+//             // we want to keep track of when user/how many time user hit enter/space key on task btn
+//             // hit enter/space then hitting enter/space render view task modal with data of task
+//             // when user click selected task again render view task modal with data of task clicked
+//             // similar algorithm for touch devices
+//             /**
+//              * for a mouse thinking about using mouseup instead of click listener
+//              * keep track of dragging event
+//              * if there is no drag render view task modal
+//              * if there is a drag event run drag algorithm
+//              * **/
+//             /**
+//              * *******
+//              * **/
+//             if (event.target.closest("BUTTON")) {
+//               const clickedTask = event.target.closest("BUTTON");
+//               const btnStatus = clickedTask.getAttribute("data-typeofstatus");
+//               const position = clickedTask.getAttribute("data-orderindex");
+
+//               const currentTask = currentBoard.columns[btnStatus][position];
+//               const {
+//                 title,
+//                 description,
+//                 status,
+//                 isSelected,
+//                 index,
+//                 subtasks,
+//               } = currentTask;
+
+//               localStorage.setItem("currentTask", JSON.stringify(currentTask));
+
+//               // call viewTask stateFunc
+//               renderContextColumnsComponent.stateFuncsForModals.viewTask(
+//                 (prevValues) => {
+//                   return {
+//                     ...prevValues,
+//                     renderViewTask: true,
+//                     title,
+//                     description,
+//                     status,
+//                     isSelected,
+//                     index,
+//                     subtasks,
+//                   };
+//                 }
+//               );
+//               // focus view task modal
+//               setTimeout(() => {
+//                 document.getElementById("view-task-modal-selector").focus();
+//               }, 80);
+//             }
+//           }}
