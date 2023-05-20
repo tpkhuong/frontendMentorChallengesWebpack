@@ -1,7 +1,11 @@
 import React from "react";
 import ColumnsStyles from "./Columns.module.css";
 import { BoardTaskRenderContext } from "../../../Context/index";
-import { mousedownOnTaskBtn, touchstartOnTaskBtn } from "./columnsHelpers.js";
+import {
+  selectingTaskBtnMousedownTouchstart,
+  mousedownOnTaskBtn,
+  touchstartOnTaskBtn,
+} from "./columnsHelpers.js";
 import TodoColumn from "./Todo";
 import DoingColumn from "./Doing";
 import DoneColumn from "./Done";
@@ -76,12 +80,22 @@ export default function Columns({
             }
           }}
           onMouseDown={(event) => {
-            mousedownOnTaskBtn({ event, renderContextColumnsComponent });
+            selectingTaskBtnMousedownTouchstart({
+              event,
+              renderContextColumnsComponent,
+            });
+            // console.log(event);
+            // mousedownOnTaskBtn({ event, renderContextColumnsComponent });
             // selectTaskBtn({ event });
             // applyTabIndexToClickedTaskBtn({ event });
           }}
           onTouchStart={(event) => {
-            touchstartOnTaskBtn({ event, renderContextColumnsComponent });
+            selectingTaskBtnMousedownTouchstart({
+              event,
+              renderContextColumnsComponent,
+            });
+            console.log(event);
+            // touchstartOnTaskBtn({ event, renderContextColumnsComponent });
             // selectTaskBtn({ event });
             // applyTabIndexToClickedTaskBtn({ event });
           }}

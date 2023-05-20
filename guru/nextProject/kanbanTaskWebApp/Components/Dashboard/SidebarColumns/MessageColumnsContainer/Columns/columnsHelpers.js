@@ -1,4 +1,7 @@
-export function mousedownOnTaskBtn({ event, renderContextColumnsComponent }) {
+export function selectingTaskBtnMousedownTouchstart({
+  event,
+  renderContextColumnsComponent,
+}) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));
 
@@ -30,6 +33,7 @@ export function mousedownOnTaskBtn({ event, renderContextColumnsComponent }) {
     const orderIndexOfClickedBtn = Number(
       clickedBtn.getAttribute("data-orderindex")
     );
+    // touchstart
     // check if current focus element is a task btn
     const isTaskBtn = currentFocusedElement.getAttribute("data-typeofstatus");
     const statusOfCurrentFocusedTaskBtn = isTaskBtn;
@@ -165,6 +169,28 @@ export function mousedownOnTaskBtn({ event, renderContextColumnsComponent }) {
             ],
           selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
         });
+
+        if (
+          event.type == "touchstart" &&
+          document.activeElement.getAttribute("data-typeofstatus") &&
+          event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+        ) {
+          // we want to apply id of "drag-drop-selected" to task btn
+          // to select it
+          event.target
+            .closest("BUTTON")
+            .setAttribute("id", "drag-drop-selected");
+          console.log("this is task btn");
+          // if (
+          //   document.activeElement.getAttribute("data-typeofstatus") &&
+          //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+          // ) {
+          //   // we want to apply id of "drag-drop-selected" to task btn
+          //   // to select it
+          //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
+          //   console.log("this is task btn");
+          // }
+        }
       }
       // if (
       //   isTaskBtn &&
@@ -326,14 +352,17 @@ export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {
   }
 
   if (!currentlyDragDropSelected) {
-    if (
-      document.activeElement.getAttribute("data-typeofstatus") &&
-      event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
-    ) {
-      // we want to apply id of "drag-drop-selected" to task btn
-      // to select it
-      console.log("this is task btn");
-    }
+    // if (
+    //   document.activeElement.getAttribute("data-typeofstatus") &&
+    //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+    // ) {
+    //   // we want to apply id of "drag-drop-selected" to task btn
+    //   // to select it
+    //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
+    //   console.log("this is task btn");
+    // }
+    // swap current task btn with tabindex "0" to be tabindex "-1"
+    // the target of toucstart that is a task btn we want to assign "0" to tabindex
   }
   // another idea
   // instead of using touchmove we can use touchstart and touchend
