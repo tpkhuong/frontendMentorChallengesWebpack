@@ -154,6 +154,28 @@ export function selectingTaskBtnMousedownTouchstart({
       }
       // current focused element is a task btn
       if (isTaskBtn) {
+        if (
+          event.type == "touchstart" &&
+          document.activeElement.getAttribute("data-typeofstatus") &&
+          event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+        ) {
+          // we want to apply id of "drag-drop-selected" to task btn
+          // to select it
+          event.target
+            .closest("BUTTON")
+            .setAttribute("id", "drag-drop-selected");
+          console.log("this is task btn");
+          return;
+          // if (
+          //   document.activeElement.getAttribute("data-typeofstatus") &&
+          //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+          // ) {
+          //   // we want to apply id of "drag-drop-selected" to task btn
+          //   // to select it
+          //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
+          //   console.log("this is task btn");
+          // }
+        }
         if (clickedBtn == currentFocusedElement) return;
         // we know the current focused element is a task btn we can swap tabindex and update tabindex in local storage
         // swap tabindex and update tabindex in local storage
@@ -169,28 +191,6 @@ export function selectingTaskBtnMousedownTouchstart({
             ],
           selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
         });
-
-        if (
-          event.type == "touchstart" &&
-          document.activeElement.getAttribute("data-typeofstatus") &&
-          event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
-        ) {
-          // we want to apply id of "drag-drop-selected" to task btn
-          // to select it
-          event.target
-            .closest("BUTTON")
-            .setAttribute("id", "drag-drop-selected");
-          console.log("this is task btn");
-          // if (
-          //   document.activeElement.getAttribute("data-typeofstatus") &&
-          //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
-          // ) {
-          //   // we want to apply id of "drag-drop-selected" to task btn
-          //   // to select it
-          //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
-          //   console.log("this is task btn");
-          // }
-        }
       }
       // if (
       //   isTaskBtn &&
@@ -325,8 +325,34 @@ export function selectingTaskBtnMousedownTouchstart({
 
       return;
     }
-    //   if (currentlyDragDropSelected) {
-    //   }
+    // touchstart and mousedown will have same algorithm for with a task btn
+    // has id drag-drop-selected
+    if (currentlyDragDropSelected) {
+      console.log("this is fun");
+      // remove id "drag-drop-selected" on current task btn with "drag-drop-selected"
+      // add "drag-drop-selected" to clicked task btn
+      currentlyDragDropSelected.removeAttribute("id");
+      clickedBtn.setAttribute("id", "drag-drop-selected");
+
+      swapTabIndex({
+        previousSelected: currentlyDragDropSelected,
+        selected: clickedBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected:
+          board.columns[statusOfCurrentFocusedTaskBtn][orderIndexOfFocusedBtn],
+        selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      });
+
+      localStorage.setItem("currentBoard", JSON.stringify(board));
+      user.boards[board.index] = board;
+
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
+      clickedBtn.focus();
+      return;
+    }
   }
 }
 
