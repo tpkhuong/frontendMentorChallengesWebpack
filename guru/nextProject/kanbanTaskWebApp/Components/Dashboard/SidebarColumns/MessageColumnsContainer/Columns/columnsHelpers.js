@@ -356,6 +356,173 @@ export function selectingTaskBtnMousedownTouchstart({
   }
 }
 
+export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
+  if (statusOfTaskBtn == "todo") {
+    // check length of element with id = "doing-column-selector" and "done-column-selector"
+    // both done and doing columns are empty
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // done columns has task
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doneTaskBtn = document.getElementById("done-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        doneTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doneTaskBtn.focus();
+    }
+    // done column is empty but doing has tasks
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doingTaskBtn = document.getElementById("doing-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        doingTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doingTaskBtn.focus();
+    }
+  }
+
+  if (statusOfTaskBtn == "doing") {
+    // check length of element with id = "todo-column-selector" and "done-column-selector"
+
+    // both todo and done columns are empty
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // todo column has tasks
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const todoTaskBtn = document.getElementById("todo-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        todoTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      todoTaskBtn.focus();
+    }
+    // todo column is empty, done has tasks
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doneTaskBtn = document.getElementById("done-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        doneTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doneTaskBtn.focus();
+    }
+  }
+
+  if (statusOfTaskBtn == "done") {
+    // check length of element with id = "todo-column-selector" and "doing-column-selector"
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // doing column has tasks
+    if (
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doingTaskBtn = document.getElementById("doing-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        doingTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doingTaskBtn.focus();
+    }
+    // doing column is empty, todo has tasks
+    if (
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const todoTaskBtn = document.getElementById("todo-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      if (event.target.tagName == "A") {
+        todoTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      todoTaskBtn.focus();
+    }
+  }
+}
+
+export function keyboardRight({ event, clickedTaskBtn, statusOfTaskBtn }) {
+  if (statusOfTaskBtn == "todo") {
+    // check length of element with id = "doing-column-selector" and "done-column-selector"
+  }
+  if (statusOfTaskBtn == "doing") {
+    // check length of element with id = "todo-column-selector" and "done-column-selector"
+  }
+  if (statusOfTaskBtn == "done") {
+    // check length of element with id = "todo-column-selector" and "doing-column-selector"
+  }
+  if (event.target.tagName == "A") {
+    console.log(event.target);
+    return;
+  }
+}
+
+export function keyboardDown({ event, clickedTaskBtn }) {
+  if (event.target.tagName == "A") {
+    console.log(event.target);
+    return;
+  }
+}
+
+export function keyboardUp({ event, clickedTaskBtn }) {
+  if (event.target.tagName == "A") {
+    console.log(event.target);
+    return;
+  }
+}
+
 export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));

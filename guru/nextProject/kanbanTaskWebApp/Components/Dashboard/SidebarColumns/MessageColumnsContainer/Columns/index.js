@@ -3,6 +3,10 @@ import ColumnsStyles from "./Columns.module.css";
 import { BoardTaskRenderContext } from "../../../Context/index";
 import {
   selectingTaskBtnMousedownTouchstart,
+  keyboardLeft,
+  keyboardRight,
+  keyboardDown,
+  keyboardUp,
   mousedownOnTaskBtn,
   touchstartOnTaskBtn,
 } from "./columnsHelpers.js";
@@ -23,22 +27,52 @@ export default function Columns({
     Space: function ({ event }) {
       console.log("space", event);
     },
-    ArrowLeft: function ({ event }) {
-      console.log("arrowleft", event);
+    ArrowLeft: function ({
+      event,
+      clickedTaskBtn,
+      keyboardLeft,
+      statusOfTaskBtn,
+    }) {
+      keyboardLeft({
+        event,
+        clickedTaskBtn,
+        statusOfTaskBtn,
+      });
+      // console.log("arrowleft", event);
     },
-    ArrowUp: function ({ event }) {
-      console.log("arrowup", event);
+    ArrowUp: function ({ event, clickedTaskBtn, keyboardUp }) {
+      keyboardUp({
+        event,
+        clickedTaskBtn,
+      });
+      // console.log("arrowup", event);
     },
-    ArrowRight: function ({ event }) {
-      console.log("arrowright", event);
+    ArrowRight: function ({
+      event,
+      clickedTaskBtn,
+      keyboardRight,
+      statusOfTaskBtn,
+    }) {
+      keyboardRight({
+        event,
+        clickedTaskBtn,
+        statusOfTaskBtn,
+      });
+      // console.log("arrowright", event);
     },
-    ArrowDown: function ({ event }) {
-      console.log("arrowdown", event);
+    ArrowDown: function ({ event, clickedTaskBtn, keyboardDown }) {
+      keyboardDown({
+        event,
+        clickedTaskBtn,
+      });
+      // console.log("arrowdown", event);
     },
     PageUp: function ({ event }) {
+      // go up two
       console.log("pageup", event);
     },
     PageDown: function ({ event }) {
+      // go down two
       console.log("pagedown", event);
     },
     Home: function ({ event }) {
@@ -75,8 +109,37 @@ export default function Columns({
           onKeyDown={(event) => {
             // only keydown will select
             // selectTaskBtn({ event });
-            if (keyboardMethods[event.code]) {
-              keyboardMethods[event.code]({ event });
+            // console.log(event.target);
+            if (
+              event.target.closest("BUTTON") &&
+              event.target.closest("BUTTON").getAttribute("data-typeofstatus")
+            ) {
+              const clickedTaskBtn =
+                event.target.closest("BUTTON") &&
+                event.target.closest("BUTTON").getAttribute("data-typeofstatus")
+                  ? event.target.closest("BUTTON")
+                  : null;
+
+              const statusOfTaskBtn =
+                event.target.closest("BUTTON") &&
+                event.target.closest("BUTTON").getAttribute("data-typeofstatus")
+                  ? event.target
+                      .closest("BUTTON")
+                      .getAttribute("data-typeofstatus")
+                  : null;
+
+              if (keyboardMethods[event.code]) {
+                event.preventDefault();
+                keyboardMethods[event.code]({
+                  event,
+                  clickedTaskBtn,
+                  keyboardLeft,
+                  keyboardRight,
+                  keyboardDown,
+                  keyboardUp,
+                  statusOfTaskBtn,
+                });
+              }
             }
           }}
           onMouseDown={(event) => {
