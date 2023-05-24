@@ -7,6 +7,8 @@ import {
   keyboardRight,
   keyboardDown,
   keyboardUp,
+  swapTabIndex,
+  localStorageSwapIndex,
   mousedownOnTaskBtn,
   touchstartOnTaskBtn,
 } from "./columnsHelpers.js";
@@ -32,18 +34,43 @@ export default function Columns({
       clickedTaskBtn,
       keyboardLeft,
       statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
     }) {
       keyboardLeft({
         event,
         clickedTaskBtn,
         statusOfTaskBtn,
+        swapTabIndex,
+        localStorageSwapIndex,
+        user,
+        board,
+        indexOfClickedTaskBtn,
       });
       // console.log("arrowleft", event);
     },
-    ArrowUp: function ({ event, clickedTaskBtn, keyboardUp }) {
+    ArrowUp: function ({
+      event,
+      clickedTaskBtn,
+      keyboardUp,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+    }) {
       keyboardUp({
         event,
         clickedTaskBtn,
+        statusOfTaskBtn,
+        swapTabIndex,
+        localStorageSwapIndex,
+        user,
+        board,
+        indexOfClickedTaskBtn,
       });
       // console.log("arrowup", event);
     },
@@ -52,33 +79,57 @@ export default function Columns({
       clickedTaskBtn,
       keyboardRight,
       statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
     }) {
       keyboardRight({
         event,
         clickedTaskBtn,
         statusOfTaskBtn,
+        swapTabIndex,
+        localStorageSwapIndex,
+        user,
+        board,
+        indexOfClickedTaskBtn,
       });
       // console.log("arrowright", event);
     },
-    ArrowDown: function ({ event, clickedTaskBtn, keyboardDown }) {
+    ArrowDown: function ({
+      event,
+      clickedTaskBtn,
+      keyboardDown,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+    }) {
       keyboardDown({
         event,
         clickedTaskBtn,
+        swapTabIndex,
+        localStorageSwapIndex,
+        user,
+        board,
+        indexOfClickedTaskBtn,
       });
       // console.log("arrowdown", event);
     },
-    PageUp: function ({ event }) {
+    PageUp: function ({ event, swapTabIndex, localStorageSwapIndex }) {
       // go up two
       console.log("pageup", event);
     },
-    PageDown: function ({ event }) {
+    PageDown: function ({ event, swapTabIndex, localStorageSwapIndex }) {
       // go down two
       console.log("pagedown", event);
     },
-    Home: function ({ event }) {
+    Home: function ({ event, swapTabIndex, localStorageSwapIndex }) {
       console.log("home", event);
     },
-    End: function ({ event }) {
+    End: function ({ event, swapTabIndex, localStorageSwapIndex }) {
       console.log("end", event);
     },
   };
@@ -107,6 +158,8 @@ export default function Columns({
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
           onKeyDown={(event) => {
+            const user = JSON.parse(localStorage.getItem("currentUser"));
+            const board = JSON.parse(localStorage.getItem("currentBoard"));
             // only keydown will select
             // selectTaskBtn({ event });
             // console.log(event.target);
@@ -119,6 +172,9 @@ export default function Columns({
                 event.target.closest("BUTTON").getAttribute("data-typeofstatus")
                   ? event.target.closest("BUTTON")
                   : null;
+
+              const indexOfClickedTaskBtn =
+                clickedTaskBtn.getAttribute("data-orderindex");
 
               const statusOfTaskBtn =
                 event.target.closest("BUTTON") &&
@@ -138,8 +194,16 @@ export default function Columns({
                   keyboardDown,
                   keyboardUp,
                   statusOfTaskBtn,
+                  swapTabIndex,
+                  localStorageSwapIndex,
+                  user,
+                  board,
+                  indexOfClickedTaskBtn,
                 });
               }
+              localStorage.setItem("currentBoard", JSON.stringify(board));
+              user.boards[board.index] = board;
+              localStorage.setItem("currentUser", JSON.stringify(user));
             }
           }}
           onMouseDown={(event) => {

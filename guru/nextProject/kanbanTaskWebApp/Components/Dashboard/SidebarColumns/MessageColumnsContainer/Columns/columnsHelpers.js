@@ -356,7 +356,16 @@ export function selectingTaskBtnMousedownTouchstart({
   }
 }
 
-export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
+export function keyboardLeft({
+  event,
+  clickedTaskBtn,
+  statusOfTaskBtn,
+  swapTabIndex,
+  localStorageSwapIndex,
+  user,
+  board,
+  indexOfClickedTaskBtn,
+}) {
   if (statusOfTaskBtn == "todo") {
     // check length of element with id = "doing-column-selector" and "done-column-selector"
     // both done and doing columns are empty
@@ -376,6 +385,16 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: doneTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.todo[indexOfClickedTaskBtn],
+        selected: board.columns.done[0],
+      });
+
       if (event.target.tagName == "A") {
         doneTaskBtn.childNodes[1].childNodes[1].focus();
         return;
@@ -392,6 +411,19 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
     ) {
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: doingTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.todo[indexOfClickedTaskBtn],
+        selected: board.columns.doing[0],
+      });
 
       if (event.target.tagName == "A") {
         doingTaskBtn.childNodes[1].childNodes[1].focus();
@@ -422,6 +454,16 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: todoTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.todo[0],
+      });
+
       if (event.target.tagName == "A") {
         todoTaskBtn.childNodes[1].childNodes[1].focus();
         return;
@@ -438,6 +480,16 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
     ) {
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: doneTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.done[0],
+      });
 
       if (event.target.tagName == "A") {
         doneTaskBtn.childNodes[1].childNodes[1].focus();
@@ -466,6 +518,19 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: doingTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.done[indexOfClickedTaskBtn],
+        selected: board.columns.doing[0],
+      });
+
       if (event.target.tagName == "A") {
         doingTaskBtn.childNodes[1].childNodes[1].focus();
         return;
@@ -483,6 +548,16 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: todoTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.todo[0],
+      });
+
       if (event.target.tagName == "A") {
         todoTaskBtn.childNodes[1].childNodes[1].focus();
         return;
@@ -493,30 +568,281 @@ export function keyboardLeft({ event, clickedTaskBtn, statusOfTaskBtn }) {
   }
 }
 
-export function keyboardRight({ event, clickedTaskBtn, statusOfTaskBtn }) {
+export function keyboardRight({
+  event,
+  clickedTaskBtn,
+  statusOfTaskBtn,
+  swapTabIndex,
+  localStorageSwapIndex,
+  user,
+  board,
+  indexOfClickedTaskBtn,
+}) {
   if (statusOfTaskBtn == "todo") {
     // check length of element with id = "doing-column-selector" and "done-column-selector"
+    // both done and doing columns are empty
+    if (
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // doing columns has task
+    if (
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doingTaskBtn = document.getElementById("doing-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: doingTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.todo[indexOfClickedTaskBtn],
+        selected: board.columns.doing[0],
+      });
+
+      if (event.target.tagName == "A") {
+        doingTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doingTaskBtn.focus();
+    }
+    // doing column is empty but done has tasks
+    if (
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doneTaskBtn = document.getElementById("done-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: doneTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.todo[indexOfClickedTaskBtn],
+        selected: board.columns.done[0],
+      });
+
+      if (event.target.tagName == "A") {
+        doneTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doneTaskBtn.focus();
+    }
   }
+
   if (statusOfTaskBtn == "doing") {
     // check length of element with id = "todo-column-selector" and "done-column-selector"
+
+    // both todo and done columns are empty
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // done column has tasks
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doneTaskBtn = document.getElementById("done-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: doneTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.done[0],
+      });
+
+      if (event.target.tagName == "A") {
+        doneTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doneTaskBtn.focus();
+    }
+    // done column is empty, todo has tasks
+    if (
+      document.getElementById("done-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const todoTaskBtn = document.getElementById("todo-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({ previousSelected: clickedTaskBtn, selected: todoTaskBtn });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.todo[0],
+      });
+
+      if (event.target.tagName == "A") {
+        todoTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      todoTaskBtn.focus();
+    }
   }
+
   if (statusOfTaskBtn == "done") {
     // check length of element with id = "todo-column-selector" and "doing-column-selector"
-  }
-  if (event.target.tagName == "A") {
-    console.log(event.target);
-    return;
+
+    // todo and doing columns are empty
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount == 0
+    ) {
+      return;
+    }
+    // todo column has tasks
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const todoTaskBtn = document.getElementById("todo-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: todoTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.done[indexOfClickedTaskBtn],
+        selected: board.columns.todo[0],
+      });
+
+      if (event.target.tagName == "A") {
+        todoTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      todoTaskBtn.focus();
+    }
+    // todo column is empty, doing has tasks
+    if (
+      document.getElementById("todo-column-selector").childNodes[1]
+        .childElementCount == 0 &&
+      document.getElementById("doing-column-selector").childNodes[1]
+        .childElementCount > 0
+    ) {
+      const doingTaskBtn = document.getElementById("doing-column-selector")
+        .childNodes[1].firstElementChild.firstElementChild;
+
+      // swap tabindex on elements and local storage
+      // previous will be the clickedTaskBtn
+
+      swapTabIndex({
+        previousSelected: clickedTaskBtn,
+        selected: doingTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        selected: board.columns.doing[0],
+      });
+
+      if (event.target.tagName == "A") {
+        doingTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      doingTaskBtn.focus();
+    }
   }
 }
 
-export function keyboardDown({ event, clickedTaskBtn }) {
-  if (event.target.tagName == "A") {
-    console.log(event.target);
-    return;
+export function keyboardDown({
+  event,
+  clickedTaskBtn,
+  statusOfTaskBtn,
+  swapTabIndex,
+  localStorageSwapIndex,
+  user,
+  board,
+  indexOfClickedTaskBtn,
+}) {
+  alert("test keyboardRight and keyboardDown");
+  // const taskBtn = document.getElementById(`${statusOfTaskBtn}-column-selector`)
+  // .childNodes[1].childNodes[indexOfClickedTaskBtn].firstElementChild;
+
+  // if index == to length childNodes of ul focus element at index 0
+  const lengthOfColumnContainerChildrenMinusOne =
+    document.getElementById(`${statusOfTaskBtn}-column-selector`).childNodes[1]
+      .childElementCount - 1;
+  if (indexOfClickedTaskBtn == lengthOfColumnContainerChildrenMinusOne) {
+    swapTabIndex({
+      previousSelected: document.getElementById(
+        `${statusOfTaskBtn}-column-selector`
+      ).childNodes[1].childNodes[indexOfClickedTaskBtn].firstElementChild,
+      selected: document.getElementById(`${statusOfTaskBtn}-column-selector`)
+        .childNodes[1].childNodes[0].firstElementChild,
+    });
+
+    localStorageSwapIndex({
+      previousSelected: board.columns[statusOfTaskBtn][indexOfClickedTaskBtn],
+      selected: board.columns[statusOfTaskBtn][0],
+    });
+
+    const taskBtn = document.getElementById(
+      `${statusOfTaskBtn}-column-selector`
+    ).childNodes[1].childNodes[0].firstElementChild;
+
+    taskBtn.focus();
+
+    if (event.target.tagName == "A") {
+      taskBtn.childNodes[1].childNodes[1].focus();
+      return;
+    }
   }
 }
 
-export function keyboardUp({ event, clickedTaskBtn }) {
+export function keyboardUp({
+  event,
+  clickedTaskBtn,
+  statusOfTaskBtn,
+  swapTabIndex,
+  localStorageSwapIndex,
+  user,
+  board,
+  indexOfClickedTaskBtn,
+}) {
   if (event.target.tagName == "A") {
     console.log(event.target);
     return;
@@ -669,7 +995,7 @@ export function applyTabIndexToClickedTaskBtn({ event }) {
 }
 // on touchend check if user perform a touchmove
 // if no touchmove fires open view modal
-function swapTabIndex({ previousSelected, selected }) {
+export function swapTabIndex({ previousSelected, selected }) {
   // change tabindex of that element from '0' to '-1'
   previousSelected.setAttribute("tabIndex", "-1");
   // change tabindex of open view icon
@@ -680,7 +1006,7 @@ function swapTabIndex({ previousSelected, selected }) {
   selected.childNodes[1].childNodes[1].setAttribute("tabIndex", "0");
 }
 
-function localStorageSwapIndex({ previousSelected, selected }) {
+export function localStorageSwapIndex({ previousSelected, selected }) {
   // update tabIndex of current focus task btn obj in local storage
   previousSelected.tabIndex = "-1";
 
@@ -688,7 +1014,7 @@ function localStorageSwapIndex({ previousSelected, selected }) {
   selected.tabIndex = "0";
 }
 
-function swapDragDropSelected({ previousSelected, selected }) {
+export function swapDragDropSelected({ previousSelected, selected }) {
   // if algorithm returns truthy
   // we will remove id="drag-drop-selected" from the element returned by calling
   previousSelected.removeAttribute("id");
