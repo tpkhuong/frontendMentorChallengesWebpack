@@ -554,7 +554,7 @@ export function keyboardLeft({
       swapTabIndex({ previousSelected: clickedTaskBtn, selected: todoTaskBtn });
 
       localStorageSwapIndex({
-        previousSelected: board.columns.doing[indexOfClickedTaskBtn],
+        previousSelected: board.columns.done[indexOfClickedTaskBtn],
         selected: board.columns.todo[0],
       });
 
@@ -797,40 +797,68 @@ export function keyboardDown({
   user,
   board,
   indexOfClickedTaskBtn,
+  listItemsContainer,
+  columns,
 }) {
-  alert("test keyboardRight and keyboardDown");
   // const taskBtn = document.getElementById(`${statusOfTaskBtn}-column-selector`)
   // .childNodes[1].childNodes[indexOfClickedTaskBtn].firstElementChild;
 
+  if (listItemsContainer.childElementCount == 1) return;
+
   // if index == to length childNodes of ul focus element at index 0
+
   const lengthOfColumnContainerChildrenMinusOne =
-    document.getElementById(`${statusOfTaskBtn}-column-selector`).childNodes[1]
-      .childElementCount - 1;
+    listItemsContainer.childElementCount - 1;
+
   if (indexOfClickedTaskBtn == lengthOfColumnContainerChildrenMinusOne) {
+    const focusFirstTaskBtn =
+      listItemsContainer.childNodes[0].firstElementChild;
+
     swapTabIndex({
-      previousSelected: document.getElementById(
-        `${statusOfTaskBtn}-column-selector`
-      ).childNodes[1].childNodes[indexOfClickedTaskBtn].firstElementChild,
-      selected: document.getElementById(`${statusOfTaskBtn}-column-selector`)
-        .childNodes[1].childNodes[0].firstElementChild,
+      previousSelected:
+        listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
+      selected: focusFirstTaskBtn,
     });
 
     localStorageSwapIndex({
-      previousSelected: board.columns[statusOfTaskBtn][indexOfClickedTaskBtn],
-      selected: board.columns[statusOfTaskBtn][0],
+      previousSelected: columns[indexOfClickedTaskBtn],
+      selected: columns[0],
     });
 
-    const taskBtn = document.getElementById(
-      `${statusOfTaskBtn}-column-selector`
-    ).childNodes[1].childNodes[0].firstElementChild;
-
-    taskBtn.focus();
+    focusFirstTaskBtn.focus();
 
     if (event.target.tagName == "A") {
-      taskBtn.childNodes[1].childNodes[1].focus();
+      focusFirstTaskBtn.childNodes[1].childNodes[1].focus();
       return;
     }
+    return;
   }
+
+  // default algorithm
+  // our index increases as user select a task btn
+  const clickedTaskIndexPlusOne = indexOfClickedTaskBtn + 1;
+
+  const focusNextTaskBtn =
+    listItemsContainer.childNodes[clickedTaskIndexPlusOne].firstElementChild;
+
+  swapTabIndex({
+    previousSelected:
+      listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
+    selected: focusNextTaskBtn,
+  });
+
+  localStorageSwapIndex({
+    previousSelected: columns[indexOfClickedTaskBtn],
+    selected: columns[clickedTaskIndexPlusOne],
+  });
+
+  focusNextTaskBtn.focus();
+
+  if (event.target.tagName == "A") {
+    focusNextTaskBtn.childNodes[1].childNodes[1].focus();
+    return;
+  }
+  return;
 }
 
 export function keyboardUp({
@@ -842,11 +870,63 @@ export function keyboardUp({
   user,
   board,
   indexOfClickedTaskBtn,
+  listItemsContainer,
+  columns,
 }) {
-  if (event.target.tagName == "A") {
-    console.log(event.target);
+  if (listItemsContainer.childElementCount == 1) return;
+
+  // if indexOfClickedTaskBtn == 0 select last item
+
+  if (indexOfClickedTaskBtn == 0) {
+    const lastItem =
+      listItemsContainer.childNodes[listItemsContainer.childElementCount - 1]
+        .firstElementChild;
+
+    swapTabIndex({
+      previousSelected: listItemsContainer.childNodes[0].firstElementChild,
+      selected: lastItem,
+    });
+
+    localStorageSwapIndex({
+      previousSelected: columns[0],
+      selected: columns[listItemsContainer.childElementCount - 1],
+    });
+
+    lastItem.focus();
+
+    if (event.target.tagName == "A") {
+      lastItem.childNodes[1].childNodes[1].focus();
+      return;
+    }
     return;
   }
+
+  // default algorithm
+  // our index decreases as user select a task btn
+
+  const clickedTaskIndexMinusOne = indexOfClickedTaskBtn - 1;
+
+  const focusPreviousTaskBtn =
+    listItemsContainer.childNodes[clickedTaskIndexMinusOne].firstElementChild;
+
+  swapTabIndex({
+    previousSelected:
+      listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
+    selected: focusPreviousTaskBtn,
+  });
+
+  localStorageSwapIndex({
+    previousSelected: columns[indexOfClickedTaskBtn],
+    selected: columns[clickedTaskIndexMinusOne],
+  });
+
+  focusPreviousTaskBtn.focus();
+
+  if (event.target.tagName == "A") {
+    focusPreviousTaskBtn.childNodes[1].childNodes[1].focus();
+    return;
+  }
+  return;
 }
 
 export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {

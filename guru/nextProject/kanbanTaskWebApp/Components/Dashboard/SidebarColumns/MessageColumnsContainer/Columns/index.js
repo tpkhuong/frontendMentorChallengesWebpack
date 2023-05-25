@@ -56,11 +56,14 @@ export default function Columns({
       event,
       clickedTaskBtn,
       keyboardUp,
+      statusOfTaskBtn,
       swapTabIndex,
       localStorageSwapIndex,
       user,
       board,
       indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
     }) {
       keyboardUp({
         event,
@@ -71,6 +74,8 @@ export default function Columns({
         user,
         board,
         indexOfClickedTaskBtn,
+        listItemsContainer,
+        columns,
       });
       // console.log("arrowup", event);
     },
@@ -88,6 +93,7 @@ export default function Columns({
       keyboardRight({
         event,
         clickedTaskBtn,
+        keyboardRight,
         statusOfTaskBtn,
         swapTabIndex,
         localStorageSwapIndex,
@@ -101,38 +107,245 @@ export default function Columns({
       event,
       clickedTaskBtn,
       keyboardDown,
+      statusOfTaskBtn,
       swapTabIndex,
       localStorageSwapIndex,
       user,
       board,
       indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
     }) {
       keyboardDown({
         event,
         clickedTaskBtn,
+        statusOfTaskBtn,
         swapTabIndex,
         localStorageSwapIndex,
         user,
         board,
         indexOfClickedTaskBtn,
+        listItemsContainer,
+        columns,
       });
       // console.log("arrowdown", event);
     },
-    PageUp: function ({ event, swapTabIndex, localStorageSwapIndex }) {
-      // go up two
-      console.log("pageup", event);
+    PageUp: function ({
+      event,
+      clickedTaskBtn,
+      keyboardDown,
+      statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
+    }) {
+      // if indexOfClickedTaskBtn == 0 return
+      if (indexOfClickedTaskBtn == 0) return;
+      // if indexOfClickedTaskBtn == 1 go to first
+      if (
+        listItemsContainer.childElementCount == 2 &&
+        indexOfClickedTaskBtn == 1
+      ) {
+        swapTabIndex({
+          previousSelected: listItemsContainer.childNodes[1].firstElementChild,
+          selected: listItemsContainer.childNodes[0].firstElementChild,
+        });
+
+        localStorageSwapIndex({
+          previousSelected: columns[1],
+          selected: columns[0],
+        });
+
+        listItemsContainer.childNodes[0].firstElementChild.focus();
+
+        if (event.target.tagName == "A") {
+          listItemsContainer.childNodes[0].firstElementChild.childNodes[1].childNodes[1].focus();
+          return;
+        }
+        return;
+      }
+      // go up two by subtracting 2 from indexOfClickedTaskBtn
+      swapTabIndex({
+        previousSelected:
+          listItemsContainer.childNodes[indexOfClickedTaskBtn]
+            .firstElementChild,
+        selected:
+          listItemsContainer.childNodes[indexOfClickedTaskBtn - 2]
+            .firstElementChild,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: columns[indexOfClickedTaskBtn],
+        selected: columns[indexOfClickedTaskBtn - 2],
+      });
+
+      listItemsContainer.childNodes[
+        indexOfClickedTaskBtn - 2
+      ].firstElementChild.focus();
+
+      if (event.target.tagName == "A") {
+        listItemsContainer.childNodes[
+          indexOfClickedTaskBtn - 2
+        ].firstElementChild.childNodes[1].childNodes[1].focus();
+        return;
+      }
     },
-    PageDown: function ({ event, swapTabIndex, localStorageSwapIndex }) {
-      // go down two
-      console.log("pagedown", event);
+    PageDown: function ({
+      event,
+      clickedTaskBtn,
+      keyboardDown,
+      statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
+    }) {
+      // if indexOfClickedTaskBtn == listItemsContainer.childElementCount - 1 return
+      if (indexOfClickedTaskBtn == listItemsContainer.childElementCount - 1)
+        return;
+      // if indexOfClickedTaskBtn == 0 go to last item
+      if (
+        listItemsContainer.childElementCount == 2 &&
+        indexOfClickedTaskBtn == 0
+      ) {
+        swapTabIndex({
+          previousSelected: listItemsContainer.childNodes[0].firstElementChild,
+          selected: listItemsContainer.childNodes[1].firstElementChild,
+        });
+
+        localStorageSwapIndex({
+          previousSelected: columns[0],
+          selected: columns[1],
+        });
+
+        listItemsContainer.childNodes[1].firstElementChild.focus();
+
+        if (event.target.tagName == "A") {
+          listItemsContainer.childNodes[1].firstElementChild.childNodes[1].childNodes[1].focus();
+          return;
+        }
+        return;
+      }
+      // go up two by subtracting 2 from indexOfClickedTaskBtn
+      swapTabIndex({
+        previousSelected:
+          listItemsContainer.childNodes[indexOfClickedTaskBtn]
+            .firstElementChild,
+        selected:
+          listItemsContainer.childNodes[indexOfClickedTaskBtn - 2]
+            .firstElementChild,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: columns[indexOfClickedTaskBtn],
+        selected: columns[indexOfClickedTaskBtn - 2],
+      });
+
+      listItemsContainer.childNodes[
+        indexOfClickedTaskBtn - 2
+      ].firstElementChild.focus();
+
+      if (event.target.tagName == "A") {
+        listItemsContainer.childNodes[
+          indexOfClickedTaskBtn - 2
+        ].firstElementChild.childNodes[1].childNodes[1].focus();
+        return;
+      }
     },
-    Home: function ({ event, swapTabIndex, localStorageSwapIndex }) {
-      console.log("home", event);
+    Home: function ({
+      event,
+      clickedTaskBtn,
+      keyboardDown,
+      statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
+    }) {
+      // if indexOfClickedTaskBtn == 0 return
+      if (indexOfClickedTaskBtn == 0) return;
+      // if listItemsContainer.childElementCount >= 2 go to first item
+      if (listItemsContainer.childElementCount >= 2) {
+        swapTabIndex({
+          previousSelected:
+            listItemsContainer.childNodes[indexOfClickedTaskBtn]
+              .firstElementChild,
+          selected: listItemsContainer.childNodes[0].firstElementChild,
+        });
+
+        localStorageSwapIndex({
+          previousSelected: columns[indexOfClickedTaskBtn],
+          selected: columns[0],
+        });
+
+        listItemsContainer.childNodes[0].firstElementChild.focus();
+
+        if (event.target.tagName == "A") {
+          listItemsContainer.childNodes[0].firstElementChild.childNodes[1].childNodes[1].focus();
+          return;
+        }
+        return;
+      }
     },
-    End: function ({ event, swapTabIndex, localStorageSwapIndex }) {
-      console.log("end", event);
+    End: function ({
+      event,
+      clickedTaskBtn,
+      keyboardDown,
+      statusOfTaskBtn,
+      swapTabIndex,
+      localStorageSwapIndex,
+      user,
+      board,
+      indexOfClickedTaskBtn,
+      listItemsContainer,
+      columns,
+    }) {
+      // if indexOfClickedTaskBtn == listItemsContainer.childElementCount - 1 return
+      if (indexOfClickedTaskBtn == listItemsContainer.childElementCount - 1)
+        return;
+      // if listItemsContainer.childElementCount >= 2 go to last item
+      if (listItemsContainer.childElementCount >= 2) {
+        console.log("hello");
+        swapTabIndex({
+          previousSelected:
+            listItemsContainer.childNodes[indexOfClickedTaskBtn]
+              .firstElementChild,
+          selected:
+            listItemsContainer.childNodes[
+              listItemsContainer.childElementCount - 1
+            ].firstElementChild,
+        });
+
+        localStorageSwapIndex({
+          previousSelected: columns[indexOfClickedTaskBtn],
+          selected: columns[listItemsContainer.childElementCount - 1],
+        });
+
+        listItemsContainer.childNodes[
+          listItemsContainer.childElementCount - 1
+        ].firstElementChild.focus();
+
+        if (event.target.tagName == "A") {
+          listItemsContainer.childNodes[
+            listItemsContainer.childElementCount - 1
+          ].firstElementChild.childNodes[1].childNodes[1].focus();
+          return;
+        }
+        return;
+      }
     },
   };
+
   const renderContextColumnsComponent = React.useContext(
     BoardTaskRenderContext
   );
@@ -173,8 +386,9 @@ export default function Columns({
                   ? event.target.closest("BUTTON")
                   : null;
 
-              const indexOfClickedTaskBtn =
-                clickedTaskBtn.getAttribute("data-orderindex");
+              const indexOfClickedTaskBtn = Number(
+                clickedTaskBtn.getAttribute("data-orderindex")
+              );
 
               const statusOfTaskBtn =
                 event.target.closest("BUTTON") &&
@@ -183,6 +397,12 @@ export default function Columns({
                       .closest("BUTTON")
                       .getAttribute("data-typeofstatus")
                   : null;
+
+              const listItemsContainer = document.getElementById(
+                `${statusOfTaskBtn}-column-selector`
+              ).childNodes[1];
+
+              const columns = board.columns[statusOfTaskBtn];
 
               if (keyboardMethods[event.code]) {
                 event.preventDefault();
@@ -199,6 +419,8 @@ export default function Columns({
                   user,
                   board,
                   indexOfClickedTaskBtn,
+                  listItemsContainer,
+                  columns,
                 });
               }
               localStorage.setItem("currentBoard", JSON.stringify(board));
