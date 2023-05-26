@@ -24,8 +24,14 @@ export default function TaskBtn({
           data-typeofstatus={status}
           className={TaskBtnStyles[`task-btn`]}
           draggable="true"
-          onDrag={(event) => {
-            console.log("this is drag");
+          onDragStart={(event) => {
+            console.log("this is drag start");
+          }}
+          onDragOver={(event) => {
+            console.log(event);
+          }}
+          onDrop={(event) => {
+            console.log(event);
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
@@ -57,8 +63,45 @@ export default function TaskBtn({
           data-typeofstatus={status}
           className={TaskBtnStyles[`task-btn`]}
           draggable="true"
-          onDrag={(event) => {
+          onDragStart={(event) => {
             console.log("this is drag");
+            console.log(event.target);
+          }}
+          onDragEnter={(event) => {
+            console.log("this is enter");
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "true");
+              return;
+            }
+          }}
+          onDragLeave={(event) => {
+            console.log("this is leave");
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "false");
+              return;
+            }
+          }}
+          onDragOver={(event) => {
+            event.preventDefault();
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "true");
+              return;
+            }
+            console.log("this is drag over");
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "false");
+              return;
+            }
+            // console.log(event.target);
+
+            console.log("drag drop");
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>

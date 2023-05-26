@@ -147,7 +147,7 @@ export default function Columns({
       if (indexOfClickedTaskBtn == 0) return;
       // if indexOfClickedTaskBtn == 1 go to first
       if (
-        listItemsContainer.childElementCount == 2 &&
+        listItemsContainer.childElementCount >= 2 &&
         indexOfClickedTaskBtn == 1
       ) {
         swapTabIndex({
@@ -211,50 +211,83 @@ export default function Columns({
       if (indexOfClickedTaskBtn == listItemsContainer.childElementCount - 1)
         return;
       // if indexOfClickedTaskBtn == 0 go to last item
+      // if (
+      //   listItemsContainer.childElementCount == 2 &&
+      //   indexOfClickedTaskBtn == 0
+      // ) {
+      //   swapTabIndex({
+      //     previousSelected: listItemsContainer.childNodes[0].firstElementChild,
+      //     selected: listItemsContainer.childNodes[1].firstElementChild,
+      //   });
+
+      //   localStorageSwapIndex({
+      //     previousSelected: columns[0],
+      //     selected: columns[1],
+      //   });
+
+      //   listItemsContainer.childNodes[1].firstElementChild.focus();
+
+      //   if (event.target.tagName == "A") {
+      //     listItemsContainer.childNodes[1].firstElementChild.childNodes[1].childNodes[1].focus();
+      //     return;
+      //   }
+      //   return;
+      // }
+      // if listItemsContainer.childElementCount >= 2 && indexOfClickedTaskBtn == listItemsContainer.childElementCount - 2
+      // go to last item
       if (
-        listItemsContainer.childElementCount == 2 &&
-        indexOfClickedTaskBtn == 0
+        listItemsContainer.childElementCount >= 2 &&
+        indexOfClickedTaskBtn == listItemsContainer.childElementCount - 2
       ) {
         swapTabIndex({
-          previousSelected: listItemsContainer.childNodes[0].firstElementChild,
-          selected: listItemsContainer.childNodes[1].firstElementChild,
+          previousSelected:
+            listItemsContainer.childNodes[indexOfClickedTaskBtn]
+              .firstElementChild,
+          selected:
+            listItemsContainer.childNodes[
+              listItemsContainer.childElementCount - 1
+            ].firstElementChild,
         });
 
         localStorageSwapIndex({
-          previousSelected: columns[0],
-          selected: columns[1],
+          previousSelected: columns[indexOfClickedTaskBtn],
+          selected: columns[listItemsContainer.childElementCount - 1],
         });
 
-        listItemsContainer.childNodes[1].firstElementChild.focus();
+        listItemsContainer.childNodes[
+          listItemsContainer.childElementCount - 1
+        ].firstElementChild.focus();
 
         if (event.target.tagName == "A") {
-          listItemsContainer.childNodes[1].firstElementChild.childNodes[1].childNodes[1].focus();
+          listItemsContainer.childNodes[
+            listItemsContainer.childElementCount - 1
+          ].firstElementChild.childNodes[1].childNodes[1].focus();
           return;
         }
         return;
       }
-      // go up two by subtracting 2 from indexOfClickedTaskBtn
+      // go up two by adding 2 from indexOfClickedTaskBtn
       swapTabIndex({
         previousSelected:
           listItemsContainer.childNodes[indexOfClickedTaskBtn]
             .firstElementChild,
         selected:
-          listItemsContainer.childNodes[indexOfClickedTaskBtn - 2]
+          listItemsContainer.childNodes[indexOfClickedTaskBtn + 2]
             .firstElementChild,
       });
 
       localStorageSwapIndex({
         previousSelected: columns[indexOfClickedTaskBtn],
-        selected: columns[indexOfClickedTaskBtn - 2],
+        selected: columns[indexOfClickedTaskBtn + 2],
       });
 
       listItemsContainer.childNodes[
-        indexOfClickedTaskBtn - 2
+        indexOfClickedTaskBtn + 2
       ].firstElementChild.focus();
 
       if (event.target.tagName == "A") {
         listItemsContainer.childNodes[
-          indexOfClickedTaskBtn - 2
+          indexOfClickedTaskBtn + 2
         ].firstElementChild.childNodes[1].childNodes[1].focus();
         return;
       }
@@ -570,3 +603,9 @@ export default function Columns({
     </React.Fragment>
   );
 }
+
+// function findTabIndex(array){
+//   array.forEach(element => {
+//     console.log(element.tabIndex);
+//   });
+// }
