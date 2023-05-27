@@ -25,13 +25,58 @@ export default function TaskBtn({
           className={TaskBtnStyles[`task-btn`]}
           draggable="true"
           onDragStart={(event) => {
-            console.log("this is drag start");
+            // console.log("this is drag");
+            // console.log(event.target);
+            const selectedTaskBtn = event.target.closest("BUTTON");
+            if (selectedTaskBtn) {
+              // we want status of task btn and index (data-orderindex and data-typeofstatus) to access the obj in local storage
+              const status = selectedTaskBtn.getAttribute("data-typeofstatus");
+              const index = selectedTaskBtn.getAttribute("data-orderindex");
+              localStorage.setItem(
+                "dragSelected",
+                JSON.stringify({ status, index })
+              );
+              console.log(selectedTaskBtn);
+              return;
+            }
+          }}
+          onDragEnter={(event) => {
+            console.log("this is enter");
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "true");
+              return;
+            }
+          }}
+          onDragLeave={(event) => {
+            console.log("this is leave");
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "false");
+              return;
+            }
           }}
           onDragOver={(event) => {
-            console.log(event);
+            event.preventDefault();
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              enteredTaskBtn.setAttribute("data-dragover", "true");
+              return;
+            }
+            console.log("this is drag over");
           }}
           onDrop={(event) => {
-            console.log(event);
+            event.preventDefault();
+            const enteredTaskBtn = event.target.closest("BUTTON");
+            if (enteredTaskBtn) {
+              // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
+              console.log(JSON.parse(localStorage.getItem("dataSelected")));
+              enteredTaskBtn.setAttribute("data-dragover", "false");
+              return;
+            }
+            // console.log(event.target);
+
+            console.log("drag drop");
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
@@ -66,6 +111,25 @@ export default function TaskBtn({
           onDragStart={(event) => {
             console.log("this is drag");
             console.log(event.target);
+            const selectedTaskBtn = event.target.closest("BUTTON");
+            if (selectedTaskBtn) {
+              // we want status of task btn and index (data-orderindex and data-typeofstatus) to access the obj in local storage
+              const status = selectedTaskBtn.getAttribute("data-typeofstatus");
+              const index = Number(
+                selectedTaskBtn.getAttribute("data-orderindex")
+              );
+              const selectedTaskObj = {
+                status,
+                index,
+              };
+              localStorage.setItem(
+                "dragSelected",
+                JSON.stringify(selectedTaskObj)
+              );
+              console.log(JSON.parse(localStorage.getItem("dragSelected")));
+              console.log(selectedTaskBtn);
+              return;
+            }
           }}
           onDragEnter={(event) => {
             console.log("this is enter");
@@ -94,9 +158,11 @@ export default function TaskBtn({
           }}
           onDrop={(event) => {
             event.preventDefault();
-            const enteredTaskBtn = event.target.closest("BUTTON");
-            if (enteredTaskBtn) {
-              enteredTaskBtn.setAttribute("data-dragover", "false");
+            const droppedTaskBtn = event.target.closest("BUTTON");
+            if (droppedTaskBtn) {
+              // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
+              console.log(JSON.parse(localStorage.getItem("dragSelected")));
+              droppedTaskBtn.setAttribute("data-dragover", "false");
               return;
             }
             // console.log(event.target);

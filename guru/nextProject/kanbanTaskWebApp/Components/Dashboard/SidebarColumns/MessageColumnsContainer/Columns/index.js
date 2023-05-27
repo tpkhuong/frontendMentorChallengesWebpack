@@ -556,7 +556,8 @@ export default function Columns({
             </p>
             <p className={ColumnsStyles[`assistive-description`]}>
               Pressing space key while focus is on a Task button will select
-              that button for drag and drop.
+              that button for drag and drop. Use arrow keys to move selected
+              elements.
             </p>
             <p className={ColumnsStyles[`assistive-description`]}>
               Pressing enter key while focus is on a Task button will open a
@@ -574,8 +575,14 @@ export default function Columns({
               className={ColumnsStyles[`descrition-container`]}
               id="keyboard-assistive-text"
             >
-              
             </div> */}
+            <div aria-live="assertive" id="assistive-text-selector">
+              {/* let user know of status changes */}
+              {/* title of task, current status grabber current position 1 of 6. status column */}
+              {/* no status change title of task, current status dropped, final position 3 of 6, status column  */}
+              {/* status change */}
+              {/* status change, title of task, new status done, final position 5 of 8, status column */}
+            </div>
           </div>
           <h2 className="visually-hidden" id="status-column-title">
             Status Columns
