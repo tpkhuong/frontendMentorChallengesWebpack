@@ -973,6 +973,33 @@ export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {
   // check if there is a currently selected task btn for drag and drop
 }
 
+export function selectOrUnselectedBtnForDragAndDrop({
+  clickedTaskBtn,
+  indexOfClickedTaskBtn,
+  statusOfTaskBtn,
+  user,
+  board,
+}) {
+  // we want status and index of selected task btn
+  // apply id drag-drop-selected to selected task btn
+  if (!clickedTaskBtn.getAttribute("id")) {
+    clickedTaskBtn.setAttribute("id", "drag-drop-selected");
+    // to assign boolean true for property isSelected in local storage
+    board.columns[statusOfTaskBtn][indexOfClickedTaskBtn].isSelected = true;
+    console.log(board.columns[statusOfTaskBtn][indexOfClickedTaskBtn]);
+    console.log(board);
+    return;
+  }
+  if (clickedTaskBtn.getAttribute("id") == "drag-drop-selected") {
+    clickedTaskBtn.removeAttribute("id");
+    // to assign boolean false for property isSelected in local storage
+    board.columns[statusOfTaskBtn][indexOfClickedTaskBtn].isSelected = false;
+    return;
+  }
+  // update values in currentBoard obj and currentUser obj in local storage
+  // will be done by algorithm at end of onKeydown of Columns module
+}
+
 export function selectTaskBtnAndApplyTabIndexMouse({ event }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));
@@ -1223,3 +1250,7 @@ function openViewModal({
 //               }, 80);
 //             }
 //           }}
+
+function swap(arr, indexOne, indexTwo) {
+  [arr[indexOne], arr[indexTwo]] = [arr[indexTwo], arr[indexOne]];
+}

@@ -9,6 +9,7 @@ import {
   keyboardUp,
   swapTabIndex,
   localStorageSwapIndex,
+  selectOrUnselectedBtnForDragAndDrop,
   mousedownOnTaskBtn,
   touchstartOnTaskBtn,
 } from "./columnsHelpers.js";
@@ -23,11 +24,39 @@ export default function Columns({
 }) {
   // obj methods for keyboard
   const keyboardMethods = {
-    Enter: function ({ event }) {
-      console.log("enter", event);
+    Enter: function ({
+      event,
+      clickedTaskBtn,
+      indexOfClickedTaskBtn,
+      statusOfTaskBtn,
+      user,
+      board,
+    }) {
+      selectOrUnselectedBtnForDragAndDrop({
+        event,
+        clickedTaskBtn,
+        indexOfClickedTaskBtn,
+        statusOfTaskBtn,
+        user,
+        board,
+      });
     },
-    Space: function ({ event }) {
-      console.log("space", event);
+    Space: function ({
+      event,
+      clickedTaskBtn,
+      indexOfClickedTaskBtn,
+      statusOfTaskBtn,
+      user,
+      board,
+    }) {
+      selectOrUnselectedBtnForDragAndDrop({
+        event,
+        clickedTaskBtn,
+        indexOfClickedTaskBtn,
+        statusOfTaskBtn,
+        user,
+        board,
+      });
     },
     ArrowLeft: function ({
       event,
