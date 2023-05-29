@@ -799,7 +799,9 @@ export function keyboardDown({
   indexOfClickedTaskBtn,
   listItemsContainer,
   columns,
+  renderContextColumnsComponent,
 }) {
+  const isDragDroppedSelected = document.getElementById("drag-drop-selected");
   // const taskBtn = document.getElementById(`${statusOfTaskBtn}-column-selector`)
   // .childNodes[1].childNodes[indexOfClickedTaskBtn].firstElementChild;
 
@@ -810,7 +812,12 @@ export function keyboardDown({
   const lengthOfColumnContainerChildrenMinusOne =
     listItemsContainer.childElementCount - 1;
 
+  // we are at last item of column
   if (indexOfClickedTaskBtn == lengthOfColumnContainerChildrenMinusOne) {
+    // if (isDragDroppedSelected) {
+    //   // user selected a task btn for drag and drop
+    //   return;
+    // }
     const focusFirstTaskBtn =
       listItemsContainer.childNodes[0].firstElementChild;
 
@@ -831,6 +838,35 @@ export function keyboardDown({
       focusFirstTaskBtn.childNodes[1].childNodes[1].focus();
       return;
     }
+    return;
+  }
+
+  if (isDragDroppedSelected) {
+    // user selected a task btn for drag and drop
+    // just need the index
+    const currentTaskBtnAtCurrPosition =
+      board.columns[statusOfTaskBtn][indexOfClickedTaskBtn];
+    const positionIndexPlusOne = indexOfClickedTaskBtn + 1;
+    const itemToSwap = board.columns[statusOfTaskBtn][positionIndexPlusOne];
+    // we want to swap the task btn obj in local storage
+    swap(
+      board.columns[statusOfTaskBtn],
+      indexOfClickedTaskBtn,
+      positionIndexPlusOne
+    );
+    // update index of each obj in board.columns[statusOfTaskBtn]
+    board.columns[statusOfTaskBtn].forEach(function updateIndex(obj, index) {
+      obj.index = index;
+    });
+    // render status column
+    renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+      board.columns[statusOfTaskBtn]
+    );
+    // focus task btn with id drag-drop-selected
+    setTimeout(() => {
+      document.getElementById("drag-drop-selected").focus();
+    }, 80);
+
     return;
   }
 

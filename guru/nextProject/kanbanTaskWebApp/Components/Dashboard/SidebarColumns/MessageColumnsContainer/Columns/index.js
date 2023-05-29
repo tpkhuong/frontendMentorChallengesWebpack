@@ -144,6 +144,7 @@ export default function Columns({
       indexOfClickedTaskBtn,
       listItemsContainer,
       columns,
+      renderContextColumnsComponent,
     }) {
       keyboardDown({
         event,
@@ -156,6 +157,7 @@ export default function Columns({
         indexOfClickedTaskBtn,
         listItemsContainer,
         columns,
+        renderContextColumnsComponent,
       });
       // console.log("arrowdown", event);
     },
@@ -483,6 +485,7 @@ export default function Columns({
                   indexOfClickedTaskBtn,
                   listItemsContainer,
                   columns,
+                  renderContextColumnsComponent,
                 });
               }
               localStorage.setItem("currentBoard", JSON.stringify(board));
