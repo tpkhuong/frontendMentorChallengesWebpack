@@ -807,94 +807,292 @@ export function keyboardDown({
 
   if (listItemsContainer.childElementCount == 1) return;
 
+  // we might not have to remove/apply "drag-drop-selected"
+  // to the swap elements
+  if (isDragDroppedSelected) {
+    if (
+      indexOfClickedTaskBtn ==
+      document.getElementById(`${statusOfTaskBtn}-column-selector`)
+        .childNodes[1].children.length
+    ) {
+      const copyArrayOfObjs = board.columns[statusOfTaskBtn];
+
+      const lastItem = copyArrayOfObjs.pop();
+
+      const rearrangedItemsArray = [lastItem, ...copyArrayOfObjs];
+
+      rearrangedItemsArray.forEach(function updateIndex(obj, index) {
+        obj.index = index;
+      });
+
+      board.columns[statusOfTaskBtn] = rearrangedItemsArray;
+
+      user.boards[board.index] = board;
+
+      console.log(rearrangedItemsArray);
+
+      clickedTaskBtn.removeAttribute("id");
+
+      renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+        rearrangedItemsArray
+      );
+
+      // setTimeout(() => {
+      //   if (event.target.tagName == "A") {
+      //     document
+      //       .getElementById("drag-drop-selected")
+      //       .childNodes[1].childNodes[1].focus();
+      //     return;
+      //   }
+
+      //   document.getElementById("drag-drop-selected").focus();
+      // }, 80);
+
+      return;
+      // setTimeout(() => {
+      //   const focusTaskBtn = document.getElementById(
+      //     `${statusOfTaskBtn}-column-selector`
+      //   ).childNodes[1].childNodes[0].firstElementChild;
+
+      //   focusTaskBtn.setAttribute("id", "drag-drop-selected");
+
+      //   if (event.target.tagName == "A") {
+      //     focusTaskBtn.childNodes[1].childNodes[1].focus();
+      //     return;
+      //   }
+
+      //   document.getElementById("drag-drop-selected").focus();
+      // }, 550);
+
+      // setTimeout(() => {
+      //   renderContextColumnsComponent.setStateFuncs[
+      //     `${statusOfTaskBtn}-column-selector`
+      //   ](rearrangedItemsArray);
+      // }, 530);
+    }
+
+    const positionIndexPlusOne = indexOfClickedTaskBtn + 1;
+    // we want to swap the task btn obj in local storage
+    const copiedArray = [].concat(board.columns[statusOfTaskBtn]);
+    swap(copiedArray, indexOfClickedTaskBtn, positionIndexPlusOne);
+    // update index of each obj in board.columns[statusOfTaskBtn]
+    copiedArray.forEach(function updateIndex(obj, index) {
+      obj.index = index;
+    });
+
+    board.columns[statusOfTaskBtn] = copiedArray;
+
+    user.boards[board.index] = board;
+
+    clickedTaskBtn.removeAttribute("id");
+
+    renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+      copiedArray
+    );
+
+    setTimeout(() => {
+      if (event.target.tagName == "A") {
+        document
+          .getElementById("drag-drop-selected")
+          .childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      document.getElementById("drag-drop-selected").focus();
+    }, 80);
+
+    // // focus task btn with id drag-drop-selected
+    // setTimeout(() => {
+    //   // console.log(
+    //   //   document.getElementById(`${statusOfTaskBtn}-column-selector`)
+    //   //     .childNodes[1].childNodes[positionIndexPlusOne]
+    //   // );
+    //   // console.log(indexOfClickedTaskBtn);
+    //   // console.log(positionIndexPlusOne);
+    //   const applyDragDropSelectedToElement = document.getElementById(
+    //     `${statusOfTaskBtn}-column-selector`
+    //   ).childNodes[1].childNodes[positionIndexPlusOne].firstElementChild;
+
+    //   applyDragDropSelectedToElement.setAttribute("id", "drag-drop-selected");
+
+    //   if (event.target.tagName == "A") {
+    //     applyDragDropSelectedToElement.childNodes[1].childNodes[1].focus();
+    //     return;
+    //   }
+
+    //   document.getElementById("drag-drop-selected").focus();
+    // }, 550);
+    // // render status column
+    // setTimeout(() => {
+    //   renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+    //     board.columns[statusOfTaskBtn]
+    //   );
+    // }, 530);
+
+    return;
+  }
+
+  // if (isDragDroppedSelected) {
+  //   if (
+  //     indexOfClickedTaskBtn ==
+  //     document.getElementById(`${statusOfTaskBtn}-column-selector`)
+  //       .childNodes[1].childElementCount -
+  //       1
+  //   ) {
+  //     const copyArrayOfObjs = board.columns[statusOfTaskBtn];
+
+  //     const lastItem = copyArrayOfObjs.pop();
+
+  //     const rearrangedItemsArray = [lastItem, ...copyArrayOfObjs];
+
+  //     rearrangedItemsArray.forEach(function updateIndex(obj, index) {
+  //       obj.index = index;
+  //     });
+
+  //     clickedTaskBtn.removeAttribute("id");
+
+  //     setTimeout(() => {
+  //       const focusTaskBtn = document.getElementById(
+  //         `${statusOfTaskBtn}-column-selector`
+  //       ).childNodes[1].childNodes[0].firstElementChild;
+
+  //       focusTaskBtn.setAttribute("id", "drag-drop-selected");
+
+  //       if (event.target.tagName == "A") {
+  //         focusTaskBtn.childNodes[1].childNodes[1].focus();
+  //         return;
+  //       }
+
+  //       document.getElementById("drag-drop-selected").focus();
+  //     }, 550);
+
+  //     setTimeout(() => {
+  //       renderContextColumnsComponent.setStateFuncs[
+  //         `${statusOfTaskBtn}-column-selector`
+  //       ](rearrangedItemsArray);
+  //     }, 530);
+
+  //     return;
+  //   }
+
+  //   // user selected a task btn for drag and drop
+  //   // just need the index
+  //   // const currentTaskBtnAtCurrPosition =
+  //   //   board.columns[statusOfTaskBtn][indexOfClickedTaskBtn];
+  //   // const indexOfSwapItem =
+  //   //   indexOfClickedTaskBtn ==
+  //   //   document.getElementById(`${statusOfTaskBtn}-column-selector`)
+  //   //     .childNodes[1].childElementCount -
+  //   //     1
+  //   //     ? 0
+  //   //     : indexOfClickedTaskBtn + 1;
+  //   const positionIndexPlusOne = indexOfClickedTaskBtn + 1;
+  //   // const itemToSwap = board.columns[statusOfTaskBtn][positionIndexPlusOne];
+  //   // we want to swap the task btn obj in local storage
+  //   swap(
+  //     board.columns[statusOfTaskBtn],
+  //     indexOfClickedTaskBtn,
+  //     positionIndexPlusOne
+  //   );
+  //   // update index of each obj in board.columns[statusOfTaskBtn]
+  //   board.columns[statusOfTaskBtn].forEach(function updateIndex(obj, index) {
+  //     obj.index = index;
+  //   });
+  //   clickedTaskBtn.removeAttribute("id");
+  //   // focus task btn with id drag-drop-selected
+  //   setTimeout(() => {
+  //     // console.log(
+  //     //   document.getElementById(`${statusOfTaskBtn}-column-selector`)
+  //     //     .childNodes[1].childNodes[positionIndexPlusOne]
+  //     // );
+  //     // console.log(indexOfClickedTaskBtn);
+  //     // console.log(positionIndexPlusOne);
+  //     const applyDragDropSelectedToElement = document.getElementById(
+  //       `${statusOfTaskBtn}-column-selector`
+  //     ).childNodes[1].childNodes[positionIndexPlusOne].firstElementChild;
+
+  //     applyDragDropSelectedToElement.setAttribute("id", "drag-drop-selected");
+
+  //     if (event.target.tagName == "A") {
+  //       applyDragDropSelectedToElement.childNodes[1].childNodes[1].focus();
+  //       return;
+  //     }
+
+  //     document.getElementById("drag-drop-selected").focus();
+  //   }, 550);
+  //   // render status column
+  //   setTimeout(() => {
+  //     renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+  //       board.columns[statusOfTaskBtn]
+  //     );
+  //   }, 530);
+
+  //   return;
+  // }
+
   // if index == to length childNodes of ul focus element at index 0
 
-  const lengthOfColumnContainerChildrenMinusOne =
-    listItemsContainer.childElementCount - 1;
+  if (!isDragDroppedSelected) {
+    console.log("wow");
+    const lengthOfColumnContainerChildrenMinusOne =
+      listItemsContainer.childElementCount - 1;
 
-  // we are at last item of column
-  if (indexOfClickedTaskBtn == lengthOfColumnContainerChildrenMinusOne) {
-    // if (isDragDroppedSelected) {
-    //   // user selected a task btn for drag and drop
-    //   return;
-    // }
-    const focusFirstTaskBtn =
-      listItemsContainer.childNodes[0].firstElementChild;
+    // we are at last item of column
+    if (indexOfClickedTaskBtn == lengthOfColumnContainerChildrenMinusOne) {
+      // if (isDragDroppedSelected) {
+      //   // user selected a task btn for drag and drop
+      //   return;
+      // }
+      const focusFirstTaskBtn =
+        listItemsContainer.childNodes[0].firstElementChild;
+
+      swapTabIndex({
+        previousSelected:
+          listItemsContainer.childNodes[indexOfClickedTaskBtn]
+            .firstElementChild,
+        selected: focusFirstTaskBtn,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: columns[indexOfClickedTaskBtn],
+        selected: columns[0],
+      });
+
+      focusFirstTaskBtn.focus();
+
+      if (event.target.tagName == "A") {
+        focusFirstTaskBtn.childNodes[1].childNodes[1].focus();
+        return;
+      }
+      return;
+    }
+
+    // default algorithm
+    // our index increases as user select a task btn
+    const clickedTaskIndexPlusOne = indexOfClickedTaskBtn + 1;
+
+    const focusNextTaskBtn =
+      listItemsContainer.childNodes[clickedTaskIndexPlusOne].firstElementChild;
 
     swapTabIndex({
       previousSelected:
         listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
-      selected: focusFirstTaskBtn,
+      selected: focusNextTaskBtn,
     });
 
     localStorageSwapIndex({
       previousSelected: columns[indexOfClickedTaskBtn],
-      selected: columns[0],
+      selected: columns[clickedTaskIndexPlusOne],
     });
 
-    focusFirstTaskBtn.focus();
+    focusNextTaskBtn.focus();
 
     if (event.target.tagName == "A") {
-      focusFirstTaskBtn.childNodes[1].childNodes[1].focus();
+      focusNextTaskBtn.childNodes[1].childNodes[1].focus();
       return;
     }
     return;
   }
-
-  if (isDragDroppedSelected) {
-    // user selected a task btn for drag and drop
-    // just need the index
-    const currentTaskBtnAtCurrPosition =
-      board.columns[statusOfTaskBtn][indexOfClickedTaskBtn];
-    const positionIndexPlusOne = indexOfClickedTaskBtn + 1;
-    const itemToSwap = board.columns[statusOfTaskBtn][positionIndexPlusOne];
-    // we want to swap the task btn obj in local storage
-    swap(
-      board.columns[statusOfTaskBtn],
-      indexOfClickedTaskBtn,
-      positionIndexPlusOne
-    );
-    // update index of each obj in board.columns[statusOfTaskBtn]
-    board.columns[statusOfTaskBtn].forEach(function updateIndex(obj, index) {
-      obj.index = index;
-    });
-    // render status column
-    renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
-      board.columns[statusOfTaskBtn]
-    );
-    // focus task btn with id drag-drop-selected
-    setTimeout(() => {
-      document.getElementById("drag-drop-selected").focus();
-    }, 80);
-
-    return;
-  }
-
-  // default algorithm
-  // our index increases as user select a task btn
-  const clickedTaskIndexPlusOne = indexOfClickedTaskBtn + 1;
-
-  const focusNextTaskBtn =
-    listItemsContainer.childNodes[clickedTaskIndexPlusOne].firstElementChild;
-
-  swapTabIndex({
-    previousSelected:
-      listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
-    selected: focusNextTaskBtn,
-  });
-
-  localStorageSwapIndex({
-    previousSelected: columns[indexOfClickedTaskBtn],
-    selected: columns[clickedTaskIndexPlusOne],
-  });
-
-  focusNextTaskBtn.focus();
-
-  if (event.target.tagName == "A") {
-    focusNextTaskBtn.childNodes[1].childNodes[1].focus();
-    return;
-  }
-  return;
 }
 
 export function keyboardUp({
@@ -1289,4 +1487,23 @@ function openViewModal({
 
 function swap(arr, indexOne, indexTwo) {
   [arr[indexOne], arr[indexTwo]] = [arr[indexTwo], arr[indexOne]];
+}
+
+function stuff() {
+  <TaskBtn
+    selected={obj.isSelected}
+    tab={obj.tabIndex}
+    position={index}
+    status={obj.status}
+    completed={`${obj.subtasks.reduce((buildingUp, currentValue) => {
+      console.log("buildingUp", buildingUp);
+      console.log("currentValue", currentValue);
+      console.log("this is todo column");
+      buildingUp = currentValue.isCompleted ? buildingUp + 1 : buildingUp;
+      return buildingUp;
+    }, 0)}`}
+    total={`${obj.subtasks.length}`}
+  >
+    {obj.title}
+  </TaskBtn>;
 }
