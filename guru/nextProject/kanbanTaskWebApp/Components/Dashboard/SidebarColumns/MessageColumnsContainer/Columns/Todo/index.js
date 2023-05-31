@@ -292,230 +292,27 @@ export default function TodoColumn({ children, todoColumnArray }) {
               console.log(obj);
               return (
                 <li key={Math.random() * index}>
-                  {obj.isSelected ? (
-                    <button
-                      tabIndex={obj.tabIndex}
-                      id="drag-drop-selected"
-                      data-orderindex={index}
-                      data-typeofstatus={obj.status}
-                      className={TodoColumnStyles[`task-btn`]}
-                      draggable="true"
-                      onDragStart={(event) => {
-                        // console.log("this is drag");
-                        // console.log(event.target);
-                        const selectedTaskBtn = event.target.closest("BUTTON");
-                        if (selectedTaskBtn) {
-                          // we want status of task btn and index (data-orderindex and data-typeofstatus) to access the obj in local storage
-                          const status =
-                            selectedTaskBtn.getAttribute("data-typeofstatus");
-                          const index =
-                            selectedTaskBtn.getAttribute("data-orderindex");
-                          localStorage.setItem(
-                            "dragSelected",
-                            JSON.stringify({ status, index })
-                          );
-                          console.log(selectedTaskBtn);
-                          return;
-                        }
-                      }}
-                      onDragEnter={(event) => {
-                        console.log("this is enter");
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "true");
-                          return;
-                        }
-                      }}
-                      onDragLeave={(event) => {
-                        console.log("this is leave");
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "false");
-                          return;
-                        }
-                      }}
-                      onDragOver={(event) => {
-                        event.preventDefault();
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "true");
-                          return;
-                        }
-                        console.log("this is drag over");
-                      }}
-                      onDrop={(event) => {
-                        event.preventDefault();
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
-                          console.log(
-                            JSON.parse(localStorage.getItem("dataSelected"))
-                          );
-                          enteredTaskBtn.setAttribute("data-dragover", "false");
-                          return;
-                        }
-                        // console.log(event.target);
-
-                        console.log("drag drop");
-                      }}
-                    >
-                      <h3 className={TodoColumnStyles[`task-title`]}>
-                        {obj.title}
-                      </h3>
-                      <div
-                        className={TodoColumnStyles[`subtasks-icon-container`]}
-                      >
-                        <div className={TodoColumnStyles[`subtasks-container`]}>
-                          <span
-                            className={TodoColumnStyles[`subtasks-completed`]}
-                          >
-                            {`${obj.subtasks.reduce(
-                              (buildingUp, currentValue) => {
-                                console.log("buildingUp", buildingUp);
-                                console.log("currentValue", currentValue);
-                                console.log("this is todo column");
-                                buildingUp = currentValue.isCompleted
-                                  ? buildingUp + 1
-                                  : buildingUp;
-                                return buildingUp;
-                              },
-                              0
-                            )}`}
-                          </span>
-                          <span>of</span>
-                          <span className={TodoColumnStyles[`subtasks-total`]}>
-                            {`${obj.subtasks.length}`}
-                          </span>
-                          <span>subtasks</span>
-                        </div>
-                        {/* open view icon */}
-                        <a
-                          id="view-icon-selector"
-                          role="button"
-                          tabIndex={obj.tabIndex}
-                          className={TodoColumnStyles[`open-view-icon-btn`]}
-                          aria-label="open view modal"
-                        >
-                          <VscOpenPreview />
-                        </a>
-                      </div>
-                    </button>
-                  ) : (
-                    <button
-                      tabIndex={obj.tabIndex}
-                      data-orderindex={index}
-                      data-typeofstatus={obj.status}
-                      className={TodoColumnStyles[`task-btn`]}
-                      draggable="true"
-                      onDragStart={(event) => {
-                        console.log("this is drag");
-                        console.log(event.target);
-                        const selectedTaskBtn = event.target.closest("BUTTON");
-                        if (selectedTaskBtn) {
-                          // we want status of task btn and index (data-orderindex and data-typeofstatus) to access the obj in local storage
-                          const status =
-                            selectedTaskBtn.getAttribute("data-typeofstatus");
-                          const index = Number(
-                            selectedTaskBtn.getAttribute("data-orderindex")
-                          );
-                          const selectedTaskObj = {
-                            status,
-                            index,
-                          };
-                          localStorage.setItem(
-                            "dragSelected",
-                            JSON.stringify(selectedTaskObj)
-                          );
-                          console.log(
-                            JSON.parse(localStorage.getItem("dragSelected"))
-                          );
-                          console.log(selectedTaskBtn);
-                          return;
-                        }
-                      }}
-                      onDragEnter={(event) => {
-                        console.log("this is enter");
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "true");
-                          return;
-                        }
-                      }}
-                      onDragLeave={(event) => {
-                        console.log("this is leave");
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "false");
-                          return;
-                        }
-                      }}
-                      onDragOver={(event) => {
-                        event.preventDefault();
-                        const enteredTaskBtn = event.target.closest("BUTTON");
-                        if (enteredTaskBtn) {
-                          enteredTaskBtn.setAttribute("data-dragover", "true");
-                          return;
-                        }
-                        console.log("this is drag over");
-                      }}
-                      onDrop={(event) => {
-                        event.preventDefault();
-                        const droppedTaskBtn = event.target.closest("BUTTON");
-                        if (droppedTaskBtn) {
-                          // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
-                          console.log(
-                            JSON.parse(localStorage.getItem("dragSelected"))
-                          );
-                          droppedTaskBtn.setAttribute("data-dragover", "false");
-                          return;
-                        }
-                        // console.log(event.target);
-
-                        console.log("drag drop");
-                      }}
-                    >
-                      <h3 className={TodoColumnStyles[`task-title`]}>
-                        {obj.title}
-                      </h3>
-                      <div
-                        className={TodoColumnStyles[`subtasks-icon-container`]}
-                      >
-                        <div className={TodoColumnStyles[`subtasks-container`]}>
-                          <span
-                            className={TodoColumnStyles[`subtasks-completed`]}
-                          >
-                            {`${obj.subtasks.reduce(
-                              (buildingUp, currentValue) => {
-                                console.log("buildingUp", buildingUp);
-                                console.log("currentValue", currentValue);
-                                console.log("this is todo column");
-                                buildingUp = currentValue.isCompleted
-                                  ? buildingUp + 1
-                                  : buildingUp;
-                                return buildingUp;
-                              },
-                              0
-                            )}`}
-                          </span>
-                          <span>of</span>
-                          <span className={TodoColumnStyles[`subtasks-total`]}>
-                            {`${obj.subtasks.length}`}
-                          </span>
-                          <span>subtasks</span>
-                        </div>
-                        {/* open view icon */}
-                        <a
-                          tabIndex={obj.tabIndex}
-                          id="view-icon-selector"
-                          role="button"
-                          className={TodoColumnStyles[`open-view-icon-btn`]}
-                          aria-label="open view modal"
-                        >
-                          <VscOpenPreview />
-                        </a>
-                      </div>
-                    </button>
-                  )}
+                  <TaskBtn
+                    selected={obj.isSelected}
+                    tab={obj.tabIndex}
+                    position={index}
+                    status={obj.status}
+                    completed={`${obj.subtasks.reduce(
+                      (buildingUp, currentValue) => {
+                        console.log("buildingUp", buildingUp);
+                        console.log("currentValue", currentValue);
+                        console.log("this is todo column");
+                        buildingUp = currentValue.isCompleted
+                          ? buildingUp + 1
+                          : buildingUp;
+                        return buildingUp;
+                      },
+                      0
+                    )}`}
+                    total={`${obj.subtasks.length}`}
+                  >
+                    {obj.title}
+                  </TaskBtn>
                 </li>
               );
             })}

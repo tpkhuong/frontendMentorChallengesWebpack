@@ -810,16 +810,24 @@ export function keyboardDown({
   // we might not have to remove/apply "drag-drop-selected"
   // to the swap elements
   if (isDragDroppedSelected) {
+    // console.log(indexOfClickedTaskBtn, "indexOfClickedTaskBtn");
+    // console.log(
+    //   document.getElementById(`${statusOfTaskBtn}-column-selector`)
+    //     .childNodes[1].children.length
+    // );
     if (
       indexOfClickedTaskBtn ==
       document.getElementById(`${statusOfTaskBtn}-column-selector`)
-        .childNodes[1].children.length
+        .childNodes[1].children.length -
+        1
     ) {
       const copyArrayOfObjs = board.columns[statusOfTaskBtn];
 
       const lastItem = copyArrayOfObjs.pop();
 
       const rearrangedItemsArray = [lastItem, ...copyArrayOfObjs];
+
+      console.log(rearrangedItemsArray, "rearrangedItemsArray");
 
       rearrangedItemsArray.forEach(function updateIndex(obj, index) {
         obj.index = index;
@@ -837,16 +845,16 @@ export function keyboardDown({
         rearrangedItemsArray
       );
 
-      // setTimeout(() => {
-      //   if (event.target.tagName == "A") {
-      //     document
-      //       .getElementById("drag-drop-selected")
-      //       .childNodes[1].childNodes[1].focus();
-      //     return;
-      //   }
+      setTimeout(() => {
+        if (event.target.tagName == "A") {
+          document
+            .getElementById("drag-drop-selected")
+            .childNodes[1].childNodes[1].focus();
+          return;
+        }
 
-      //   document.getElementById("drag-drop-selected").focus();
-      // }, 80);
+        document.getElementById("drag-drop-selected").focus();
+      }, 80);
 
       return;
       // setTimeout(() => {
@@ -873,9 +881,12 @@ export function keyboardDown({
 
     const positionIndexPlusOne = indexOfClickedTaskBtn + 1;
     // we want to swap the task btn obj in local storage
-    const copiedArray = [].concat(board.columns[statusOfTaskBtn]);
+    console.log(board.columns[statusOfTaskBtn]);
+    const copiedArray = [...board.columns[statusOfTaskBtn]];
+    console.log(copiedArray);
     swap(copiedArray, indexOfClickedTaskBtn, positionIndexPlusOne);
     // update index of each obj in board.columns[statusOfTaskBtn]
+    console.log(copiedArray);
     copiedArray.forEach(function updateIndex(obj, index) {
       obj.index = index;
     });
@@ -1486,7 +1497,9 @@ function openViewModal({
 //           }}
 
 function swap(arr, indexOne, indexTwo) {
-  [arr[indexOne], arr[indexTwo]] = [arr[indexTwo], arr[indexOne]];
+  const saveRef = arr[indexOne];
+  arr[indexOne] = arr[indexTwo];
+  arr[indexTwo] = saveRef;
 }
 
 function stuff() {
