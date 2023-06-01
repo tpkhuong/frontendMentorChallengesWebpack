@@ -68,6 +68,7 @@ export default function Columns({
       user,
       board,
       indexOfClickedTaskBtn,
+      renderContextColumnsComponent,
     }) {
       keyboardLeft({
         event,
@@ -78,6 +79,7 @@ export default function Columns({
         user,
         board,
         indexOfClickedTaskBtn,
+        renderContextColumnsComponent,
       });
       // console.log("arrowleft", event);
     },
@@ -93,6 +95,7 @@ export default function Columns({
       indexOfClickedTaskBtn,
       listItemsContainer,
       columns,
+      renderContextColumnsComponent,
     }) {
       keyboardUp({
         event,
@@ -105,6 +108,7 @@ export default function Columns({
         indexOfClickedTaskBtn,
         listItemsContainer,
         columns,
+        renderContextColumnsComponent,
       });
       // console.log("arrowup", event);
     },
@@ -118,6 +122,7 @@ export default function Columns({
       user,
       board,
       indexOfClickedTaskBtn,
+      renderContextColumnsComponent,
     }) {
       keyboardRight({
         event,
@@ -129,6 +134,7 @@ export default function Columns({
         user,
         board,
         indexOfClickedTaskBtn,
+        renderContextColumnsComponent,
       });
       // console.log("arrowright", event);
     },

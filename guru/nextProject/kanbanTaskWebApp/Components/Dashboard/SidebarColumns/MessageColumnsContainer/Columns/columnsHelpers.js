@@ -382,6 +382,7 @@ export function keyboardLeft({
       document.getElementById("done-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -409,6 +410,7 @@ export function keyboardLeft({
       document.getElementById("doing-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -823,6 +825,8 @@ export function keyboardDown({
     ) {
       const copyArrayOfObjs = board.columns[statusOfTaskBtn];
 
+      // const objsBeforeLastItem = copyArrayOfObjs.slice(0, -1);
+
       const lastItem = copyArrayOfObjs.pop();
 
       const rearrangedItemsArray = [lastItem, ...copyArrayOfObjs];
@@ -846,6 +850,20 @@ export function keyboardDown({
       );
 
       setTimeout(() => {
+        // apply id and tabindex 0 to first task btn
+
+        const firstElementTaskBtn = document.getElementById(
+          `${statusOfTaskBtn}-column-selector`
+        ).childNodes[1].childNodes[0].firstElementChild;
+
+        firstElementTaskBtn.getAttribute("id") != "drag-drop-selected"
+          ? firstElementTaskBtn.setAttribute("id", "drag-drop-selected")
+          : null;
+
+        firstElementTaskBtn.getAttribute("tabindex") === "-1"
+          ? firstElementTaskBtn.setAttribute("tabindex", "0")
+          : null;
+
         if (event.target.tagName == "A") {
           document
             .getElementById("drag-drop-selected")
@@ -1117,61 +1135,165 @@ export function keyboardUp({
   indexOfClickedTaskBtn,
   listItemsContainer,
   columns,
+  renderContextColumnsComponent,
 }) {
+  const isDragDroppedSelectedKeyUp =
+    document.getElementById("drag-drop-selected");
+
   if (listItemsContainer.childElementCount == 1) return;
 
-  // if indexOfClickedTaskBtn == 0 select last item
+  if (isDragDroppedSelectedKeyUp) {
+    // user selected task btn for drag and drop
+    if (indexOfClickedTaskBtn === 0) {
+      // move first item to last item of array
+      const copiedArray = [...board.columns[statusOfTaskBtn]];
 
-  if (indexOfClickedTaskBtn == 0) {
-    const lastItem =
-      listItemsContainer.childNodes[listItemsContainer.childElementCount - 1]
-        .firstElementChild;
+      const firstObj = copiedArray.shift();
+
+      const newOrderedArray = [...copiedArray, firstObj];
+
+      newOrderedArray.forEach(function updateIndex(obj, index) {
+        obj.index = index;
+      });
+
+      board.columns[statusOfTaskBtn] = newOrderedArray;
+
+      user.boards[board.index] = board;
+
+      console.log(newOrderedArray);
+
+      clickedTaskBtn.removeAttribute("id");
+
+      renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+        newOrderedArray
+      );
+
+      setTimeout(() => {
+        // console.log(
+        //   document.getElementById(`${statusOfTaskBtn}-column-selector`)
+        //     .childNodes[1].childNodes[
+        //     document.getElementById(`${statusOfTaskBtn}-column-selector`)
+        //       .childNodes[1].childElementCount - 1
+        //   ].firstElementChild
+        // );
+        const lastItem = document.getElementById(
+          `${statusOfTaskBtn}-column-selector`
+        ).childNodes[1].childNodes[
+          document.getElementById(`${statusOfTaskBtn}-column-selector`)
+            .childNodes[1].childElementCount - 1
+        ].firstElementChild;
+
+        lastItem.getAttribute("id") != "drag-drop-selected"
+          ? lastItem.setAttribute("id", "drag-drop-selected")
+          : null;
+
+        lastItem.getAttribute("tabindex") === "-1"
+          ? lastItem.setAttribute("tabindex", "0")
+          : null;
+
+        if (event.target.tagName == "A") {
+          document
+            .getElementById("drag-drop-selected")
+            .childNodes[1].childNodes[1].focus();
+          return;
+        }
+
+        document.getElementById("drag-drop-selected").focus();
+      }, 80);
+      return;
+    }
+    // default algorithm
+    const indexMinusOne = indexOfClickedTaskBtn - 1;
+
+    const arrayCopied = [...board.columns[statusOfTaskBtn]];
+
+    swap(arrayCopied, indexOfClickedTaskBtn, indexMinusOne);
+
+    // update index of objs in arrayCopied
+
+    arrayCopied.forEach(function updateIndex(obj, index) {
+      obj.index = index;
+    });
+
+    // update data in local storage
+
+    board.columns[statusOfTaskBtn] = arrayCopied;
+
+    user.boards[board.index] = board;
+
+    clickedTaskBtn.removeAttribute("id");
+
+    renderContextColumnsComponent.setStateFuncs[`${statusOfTaskBtn}Column`](
+      arrayCopied
+    );
+
+    setTimeout(() => {
+      if (event.target.tagName == "A") {
+        document
+          .getElementById("drag-drop-selected")
+          .childNodes[1].childNodes[1].focus();
+        return;
+      }
+
+      document.getElementById("drag-drop-selected").focus();
+    }, 80);
+    return;
+  }
+
+  if (!isDragDroppedSelectedKeyUp) {
+    // if indexOfClickedTaskBtn == 0 select last item
+
+    if (indexOfClickedTaskBtn == 0) {
+      const lastItem =
+        listItemsContainer.childNodes[listItemsContainer.childElementCount - 1]
+          .firstElementChild;
+
+      swapTabIndex({
+        previousSelected: listItemsContainer.childNodes[0].firstElementChild,
+        selected: lastItem,
+      });
+
+      localStorageSwapIndex({
+        previousSelected: columns[0],
+        selected: columns[listItemsContainer.childElementCount - 1],
+      });
+
+      lastItem.focus();
+
+      if (event.target.tagName == "A") {
+        lastItem.childNodes[1].childNodes[1].focus();
+        return;
+      }
+      return;
+    }
+
+    // default algorithm
+    // our index decreases as user select a task btn
+
+    const clickedTaskIndexMinusOne = indexOfClickedTaskBtn - 1;
+
+    const focusPreviousTaskBtn =
+      listItemsContainer.childNodes[clickedTaskIndexMinusOne].firstElementChild;
 
     swapTabIndex({
-      previousSelected: listItemsContainer.childNodes[0].firstElementChild,
-      selected: lastItem,
+      previousSelected:
+        listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
+      selected: focusPreviousTaskBtn,
     });
 
     localStorageSwapIndex({
-      previousSelected: columns[0],
-      selected: columns[listItemsContainer.childElementCount - 1],
+      previousSelected: columns[indexOfClickedTaskBtn],
+      selected: columns[clickedTaskIndexMinusOne],
     });
 
-    lastItem.focus();
+    focusPreviousTaskBtn.focus();
 
     if (event.target.tagName == "A") {
-      lastItem.childNodes[1].childNodes[1].focus();
+      focusPreviousTaskBtn.childNodes[1].childNodes[1].focus();
       return;
     }
     return;
   }
-
-  // default algorithm
-  // our index decreases as user select a task btn
-
-  const clickedTaskIndexMinusOne = indexOfClickedTaskBtn - 1;
-
-  const focusPreviousTaskBtn =
-    listItemsContainer.childNodes[clickedTaskIndexMinusOne].firstElementChild;
-
-  swapTabIndex({
-    previousSelected:
-      listItemsContainer.childNodes[indexOfClickedTaskBtn].firstElementChild,
-    selected: focusPreviousTaskBtn,
-  });
-
-  localStorageSwapIndex({
-    previousSelected: columns[indexOfClickedTaskBtn],
-    selected: columns[clickedTaskIndexMinusOne],
-  });
-
-  focusPreviousTaskBtn.focus();
-
-  if (event.target.tagName == "A") {
-    focusPreviousTaskBtn.childNodes[1].childNodes[1].focus();
-    return;
-  }
-  return;
 }
 
 export function touchstartOnTaskBtn({ event, renderContextColumnsComponent }) {
