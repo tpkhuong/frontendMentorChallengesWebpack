@@ -556,6 +556,58 @@ export function keyboardLeft({
       document.getElementById("todo-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from doing status column
+        // add it to todo column
+        // const doingItems = [...board.columns.doing];
+        const addingItemTodoArray = board.columns.doing[indexOfClickedTaskBtn];
+        const todoObjItems = board.columns.todo.slice();
+        const removeTaskFromDoingColumn = board.columns.doing.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        todoObjItems.push(addingItemTodoArray);
+        // update index of item in removeTaskFromDoingColumn array and todo column array
+        removeTaskFromDoingColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        todoObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        todoObjItems[todoObjItems.length - 1].status = "todo";
+        // update board
+        board.columns.doing = removeTaskFromDoingColumn;
+        board.columns.todo = todoObjItems;
+        // render todo and todo columns
+        renderContextColumnsComponent.setStateFuncs.doingColumn(
+          removeTaskFromDoingColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.todoColumn(todoObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[todoObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -583,6 +635,58 @@ export function keyboardLeft({
       document.getElementById("done-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from doing status column
+        // add it to done column
+        // const doingItems = [...board.columns.doing];
+        const addingItemDoneArray = board.columns.doing[indexOfClickedTaskBtn];
+        const doneObjItems = board.columns.done.slice();
+        const removeTaskFromDoingColumn = board.columns.doing.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to done array
+        doneObjItems.push(addingItemDoneArray);
+        // update index of item in removeTaskFromDoingColumn array and done column array
+        removeTaskFromDoingColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doneObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in done column array
+        doneObjItems[doneObjItems.length - 1].status = "done";
+        // update board
+        board.columns.doing = removeTaskFromDoingColumn;
+        board.columns.done = doneObjItems;
+        // render done and done columns
+        renderContextColumnsComponent.setStateFuncs.doingColumn(
+          removeTaskFromDoingColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doneColumn(doneObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[addingItemDoneArray.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -620,6 +724,58 @@ export function keyboardLeft({
       document.getElementById("doing-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to doing column
+        // const doneItems = [...board.columns.done];
+        const addingItemDoingArray = board.columns.done[indexOfClickedTaskBtn];
+        const doingObjItems = board.columns.doing.slice();
+        const removeTaskFromDoneColumn = board.columns.done.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to doing array
+        doingObjItems.push(addingItemDoingArray);
+        // update index of item in removeTaskFromDoneColumn array and doing column array
+        removeTaskFromDoneColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doingObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in doing column array
+        doingObjItems[doingObjItems.length - 1].status = "doing";
+        // update board
+        board.columns.done = removeTaskFromDoneColumn;
+        board.columns.doing = doingObjItems;
+        // render doing and doing columns
+        renderContextColumnsComponent.setStateFuncs.doneColumn(
+          removeTaskFromDoneColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doingColumn(doingObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInDoingColumn =
+          //   document.getElementById(`doing-column-selector`).childNodes[1]
+          //     .childNodes[doingObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -650,6 +806,58 @@ export function keyboardLeft({
       document.getElementById("todo-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to todo column
+        // const doneItems = [...board.columns.done];
+        const addingItemTodoArray = board.columns.done[indexOfClickedTaskBtn];
+        const todoObjItems = board.columns.todo.slice();
+        const removeTaskFromDoneColumn = board.columns.done.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        todoObjItems.push(addingItemTodoArray);
+        // update index of item in removeTaskFromDoneColumn array and doing column array
+        removeTaskFromDoneColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        todoObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        todoObjItems[todoObjItems.length - 1].status = "todo";
+        // update board
+        board.columns.done = removeTaskFromDoneColumn;
+        board.columns.todo = todoObjItems;
+        // render todo and done columns
+        renderContextColumnsComponent.setStateFuncs.doneColumn(
+          removeTaskFromDoneColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.todoColumn(todoObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[todoObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -682,6 +890,7 @@ export function keyboardRight({
   user,
   board,
   indexOfClickedTaskBtn,
+  renderContextColumnsComponent,
 }) {
   if (statusOfTaskBtn == "todo") {
     // check length of element with id = "doing-column-selector" and "done-column-selector"
@@ -699,6 +908,58 @@ export function keyboardRight({
       document.getElementById("doing-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to todo column
+        // const doneItems = [...board.columns.done];
+        const addingItemDoingArray = board.columns.todo[indexOfClickedTaskBtn];
+        const doingObjItems = board.columns.doing.slice();
+        const removeTaskFromTodoColumn = board.columns.todo.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        doingObjItems.push(addingItemDoingArray);
+        // update index of item in removeTaskFromTodoColumn array and doing column array
+        removeTaskFromTodoColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doingObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        doingObjItems[doingObjItems.length - 1].status = "doing";
+        // update board
+        board.columns.todo = removeTaskFromTodoColumn;
+        board.columns.doing = doingObjItems;
+        // render doing and done columns
+        renderContextColumnsComponent.setStateFuncs.todoColumn(
+          removeTaskFromTodoColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doingColumn(doingObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[doingObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -729,6 +990,58 @@ export function keyboardRight({
       document.getElementById("done-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to todo column
+        // const doneItems = [...board.columns.done];
+        const addingItemDoneArray = board.columns.todo[indexOfClickedTaskBtn];
+        const doneObjItems = board.columns.done.slice();
+        const removeTaskFromTodoColumn = board.columns.todo.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        doneObjItems.push(addingItemDoneArray);
+        // update index of item in removeTaskFromTodoColumn array and done column array
+        removeTaskFromTodoColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doneObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        doneObjItems[doneObjItems.length - 1].status = "done";
+        // update board
+        board.columns.todo = removeTaskFromTodoColumn;
+        board.columns.done = doneObjItems;
+        // render done and done columns
+        renderContextColumnsComponent.setStateFuncs.todoColumn(
+          removeTaskFromTodoColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doneColumn(doneObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[doneObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -771,6 +1084,58 @@ export function keyboardRight({
       document.getElementById("done-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from doing status column
+        // add it to done column
+        // const doingItems = [...board.columns.doing];
+        const addingItemDoneArray = board.columns.doing[indexOfClickedTaskBtn];
+        const doneObjItems = board.columns.done.slice();
+        const removeTaskFromDoingColumn = board.columns.doing.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to done array
+        doneObjItems.push(addingItemDoneArray);
+        // update index of item in removeTaskFromDoingColumn array and done column array
+        removeTaskFromDoingColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doneObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in done column array
+        doneObjItems[doneObjItems.length - 1].status = "done";
+        // update board
+        board.columns.doing = removeTaskFromDoingColumn;
+        board.columns.done = doneObjItems;
+        // render done and done columns
+        renderContextColumnsComponent.setStateFuncs.doingColumn(
+          removeTaskFromDoingColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doneColumn(doneObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[addingItemDoneArray.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doneTaskBtn = document.getElementById("done-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -798,6 +1163,58 @@ export function keyboardRight({
       document.getElementById("todo-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from doing status column
+        // add it to todo column
+        // const doingItems = [...board.columns.doing];
+        const addingItemTodoArray = board.columns.doing[indexOfClickedTaskBtn];
+        const todoObjItems = board.columns.todo.slice();
+        const removeTaskFromDoingColumn = board.columns.doing.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        todoObjItems.push(addingItemTodoArray);
+        // update index of item in removeTaskFromDoingColumn array and todo column array
+        removeTaskFromDoingColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        todoObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        todoObjItems[todoObjItems.length - 1].status = "todo";
+        // update board
+        board.columns.doing = removeTaskFromDoingColumn;
+        board.columns.todo = todoObjItems;
+        // render todo and todo columns
+        renderContextColumnsComponent.setStateFuncs.doingColumn(
+          removeTaskFromDoingColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.todoColumn(todoObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[todoObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -837,6 +1254,58 @@ export function keyboardRight({
       document.getElementById("todo-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to todo column
+        // const doneItems = [...board.columns.done];
+        const addingItemTodoArray = board.columns.done[indexOfClickedTaskBtn];
+        const todoObjItems = board.columns.todo.slice();
+        const removeTaskFromDoneColumn = board.columns.done.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to todo array
+        todoObjItems.push(addingItemTodoArray);
+        // update index of item in removeTaskFromDoneColumn array and doing column array
+        removeTaskFromDoneColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        todoObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in todo column array
+        todoObjItems[todoObjItems.length - 1].status = "todo";
+        // update board
+        board.columns.done = removeTaskFromDoneColumn;
+        board.columns.todo = todoObjItems;
+        // render todo and done columns
+        renderContextColumnsComponent.setStateFuncs.doneColumn(
+          removeTaskFromDoneColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.todoColumn(todoObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInTodoColumn =
+          //   document.getElementById(`todo-column-selector`).childNodes[1]
+          //     .childNodes[todoObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const todoTaskBtn = document.getElementById("todo-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
@@ -867,6 +1336,58 @@ export function keyboardRight({
       document.getElementById("doing-column-selector").childNodes[1]
         .childElementCount > 0
     ) {
+      // check if one of the task btns has drag-drop-selected here
+      if (document.getElementById("drag-drop-selected")) {
+        // id from clicked task btn
+        clickedTaskBtn.removeAttribute("id");
+        // remove element with id drag-drop-selected from done status column
+        // add it to doing column
+        // const doneItems = [...board.columns.done];
+        const addingItemDoingArray = board.columns.done[indexOfClickedTaskBtn];
+        const doingObjItems = board.columns.doing.slice();
+        const removeTaskFromDoneColumn = board.columns.done.filter(
+          function removeItem(obj, index) {
+            return obj.index !== indexOfClickedTaskBtn;
+          }
+        );
+        // add obj of clicked task btn to doing array
+        doingObjItems.push(addingItemDoingArray);
+        // update index of item in removeTaskFromDoneColumn array and doing column array
+        removeTaskFromDoneColumn.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+
+        doingObjItems.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update status of last item in doing column array
+        doingObjItems[doingObjItems.length - 1].status = "doing";
+        // update board
+        board.columns.done = removeTaskFromDoneColumn;
+        board.columns.doing = doingObjItems;
+        // render doing and doing columns
+        renderContextColumnsComponent.setStateFuncs.doneColumn(
+          removeTaskFromDoneColumn
+        );
+        renderContextColumnsComponent.setStateFuncs.doingColumn(doingObjItems);
+
+        setTimeout(() => {
+          // const focusLastElementInDoingColumn =
+          //   document.getElementById(`doing-column-selector`).childNodes[1]
+          //     .childNodes[doingObjItems.length - 1].firstElementChild;
+
+          if (event.target.tagName == "A") {
+            document
+              .getElementById("drag-drop-selected")
+              .childNodes[1].childNodes[1].focus();
+            return;
+          }
+
+          document.getElementById("drag-drop-selected").focus();
+        }, 80);
+        return;
+      }
+
       const doingTaskBtn = document.getElementById("doing-column-selector")
         .childNodes[1].firstElementChild.firstElementChild;
 
