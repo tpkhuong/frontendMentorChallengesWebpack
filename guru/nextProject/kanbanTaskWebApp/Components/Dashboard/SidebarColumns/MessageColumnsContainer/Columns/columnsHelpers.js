@@ -11,6 +11,12 @@ export function selectingTaskBtnMousedownTouchstart({
     event.target.closest("A").getAttribute("role") == "button" &&
     event.target.closest("A").getAttribute("aria-label") == "open view modal"
   ) {
+    /**
+     * when user click on open view modal
+     * we want to find current taskbtn with tabindex "0" change its tabindex to "-1"
+     * find taskbtn of <a/> with aria label "open view modal" changes its tabindex from "-1" to "0"
+     * for both the taskbtn element and obj associated with the taskbtn of <a/> with aria label "open view modal"
+     * **/
     // render view modal
     openViewModal({
       currentBoard: board,

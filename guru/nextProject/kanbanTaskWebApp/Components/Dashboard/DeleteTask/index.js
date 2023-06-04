@@ -49,6 +49,7 @@ export default function DeleteTask({ children }) {
                     board.columns[taskStatus].length;
                   // when column array has only one item
                   if (board.columns[taskStatus].length === 1) {
+                    console.log(task);
                     // set empty array to column array of task that was deleted
                     board.columns[taskStatus] = [];
                     // render column component
@@ -62,9 +63,28 @@ export default function DeleteTask({ children }) {
                       `${taskStatus}Column`
                     ]([]);
                     // add-task-btn
-                    setTimeout(() => {
-                      document.getElementById("add-task-btn").focus();
-                    }, 80);
+                    if (task.tabIndex === "0") {
+                      // status is todo
+                      if (
+                        taskStatus === "todo" &&
+                        board.columns.doing.length === 0 &&
+                        board.columns.done.length === 0
+                      ) {
+                        //
+                      }
+                      // status is doing
+                      if (taskStatus === "todo") {
+                        //
+                      }
+                      // status is done
+                      if (taskStatus === "todo") {
+                        //
+                      }
+                      setTimeout(() => {
+                        //
+                        // document.getElementById("add-task-btn").focus();
+                      }, 80);
+                    }
                   }
                   //   // when column array has two items
                   //   if (board.columns[taskStatus].length === 2) {
@@ -90,6 +110,7 @@ export default function DeleteTask({ children }) {
                     renderContextDeleteTask.setStateFuncs[
                       `${taskStatus}Column`
                     ](board.columns[taskStatus]);
+
                     const arrayOfListitems = document.getElementById(
                       `${taskStatus}-column-selector`
                     ).childNodes[1].childNodes;
