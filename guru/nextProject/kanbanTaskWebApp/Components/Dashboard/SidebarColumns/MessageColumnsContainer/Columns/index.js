@@ -503,6 +503,8 @@ export default function Columns({
             selectingTaskBtnMousedownTouchstart({
               event,
               renderContextColumnsComponent,
+              swapTabIndex,
+              localStorageSwapIndex,
             });
             // console.log(event);
             // mousedownOnTaskBtn({ event, renderContextColumnsComponent });
@@ -513,6 +515,8 @@ export default function Columns({
             selectingTaskBtnMousedownTouchstart({
               event,
               renderContextColumnsComponent,
+              swapTabIndex,
+              localStorageSwapIndex,
             });
             console.log(event);
             // touchstartOnTaskBtn({ event, renderContextColumnsComponent });

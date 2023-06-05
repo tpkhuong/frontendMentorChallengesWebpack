@@ -1,6 +1,8 @@
 export function selectingTaskBtnMousedownTouchstart({
   event,
   renderContextColumnsComponent,
+  swapTabIndex,
+  localStorageSwapIndex,
 }) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const board = JSON.parse(localStorage.getItem("currentBoard"));
@@ -11,18 +13,61 @@ export function selectingTaskBtnMousedownTouchstart({
     event.target.closest("A").getAttribute("role") == "button" &&
     event.target.closest("A").getAttribute("aria-label") == "open view modal"
   ) {
+    const currentClickedTaskBtn =
+      event.target.closest("A").parentElement.parentElement;
+    const currentClickedBtnStatus =
+      currentClickedTaskBtn.getAttribute("data-typeofstatus");
+    const currentClickedBtnPosition = Number(
+      currentClickedTaskBtn.getAttribute("data-orderindex")
+    );
     /**
      * when user click on open view modal
      * we want to find current taskbtn with tabindex "0" change its tabindex to "-1"
      * find taskbtn of <a/> with aria label "open view modal" changes its tabindex from "-1" to "0"
      * for both the taskbtn element and obj associated with the taskbtn of <a/> with aria label "open view modal"
      * **/
+    console.log(currentClickedTaskBtn);
+    const arrayOfAllTaskObjs = [
+      ...board.columns.todo,
+      ...board.columns.doing,
+      ...board.columns.done,
+    ];
+    const [taskBtnWithTabIndexZero] = arrayOfAllTaskObjs.filter(
+      function findTabIndexZero(obj) {
+        return obj.tabIndex === "0";
+      }
+    );
+    // console.log(taskBtnWithTabIndexZero);
+    // console.log(
+    //   document.getElementById(
+    //     `${taskBtnWithTabIndexZero.status}-column-selector`
+    //   )
+    // );
+
+    const currentElementWithTabIndexZero = document.getElementById(
+      `${taskBtnWithTabIndexZero.status}-column-selector`
+    ).childNodes[1].childNodes[taskBtnWithTabIndexZero.index].firstElementChild;
+    console.log(currentElementWithTabIndexZero);
+    // swapTabIndex({
+    //   previousSelected: currentElementWithTabIndexZero,
+    //   selected: currentClickedTaskBtn,
+    // });
+
+    // localStorageSwapIndex({
+    //   previousSelected:
+    //     board.columns[taskBtnWithTabIndexZero.status][
+    //       taskBtnWithTabIndexZero.index
+    //     ],
+    //   selected:
+    //     board.columns[currentClickedBtnStatus][currentClickedBtnPosition],
+    // });
+    // console.log(board);
     // render view modal
-    openViewModal({
-      currentBoard: board,
-      clickedIcon: event.target.closest("A"),
-      renderContextColumnsComponent,
-    });
+    // openViewModal({
+    //   currentBoard: board,
+    //   clickedIcon: event.target.closest("A"),
+    //   renderContextColumnsComponent,
+    // });
     return;
   }
 
