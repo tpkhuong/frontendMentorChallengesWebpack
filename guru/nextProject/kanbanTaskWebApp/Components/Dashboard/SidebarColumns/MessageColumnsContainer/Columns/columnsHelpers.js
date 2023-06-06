@@ -26,7 +26,7 @@ export function selectingTaskBtnMousedownTouchstart({
      * find taskbtn of <a/> with aria label "open view modal" changes its tabindex from "-1" to "0"
      * for both the taskbtn element and obj associated with the taskbtn of <a/> with aria label "open view modal"
      * **/
-    console.log(currentClickedTaskBtn);
+    // console.log(currentClickedTaskBtn);
     const arrayOfAllTaskObjs = [
       ...board.columns.todo,
       ...board.columns.doing,
@@ -47,27 +47,39 @@ export function selectingTaskBtnMousedownTouchstart({
     const currentElementWithTabIndexZero = document.getElementById(
       `${taskBtnWithTabIndexZero.status}-column-selector`
     ).childNodes[1].childNodes[taskBtnWithTabIndexZero.index].firstElementChild;
-    console.log(currentElementWithTabIndexZero);
-    // swapTabIndex({
-    //   previousSelected: currentElementWithTabIndexZero,
-    //   selected: currentClickedTaskBtn,
-    // });
 
-    // localStorageSwapIndex({
-    //   previousSelected:
-    //     board.columns[taskBtnWithTabIndexZero.status][
-    //       taskBtnWithTabIndexZero.index
-    //     ],
-    //   selected:
-    //     board.columns[currentClickedBtnStatus][currentClickedBtnPosition],
-    // });
-    // console.log(board);
+    if (currentClickedTaskBtn === currentElementWithTabIndexZero) {
+      // render view modal
+      openViewModal({
+        currentBoard: board,
+        clickedIcon: event.target.closest("A"),
+        renderContextColumnsComponent,
+      });
+      return;
+    }
+    swapTabIndex({
+      previousSelected: currentElementWithTabIndexZero,
+      selected: currentClickedTaskBtn,
+    });
+
+    localStorageSwapIndex({
+      previousSelected:
+        board.columns[taskBtnWithTabIndexZero.status][
+          taskBtnWithTabIndexZero.index
+        ],
+      selected:
+        board.columns[currentClickedBtnStatus][currentClickedBtnPosition],
+    });
+
+    user.boards[board.index] = board;
+    localStorage.setItem("currentBoard", JSON.stringify(board));
+    localStorage.setItem("currentUser", JSON.stringify(user));
     // render view modal
-    // openViewModal({
-    //   currentBoard: board,
-    //   clickedIcon: event.target.closest("A"),
-    //   renderContextColumnsComponent,
-    // });
+    openViewModal({
+      currentBoard: board,
+      clickedIcon: event.target.closest("A"),
+      renderContextColumnsComponent,
+    });
     return;
   }
 

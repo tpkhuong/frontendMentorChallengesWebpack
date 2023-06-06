@@ -65,21 +65,60 @@ export default function DeleteTask({ children }) {
                     // add-task-btn
                     if (task.tabIndex === "0") {
                       // status is todo
+                      let firstColumn = null;
+                      let secondColumn = null;
+
+                      const methods = {
+                        todo: function () {
+                          firstColumn = "doing";
+                          secondColumn = "done";
+                        },
+                        doing: function () {
+                          firstColumn = "todo";
+                          secondColumn = "done";
+                        },
+                        done: function () {
+                          firstColumn = "todo";
+                          secondColumn = "doing";
+                        },
+                      };
+                      methods[taskStatus]();
+
                       if (
-                        taskStatus === "todo" &&
-                        board.columns.doing.length === 0 &&
-                        board.columns.done.length === 0
+                        board.columns[firstColumn].length === 0 &&
+                        board.columns[secondColumn].length === 0
                       ) {
-                        //
+                        setTimeout(() => {
+                          document.getElementById("add-task-btn").focus();
+                        }, 80);
+                        console.log(firstColumn, "first column");
+                        console.log(secondColumn, "second column");
+                        console.log(taskStatus, "taskStatus");
+                        return;
                       }
-                      // status is doing
-                      if (taskStatus === "todo") {
-                        //
-                      }
-                      // status is done
-                      if (taskStatus === "todo") {
-                        //
-                      }
+                      // if (
+                      //   taskStatus === "todo" &&
+                      //   board.columns.doing.length === 0 &&
+                      //   board.columns.done.length === 0
+                      // ) {
+                      //   //
+                      // }
+                      // // status is doing
+                      // if (
+                      //   taskStatus === "doing" &&
+                      //   board.columns.todo.length === 0 &&
+                      //   board.columns.done.length === 0
+                      // ) {
+                      //   //
+                      // }
+                      // // status is done
+                      // if (
+                      //   taskStatus === "done" &&
+                      //   board.columns.todo.length === 0 &&
+                      //   board.columns.doing.length === 0
+                      // ) {
+                      //   //
+                      // }
                       setTimeout(() => {
                         //
                         // document.getElementById("add-task-btn").focus();
