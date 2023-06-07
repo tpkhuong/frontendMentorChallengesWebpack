@@ -160,10 +160,21 @@ export default function TaskBtn({
             console.log("this is drag over");
           }}
           onDrop={(event) => {
+            // position/index of drag start element less than position/index of drop element
+            // drag start element will go below drop element
+            // position/index of drag start element greater than position/index of drop element
+            // drag start element will go above drop element
             event.preventDefault();
             const droppedTaskBtn = event.target.closest("BUTTON");
             if (droppedTaskBtn) {
+              const droppedTaskBtnStatus =
+                droppedTaskBtn.getAttribute("data-typeofstatus");
+              const droppedTaskBtnPosition = Number(
+                droppedTaskBtn.getAttribute("data-orderindex")
+              );
               // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
+              console.log(droppedTaskBtnStatus, "droppedTaskBtnStatus");
+              console.log(droppedTaskBtnPosition, "droppedTaskBtnPosition");
               console.log(JSON.parse(localStorage.getItem("dragSelected")));
               droppedTaskBtn.setAttribute("data-dragover", "false");
               return;
