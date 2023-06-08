@@ -1,6 +1,7 @@
 import React from "react";
 import TaskBtnStyles from "./TaskBtn.module.css";
 import { VscOpenPreview } from "react-icons/vsc";
+import { BoardTaskRenderContext } from "../../../../Context";
 
 export default function TaskBtn({
   children,
@@ -11,6 +12,7 @@ export default function TaskBtn({
   selected,
   tab,
 }) {
+  const renderContextTaskBtn = React.useContext(BoardTaskRenderContext);
   // apply drag event to each task btns
   console.log(completed, "completed");
   console.log(status, "status");
@@ -165,6 +167,7 @@ export default function TaskBtn({
             // position/index of drag start element greater than position/index of drop element
             // drag start element will go above drop element
             event.preventDefault();
+            onDropEvent({ event, renderContextTaskBtn });
             const droppedTaskBtn = event.target.closest("BUTTON");
             if (droppedTaskBtn) {
               const droppedTaskBtnStatus =
@@ -209,6 +212,105 @@ export default function TaskBtn({
       )}
     </React.Fragment>
   );
+}
+
+function topToBottomArray({
+  array,
+  droppedTaskBtnPosition,
+  grabbedTaskBtnPosition,
+}) {
+  // return obj top and bottom array without grabbed element obj
+  const top = array.slice(0, droppedTaskBtnPosition + 1);
+  const bottom = array.slice(droppedTaskBtnPosition);
+  const removeGrabbedObjFromTopArray = top.filter(function removeObj(
+    obj,
+    index
+  ) {
+    return obj.index === grabbedTaskBtnPosition;
+  });
+  return {
+    top: removeGrabbedObjFromTopArray,
+    bottom,
+  };
+}
+
+function bottomToTopArray({
+  array,
+  droppedTaskBtnPosition,
+  grabbedTaskBtnPosition,
+}) {
+  // return obj top and bottom array without grabbed element obj
+  const top = array.slice(0, droppedTaskBtnPosition);
+  const bottom = array.slice(droppedTaskBtnPosition);
+  const removeGrabbedObjFromBottomArray = bottom.filter(function removeObj(
+    obj,
+    index
+  ) {
+    return obj.index === grabbedTaskBtnPosition;
+  });
+
+  return {
+    top,
+    bottom: removeGrabbedObjFromBottomArray,
+  };
+}
+
+function onDropEvent({ event, renderContextTaskBtn }) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentBoard = JSON.parse(localStorage.getItem("currentBoard"));
+
+  const droppedTaskBtn = event.target.closest("BUTTON");
+  if (droppedTaskBtn) {
+    const grabbedElementValues = JSON.parse(
+      localStorage.getItem("dragSelected")
+    );
+    const droppedTaskBtnStatus =
+      droppedTaskBtn.getAttribute("data-typeofstatus");
+    const droppedTaskBtnPosition = Number(
+      droppedTaskBtn.getAttribute("data-orderindex")
+    );
+
+    // check if status of grabbed element and dropped element equal each other
+    // just re-render one column
+    if (grabbedElementValues.status === droppedTaskBtnStatus) {
+      if (grabbedElementValues.index < droppedTaskBtnPosition) {
+        // position/index of drag start element less than position/index of drop element
+        // drag start element will go below drop element
+        // use topToBottomArray func
+        // update index of objs in array after we concat the array with the grabbed element obj
+      }
+      if (grabbedElementValues.index > droppedTaskBtnPosition) {
+        // position/index of drag start element greater than position/index of drop element
+        // drag start element will go above drop element
+        // use bottomToTopArray func
+        // update index of objs in array after we concat the array with the grabbed element obj
+      }
+    }
+
+    if (grabbedElementValues.status !== droppedTaskBtnStatus) {
+      // remove grabbed element from column
+      const copiedGrabbedElementArray =
+        currentBoard.columns[grabbedElementValues.status];
+      const removedGrabbedElementObj = copiedGrabbedElementArray.filter(
+        function removeObj(obj, index) {
+          return obj.index !== grabbedElementValues.index;
+        }
+      );
+      // re-render two columns
+      const grabbedTaskBtnObj =
+        copiedGrabbedElementArray[grabbedElementValues.index];
+      // call topToBottomArray func
+    }
+
+    // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
+    console.log(droppedTaskBtnStatus, "droppedTaskBtnStatus");
+    console.log(droppedTaskBtnPosition, "droppedTaskBtnPosition");
+    droppedTaskBtn.setAttribute("data-dragover", "false");
+    return;
+  }
+  // console.log(event.target);
+
+  console.log("drag drop");
 }
 
 function notes() {
