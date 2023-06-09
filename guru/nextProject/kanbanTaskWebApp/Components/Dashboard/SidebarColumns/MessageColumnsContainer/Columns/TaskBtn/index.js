@@ -140,6 +140,19 @@ export default function TaskBtn({
             console.log("this is enter");
             const enteredTaskBtn = event.target.closest("BUTTON");
             if (enteredTaskBtn) {
+              const grabbedElementValues = JSON.parse(
+                localStorage.getItem("dragSelected")
+              );
+
+              const grabbedTaskBtn = document.getElementById(
+                `${grabbedElementValues.status}-column-selector`
+              ).childNodes[1].childNodes[grabbedElementValues.index]
+                .firstElementChild;
+
+              if (enteredTaskBtn === grabbedTaskBtn) {
+                return;
+              }
+
               enteredTaskBtn.setAttribute("data-dragover", "true");
               return;
             }
@@ -148,6 +161,19 @@ export default function TaskBtn({
             console.log("this is leave");
             const enteredTaskBtn = event.target.closest("BUTTON");
             if (enteredTaskBtn) {
+              const grabbedElementValues = JSON.parse(
+                localStorage.getItem("dragSelected")
+              );
+
+              const grabbedTaskBtn = document.getElementById(
+                `${grabbedElementValues.status}-column-selector`
+              ).childNodes[1].childNodes[grabbedElementValues.index]
+                .firstElementChild;
+
+              if (enteredTaskBtn === grabbedTaskBtn) {
+                return;
+              }
+
               enteredTaskBtn.setAttribute("data-dragover", "false");
               return;
             }
@@ -156,6 +182,18 @@ export default function TaskBtn({
             event.preventDefault();
             const enteredTaskBtn = event.target.closest("BUTTON");
             if (enteredTaskBtn) {
+              const grabbedElementValues = JSON.parse(
+                localStorage.getItem("dragSelected")
+              );
+
+              const grabbedTaskBtn = document.getElementById(
+                `${grabbedElementValues.status}-column-selector`
+              ).childNodes[1].childNodes[grabbedElementValues.index]
+                .firstElementChild;
+
+              if (enteredTaskBtn === grabbedTaskBtn) {
+                return;
+              }
               enteredTaskBtn.setAttribute("data-dragover", "true");
               return;
             }
@@ -169,19 +207,19 @@ export default function TaskBtn({
             event.preventDefault();
             onDropEvent({ event, renderContextTaskBtn });
             const droppedTaskBtn = event.target.closest("BUTTON");
-            if (droppedTaskBtn) {
-              const droppedTaskBtnStatus =
-                droppedTaskBtn.getAttribute("data-typeofstatus");
-              const droppedTaskBtnPosition = Number(
-                droppedTaskBtn.getAttribute("data-orderindex")
-              );
-              // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
-              console.log(droppedTaskBtnStatus, "droppedTaskBtnStatus");
-              console.log(droppedTaskBtnPosition, "droppedTaskBtnPosition");
-              console.log(JSON.parse(localStorage.getItem("dragSelected")));
-              droppedTaskBtn.setAttribute("data-dragover", "false");
-              return;
-            }
+            // if (droppedTaskBtn) {
+            //   const droppedTaskBtnStatus =
+            //     droppedTaskBtn.getAttribute("data-typeofstatus");
+            //   const droppedTaskBtnPosition = Number(
+            //     droppedTaskBtn.getAttribute("data-orderindex")
+            //   );
+            //   // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus
+            //   console.log(droppedTaskBtnStatus, "droppedTaskBtnStatus");
+            //   console.log(droppedTaskBtnPosition, "droppedTaskBtnPosition");
+            //   console.log(JSON.parse(localStorage.getItem("dragSelected")));
+            //   droppedTaskBtn.setAttribute("data-dragover", "false");
+            //   return;
+            // }
             // console.log(event.target);
 
             console.log("drag drop");
@@ -221,12 +259,12 @@ function topToBottomArray({
 }) {
   // return obj top and bottom array without grabbed element obj
   const top = array.slice(0, droppedTaskBtnPosition + 1);
-  const bottom = array.slice(droppedTaskBtnPosition);
+  const bottom = array.slice(droppedTaskBtnPosition + 1);
   const removeGrabbedObjFromTopArray = top.filter(function removeObj(
     obj,
     index
   ) {
-    return obj.index === grabbedTaskBtnPosition;
+    return obj.index !== grabbedTaskBtnPosition;
   });
   return {
     top: removeGrabbedObjFromTopArray,
@@ -246,7 +284,7 @@ function bottomToTopArray({
     obj,
     index
   ) {
-    return obj.index === grabbedTaskBtnPosition;
+    return obj.index !== grabbedTaskBtnPosition;
   });
 
   return {
@@ -264,26 +302,113 @@ function onDropEvent({ event, renderContextTaskBtn }) {
     const grabbedElementValues = JSON.parse(
       localStorage.getItem("dragSelected")
     );
+
+    const grabbedElementObj =
+      currentBoard.columns[grabbedElementValues.status][
+        grabbedElementValues.index
+      ];
+
+    const grabbedTaskBtn = document.getElementById(
+      `${grabbedElementValues.status}-column-selector`
+    ).childNodes[1].childNodes[grabbedElementValues.index].firstElementChild;
+
     const droppedTaskBtnStatus =
       droppedTaskBtn.getAttribute("data-typeofstatus");
     const droppedTaskBtnPosition = Number(
       droppedTaskBtn.getAttribute("data-orderindex")
     );
 
+    if (grabbedTaskBtn == droppedTaskBtn) {
+      return;
+    }
+
     // check if status of grabbed element and dropped element equal each other
     // just re-render one column
     if (grabbedElementValues.status === droppedTaskBtnStatus) {
+      const statusArray = currentBoard.columns[grabbedElementValues.status];
+      console.log(grabbedElementObj);
+      console.log(statusArray);
       if (grabbedElementValues.index < droppedTaskBtnPosition) {
         // position/index of drag start element less than position/index of drop element
         // drag start element will go below drop element
         // use topToBottomArray func
+        const objWithTopAndBottomArrays = topToBottomArray({
+          array: statusArray,
+          droppedTaskBtnPosition,
+          grabbedTaskBtnPosition: grabbedElementValues.index,
+        });
+        // concat top array, grabbedTaskBtnObj and bottom array
+
+        const newOrderedArray = [
+          ...objWithTopAndBottomArrays.top,
+          grabbedElementObj,
+          ...objWithTopAndBottomArrays.bottom,
+        ];
         // update index of objs in array after we concat the array with the grabbed element obj
+        newOrderedArray.forEach(function updateObjIndex(obj, index) {
+          obj.index = index;
+        });
+        // update array in currentBoard
+        currentBoard.columns[grabbedElementValues.status] = newOrderedArray;
+        currentUser.boards[currentBoard.index] = currentBoard;
+
+        localStorage.setItem("currentBoard", currentBoard);
+        localStorage.setItem("currentUser", currentUser);
+        // render column with new objs array
+        renderContextTaskBtn.setStateFuncs[
+          `${grabbedElementValues.status}Column`
+        ];
+        setTimeout(() => {
+          // focus element after render of column
+          const focusElementValues = newOrderedArray[droppedTaskBtnPosition];
+          const elementToFocus = document.getElementById(
+            `${focusElementValues.status}-column-selector`
+          ).childNodes[1].childNodes[focusElementValues.index]
+            .firstElementChild;
+
+          elementToFocus.focus();
+          console.log(elementToFocus);
+        }, 80);
       }
       if (grabbedElementValues.index > droppedTaskBtnPosition) {
         // position/index of drag start element greater than position/index of drop element
         // drag start element will go above drop element
         // use bottomToTopArray func
+        const objOfArrays = bottomToTopArray({
+          array: statusArray,
+          droppedTaskBtnPosition,
+          grabbedTaskBtnPosition: grabbedElementValues.index,
+        });
+
+        const reorderedArray = [
+          ...objOfArrays.top,
+          grabbedElementObj,
+          ...objOfArrays.bottom,
+        ];
         // update index of objs in array after we concat the array with the grabbed element obj
+        reorderedArray.forEach(function updateIndex(obj, index) {
+          obj.index = index;
+        });
+        // update array in currentBoard
+        currentBoard.columns[grabbedElementValues.status] = reorderedArray;
+        currentUser.boards[currentBoard.index] = currentBoard;
+
+        localStorage.setItem("currentBoard", currentBoard);
+        localStorage.setItem("currentUser", currentUser);
+        // render column with new objs array
+        renderContextTaskBtn.setStateFuncs[
+          `${grabbedElementValues.status}Column`
+        ];
+        setTimeout(() => {
+          // focus element after render of column
+          const elementObjValues = reorderedArray[droppedTaskBtnPosition];
+          const focusElement = document.getElementById(
+            `${elementObjValues.status}-column-selector`
+          ).childNodes[1].childNodes[elementObjValues.index].firstElementChild;
+
+          focusElement.focus();
+          console.log(focusElement);
+        }, 80);
       }
     }
 
