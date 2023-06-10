@@ -256,10 +256,19 @@ function topToBottomArray({
   array,
   droppedTaskBtnPosition,
   grabbedTaskBtnPosition,
+  isStatusDifferent,
 }) {
   // return obj top and bottom array without grabbed element obj
   const top = array.slice(0, droppedTaskBtnPosition + 1);
   const bottom = array.slice(droppedTaskBtnPosition + 1);
+  // different status
+  if (isStatusDifferent) {
+    return {
+      top,
+      bottom,
+    };
+  }
+  // same status
   const removeGrabbedObjFromTopArray = top.filter(function removeObj(
     obj,
     index
@@ -314,6 +323,7 @@ function onDropEvent({ event, renderContextTaskBtn }) {
 
     const droppedTaskBtnStatus =
       droppedTaskBtn.getAttribute("data-typeofstatus");
+
     const droppedTaskBtnPosition = Number(
       droppedTaskBtn.getAttribute("data-orderindex")
     );
@@ -352,12 +362,13 @@ function onDropEvent({ event, renderContextTaskBtn }) {
         currentBoard.columns[grabbedElementValues.status] = newOrderedArray;
         currentUser.boards[currentBoard.index] = currentBoard;
 
-        localStorage.setItem("currentBoard", currentBoard);
-        localStorage.setItem("currentUser", currentUser);
+        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
         // render column with new objs array
         renderContextTaskBtn.setStateFuncs[
           `${grabbedElementValues.status}Column`
-        ];
+        ](newOrderedArray);
+
         setTimeout(() => {
           // focus element after render of column
           const focusElementValues = newOrderedArray[droppedTaskBtnPosition];
@@ -393,12 +404,12 @@ function onDropEvent({ event, renderContextTaskBtn }) {
         currentBoard.columns[grabbedElementValues.status] = reorderedArray;
         currentUser.boards[currentBoard.index] = currentBoard;
 
-        localStorage.setItem("currentBoard", currentBoard);
-        localStorage.setItem("currentUser", currentUser);
+        localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
         // render column with new objs array
         renderContextTaskBtn.setStateFuncs[
           `${grabbedElementValues.status}Column`
-        ];
+        ](reorderedArray);
         setTimeout(() => {
           // focus element after render of column
           const elementObjValues = reorderedArray[droppedTaskBtnPosition];
@@ -416,15 +427,71 @@ function onDropEvent({ event, renderContextTaskBtn }) {
       // remove grabbed element from column
       const copiedGrabbedElementArray =
         currentBoard.columns[grabbedElementValues.status];
-      const removedGrabbedElementObj = copiedGrabbedElementArray.filter(
+
+      const arrayWithoutGrabbedElementObj = copiedGrabbedElementArray.filter(
         function removeObj(obj, index) {
           return obj.index !== grabbedElementValues.index;
         }
       );
-      // re-render two columns
+      // update index of obj in arrayWithoutGrabbedElementObj
+      arrayWithoutGrabbedElementObj.forEach(function updateIndex(obj, index) {
+        obj.index = index;
+      });
+      // grabbed element will always go below dropped element
       const grabbedTaskBtnObj =
         copiedGrabbedElementArray[grabbedElementValues.index];
+      // update status of grabbed task btn to match dropped task btn
+      grabbedTaskBtnObj.status = droppedTaskBtnStatus;
+      // copy dropped status array
+      const copiedDroppedElementArray =
+        currentBoard.columns[droppedTaskBtnStatus];
       // call topToBottomArray func
+      const objArrays = topToBottomArray({
+        isStatusDifferent: true,
+        array: copiedDroppedElementArray,
+        droppedTaskBtnPosition,
+      });
+      // concat arrays and grabbed element obj
+      const concatArraysWithGrabbedElementObj = [
+        ...objArrays.top,
+        grabbedTaskBtnObj,
+        ...objArrays.bottom,
+      ];
+      // update obj index
+      concatArraysWithGrabbedElementObj.forEach(function updateIndex(
+        obj,
+        index
+      ) {
+        obj.index = index;
+      });
+      // update data in local storage
+      currentBoard.columns[`${grabbedElementValues.status}`] =
+        arrayWithoutGrabbedElementObj;
+
+      currentBoard.columns[`${droppedTaskBtnStatus}`] =
+        concatArraysWithGrabbedElementObj;
+
+      currentUser.boards[currentBoard.index] = currentBoard;
+
+      localStorage.setItem("currentBoard", JSON.stringify(currentBoard));
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      // re-render two columns
+      renderContextTaskBtn.setStateFuncs[
+        `${grabbedElementValues.status}Column`
+      ](arrayWithoutGrabbedElementObj);
+      renderContextTaskBtn.setStateFuncs[`${droppedTaskBtnStatus}Column`](
+        concatArraysWithGrabbedElementObj
+      );
+      // focus grabbed element in new column
+      setTimeout(() => {
+        // focus element
+        const focusElement = document.getElementById(
+          `${droppedTaskBtnStatus}-column-selector`
+        ).childNodes[1].childNodes[droppedTaskBtnPosition + 1]
+          .firstElementChild;
+
+        focusElement.focus();
+      }, 80);
     }
 
     // we want the status of the task btn and index that use fire onDrop event data-orderindex and data-typeofstatus

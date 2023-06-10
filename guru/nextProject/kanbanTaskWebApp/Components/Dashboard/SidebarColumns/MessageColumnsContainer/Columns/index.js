@@ -2,7 +2,8 @@ import React from "react";
 import ColumnsStyles from "./Columns.module.css";
 import { BoardTaskRenderContext } from "../../../Context/index";
 import {
-  selectingTaskBtnMousedownTouchstart,
+  selectingTaskBtn,
+  selectingTaskBtnTouchstart,
   keyboardLeft,
   keyboardRight,
   keyboardDown,
@@ -441,6 +442,7 @@ export default function Columns({
           className={ColumnsStyles[`column-container`]}
           aria-labelledby="status-column-title"
           onKeyDown={(event) => {
+            console.log(event.type);
             const user = JSON.parse(localStorage.getItem("currentUser"));
             const board = JSON.parse(localStorage.getItem("currentBoard"));
             // only keydown will select
@@ -499,30 +501,38 @@ export default function Columns({
               localStorage.setItem("currentUser", JSON.stringify(user));
             }
           }}
-          onMouseDown={(event) => {
-            selectingTaskBtnMousedownTouchstart({
+          onClick={(event) => {
+            selectingTaskBtn({
               event,
               renderContextColumnsComponent,
               swapTabIndex,
               localStorageSwapIndex,
             });
-            // console.log(event);
-            // mousedownOnTaskBtn({ event, renderContextColumnsComponent });
-            // selectTaskBtn({ event });
-            // applyTabIndexToClickedTaskBtn({ event });
           }}
-          onTouchStart={(event) => {
-            selectingTaskBtnMousedownTouchstart({
-              event,
-              renderContextColumnsComponent,
-              swapTabIndex,
-              localStorageSwapIndex,
-            });
-            console.log(event);
-            // touchstartOnTaskBtn({ event, renderContextColumnsComponent });
-            // selectTaskBtn({ event });
-            // applyTabIndexToClickedTaskBtn({ event });
-          }}
+          // onMouseDown={(event) => {
+          //   selectingTaskBtnMousedown({
+          //     event,
+          //     renderContextColumnsComponent,
+          //     swapTabIndex,
+          //     localStorageSwapIndex,
+          //   });
+          //   // console.log(event);
+          //   // mousedownOnTaskBtn({ event, renderContextColumnsComponent });
+          //   // selectTaskBtn({ event });
+          //   // applyTabIndexToClickedTaskBtn({ event });
+          // }}
+          // onTouchStart={(event) => {
+          //   selectingTaskBtnTouchstart({
+          //     event,
+          //     renderContextColumnsComponent,
+          //     swapTabIndex,
+          //     localStorageSwapIndex,
+          //   });
+          //   console.log(event);
+          //   // touchstartOnTaskBtn({ event, renderContextColumnsComponent });
+          //   // selectTaskBtn({ event });
+          //   // applyTabIndexToClickedTaskBtn({ event });
+          // }}
           /**
            * uncomment this later
            * **/
