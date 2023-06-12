@@ -108,7 +108,7 @@ export function selectingTaskBtn({
     // const orderIndexOfFocusedBtn = Number(
     //   currentFocusedElement.getAttribute("data-orderindex")
     // );
-    console.log(isTaskBtn, "isTaskBtn");
+    // console.log(isTaskBtn, "isTaskBtn");
     const isTabIndexZeroAssignedToTaskBtn = document.querySelector(
       "#columns-container-selector [tabindex='0']"
     );
@@ -123,208 +123,220 @@ export function selectingTaskBtn({
     if (!currentlyDragDropSelected) {
       // desktop and mobile will be different
       // mobile and tablet
-      if (window.innerWidth <= 768) {
-        if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
-        // if clicked btn has tabindex == "0" assign string "drag-drop-selected"
-        if (clickedBtn.getAttribute("tabindex" === "0")) {
-          clickedBtn.setAttribute("id", "drag-drop-selected");
-        }
-        // if clicked btn has tabindex == "-1" swap tabindex on element and element obj
-        if (clickedBtn.getAttribute("tabindex" === "-1")) {
-          swapTabIndex({
-            previousSelected: isTabIndexZeroAssignedToTaskBtn,
-            selected: clickedBtn,
-          });
+      // if (window.innerWidth <= 768) {
+      //   console.log(clickedBtn, "clickedBtn");
+      //   console.log(
+      //     isTabIndexZeroAssignedToTaskBtn,
+      //     "isTabIndexZeroAssignedToTaskBtn"
+      //   );
+      //   // if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+      //   console.log(
+      //     clickedBtn.getAttribute("tabindex"),
+      //     "clickedBtn.getAttribute('tabindex')"
+      //   );
 
-          localStorageSwapIndex({
-            previousSelected:
-              board.columns[statusOfTaskBtnWithTabIndexZero][
-                orderIndexOfTaskBtnWithTabIndexZero
-              ],
-            selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-          });
-        }
+      //   // if clicked btn has tabindex == "0" assign string "drag-drop-selected"
+      //   if (clickedBtn.getAttribute("tabindex") === "0") {
+      //     console.log("tabindex 0");
+      //     clickedBtn.setAttribute("id", "drag-drop-selected");
+      //   }
+      //   // if clicked btn has tabindex == "-1" swap tabindex on element and element obj
+      //   if (clickedBtn.getAttribute("tabindex") === "-1") {
+      //     console.log("tabindex -1");
+      //     swapTabIndex({
+      //       previousSelected: isTabIndexZeroAssignedToTaskBtn,
+      //       selected: clickedBtn,
+      //     });
 
-        return;
-      }
+      //     localStorageSwapIndex({
+      //       previousSelected:
+      //         board.columns[statusOfTaskBtnWithTabIndexZero][
+      //           orderIndexOfTaskBtnWithTabIndexZero
+      //         ],
+      //       selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //     });
+      //   }
+
+      //   return;
+      // }
       // desktop
-      if (window.innerWidth >= 1400) {
-        if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+      // if (window.innerWidth >= 1400) {
+      //   if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
 
-        swapTabIndex({
-          previousSelected: isTabIndexZeroAssignedToTaskBtn,
-          selected: clickedBtn,
-        });
+      //   swapTabIndex({
+      //     previousSelected: isTabIndexZeroAssignedToTaskBtn,
+      //     selected: clickedBtn,
+      //   });
 
-        localStorageSwapIndex({
-          previousSelected:
-            board.columns[statusOfTaskBtnWithTabIndexZero][
-              orderIndexOfTaskBtnWithTabIndexZero
-            ],
-          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-        });
+      //   localStorageSwapIndex({
+      //     previousSelected:
+      //       board.columns[statusOfTaskBtnWithTabIndexZero][
+      //         orderIndexOfTaskBtnWithTabIndexZero
+      //       ],
+      //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //   });
 
-        return;
-      }
+      //   return;
+      // }
       //   console.log(clickedBtn);
       //   console.log(currentFocusedElement);
-      if (!isTaskBtn) {
-        // with our changed algorithm, doesn't matter the status of the task btn clicked or the current task btn
-        // that has tabindex "0" we want to change the tabindex of the clicked task btn to "0"
-        // the task btn that has tabindex "0" chnage it to "-1"
-        console.log("before !isTaskBtn");
-        if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
-        // swap tabindex and update tabindex in local storage
-        console.log("after !isTaskBtn");
-        swapTabIndex({
-          previousSelected: isTabIndexZeroAssignedToTaskBtn,
-          selected: clickedBtn,
-        });
+      // if (!isTaskBtn) {
+      //   // with our changed algorithm, doesn't matter the status of the task btn clicked or the current task btn
+      //   // that has tabindex "0" we want to change the tabindex of the clicked task btn to "0"
+      //   // the task btn that has tabindex "0" chnage it to "-1"
+      //   console.log("before !isTaskBtn");
+      //   if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+      //   // swap tabindex and update tabindex in local storage
+      //   console.log("after !isTaskBtn");
+      //   swapTabIndex({
+      //     previousSelected: isTabIndexZeroAssignedToTaskBtn,
+      //     selected: clickedBtn,
+      //   });
 
-        localStorageSwapIndex({
-          previousSelected:
-            board.columns[statusOfTaskBtnWithTabIndexZero][
-              orderIndexOfTaskBtnWithTabIndexZero
-            ],
-          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-        });
-        // // when the focused element is not a task btn
-        // // check if the clicked btn tabIndex is "0"
-        // if (
-        //   clickedBtn.getAttribute("tabIndex") == "0" &&
-        //   clickedBtn.getAttribute("data-orderindex") != "0"
-        // ) {
-        //   clickedBtn.focus();
-        //   return;
-        // }
+      //   localStorageSwapIndex({
+      //     previousSelected:
+      //       board.columns[statusOfTaskBtnWithTabIndexZero][
+      //         orderIndexOfTaskBtnWithTabIndexZero
+      //       ],
+      //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //   });
+      //   // // when the focused element is not a task btn
+      //   // // check if the clicked btn tabIndex is "0"
+      //   // if (
+      //   //   clickedBtn.getAttribute("tabIndex") == "0" &&
+      //   //   clickedBtn.getAttribute("data-orderindex") != "0"
+      //   // ) {
+      //   //   clickedBtn.focus();
+      //   //   return;
+      //   // }
 
-        // if (
-        //   clickedBtn.getAttribute("tabIndex") == "0" &&
-        //   clickedBtn.getAttribute("data-orderindex") == "0"
-        // ) {
-        // }
+      //   // if (
+      //   //   clickedBtn.getAttribute("tabIndex") == "0" &&
+      //   //   clickedBtn.getAttribute("data-orderindex") == "0"
+      //   // ) {
+      //   // }
 
-        // if (clickedBtn.getAttribute("tabIndex") == "-1") {
-        //   // task btn with tabIndex = "0"
-        //   // console.log(statusOfClickedBtn);
-        //   // console.log(
-        //   //   Number(
-        //   //     document
-        //   //       .querySelector(
-        //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
-        //   //       )
-        //   //       .getAttribute("data-orderindex")
-        //   //   )
-        //   // );
-        //   // console.log(
-        //   //   document.querySelector(
-        //   //     `#${statusOfClickedBtn}-column-selector [tabindex='0']`
-        //   //   )
-        //   // );
-        //   swapTabIndex({
-        //     previousSelected: document.querySelector(
-        //       `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
-        //     ),
-        //     selected: clickedBtn,
-        //   });
+      //   // if (clickedBtn.getAttribute("tabIndex") == "-1") {
+      //   //   // task btn with tabIndex = "0"
+      //   //   // console.log(statusOfClickedBtn);
+      //   //   // console.log(
+      //   //   //   Number(
+      //   //   //     document
+      //   //   //       .querySelector(
+      //   //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+      //   //   //       )
+      //   //   //       .getAttribute("data-orderindex")
+      //   //   //   )
+      //   //   // );
+      //   //   // console.log(
+      //   //   //   document.querySelector(
+      //   //   //     `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+      //   //   //   )
+      //   //   // );
+      //   //   swapTabIndex({
+      //   //     previousSelected: document.querySelector(
+      //   //       `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
+      //   //     ),
+      //   //     selected: clickedBtn,
+      //   //   });
 
-        //   localStorageSwapIndex({
-        //     previousSelected:
-        //       board.columns[statusOfClickedBtn][
-        //         Number(
-        //           document
-        //             .querySelector(
-        //               `#${statusOfClickedBtn}-column-selector [tabindex='0']`
-        //             )
-        //             .getAttribute("data-orderindex")
-        //         )
-        //       ],
-        //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-        //   });
+      //   //   localStorageSwapIndex({
+      //   //     previousSelected:
+      //   //       board.columns[statusOfClickedBtn][
+      //   //         Number(
+      //   //           document
+      //   //             .querySelector(
+      //   //               `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+      //   //             )
+      //   //             .getAttribute("data-orderindex")
+      //   //         )
+      //   //       ],
+      //   //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //   //   });
 
-        //   // board.columns[statusOfClickedBtn][
-        //   //   Number(
-        //   //     document
-        //   //       .querySelector(
-        //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
-        //   //       )
-        //   //       .getAttribute("data-orderindex")
-        //   //   )
-        //   // ].tabIndex = "-1";
+      //   //   // board.columns[statusOfClickedBtn][
+      //   //   //   Number(
+      //   //   //     document
+      //   //   //       .querySelector(
+      //   //   //         `#${statusOfClickedBtn}-column-selector [tabindex='0']`
+      //   //   //       )
+      //   //   //       .getAttribute("data-orderindex")
+      //   //   //   )
+      //   //   // ].tabIndex = "-1";
 
-        //   // document
-        //   //   .querySelector(
-        //   //     `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
-        //   //   )
-        //   //   .setAttribute("tabIndex", "-1");
+      //   //   // document
+      //   //   //   .querySelector(
+      //   //   //     `#${statusOfClickedBtn}-column-selector [tabIndex='0']`
+      //   //   //   )
+      //   //   //   .setAttribute("tabIndex", "-1");
 
-        //   // clickedBtn.setAttribute("tabIndex", "0");
-        //   // // update tabIndex of clicked Btn obj in local storage
-        //   // board.columns[statusOfClickedBtn][orderIndexOfClickedBtn].tabIndex =
-        //   //   "0";
+      //   //   // clickedBtn.setAttribute("tabIndex", "0");
+      //   //   // // update tabIndex of clicked Btn obj in local storage
+      //   //   // board.columns[statusOfClickedBtn][orderIndexOfClickedBtn].tabIndex =
+      //   //   //   "0";
 
-        //   clickedBtn.focus();
-        // }
-      }
+      //   //   clickedBtn.focus();
+      //   // }
+      // }
       // current focused element is a task btn
 
-      if (isTaskBtn) {
-        // if (
-        //   window.innerWidth <= 378 &&
-        //   document.activeElement.getAttribute("data-typeofstatus") &&
-        //   event.target.closest("BUTTON").getAttribute("tabindex") === "0"
-        // ) {
-        //   console.log("here test");
+      // if (isTaskBtn) {
+      //   // if (
+      //   //   window.innerWidth <= 378 &&
+      //   //   document.activeElement.getAttribute("data-typeofstatus") &&
+      //   //   event.target.closest("BUTTON").getAttribute("tabindex") === "0"
+      //   // ) {
+      //   //   console.log("here test");
 
-        //   // const clickedBtnStatus = clickedBtn.getAttribute("data-typeofstatus");
-        //   // const clickedBtnIndex = clickedBtn.getAttribute("data-orderindex");
-        //   // // we want to apply id of "drag-drop-selected" to task btn
-        //   // // to select it
-        //   // console.log(event.target.closest("BUTTON").getAttribute("id"));
-        //   // clickedBtn.setAttribute("id", "drag-drop-selected");
-        //   // // update isSelected property of clicked task btn
-        //   // board.columns[clickedBtnStatus][clickedBtnIndex].isSelected = true;
-        //   // // update board and user of local storage
-        //   // user.boards[board.index] = board;
-        //   // localStorage.setItem("currentBoard", JSON.stringify(board));
-        //   // localStorage.setItem("currentUser", JSON.stringify(user));
-        //   // !event.target.closest("BUTTON").getAttribute("id")
-        //   //   ? event.target
-        //   //       .closest("BUTTON")
-        //   //       .setAttribute("id", "drag-drop-selected")
-        //   //   : event.target.closest("BUTTON").removeAttribute("id");
-        //   // event.target
-        //   //   .closest("BUTTON")
-        //   //   .setAttribute("id", "drag-drop-selected");
-        //   console.log("this is task btn");
-        //   return;
-        //   // if (
-        //   //   document.activeElement.getAttribute("data-typeofstatus") &&
-        //   //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
-        //   // ) {
-        //   //   // we want to apply id of "drag-drop-selected" to task btn
-        //   //   // to select it
-        //   //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
-        //   //   console.log("this is task btn");
-        //   // }
-        // }
-        if (clickedBtn == currentFocusedElement) return;
-        // we know the current focused element is a task btn we can swap tabindex and update tabindex in local storage
-        // swap tabindex and update tabindex in local storage
-        console.log("after");
-        swapTabIndex({
-          previousSelected: currentFocusedElement,
-          selected: clickedBtn,
-        });
+      //   //   // const clickedBtnStatus = clickedBtn.getAttribute("data-typeofstatus");
+      //   //   // const clickedBtnIndex = clickedBtn.getAttribute("data-orderindex");
+      //   //   // // we want to apply id of "drag-drop-selected" to task btn
+      //   //   // // to select it
+      //   //   // console.log(event.target.closest("BUTTON").getAttribute("id"));
+      //   //   // clickedBtn.setAttribute("id", "drag-drop-selected");
+      //   //   // // update isSelected property of clicked task btn
+      //   //   // board.columns[clickedBtnStatus][clickedBtnIndex].isSelected = true;
+      //   //   // // update board and user of local storage
+      //   //   // user.boards[board.index] = board;
+      //   //   // localStorage.setItem("currentBoard", JSON.stringify(board));
+      //   //   // localStorage.setItem("currentUser", JSON.stringify(user));
+      //   //   // !event.target.closest("BUTTON").getAttribute("id")
+      //   //   //   ? event.target
+      //   //   //       .closest("BUTTON")
+      //   //   //       .setAttribute("id", "drag-drop-selected")
+      //   //   //   : event.target.closest("BUTTON").removeAttribute("id");
+      //   //   // event.target
+      //   //   //   .closest("BUTTON")
+      //   //   //   .setAttribute("id", "drag-drop-selected");
+      //   //   console.log("this is task btn");
+      //   //   return;
+      //   //   // if (
+      //   //   //   document.activeElement.getAttribute("data-typeofstatus") &&
+      //   //   //   event.target.closest("BUTTON").getAttribute("tabIndex") === "0"
+      //   //   // ) {
+      //   //   //   // we want to apply id of "drag-drop-selected" to task btn
+      //   //   //   // to select it
+      //   //   //   event.target.closest("BUTTON").setAttribute("id", "drag-drop-selected");
+      //   //   //   console.log("this is task btn");
+      //   //   // }
+      //   // }
+      //   if (clickedBtn == currentFocusedElement) return;
+      //   // we know the current focused element is a task btn we can swap tabindex and update tabindex in local storage
+      //   // swap tabindex and update tabindex in local storage
+      //   console.log("after");
+      //   swapTabIndex({
+      //     previousSelected: currentFocusedElement,
+      //     selected: clickedBtn,
+      //   });
 
-        localStorageSwapIndex({
-          previousSelected:
-            board.columns[statusOfCurrentFocusedTaskBtn][
-              orderIndexOfFocusedBtn
-            ],
-          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-        });
-      }
+      //   localStorageSwapIndex({
+      //     previousSelected:
+      //       board.columns[statusOfCurrentFocusedTaskBtn][
+      //         orderIndexOfFocusedBtn
+      //       ],
+      //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+      //   });
+      // }
       // if (
       //   isTaskBtn &&
       //   isTaskBtn == statusOfClickedBtn &&
