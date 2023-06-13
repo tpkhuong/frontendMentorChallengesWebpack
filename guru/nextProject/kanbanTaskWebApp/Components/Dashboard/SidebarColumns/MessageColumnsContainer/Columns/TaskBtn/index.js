@@ -83,6 +83,10 @@ export default function TaskBtn({
 
             console.log("drag drop");
           }}
+          onBlur={(event) => {
+            console.log(event);
+            console.log("im not focus");
+          }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>
           <div className={TaskBtnStyles[`subtasks-icon-container`]}>
@@ -223,6 +227,9 @@ export default function TaskBtn({
             // console.log(event.target);
 
             console.log("drag drop");
+          }}
+          onBlur={(event) => {
+            console.log("im not focus");
           }}
         >
           <h3 className={TaskBtnStyles[`task-title`]}>{children}</h3>

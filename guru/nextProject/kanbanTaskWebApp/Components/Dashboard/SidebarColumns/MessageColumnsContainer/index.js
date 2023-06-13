@@ -38,6 +38,7 @@ export default function MessageColumnsContainer({
     <div
       id="message-columns"
       data-issidebarshown="true"
+      data-counter="0"
       // we can use value of initialMsgColumnsObj.isCurrentBoardEmpty
       // to figure out if data-atleastonecolumnshown is "true" or "false"
       data-atleastonecolumnshown={

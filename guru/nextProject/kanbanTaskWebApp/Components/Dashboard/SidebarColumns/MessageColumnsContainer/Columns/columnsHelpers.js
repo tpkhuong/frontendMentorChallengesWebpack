@@ -91,6 +91,14 @@ export function selectingTaskBtn({
     // check if there is a currently selected task btn for drag and drop
     const currentlyDragDropSelected =
       document.getElementById("drag-drop-selected");
+
+    const statusOfSelectedTaskBtn = currentlyDragDropSelected
+      ? currentlyDragDropSelected.getAttribute("data-typeofstatus")
+      : null;
+
+    const orderIndexOfSelectedTaskBtn = currentlyDragDropSelected
+      ? currentlyDragDropSelected.getAttribute("data-orderindex")
+      : null;
     // find current focus element
     // const currentFocusedElement = document.activeElement;
     // get status of clicked task btn
@@ -123,61 +131,103 @@ export function selectingTaskBtn({
     if (!currentlyDragDropSelected) {
       // desktop and mobile will be different
       // mobile and tablet
-      // if (window.innerWidth <= 768) {
-      //   console.log(clickedBtn, "clickedBtn");
-      //   console.log(
-      //     isTabIndexZeroAssignedToTaskBtn,
-      //     "isTabIndexZeroAssignedToTaskBtn"
-      //   );
-      //   // if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
-      //   console.log(
-      //     clickedBtn.getAttribute("tabindex"),
-      //     "clickedBtn.getAttribute('tabindex')"
-      //   );
+      if (window.innerWidth <= 768) {
+        console.log(clickedBtn, "clickedBtn");
+        console.log(
+          isTabIndexZeroAssignedToTaskBtn,
+          "isTabIndexZeroAssignedToTaskBtn"
+        );
+        // if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+        console.log(
+          clickedBtn.getAttribute("tabindex"),
+          "clickedBtn.getAttribute('tabindex')"
+        );
+        // clicking on task btn after first load
 
-      //   // if clicked btn has tabindex == "0" assign string "drag-drop-selected"
-      //   if (clickedBtn.getAttribute("tabindex") === "0") {
-      //     console.log("tabindex 0");
-      //     clickedBtn.setAttribute("id", "drag-drop-selected");
-      //   }
-      //   // if clicked btn has tabindex == "-1" swap tabindex on element and element obj
-      //   if (clickedBtn.getAttribute("tabindex") === "-1") {
-      //     console.log("tabindex -1");
-      //     swapTabIndex({
-      //       previousSelected: isTabIndexZeroAssignedToTaskBtn,
-      //       selected: clickedBtn,
-      //     });
+        if (
+          document
+            .getElementById("message-columns")
+            .getAttribute("data-counter") === "0" &&
+          clickedBtn.getAttribute("tabindex") === "0"
+        ) {
+          clickedBtn.focus();
 
-      //     localStorageSwapIndex({
-      //       previousSelected:
-      //         board.columns[statusOfTaskBtnWithTabIndexZero][
-      //           orderIndexOfTaskBtnWithTabIndexZero
-      //         ],
-      //       selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-      //     });
-      //   }
+          document
+            .getElementById("message-columns")
+            .setAttribute("data-counter", "1");
 
-      //   return;
-      // }
+          return;
+        }
+
+        if (
+          document
+            .getElementById("message-columns")
+            .getAttribute("data-counter") === "0" &&
+          clickedBtn.getAttribute("tabindex") === "-1"
+        ) {
+          swapTabIndex({
+            previousSelected: isTabIndexZeroAssignedToTaskBtn,
+            selected: clickedBtn,
+          });
+
+          localStorageSwapIndex({
+            previousSelected:
+              board.columns[statusOfTaskBtnWithTabIndexZero][
+                orderIndexOfTaskBtnWithTabIndexZero
+              ],
+            selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+          });
+
+          document
+            .getElementById("message-columns")
+            .setAttribute("data-counter", "1");
+
+          return;
+        }
+        // clicking on task btn after first load
+        // if clicked btn has tabindex == "0" assign string "drag-drop-selected"
+        if (clickedBtn.getAttribute("tabindex") === "0") {
+          console.log("tabindex 0");
+          clickedBtn.setAttribute("id", "drag-drop-selected");
+        }
+        // if clicked btn has tabindex == "-1" swap tabindex on element and element obj
+        if (clickedBtn.getAttribute("tabindex") === "-1") {
+          console.log("tabindex -1");
+          swapTabIndex({
+            previousSelected: isTabIndexZeroAssignedToTaskBtn,
+            selected: clickedBtn,
+          });
+
+          localStorageSwapIndex({
+            previousSelected:
+              board.columns[statusOfTaskBtnWithTabIndexZero][
+                orderIndexOfTaskBtnWithTabIndexZero
+              ],
+            selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+          });
+        }
+
+        return;
+      }
       // desktop
-      // if (window.innerWidth >= 1400) {
-      //   if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
+      if (window.innerWidth >= 1400) {
+        if (clickedBtn == isTabIndexZeroAssignedToTaskBtn) return;
 
-      //   swapTabIndex({
-      //     previousSelected: isTabIndexZeroAssignedToTaskBtn,
-      //     selected: clickedBtn,
-      //   });
+        swapTabIndex({
+          previousSelected: isTabIndexZeroAssignedToTaskBtn,
+          selected: clickedBtn,
+        });
 
-      //   localStorageSwapIndex({
-      //     previousSelected:
-      //       board.columns[statusOfTaskBtnWithTabIndexZero][
-      //         orderIndexOfTaskBtnWithTabIndexZero
-      //       ],
-      //     selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
-      //   });
+        localStorageSwapIndex({
+          previousSelected:
+            board.columns[statusOfTaskBtnWithTabIndexZero][
+              orderIndexOfTaskBtnWithTabIndexZero
+            ],
+          selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
+        });
 
-      //   return;
-      // }
+        return;
+      }
       //   console.log(clickedBtn);
       //   console.log(currentFocusedElement);
       // if (!isTaskBtn) {
@@ -493,17 +543,13 @@ export function selectingTaskBtn({
 
         localStorageSwapIndex({
           previousSelected:
-            board.columns[statusOfCurrentFocusedTaskBtn][
-              orderIndexOfFocusedBtn
-            ],
+            board.columns[statusOfSelectedTaskBtn][orderIndexOfSelectedTaskBtn],
           selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
         });
 
         swapDragDropSelected({
           previousSelected:
-            board.columns[statusOfCurrentFocusedTaskBtn][
-              orderIndexOfFocusedBtn
-            ],
+            board.columns[statusOfSelectedTaskBtn][orderIndexOfSelectedTaskBtn],
           selected: board.columns[statusOfClickedBtn][orderIndexOfClickedBtn],
         });
       }
